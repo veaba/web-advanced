@@ -273,7 +273,7 @@ a.onGet()
 ### call
 ### apply
 ### bind
-###　call 与applye区别
+### call 与applye区别
 
 ### 闭包(closure)
 闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数，
