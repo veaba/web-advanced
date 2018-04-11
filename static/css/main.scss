@@ -1,4 +1,3 @@
-
 @media screen and(min-width:1200px){
     .base64{
         width: 32px;
@@ -10,9 +9,7 @@
         height: 32px;
         background: url('../images/src.jpg') no-repeat
     }
-    body{
-        background: red;
-    }
+
 }
 
 @media screen and(max-width:750px){
@@ -26,7 +23,31 @@
         height: 32px;
         background: url('../images/src-2.jpg') no-repeat
     }
-    body{
-        background: green;
+}
+
+.a{
+    width: 200px;
+    height: 200px;
+    padding: 50px;
+    border: 1px solid yellow;
+    .b{
+        width: 100%;
+        height: 100%;
+        border: 1px solid green;
+        &:hover{
+            background: rgb(63, 27, 27);
+        }
+    }
+}
+.a .c + .b:hover{
+    background: yellowgreen
+}
+
+.p{
+    .top{
+
+    }
+    .bottom{
+
     }
 }

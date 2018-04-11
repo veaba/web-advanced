@@ -1,6 +1,7 @@
 # web-advanced-frond-end
 进阶web高级前端知识体系
 ## Vue 技术栈相关知识
+### Vue 响应式原理分析
 
 ### 生命周期
 #### created
@@ -420,3 +421,10 @@ a.onGet()
 
 	得出的结论是，base占用内存，速度快。
 	css 响应式，src 按需加载。base64 
+
+### css 有间隙
+- 当使用inline-block  父级设置font-size:0
+- 或者letter-spacing:0
+### css l v h f a 记忆方法 ，倒叙记忆
+### css 纯css 无法实现父选择器
+- 目前的实验上去测试了，发现以往的记忆是JQuery来实现的，纯css 无法实现该效果

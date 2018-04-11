@@ -9,9 +9,6 @@
     height: 32px;
     background: url("../images/src.jpg") no-repeat;
   }
-  body {
-    background: red;
-  }
 }
 
 @media screen and (max-width: 750px) {
@@ -25,7 +22,25 @@
     height: 32px;
     background: url("../images/src-2.jpg") no-repeat;
   }
-  body {
-    background: green;
-  }
+}
+
+.a {
+  width: 200px;
+  height: 200px;
+  padding: 50px;
+  border: 1px solid yellow;
+}
+
+.a .b {
+  width: 100%;
+  height: 100%;
+  border: 1px solid green;
+}
+
+.a .b:hover {
+  background: #3f1b1b;
+}
+
+.a .c + .b:hover {
+  background: yellowgreen;
 }
