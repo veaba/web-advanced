@@ -399,3 +399,24 @@ a.onGet()
 
 ### 浏览器的300状态
 - 304 （意义：原来缓存的文档还可以使用）png document。依然会与服务器通信。如果cache-control:max-age>0 直接从浏览器提取。否则，向服务器发送http请求，确认该资源是否修改，有200，无修改304
+
+### svg 与canvas
+
+- svg 数量小，静态，不失真，dom绘制，类似图片，logo，简单
+- canvas 数量大，密集，js绘制。像素级。可塑性高，可添加各类事件。处理处理重绘。效率高，复杂度高。
+
+### base64 图片 与 src 引用图片
+- base64 好处。小文件嵌入，不需要额外的请求。
+- base64 坏处。浏览器不会缓存。
+
+- 根据 base64AndSrcImage.html 测试结果来看
+	width 1200px 下
+	base 编译的代码 灰色200，从内存取缓存 from memory cache
+	src ，正常200，从网络取 /304 产生7ms
+
+	width 750px 下
+	base 编译的代码 灰色200，从内存取缓存 from memory cache
+	src，正常200.从网络取 /304 产生7ms
+
+	得出的结论是，base占用内存，速度快。
+	css 响应式，src 按需加载。base64 
