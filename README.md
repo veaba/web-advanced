@@ -1,6 +1,40 @@
 # web-advanced-frond-end
 进阶web高级前端知识体系
+## vue 源码学习
+### 项目结构 https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup
+- `scripts` 一般不需要关注，不过熟悉以下两个文件会更好
+	- `scripts/alias.js`  所有源码和测试中使用模块导入的别名
+	- `scripts/config.js` 包含生成`dist/`的所有文件的配置，查找入口文件，都在这个`dist`都在里面
+- `dist` 包含用户发布的内置文件。此目录只会在发布的时候更新，并不能说明当前开发的最新特性变化。
+	- 关于dist的信息请查看 [更多](https://github.com/vuejs/vue/blob/dev/dist/README.md)
+- `flow` 包含flow 的类型声明。全局加载的，可以在普通源码中看到他们在注释中的使用
+- `packages` 包含 vue ssr 和 vue 模板编译 包。vue的依赖包
+- `test` 包含所有测试。单元测试是Jasmine写的，运行是用Karma。e2e 是Nighwatch.js 编写和运行的。
+- `src` 包含源代码。基本代码是es2015编写的，并用flow 来做类型注释
+	- `compiler` 编译器。包含模板转函数编译器的代码。
+	
+	parse 解析器（将字符串模板转为抽象语法树AST）
+	optimizer 优化器（检测用于vdom呈现优化的静态树）
+	code generator代码生成器（将抽象语法树生成渲染函数代码）。代码生成器直接从抽象语法树生成字符串，这样做的代码规格较小，因为编译器在独立构建中，发送给浏览器的
+	- `core` 包含通用，无关平台运行时的代码
+
+	vue2.0开始 core 就与平台无关。这意味着，你可以运行在浏览器、nodejs、或者嵌入式js里面。
+		- `observer` 观察者。包含与响应式系统相关的代码。
+		- `vdom` 虚拟dom。 包含虚拟dom 创建元素的相关代码和补丁。
+		- `instance` 实例。包含Vue 实例构造函数和原型对象(prototype)方法。
+		- `global-api` 顾名思义，就是全局的api
+		- `components` 通过抽象组件，目前 keep-alive 是唯一的一个。
+	- `server`　包含ｓｓｒ（服务端渲染）相关代码
+	- `platforms` 包含特定平台的代码。	
+
+	来自 `dist/build`的入口文件位于各自平台的目录中。
+	每个平台模块包含三个部分：编译器compiler、运行时runtime、服务器server。对应上面的三个目录，每个部分都包含特定的平台的 模块/实用 程序，然后导出并注入到平台特定的目录文件中的core项中。例如，实现v-bind:class 背后的逻辑的核心就是在 `platforms/web/runtime/modules/class.js` ——这个入口是在`entries/web-runtime.js` ，用于创建特定浏览器的vdom的修补功能。
+	- `sfc` 包含单文件组件(*.vue)解析逻辑。用到 package 中的 vue-template-compiler 依赖包。
+	- 包含整个代码库中共享的实用程序。
+	
 ## Vue 技术栈相关知识
+
+
 ### Vue 响应式原理分析
 
 ### 生命周期
@@ -507,7 +541,9 @@ a.onGet()
 	true+NaN //NaN
 	true+function(){} //'truefunction(){}'
 
-
-
 ```
 
+
+——————————————————————-
+
+`@1` AST ：抽象语法树。(abstract syntax tree)
