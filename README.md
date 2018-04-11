@@ -428,3 +428,86 @@ a.onGet()
 ### css l v h f a 记忆方法 ，倒叙记忆
 ### css 纯css 无法实现父选择器
 - 目前的实验上去测试了，发现以往的记忆是JQuery来实现的，纯css 无法实现该效果
+### 二叉树
+
+- 特殊的二叉树，满二叉树。深入k且含有2^k - 1的节点，深度3，节点为2^3-1=7。满二叉树，一定是完全二叉树。
+		          ①
+	          ②        ③
+	        ④   ⑤    ⑥   ⑦
+	       ⑧ ⑨ ⑩ ⑪  ⑫ ⑫	⑫ ⑫
+- 完全二叉树。 最后一层左边是满的，右边可能满或不满，其余层是满的。
+	              ①
+	          ②       ③
+	        ④   ⑤    ⑥  ⑦
+	       ⑧ ⑨ ⑩ ⑪  ⑫	 
+- 二叉树第i层最多有2^(i-1) 个节点，i>=1
+- 二叉树 深度为k 最多有 2^k-1个节点kk>=1
+
+- 遍历。 前序遍历(DLR)，D根L左R右。
+- 遍历。 中序遍历(LDR)，L左D根R右
+- 遍历。 后序遍历(LRD)，L左R右D根
+### Number方法 （2018年4月10日 面试遇到该类型的题目，简直日了狗的难受）
+- 原始值 NaN （not a number）
+- 原始值 undefined
+- 原始值 null
+- 原始值 boolean
+- 原始值 string
+- 原始值 number
+
+- 如果对象的值无法转为数字，则Number的函数返回NaN
+- 加法有两种情况，数字与数字相加；字符串与字符串相加。
+- 加法会触发三种类型转换，转换为原始值；转为数字；转为字符串
+- 结论1、先两个两个操作数，转为原始值
+- 结论2、如果存在一个任意字符串，则也将另外一个也转为字符串，然后返回两个字符串链接结果
+- 结论3、否则将两个值转为数字类型，并返回和
+- 结论4、任何数字与NaN 相加都是NaN
+
+
+-----toNumber 将值转为数字-------
+	undefined  NaN
+	null       0
+	boolean    true/1 false/0
+	number     无需转换
+	string     由字符串解析为数组 '324' ->324
+	[]		   0
+
+-----toString 将值转为数字-------
+	undefined  'undefined'
+	null       'null'
+	boolean    'true'/'false'
+	number     数字做字符串
+	string     无需转换
+	function(){} 'function(){}'
+
+```js
+	1+1  //2 typeof number
+	1+'1' // 11 typeof stirng
+	'1'+1 // 11 typeof string
+	1+'' // '1'
+	''+1 // '1'
+	1+undefined //NaN
+	''+undefined //undefined
+	true+undefined // NaN  Number(true)+Number(undefined)=NaN,String(true)+String(undefined)='trueundefined'
+	false+undefined // NaN
+	''+true // 'true'
+	' ' + true // ' true'
+	''+false//'false'
+	' '+false//' false'
+	1+function (){} //'1function(){}'
+	1+Object()//'1[object Object]'
+	'' +Object() // [object object]
+	1+Array() // 1+Array().toString()=>1 +[].toString()
+	1+Array //1 +Array.toString()= >1+function Array(){[native code]}
+	1+NaN // NaN
+	''+NaN //'NaN'
+	'1'+NaN //'1+NaN'
+	true+false //1
+	true+true //2
+	true+undefined //NaN
+	true+NaN //NaN
+	true+function(){} //'truefunction(){}'
+
+
+
+```
+
