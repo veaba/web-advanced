@@ -585,6 +585,103 @@ a.onGet()
 ```js
 	"object"
 ```
+### let domList = document.querySelectorAll('div')，一句话将domlist转为数组
+```js
+	Array.from(domList)
+```
+### 哪个http response header 不会影响浏览器缓存行为
+a.cache-control   b.etag   c.age     d.last-modified
+
+通用首部字段（请求头报文+响应报文）
+- Cache-Control  控制缓存的行为
+- Pragma		http1.0 遗留，no-cache时禁用缓存
+请求首部字段
+- If-Match 		比较ETag是否一致
+- IF-None-Match 同上
+- If-Modified-Since	比较资源最后更新的时间是否一致
+- IF-Unmodified-Since 比较资源最后更新的时间是否一致
+响应首部字段
+- ETag	资源的匹配信息
+实体首部字段
+- Expires http1.0的遗留物，实体主体过期的时间
+- Last-Modified	资源的最后一次修改时间
+
+[详见 浅谈浏览器http 的缓存机制](https://www.cnblogs.com/vajoy/p/5341664.html)
+
+
+### 合理的前端项目结构分层
+
+### 挑选自己活着公司项目，遇到的问题和解决的思路
+
+### 全面解析一个任意url的所有参数为object，注意边界条件
+let url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B2&status=disabled'
+=>ob={
+	user:admin
+	id:[23,555],//合并id相同的为数组
+	city:'颜色'//中文编码
+	enabled:true // 未指定的key约定值为true
+}
+### 实现一个最简单的模板渲染引擎
+let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
+let data ={
+
+	name:'姓名',
+	age:18,
+}
+结果：我是姓名，年龄18，性别 undefined
+```js
+
+```
+### 字符串查找
+使用最基本遍历实现查找字符串，并返回第一次出现的问题，找不到返回-1
+ a='34'  b='1234567'  返回2
+ a='35'  b='1234567'  返回-1
+ a='355' b=''12354355 返回5
+ ```js
+ function compare(a,b){
+	 return b.indexof(a)
+ }
+ compare(a,b)
+ ```
+
+ ### 数据绑定基本实现
+ let obj={
+	 key_1:1,
+	 key_2:2
+ }
+ function func(key){
+	 console.info(key+'的值子发生变化'+this[key])
+ }
+ bindData(obj,func)
+ obj.key_1=2;//此时自动输出 变化为2
+ obje.key_2:1 //此时自动输出变化为1
+
+ ###  数据结构处理
+ 输出有多个儿子的人的名字
+ ```js
+ let data={
+	 name:'jack',
+	 child:[
+		 {name:'jack1'},
+		 {name:'jack2',child:[
+			 {name:'jack2_1',child:{name:'jack2-1-1'}},
+			 {name:'jack2_2'}
+		 ]}
+		 {name:'jack3',child:{name:'jack3-1'}}
+	 ]
+ }
+ ```
+
+ ### 程序题1
+
+ ```js
+ for(var i=0;i<5;i++){
+	setTimeout(function(){
+		console.info(new Date,i)
+	},1000)
+};
+console.info(new Date,i)
+ ```
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
