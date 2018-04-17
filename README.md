@@ -682,6 +682,18 @@ let data ={
 };
 console.info(new Date,i)
  ```
+
+ ```js
+function Person(name){
+	this.name=name
+}
+var a =  Person('a');
+var b = new Person('b');
+var c = Person;
+console.info(a.name)
+console.info(b.name)
+console.info(c.name)
+ ```
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
