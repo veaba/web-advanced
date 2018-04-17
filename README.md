@@ -557,7 +557,22 @@ a.onGet()
 	true+function(){} //'truefunction(){}'
 
 ```
+### replace 理解
+```js
+let string='22dda';
+$1   找到的
+$2   找到所在的索引
+$3   替换前的源码
+string.replace('要替换的正则、字符等',function($1,$2,$3){
+	return $2
+})
 
+'我是{{name}} ,年龄{{age}},性别{{sex}}'.replace(/\{{(.+?)\}}/g,function($1,$2,$3){
+			console.info($1)
+		})
+// {{name}}{{age}}{{sex}}
+```
+### sort 理解
 ### typeof 常见类型
 - typeof null						"object"
 - typeof undefined					"undefined"
@@ -621,7 +636,12 @@ let url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B
 	city:'颜色'//中文编码
 	enabled:true // 未指定的key约定值为true
 }
-### 实现一个最简单的模板渲染引擎
+### 实现一个最简单的模板渲染引擎(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对replace的理解和正则，)
+
+- 要点一 replace 的用法 第一个替换的，第二回调函数，回调函数有三个参数，第一个要找到的，第二个找到的索引，第三个原先的字符
+- 对象key 转数组
+- 正则 从什么到任意的什么 \{{(.+?)\}}
+- 正则 这个或者那个 \{{|\}}
 let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
 let data ={
 
@@ -630,8 +650,26 @@ let data ={
 }
 结果：我是姓名，年龄18，性别 undefined
 ```js
-
+	let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
+	let data ={
+		name:'姓名',
+		age:18,
+	}
+	function cover(template,data){
+		let arr = Object.keys(data)
+		let temp= template.replace(/\{{(.+?)\}}/g,function($1){
+			for(let i=0;i<arr.length;i++){
+				if($1.indexOf(arr[i])>-1){
+					return $1.replace(arr[i],arr[i]).replace(/\{{|\}}/g,'')
+				}
+			}
+		})
+		return temp
+	}
+	cover(template,data)
 ```
+
+
 ### 字符串查找
 使用最基本遍历实现查找字符串，并返回第一次出现的问题，找不到返回-1
  a='34'  b='1234567'  返回2
@@ -644,7 +682,24 @@ let data ={
  compare(a,b)
  ```
 
- ### 数据绑定基本实现
+ ### 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
+ [详见 MDN的 对象Object.defineProperty()方法的使用](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+ - 问题已 Object.defineProperty(obj,key,options)的使用
+ - 其中 option 里面的选项以及主要的get 和set方法 
+ ```js
+	get:function(){
+		return '你要改变的值'
+	},
+	set:fucntion(value){
+		//set会返回一个value
+		//这个value就是变更后的值，怎么处理
+		obj.key= value
+	}
+ ```
+ - bind()。【与此同类似的需要懂 call bind apply】其次是使用函数时候，怎么给另外一个对象绑定this，因为此题目用到一个返回并返回这个this，的key值，这时候需要处理
+ ```js
+	func.bind(obj)('你的参数') // func 是函数，里面有this， obj 就是要操作的函数的那个，
+ ```
  let obj={
 	 key_1:1,
 	 key_2:2
@@ -655,7 +710,33 @@ let data ={
  bindData(obj,func)
  obj.key_1=2;//此时自动输出 变化为2
  obje.key_2:1 //此时自动输出变化为1
+```js
+ let obj={
+	 key_1:1,
+	 key_2:2
+ }
+ function func(key){
+	 console.info(key+'的值子发生变化'+this[key])
+ }
 
+function bindData(obj,func){
+	for(let item in obj){
+		Object.defineProperty(obj,item,{
+			get:function(){
+				return obj.item;
+			},
+			set:function(value){
+				obj.item=value;
+				func.bind(obj)(item);
+			}
+		}
+	}
+}
+bindData(obj,func)
+obj.key_1=2;//此时自动输出 变化为2
+obj.key_2:1 //此时自动输出变化为1
+
+```
  ###  数据结构处理
  输出有多个儿子的人的名字
  ```js
@@ -694,6 +775,51 @@ console.info(a.name)
 console.info(b.name)
 console.info(c.name)
  ```
+
+ ### 斐波那契数列(递归) *　ｊｓ　递归概念和思维方式有点模糊闲杂
+ 序列|值
+ - | - | -
+ 0 | 1
+ 1 | 1
+ 2 | 2
+ 3 | 3
+ 4 | 5
+ 5 | 8
+ 6 | 13
+ 7 | 21
+ 8 | 33
+ 9 | 55 
+
+ 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
+
+ ```js 
+ //递归实现
+var fib= function(n){
+	if(n<2){
+		return 1
+	}
+	return fib(n-1)+fib(n-2)
+}
+ console.info(fib(9))
+
+ // for 循环实现
+ var fibFor =function(n){
+	 let n1=1,n2=1,n3=0
+	 if(n<2){
+		 return 1
+	 }
+	 for(let i =0;i<n-1;i++){
+		 n3=n1+n2;
+		 n1=n2;
+		 n2=n3
+	 }
+	 return n3
+ }
+ console.info(fibFor(9))
+ ```
+
+
+
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
