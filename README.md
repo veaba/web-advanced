@@ -1,7 +1,20 @@
 # web-advanced-frond-end
 进阶web高级前端知识体系
 ## vue 源码学习
+
+[勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
+[HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
+
+### 启动
+```js
+	cnpm install -g karma (运行时test 是基于 Karma 的)
+	cnpm install --save mime-db
+	cnpm install (安装依赖)
+	cnpm run dev:test 
+```
+
 ### 项目结构 https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup
+
 - `scripts` 一般不需要关注，不过熟悉以下两个文件会更好
 	- `scripts/alias.js`  所有源码和测试中使用模块导入的别名
 	- `scripts/config.js` 包含生成`dist/`的所有文件的配置，查找入口文件，都在这个`dist`都在里面
@@ -480,7 +493,9 @@ a.onGet()
 - 遍历。 前序遍历(DLR)，D根L左R右。
 - 遍历。 中序遍历(LDR)，L左D根R右
 - 遍历。 后序遍历(LRD)，L左R右D根
+
 ### Number方法 （2018年4月10日 面试遇到该类型的题目，简直日了狗的难受）
+
 - 原始值 NaN （not a number）
 - 原始值 undefined
 - 原始值 null
@@ -543,7 +558,33 @@ a.onGet()
 
 ```
 
+### typeof 常见类型
+- typeof null						"object"
+- typeof undefined					"undefined"
+- typeof []							"object"
+- typeof ['']						"object"
+- typeof ['a']						"object"
+- typeof {}							"object"
+- typeof {a:['test']}				"object"	
+- typeof NaN						"number"
+- typeof true						"boolean"
+- typeof false						"boolean"
+- typeof new Date()					"object"
+- typeof function(){alert('22')}	"function"
+- typeof console.info('tt')			"tt" "undefined"
+- typeof console					"object"
+- typeof 1							"number"
+- typeof '2'						"string"
+- typeof ''							"string"
 
+### 用一行代码将[1,2,3,4]随机打乱
+```js
+	[1,2,3,4].sort(function(){return  Math.round(Math.random())?1:-1})
+```
+### typeof null 
+```js
+	"object"
+```
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
