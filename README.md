@@ -340,6 +340,13 @@ a.onGet()
 ### 一些流行的技术题目
 - ["1", "2", "3"].map(parseInt) 答案是多少？
 	 详细解析：http://blog.csdn.net/justjavac/article/details/19473199
+- map 用法考察
+```js 
+	//map 一定会执行funtion，必须会执行这个currentValu,index,arr
+	// thisValue 对象作为该执行回调时使用，传给函数,用作this 值，省略。this 为 undefined 
+	array.map(function(currentValue,index,arr), thisValue)
+```	 
+- parseInt 考察
 ```js
 	map:
 	["1","2","3"].map(function(value,index){
@@ -600,6 +607,23 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 // {{name}}{{age}}{{sex}}
 ```
 ### sort 理解
+- sort 用户数组元素排序，排序可以使字母或者数字，并按升续降序
+- 默认是字母升序
+- 【注意】：数字是按字母顺序排序时 40 在 5前面
+- 【注意】：使用数字排序，必须通过一个函数作为参数调用
+- 函数是指定数字是升序还是降序
+- 会改变原始数组
+
+语法
+```js
+array.sort(sortFunction) //可选，但排序顺序，必须是函数
+
+// 返回值
+Array 对数组的引用，数组在原数组进行排序，不生成副本
+```
+### 冒泡算法
+- 有几种冒泡算法？
+- 分别实现冒泡算法?
 ### typeof 常见类型
 typeof|值
  - | - | -
