@@ -538,20 +538,22 @@ a.onGet()
 
 
 -----toNumber 将值转为数字-------
-	undefined  NaN
-	null       0
-	boolean    true/1 false/0
-	number     无需转换
-	string     由字符串解析为数组 '324' ->324
-	[]		   0
+
+	undefined   | NaN
+	null        | 0
+	boolean     | true/1 false/0
+	number      | 无需转换
+	string      | 由字符串解析为数组 '324' ->324
+	[]		    | 0
 
 -----toString 将值转为数字-------
-	undefined  'undefined'
-	null       'null'
-	boolean    'true'/'false'
-	number     数字做字符串
-	string     无需转换
-	function(){} 'function(){}'
+
+	undefined   | 'undefined'
+	null        | 'null'
+	boolean     | 'true'/'false'
+	number      | 数字做字符串
+	string      | 无需转换
+	function(){}| 'function(){}'
 
 ```js
 	1+1  //2 typeof number
@@ -711,7 +713,8 @@ let data ={
 
  ### 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
  [详见 MDN的 对象Object.defineProperty()方法的使用](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
- - 问题已 Object.defineProperty(obj,key,options)的使用
+
+ - 问题一  Object.defineProperty(obj,key,options)的使用
  - 其中 option 里面的选项以及主要的get 和set方法 
  ```js
 	get:function(){
