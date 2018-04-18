@@ -2,8 +2,8 @@
 进阶web高级前端知识体系
 ## vue 源码学习
 
-[勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
-[HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
+- [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
+- [HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
 
 ### 启动
 ```js
