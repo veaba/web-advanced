@@ -13,7 +13,8 @@
 	cnpm run dev:test 
 ```
 
-### 项目结构 https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup
+### 项目结构 
+[vue官方开发文档 ](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup)
 
 - `scripts` 一般不需要关注，不过熟悉以下两个文件会更好
 	- `scripts/alias.js`  所有源码和测试中使用模块导入的别名
@@ -37,7 +38,7 @@
 		- `instance` 实例。包含Vue 实例构造函数和原型对象(prototype)方法。
 		- `global-api` 顾名思义，就是全局的api
 		- `components` 通过抽象组件，目前 keep-alive 是唯一的一个。
-	- `server`　包含ｓｓｒ（服务端渲染）相关代码
+	- `server`　包含ssr（服务端渲染 server-side rendering）相关代码
 	- `platforms` 包含特定平台的代码。	
 
 	来自 `dist/build`的入口文件位于各自平台的目录中。
@@ -46,7 +47,8 @@
 	- 包含整个代码库中共享的实用程序。
 	
 ## Vue 技术栈相关知识
-
+- vue router 懒加载
+- vue 路由的几种模式，history 和hash 的原理是什么？
 
 ### Vue 响应式原理分析
 
@@ -218,7 +220,7 @@
 		this.name=name;
 		this.color=color
 	}
-	Dog.prototype = Animal.prototype; //直接继承 Animal的对象对象
+	Dog.prototype = Animal.prototype; //直接继承 Animal的原型对象
 	Dog.prototype.constructor=Dog;
 	var cat3= new Dog('四哈','黒色')
 	console.info(cat3.type) // 动物
@@ -257,16 +259,17 @@
 
 ####  无参实现
 ```js
-funciton Person(){}
-var person = new Person()
+function Person(){}
+`var person = new Person()`
 person.name ='liao'
 person.onClick=function(){
-	console.info(person.name)
+	console.info(person.name)//console.info(this.name)
+	
 }
 person.onClick()
 ```
 
-#### 有参实现
+#### 有参实现(不需要 new 来实现这个继承，原理是直接使用对象函数来赋值)
 ```js
 function Person(name){
 	this.name=name ;//this作用域，指之前对象
@@ -280,7 +283,7 @@ person.onDelete()
 
 #### 工厂方式创建（内置对象）
 ```js
-	var ob =new  Object();
+	`var ob =new  Object();`
 	ob.name='中国'
 	ob.onPost=fucntion(){
 		console.info(ob.name)
@@ -297,7 +300,7 @@ person.onDelete()
 	D.prototype.onName=function(){
 		console.info(this.name)
 	}
-	var d= new D()
+	`var d= new D()`
 	d.onName()
 ```
 #### 混合方式。函数对象在原型上，普通对象直接 赋值
@@ -309,7 +312,7 @@ function A(name,p){
 A.prototype.onGet=fucntion(){
 	console.info(this.name)
 }
-var a= new A('机器人')
+`var a= new A('机器人')`
 a.onGet()
 
 ```
@@ -355,7 +358,7 @@ a.onGet()
 	parseInt(string,radix) 
 	parseInt('8','7') 
 	string必填
-	radix 2~36，如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回NaN
+	radix 2~36，如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
 	parseInt("1", 0); 	// 十进制 1 
 	parseInt("2", 1); 	// 第二个参数不在 2-36 直接
 	parseInt("3", 2); 	// 二进制 NaN，因为二进制中，不存在3，所以报错
@@ -376,6 +379,11 @@ a.onGet()
 	
 ```
 
+- 判断对象为空？
+```js
+	let b={}
+	(JSON.stringify(b)).length  // 2
+```
 - 如何阻止冒泡？ [*]
 	e.stopPropagation()
 	旧的IE e.cancelButton=true
@@ -404,6 +412,13 @@ a.onGet()
 	- 创建script
 - document.write
 - document.innerHTML
+- ECMAScript 与 Javascript
+```js
+	Javascript 是  ECMAScript 所实现的一个标准
+	Javascript 是  ECMAScript的一种实现
+	一般讲js ：dom+bom+ECMAScript
+```
+
 
 
 
@@ -442,8 +457,18 @@ a.onGet()
 ### 浏览器的100
 - 101 websocket  (size 0B)
 ### 浏览器的200状态的区别
-- 灰色的 200  from disk cache（来自磁盘缓存）
+- 灰色的 200  from disk cache（来自磁盘缓存），比如f5百度之后的，某个js，或者 (from memory cache) （使用该功能，必须在chrome里面 Network取消勾选Disable cache）
 - 正常 200
+### 了解chrome 控制台工具
+- Elements 元素
+- Console  控制台
+- Sources  源
+- Network 网络
+- Performance 性能
+- Memory	内存
+- Application	应用程序
+- Security	安全
+- Audits	审计/审查
 
 ### 浏览器的300状态
 - 304 （意义：原来缓存的文档还可以使用）png document。依然会与服务器通信。如果cache-control:max-age>0 直接从浏览器提取。否则，向服务器发送http请求，确认该资源是否修改，有200，无修改304
@@ -574,23 +599,25 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 ```
 ### sort 理解
 ### typeof 常见类型
-- typeof null						"object"
-- typeof undefined					"undefined"
-- typeof []							"object"
-- typeof ['']						"object"
-- typeof ['a']						"object"
-- typeof {}							"object"
-- typeof {a:['test']}				"object"	
-- typeof NaN						"number"
-- typeof true						"boolean"
-- typeof false						"boolean"
-- typeof new Date()					"object"
-- typeof function(){alert('22')}	"function"
-- typeof console.info('tt')			"tt" "undefined"
-- typeof console					"object"
-- typeof 1							"number"
-- typeof '2'						"string"
-- typeof ''							"string"
+typeof|值
+ - | - | -
+typeof null	 					|	"object"
+typeof undefined				|	"undefined"
+typeof []						|	"object"
+typeof ['']						|	"object"
+typeof ['a']					|	"object"
+typeof {}						|	"object"
+typeof {a:['test']}				|	"object"	
+typeof NaN						|	"number"
+typeof true						|	"boolean"
+typeof false					|	"boolean"
+typeof new Date()				|	"object"
+typeof function(){alert('22')}	|	"function"
+typeof console.info('tt')		|	"tt" "undefined"
+typeof console					|	"object"
+typeof 1						|	"number"
+typeof '2'						|	"string"
+typeof ''						|	"string"
 
 ### 用一行代码将[1,2,3,4]随机打乱
 ```js
