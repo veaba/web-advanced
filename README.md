@@ -72,12 +72,41 @@
 - 事件中，指触发这个事件的对象。
 - 特殊的。IE中的attachEvent 的this 总是指向全局的window
 
+### 以下三个方法都是为了改变上下文存在而是用的
+- call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+- apply 方法。调用一个函数，具有指定this 的值，一级作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+
+- bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+### call  会立即执行。
+	- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
+### apply  会立即执行。
+### bind 新函数，不会立即执行。
+### call 与apply区别
+
+- call  入参是列表。
+- apply  入参是数组
+```js
+function a(ob){
+	console.info(ob)
+};
+var cc ={t:'222'}
+var ob={name1:'lala'};
+a.apply(null,([ob],cc))
+
+// undefined
+```
 ### window  对象
 - 浏览器窗口
 ### document 对象
 - document对象，文档，window的属性
 
 ## 继承
+### new 关键字都做了什么？
+[查看更多 js中的new()到底做了些什么？？](https://www.cnblogs.com/faith3/p/6209741.html)
+- 创建一个对象
+- 将构造函数的作用域赋给新对象。（`this` 此时指向新对象）
+- 执行构造数中的代码（对这新对象添加属性）
+- 返回新对象
 ### 如何实现继承
 - 构造继承 constructor
 - 原型继承 prototype。原型继承，就是函数对象的原型= 构造函数
@@ -95,8 +124,8 @@
 - 实例继承 instance
 - 拷贝继承 copy
 ### js继承的几种方式？
-- *构造函数继承 (http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
-- *非构造函数继承 (http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)
+- *构造函数继承 [阮一峰 Javascript面向对象编程（二）：构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
+- *非构造函数继承 [阮一峰 Javascript面向对象编程（三）：非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)
 
 ### 对象之间“非构造函数方法”。 [非构造函数方法实现]
 啥是非构造函数继承？因为两个都是普通对象，无法使用构造函数的方式继承
@@ -321,10 +350,7 @@ a.onGet()
 ### 概念定义
 ### 构造函数
 ### JS原型继承的几种方法
-### call
-### apply
-### bind
-### call 与applye区别
+
 
 ### 闭包(closure)
 闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数，
@@ -460,17 +486,16 @@ a.onGet()
 ## 附 2018阿里资深web前端面试题
 ## 附 2018网易高级web前端面试题
 ## 附 一次中级/高web前端面试题
-###js 的异步机制
+### js 的异步机制
 - js 是单线程的
 - 任务队列 和事件循环(queue、eventLoop)
 - 定时器t
 - 异步机制 
 - 总结
-```js
+
 JavaScript单线程和其异步机制就如上所述。所谓的单线程并不孤单，它的背后有浏览器的其他线程为其服务，其异步也得靠其他线程来监听事件的响应，并将回调函数推入到任务队列等待执行。
 单线程所做的就是执行栈中的同步任务，执行完毕后，再从任务队列中取出一个事件（没有事件的话，就等待事件），然后开始执行栈中相关的同步任务，不断的这样循环。
 
-```
 
 
 ### 浏览器的100
