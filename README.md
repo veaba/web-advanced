@@ -56,15 +56,85 @@
 #### created
 
 ### 组件通信
-#### props 父传子
-#### $emit 子传父
+#### 父传子
+- $props 
+#### 子传父
+- $emit 
+#### $refs || ref
 ### 路由vue-router
 ### vue 相关面试题
 - 为什么vue 的data 是一个函数?
 ```text
 
 ```
-## 概念
+
+## nuxt
+
+### asyncData()
+- 导致session id不一直
+- 刷新都没有了
+## nuxt.conf.js
+## es6
+### let、const 
+- let  
+	- 不可重复声明变量
+- const 
+	- 必须先赋值
+	- 不可重复声明变量
+	- 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
+### Promise 对象
+#### 状态的变更
+### resolve()
+- 只能入参一个，但可以是`数组`、`对象`
+### reject()
+- 只能入参一个，但可以是`数组`、`对象`
+### then()
+### catch()
+### finally()
+### all()
+### racr()
+### async/await
+- 是Generator函数的语法糖
+- Generator 的改进
+	- 内置执行器
+	- 更好的语义
+	-更广的适用性
+	- 返回值是promise
+### Generator
+
+```js
+// 以下声明都成立
+function * a(){}
+function* a(){}
+function *a(){}
+function*a(){}
+
+
+function * hello(){
+	yield 'hello' //yield 表达式
+	yield 'world' //yield 表达式
+	return 'hellow and world'
+}
+```
+- 分段执行。`yiled` 表示暂停执行的标志，`next` 表示恢复执行
+- es6提供的异步编程解决方案。[阮一峰 Generator 函数的语法](http://es6.ruanyifeng.com/#docs/generator)
+- 状态机，封装了多个内部状态
+- 有*星号。function * a(){}
+- 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
+### 字符串 String
+### 数字 Number
+### 数组 Array
+### 对象 Object
+### 枚举[`new`] symbol
+### 类 class  
+
+## lavas (尚未开始)
+## node (尚未开始)
+## pwa (尚未开始)
+## react (尚未开始)
+## php (尚未开始)
+## linux (尚未开始)
+## 基础概念
 ### 作用域
 ### this
 - this 总是指向函数的直接调用者（非间接）
