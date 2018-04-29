@@ -790,12 +790,35 @@ a.cache-control   b.etag   c.age     d.last-modified
 
 ### 全面解析一个任意url的所有参数为object，注意边界条件
 let url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B2&status=disabled'
-=>ob={
+
+```js
+var url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B2&status=disabled';
+var newUrl  = url.replace(/^.+(\?)/,'');
+var url1 = newUrl.split('&');
+var ob={}
+url1.map((item,index)=>{
+		var temp=[];
+		temp = item.split('=');
+		keys.push(temp[0]);
+		values.push(temp[1])
+		if(ob[temp[0]])	{
+			ob[temp[0]]=[ob[temp[0]]].concat(temp[1]) //如果存在 则合并成为数组
+		}else{
+			ob[temp[0]]=temp[1];
+		}
+});
+console.info(ob)
+```
+
+
+```js
+ob={
 	user:admin
 	id:[23,555],//合并id相同的为数组
 	city:'颜色'//中文编码
 	enabled:true // 未指定的key约定值为true
 }
+```
 ### 实现一个最简单的模板渲染引擎(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对replace的理解和正则，)
 
 - 要点一 replace 的用法 第一个替换的，第二回调函数，回调函数有三个参数，第一个要找到的，第二个找到的索引，第三个原先的字符
