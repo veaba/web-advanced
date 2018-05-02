@@ -65,6 +65,97 @@
 
 ```
 ## 概念
+### 递归
+`函数自己调用自己,就是递归`，由于递归需要具备超前的临时计算能力，对于我来讲，是很难一个学习难点。随后在网络上找到一个方法、函数来加深理解。
+
+```js
+
+// 用递归 来求 5 的阶乘 ，翻译过来就是 1*2*3*4*5 =120
+// n! = n * (n-1)!
+
+// 定义一个函数，用于求 n 的阶乘
+function func(n)
+{
+    if (n == 1)
+    {
+        return 1;
+    }
+
+    // func(n-1) 因为传递的参数是 n-1,那么就是求 (n-1) 的阶乘
+    return n * func(n-1);
+}
+console.log(func(5));
+
+// 所以计算的结果是
+// 第一步 return 5 *(func(4))
+// 第二步 return 5 *(4*(func(3)))
+// 第二步 return 5 *(4*3*2(func(2)))
+// 第二步 return 5 *(4*3*2(*1*func(1)))
+// 第二步 return 5 *(4*3*2*1) = 120
+```
+再看一个斐波那契数列的递归数列，加深对递归概念的理解，小于2则return 1, 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
+
+- 基本规则
+
+ 序列|值
+ - | - | -
+ 0 | 1
+ 1 | 1
+ 2 | 2
+ 3 | 3
+ 4 | 5
+ 5 | 8
+ 6 | 13
+ 7 | 21
+ 8 | 34
+ 9 | 55 
+ ```js 
+ 
+ /**
+  * @desc for 循环实现 ，借用三个变量来存放
+  * */ 
+ var fibFor =function(n){
+	 let n1=1,n2=1,n3=0
+	 if(n<2){
+		 return 1
+	 }
+	 for(let i =0;i<n-1;i++){
+		 n3=n1+n2;
+		 n1=n2;
+		 n2=n3
+	 }
+	 return n3
+ }
+ console.info(fibFor(9))
+
+/**
+ * @desc 斐波那契数列 学习，递归函数解析
+ * 
+*/
+var fib= function(n){
+	if(n<2){
+		return 1
+	}
+	return fib(n-1)+fib(n-2)
+}
+ console.info(fib(9))
+fib(8)
+// 入参 8 
+
+```
+ 序列|值
+ - | - | -
+第一步 | fib(7)+fib(6)
+第二步 | fib(6)+fib(5) + fib(5)+fib(4) 
+第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2) 
+第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
+第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
+第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
+
+![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 ### 作用域
 ### this
 - this 总是指向函数的直接调用者（非间接）
@@ -842,49 +933,7 @@ console.info(b.name)
 console.info(c.name)
  ```
 
- ### 斐波那契数列(递归) *　ｊｓ　递归概念和思维方式有点模糊闲杂
- 序列|值
- - | - | -
- 0 | 1
- 1 | 1
- 2 | 2
- 3 | 3
- 4 | 5
- 5 | 8
- 6 | 13
- 7 | 21
- 8 | 33
- 9 | 55 
-
- 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
-
- ```js 
- //递归实现
-var fib= function(n){
-	if(n<2){
-		return 1
-	}
-	return fib(n-1)+fib(n-2)
-}
- console.info(fib(9))
-
- // for 循环实现
- var fibFor =function(n){
-	 let n1=1,n2=1,n3=0
-	 if(n<2){
-		 return 1
-	 }
-	 for(let i =0;i<n-1;i++){
-		 n3=n1+n2;
-		 n1=n2;
-		 n2=n3
-	 }
-	 return n3
- }
- console.info(fibFor(9))
- ```
-
-
+ 
 
 ——————————————————————-
 
