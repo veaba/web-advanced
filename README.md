@@ -201,6 +201,9 @@ fib(8)
 ```js
   for(var i =0;i<5;i++){}
   console.info(i) // 5
+
+  for(let i=0;i<5;i++){}
+  console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
 ``` 
 ### Promise 对象
 #### 状态的变更
