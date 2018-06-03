@@ -6,7 +6,7 @@
 - [HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
 
 ### 启动
-```js
+```mpm
 	cnpm install -g karma (运行时test 是基于 Karma 的)
 	cnpm install --save mime-db
 	cnpm install (安装依赖)
@@ -67,6 +67,117 @@
 ```text
 
 ```
+## 概念
+###　js三大对象
+[SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
+- 本地对象
+	- 与宿主无关，独立于宿主环境的ECMAScript 实现提供的对象
+	- ECMA-262 定义的类（引用类型）
+	- 该类引用类型在运行过程中需要通过new 创建所需的实例对象
+	- 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
+- 内置对象
+	- 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
+	- EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需是实例化
+	- 内置对象是本地对象的子集
+	- 包含`Global` 和`Math`
+	- ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
+- 宿主对象
+	- 由ECMAScript 实现的宿主环境提供的对象，包含两个大类，一个是宿主提供，一个是自定义类对象
+	- 所有非本地对象都是宿主对象
+	- 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
+	- 所有DOM 和 BOM 对象都属于宿主对象	
+### 递归
+`函数自己调用自己,就是递归`，由于递归需要具备超前的临时计算能力，对于我来讲，是很难一个学习难点。随后在网络上找到一个方法、函数来加深理解。
+
+```js
+
+// 用递归 来求 5 的阶乘 ，翻译过来就是 1*2*3*4*5 =120
+// n! = n * (n-1)!
+
+// 定义一个函数，用于求 n 的阶乘
+function func(n)
+{
+    if (n == 1)
+    {
+        return 1;
+    }
+
+    // func(n-1) 因为传递的参数是 n-1,那么就是求 (n-1) 的阶乘
+    return n * func(n-1);
+}
+console.log(func(5));
+
+// 所以计算的结果是
+// 第一步 return 5 *(func(4))
+// 第二步 return 5 *(4*(func(3)))
+// 第二步 return 5 *(4*3*2(func(2)))
+// 第二步 return 5 *(4*3*2(*1*func(1)))
+// 第二步 return 5 *(4*3*2*1) = 120
+```
+再看一个斐波那契数列的递归数列，加深对递归概念的理解，小于2则return 1, 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
+
+- 基本规则
+
+ |序列|值|
+ |----- | ---- |
+ 0 | 1
+ 1 | 1
+ 2 | 2
+ 3 | 3
+ 4 | 5
+ 5 | 8
+ 6 | 13
+ 7 | 21
+ 8 | 34
+ 9 | 55 
+ ```js 
+ 
+ /**
+  * @desc for 循环实现 ，借用三个变量来存放
+  * */ 
+ var fibFor =function(n){
+	 let n1=1,n2=1,n3=0
+	 if(n<2){
+		 return 1
+	 }
+	 for(let i =0;i<n-1;i++){
+		 n3=n1+n2;
+		 n1=n2;
+		 n2=n3
+	 }
+	 return n3
+ }
+ console.info(fibFor(9))
+
+/**
+ * @desc 斐波那契数列 学习，递归函数解析
+ * 
+*/
+var fib= function(n){
+	if(n<2){
+		return 1
+	}
+	return fib(n-1)+fib(n-2)
+}
+ console.info(fib(9))
+fib(8)
+// 入参 8 
+
+```
+|序列|值|
+| ---- | ---- |
+第一步 | fib(7)+fib(6)
+第二步 | fib(6)+fib(5) + fib(5)+fib(4) 
+第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2) 
+第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
+第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
+第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
+
+![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
+=======
 
 ## nuxt
 
@@ -78,10 +189,23 @@
 ### let、const 
 - let  
 	- 不可重复声明变量
+  - 暂时临时死域
+  - 作用域块
 - const 
 	- 必须先赋值
 	- 不可重复声明变量
 	- 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
+
+ - var  
+  - var 声明，存在变量提升问题
+  - var 是全局变量声明的方式
+```js
+  for(var i =0;i<5;i++){}
+  console.info(i) // 5
+
+  for(let i=0;i<5;i++){}
+  console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
+``` 
 ### Promise 对象
 #### 状态的变更
 ### resolve()
@@ -259,7 +383,7 @@ a.apply(null,([ob],cc))
 	function extendDeep(p,c){
 		var c=c||{};
 		for(var i in p){
-			if(type p[i] ==='object'){
+			if(typeof p[i] ==='object'){
 				c[i]=(p[i].constructor===Array)?[]:{};
 				extenDeep(p[i],c[i])
 			}else{
@@ -384,7 +508,7 @@ person.onClick()
 ```js
 function Person(name){
 	this.name=name ;//this作用域，指之前对象
-	this.onDelete=fucnton()){
+	this.onDelete=function(){
 		console.info(this.name)
 	}
 }
@@ -396,7 +520,7 @@ person.onDelete()
 ```js
 	`var ob =new  Object();`
 	ob.name='中国'
-	ob.onPost=fucntion(){
+	ob.onPost=function(){
 		console.info(ob.name)
 	}
 	ob.onPost()
@@ -404,7 +528,7 @@ person.onDelete()
 
 #### 原型方式
 ```js
-	function D()){
+	function D(){
 
 	}
 	D.prototype.name='狗狗'
@@ -420,7 +544,7 @@ function A(name,p){
 	this.name=name;
 	this.p=p
 }
-A.prototype.onGet=fucntion(){
+A.prototype.onGet=function(){
 	console.info(this.name)
 }
 `var a= new A('机器人')`
@@ -528,41 +652,9 @@ a.onGet()
 - document.write
 - document.innerHTML
 - ECMAScript 与 Javascript
-```js
-	Javascript 是  ECMAScript 所实现的一个标准
-	Javascript 是  ECMAScript的一种实现
-	一般讲js ：dom+bom+ECMAScript
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	- Javascript 是  ECMAScript 所实现的一个标准
+	- Javascript 是  ECMAScript的一种实现
+	- 一般讲js ：dom+bom+ECMAScript
 
 
 ## 附 2018阿里资深web前端面试题
@@ -581,7 +673,7 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 
 
 ### 浏览器的100
-- 101 websocket  (size 0B)
+- 101 webSocket  (size 0B)
 ### 浏览器的200状态的区别
 - 灰色的 200  from disk cache（来自磁盘缓存），比如f5百度之后的，某个js，或者 (from memory cache) （使用该功能，必须在chrome里面 Network取消勾选Disable cache）
 - 正常 200
@@ -663,23 +755,23 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 - 结论4、任何数字与NaN 相加都是NaN
 
 
------toNumber 将值转为数字-------
+|toNumber|将值转为数字|
+|----|----|
+undefined   | NaN
+null        | 0
+boolean     | true/1 false/0
+number      | 无需转换
+string      | 由字符串解析为数组 '324' ->324
+[]		    | 0
 
-	undefined   | NaN
-	null        | 0
-	boolean     | true/1 false/0
-	number      | 无需转换
-	string      | 由字符串解析为数组 '324' ->324
-	[]		    | 0
-
------toString 将值转为数字-------
-
-	undefined   | 'undefined'
-	null        | 'null'
-	boolean     | 'true'/'false'
-	number      | 数字做字符串
-	string      | 无需转换
-	function(){}| 'function(){}'
+|toString|将值转为数字|
+|----|----|
+undefined   | 'undefined'
+null        | 'null'
+boolean     | 'true'/'false'
+number      | 数字做字符串
+string      | 无需转换
+function(){}| 'function(){}'
 
 ```js
 	1+1  //2 typeof number
@@ -713,9 +805,9 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 ### replace 理解
 ```js
 let string='22dda';
-$1   找到的
-$2   找到所在的索引
-$3   替换前的源码
+// $1   找到的
+// $2   找到所在的索引
+// $3   替换前的源码
 string.replace('要替换的正则、字符等',function($1,$2,$3){
 	return $2
 })
@@ -735,17 +827,24 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 
 语法
 ```js
+let array=[]
 array.sort(sortFunction) //可选，但排序顺序，必须是函数
-
+function  sortFunction() {
+  return Math.round(Math.random())?1:-1
+}
+// Math.round(0)// 0  四舍五入，向上取舍 
+// Math.round(0.49)// 0  
+// Math.round(0.2)// 0
+// Math.round(0.5)// 1 
 // 返回值
-Array 对数组的引用，数组在原数组进行排序，不生成副本
+// Array 对数组的引用，数组在原数组进行排序，不生成副本
 ```
 ### 冒泡算法
 - 有几种冒泡算法？
 - 分别实现冒泡算法?
 ### typeof 常见类型
-typeof|值
- - | - | -
+|typeof|值|
+| ----- | ---- |
 typeof null	 					|	"object"
 typeof undefined				|	"undefined"
 typeof []						|	"object"
@@ -825,9 +924,9 @@ console.info(ob)
 
 ```js
 ob={
-	user:admin
+	user:'admin',
 	id:[23,555],//合并id相同的为数组
-	city:'颜色'//中文编码
+	city:'颜色', //中文编码
 	enabled:true // 未指定的key约定值为true
 }
 ```
@@ -883,10 +982,10 @@ let data ={
  - 问题一  Object.defineProperty(obj,key,options)的使用
  - 其中 option 里面的选项以及主要的get 和set方法 
  ```js
-	get:function(){
+	get:function name (){
 		return '你要改变的值'
 	},
-	set:fucntion(value){
+	set:function name (value){
 		//set会返回一个value
 		//这个value就是变更后的值，怎么处理
 		obj.key= value
@@ -925,12 +1024,12 @@ function bindData(obj,func){
 				obj.item=value;
 				func.bind(obj)(item);
 			}
-		}
+		})
 	}
 }
 bindData(obj,func)
 obj.key_1=2;//此时自动输出 变化为2
-obj.key_2:1 //此时自动输出变化为1
+obj.key_2=1 //此时自动输出变化为1
 
 ```
  ###  数据结构处理
@@ -943,7 +1042,7 @@ obj.key_2:1 //此时自动输出变化为1
 		 {name:'jack2',child:[
 			 {name:'jack2_1',child:{name:'jack2-1-1'}},
 			 {name:'jack2_2'}
-		 ]}
+		 ]},
 		 {name:'jack3',child:{name:'jack3-1'}}
 	 ]
  }
@@ -972,49 +1071,7 @@ console.info(b.name)
 console.info(c.name)
  ```
 
- ### 斐波那契数列(递归) *　ｊｓ　递归概念和思维方式有点模糊闲杂
- 序列|值
- - | - | -
- 0 | 1
- 1 | 1
- 2 | 2
- 3 | 3
- 4 | 5
- 5 | 8
- 6 | 13
- 7 | 21
- 8 | 33
- 9 | 55 
-
- 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
-
- ```js 
- //递归实现
-var fib= function(n){
-	if(n<2){
-		return 1
-	}
-	return fib(n-1)+fib(n-2)
-}
- console.info(fib(9))
-
- // for 循环实现
- var fibFor =function(n){
-	 let n1=1,n2=1,n3=0
-	 if(n<2){
-		 return 1
-	 }
-	 for(let i =0;i<n-1;i++){
-		 n3=n1+n2;
-		 n1=n2;
-		 n2=n3
-	 }
-	 return n3
- }
- console.info(fibFor(9))
- ```
-
-
+ 
 
 ——————————————————————-
 
