@@ -101,6 +101,18 @@
 	-更广的适用性
 	- 返回值是promise
 ### Generator
+### async await
+- generator的语法糖
+- async 函数的的返回值是Promise 对象，aysnc 表示 该函数内部有异步操作
+- await 命令后可以是Promise 对象和原始类型的值（数值，字符串，布尔值，此时等同于同步操作）
+- 如果包装成为一个函数，then里面表示当遇到await是执行then然后才执行后面
+- 如何使用asyns/await
+	- 函数声明
+	- 函数表达式
+	- 对象的方法
+	- class 的方法
+	- 箭头函数方法
+
 
 ```js
 // 以下声明都成立
