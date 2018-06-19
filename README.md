@@ -164,17 +164,17 @@ fib(8)
 // 入参 8 
 
 ```
-|序列|值|
-| ---- | ---- |
-第一步 | fib(7)+fib(6)
-第二步 | fib(6)+fib(5) + fib(5)+fib(4) 
-第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2) 
-第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
-第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
-第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
+| 序列  | 值                                                                                                                                                                                                                                                                                     |
+|-----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 第一步 | fib(7)+fib(6)                                                                                                                                                                                                                                                                         |
+| 第二步 | fib(6)+fib(5) + fib(5)+fib(4)                                                                                                                                                                                                                                                         |
+| 第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2)                                                                                                                                                                                                                         |
+| 第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)                                                                                                                                                         |
+| 第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)                                                             |
+| 第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)          |
+| 第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0) |
+| 第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  |
+| 第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34                                                                                                                                                                                             |
 
 ![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 =======
@@ -237,7 +237,213 @@ fib(8)
 	- class 的方法
 	- 箭头函数方法
 
+```js
+// demo1
+async function all(){
+	return new Promise((resolve,reject)=>{
+		let time1 = Math.random();
+		let time2 =Math.random();
+		// 第一个异步
+		setTimeout(()=>{
+			console.log(1,time1*10*5000);
+			resolve(time1*10*5000)
+		},time1*10*5000)
 
+		// 第二个异步
+
+		setTimeout(()=>{
+			console.log(2,time2*10*5000);
+			resolve(time2*10*5000)
+		},time2*10*5000)
+	})
+};
+all()
+	.then(res=>{
+		console.log(3,res)
+	})
+	.catch(err=>{
+		console.log(4,err)
+	})
+
+/*************************************************/
+// 第一个异步
+async function all1 () {
+  return new Promise((resolve, reject) => {
+    let time1 = Math.random()
+    setTimeout(() => {
+      console.log(1, time1 * 10 * 1000)
+      resolve(time1)
+    }, time1 * 10 * 1000)
+  })
+}
+
+// 第二个异步
+async function all2 () {
+  return new Promise((resolve, reject) => {
+    let time2 = Math.random()
+    setTimeout(() => {
+      console.log(2, time2 * 10 * 1000)
+    }, time2 * 10 * 1000)
+  })
+}
+
+// 一个普通async 函数里面，执行两个异步函数会怎么样呢?
+async function all () {
+  console.log('a')
+  await all1()
+  console.log('b')
+  await all2()
+  console.log('c') //这个不会执行，以为还在等待promise 的回来
+}
+all()
+
+```
+而以下代码呢？
+```js
+// 第一个异步
+async function all1 () {
+  return new Promise((resolve, reject) => {
+    let time1 = Math.random()
+    setTimeout(() => {
+      console.log(1, time1 * 10 * 1000)
+      resolve(time1 * 10 * 1000)
+    }, time1 * 10 * 1000)
+  })
+}
+// 第二个异步
+async function all2 () {
+  return new Promise((resolve, reject) => {
+    let time2 = Math.random()
+    setTimeout(() => {
+      console.log(2, time2 * 10 * 1000)
+      resolve(time2 * 10 * 1000)
+    }, time2 * 10 * 1000)
+  })
+}
+
+// 一个普通async 函数里面，执行两个异步函数会怎么样呢?
+async function all () {
+  console.log('a')
+  await all1()
+    .then(res1 => {
+      console.log(res1)
+    })
+  console.log('b')
+  await all2()
+    .then(res2 => {
+      console.log(res2)
+    })
+  console.log('c')
+}
+all()
+
+
+// 结论是
+/*a
+Promise {<pending>}
+1 2824.509694408435
+27 2824.509694408435
+29 b
+16 2 6266.805712440053
+32 6266.805712440053
+34 c*/
+```
+再看一下这个
+结论：
+a
+第0s——10s计时后，打印 1 10 
+10 异步一函数的then
+打印 b
+第10s——17s计时后， 打印 2 8
+8 异步二函数的then
+c
+第18s……
+
+（如果把i 用var 声明在 all函数 外面，呵呵，就好玩了 2、3、4 特么智障，不知道怎么回事）
+```js
+// 第一个异步
+async function all1 () {
+  return new Promise((resolve, reject) => {
+    let time1 = 10
+    setTimeout(() => {
+      console.log(1, time1)
+      resolve(time1)
+    }, time1*1000)
+  })
+}
+// 第二个异步
+async function all2 () {
+  return new Promise((resolve, reject) => {
+    let time2 =8
+    setTimeout(() => {
+      console.log(2, time2)
+      resolve(time2)
+    }, time2 * 1000)
+  })
+}
+
+// 一个普通async 函数里面，执行两个异步函数会怎么样呢?
+async function all () {
+	let i=0;
+ setInterval(()=>{
+		console.log(i++)
+	},1000)
+  console.log('a')
+  await all1()
+    .then(res1 => {
+      console.log(res1)
+    })
+  console.log('b')
+  await all2()
+    .then(res2 => {
+      console.log(res2)
+    })
+  console.log('c')
+}
+all()
+```
+再看，把async/await 里面有两个普通的定时任务会怎么样?
+
+结论，此时all1 与all2 是异步任务了，
+a
+b
+c
+0s-8s计时
+2 8
+9s
+10 s
+1 10
+```js
+// 第一个异步
+async function all1 () {
+    let time1 = 10
+    setTimeout(() => {
+      console.log(1, time1)
+    }, time1*1000)
+}
+// 第二个异步
+async function all2 () {
+    let time2 =8
+    setTimeout(() => {
+      console.log(2, time2)
+    }, time2 * 1000)
+
+}
+
+// 一个普通async 函数里面，执行两个异步函数会怎么样呢?
+async function all () {
+	let i=0;
+ setInterval(()=>{
+		console.log(i++)
+	},1000)
+  console.log('a')
+  await all1()
+  console.log('b')
+  await all2()
+  console.log('c')
+}
+all()
+```
 ```js
 // 以下声明都成立
 function * a(){}
@@ -755,23 +961,23 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 - 结论4、任何数字与NaN 相加都是NaN
 
 
-|toNumber|将值转为数字|
-|----|----|
-undefined   | NaN
-null        | 0
-boolean     | true/1 false/0
-number      | 无需转换
-string      | 由字符串解析为数组 '324' ->324
-[]		    | 0
+| toNumber  | 将值转为数字                |
+|-----------|-----------------------|
+| undefined | NaN                   |
+| null      | 0                     |
+| boolean   | true/1 false/0        |
+| number    | 无需转换                  |
+| string    | 由字符串解析为数组 '324' ->324 |
+| []        | 0                     |
 
-|toString|将值转为数字|
-|----|----|
-undefined   | 'undefined'
-null        | 'null'
-boolean     | 'true'/'false'
-number      | 数字做字符串
-string      | 无需转换
-function(){}| 'function(){}'
+| toString     | 将值转为数字         |
+|--------------|----------------|
+| undefined    | 'undefined'    |
+| null         | 'null'         |
+| boolean      | 'true'/'false' |
+| number       | 数字做字符串         |
+| string       | 无需转换           |
+| function(){} | 'function(){}' |
 
 ```js
 	1+1  //2 typeof number
@@ -843,25 +1049,25 @@ function  sortFunction() {
 - 有几种冒泡算法？
 - 分别实现冒泡算法?
 ### typeof 常见类型
-|typeof|值|
-| ----- | ---- |
-typeof null	 					|	"object"
-typeof undefined				|	"undefined"
-typeof []						|	"object"
-typeof ['']						|	"object"
-typeof ['a']					|	"object"
-typeof {}						|	"object"
-typeof {a:['test']}				|	"object"	
-typeof NaN						|	"number"
-typeof true						|	"boolean"
-typeof false					|	"boolean"
-typeof new Date()				|	"object"
-typeof function(){alert('22')}	|	"function"
-typeof console.info('tt')		|	"tt" "undefined"
-typeof console					|	"object"
-typeof 1						|	"number"
-typeof '2'						|	"string"
-typeof ''						|	"string"
+| typeof                         | 值                |
+|--------------------------------|------------------|
+| typeof null                    | "object"         |
+| typeof undefined               | "undefined"      |
+| typeof []                      | "object"         |
+| typeof ['']                    | "object"         |
+| typeof ['a']                   | "object"         |
+| typeof {}                      | "object"         |
+| typeof {a:['test']}            | "object"         |
+| typeof NaN                     | "number"         |
+| typeof true                    | "boolean"        |
+| typeof false                   | "boolean"        |
+| typeof new Date()              | "object"         |
+| typeof function(){alert('22')} | "function"       |
+| typeof console.info('tt')      | "tt" "undefined" |
+| typeof console                 | "object"         |
+| typeof 1                       | "number"         |
+| typeof '2'                     | "string"         |
+| typeof ''                      | "string"         |
 
 ### 用一行代码将[1,2,3,4]随机打乱
 ```js
