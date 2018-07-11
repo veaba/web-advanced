@@ -1,92 +1,113 @@
 # web-advanced-frond-end
+
 进阶web高级前端知识体系
+
 ## vue 源码学习
 
 - [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
 - [HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
 
 ### 启动
+
 ```mpm
-	cnpm install -g karma (运行时test 是基于 Karma 的)
-	cnpm install --save mime-db
-	cnpm install (安装依赖)
-	cnpm run dev:test 
+cnpm install -g karma (运行时test 是基于 Karma 的)
+cnpm install --save mime-db
+cnpm install (安装依赖)
+cnpm run dev:test
+
 ```
 
-### 项目结构 
-[vue官方开发文档 ](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup)
+### 项目结构
+
+[vue官方开发文档](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup)
 
 - `scripts` 一般不需要关注，不过熟悉以下两个文件会更好
-	- `scripts/alias.js`  所有源码和测试中使用模块导入的别名
-	- `scripts/config.js` 包含生成`dist/`的所有文件的配置，查找入口文件，都在这个`dist`都在里面
+  - `scripts/alias.js`  所有源码和测试中使用模块导入的别名
+  - `scripts/config.js` 包含生成`dist/`的所有文件的配置，查找入口文件，都在这个`dist`都在里面
 - `dist` 包含用户发布的内置文件。此目录只会在发布的时候更新，并不能说明当前开发的最新特性变化。
-	- 关于dist的信息请查看 [更多](https://github.com/vuejs/vue/blob/dev/dist/README.md)
+  - 关于dist的信息请查看 [更多](https://github.com/vuejs/vue/blob/dev/dist/README.md)
 - `flow` 包含flow 的类型声明。全局加载的，可以在普通源码中看到他们在注释中的使用
 - `packages` 包含 vue ssr 和 vue 模板编译 包。vue的依赖包
 - `test` 包含所有测试。单元测试是Jasmine写的，运行是用Karma。e2e 是Nighwatch.js 编写和运行的。
 - `src` 包含源代码。基本代码是es2015编写的，并用flow 来做类型注释
-	- `compiler` 编译器。包含模板转函数编译器的代码。
-	
-	parse 解析器（将字符串模板转为抽象语法树AST）
-	optimizer 优化器（检测用于vdom呈现优化的静态树）
-	code generator代码生成器（将抽象语法树生成渲染函数代码）。代码生成器直接从抽象语法树生成字符串，这样做的代码规格较小，因为编译器在独立构建中，发送给浏览器的
-	- `core` 包含通用，无关平台运行时的代码
+  - `compiler` 编译器。包含模板转函数编译器的代码。
+  - `parse` 解析器（将字符串模板转为抽象语法树AST）
+  - `optimizer` 优化器（检测用于vdom呈现优化的静态树）
+  - `code generator`代码生成器（将抽象语法树生成渲染函数代码）
 
-	vue2.0开始 core 就与平台无关。这意味着，你可以运行在浏览器、nodejs、或者嵌入式js里面。
-		- `observer` 观察者。包含与响应式系统相关的代码。
-		- `vdom` 虚拟dom。 包含虚拟dom 创建元素的相关代码和补丁。
-		- `instance` 实例。包含Vue 实例构造函数和原型对象(prototype)方法。
-		- `global-api` 顾名思义，就是全局的api
-		- `components` 通过抽象组件，目前 keep-alive 是唯一的一个。
-	- `server`　包含ssr（服务端渲染 server-side rendering）相关代码
-	- `platforms` 包含特定平台的代码。	
+  代码生成器直接从抽象语法树生成字符串，这样做的代码规格较小，因为编译器在独立构建中，发送给浏览器的
+  - `core` 包含通用，无关平台运行时的代码。
+    - vue2.0开始 core 就与平台无关。这意味着，你可以运行在浏览器、nodejs、或者嵌入式js里面。
+    - `observer` 观察者。包含与响应式系统相关的代码。
+    - `vdom` 虚拟dom。 包含虚拟dom 创建元素的相关代码和补丁。
+    - `instance` 实例。包含Vue 实例构造函数和原型对象(prototype)方法。
+    - `global-api` 顾名思义，就是全局的api
+    - `components` 通过抽象组件，目前 keep-alive 是唯一的一个。
+  - `server`　包含ssr（服务端渲染 server-side rendering）相关代码
+  - `platforms` 包含特定平台的代码。
 
-	来自 `dist/build`的入口文件位于各自平台的目录中。
-	每个平台模块包含三个部分：编译器compiler、运行时runtime、服务器server。对应上面的三个目录，每个部分都包含特定的平台的 模块/实用 程序，然后导出并注入到平台特定的目录文件中的core项中。例如，实现v-bind:class 背后的逻辑的核心就是在 `platforms/web/runtime/modules/class.js` ——这个入口是在`entries/web-runtime.js` ，用于创建特定浏览器的vdom的修补功能。
-	- `sfc` 包含单文件组件(*.vue)解析逻辑。用到 package 中的 vue-template-compiler 依赖包。
-	- 包含整个代码库中共享的实用程序。
-	
+  来自 `dist/build`的入口文件位于各自平台的目录中。
+  每个平台模块包含三个部分：编译器compiler、运行时runtime、服务器server。对应上面的三个目录，每个部分都包含特定的平台的 模块/实用 程序，然后导出并注入到平台特定的目录文件中的core项中。例如，实现v-bind:class 背后的逻辑的核心就是在 `platforms/web/runtime/modules/class.js` ——这个入口是在`entries/web-runtime.js` ，用于创建特定浏览器的vdom的修补功能。
+  - `sfc` 包含单文件组件(*.vue)解析逻辑。用到 package 中的 vue-template-compiler 依赖包。
+  - 包含整个代码库中共享的实用程序。
+
 ## Vue 技术栈相关知识
+
 - vue router 懒加载
 - vue 路由的几种模式，history 和hash 的原理是什么？
 
 ### Vue 响应式原理分析
 
 ### 生命周期
+
 #### created
 
 ### 组件通信
+
 #### 父传子
-- $props 
+
+- $props
+
 #### 子传父
-- $emit 
+
+- $emit
+
 #### $refs || ref
+
 ### 路由vue-router
+
 ### vue 相关面试题
+
 - 为什么vue 的data 是一个函数?
+
 ```text
 
 ```
+
 ## 概念
+
 ###　js三大对象
 [SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
+
 - 本地对象
-	- 与宿主无关，独立于宿主环境的ECMAScript 实现提供的对象
-	- ECMA-262 定义的类（引用类型）
-	- 该类引用类型在运行过程中需要通过new 创建所需的实例对象
-	- 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
+  - 与宿主无关，独立于宿主环境的ECMAScript 实现提供的对象
+  - ECMA-262 定义的类（引用类型）
+  - 该类引用类型在运行过程中需要通过new 创建所需的实例对象
+  - 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
 - 内置对象
-	- 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
-	- EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需是实例化
-	- 内置对象是本地对象的子集
-	- 包含`Global` 和`Math`
-	- ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
+  - 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
+  - EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需是实例化
+  - 内置对象是本地对象的子集
+  - 包含`Global` 和`Math`
+  - ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
 - 宿主对象
-	- 由ECMAScript 实现的宿主环境提供的对象，包含两个大类，一个是宿主提供，一个是自定义类对象
-	- 所有非本地对象都是宿主对象
-	- 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
-	- 所有DOM 和 BOM 对象都属于宿主对象	
+  - 由ECMAScript 实现的宿主环境提供的对象，包含两个大类，一个是宿主提供，一个是自定义类对象
+  - 所有非本地对象都是宿主对象
+  - 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
+  - 所有DOM 和 BOM 对象都属于宿主对象
+
 ### 递归
+
 `函数自己调用自己,就是递归`，由于递归需要具备超前的临时计算能力，对于我来讲，是很难一个学习难点。随后在网络上找到一个方法、函数来加深理解。
 
 ```js
@@ -114,6 +135,7 @@ console.log(func(5));
 // 第二步 return 5 *(4*3*2(*1*func(1)))
 // 第二步 return 5 *(4*3*2*1) = 120
 ```
+
 再看一个斐波那契数列的递归数列，加深对递归概念的理解，小于2则return 1, 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
 
 - 基本规则
@@ -129,46 +151,47 @@ console.log(func(5));
  6 | 13
  7 | 21
  8 | 34
- 9 | 55 
- ```js 
- 
+ 9 | 55
+
+ ```js
  /**
   * @desc for 循环实现 ，借用三个变量来存放
-  * */ 
- var fibFor =function(n){
-	 let n1=1,n2=1,n3=0
-	 if(n<2){
-		 return 1
-	 }
-	 for(let i =0;i<n-1;i++){
-		 n3=n1+n2;
-		 n1=n2;
-		 n2=n3
-	 }
-	 return n3
- }
+  * */
+var fibFor =function(n){
+let n1=1,n2=1,n3=0
+  if(n<2){
+    return 1
+    }
+    for(let i =0;i<n-1;i++){
+      n3=n1+n2;
+      n1=n2;
+      n2=n3
+      }
+      return n3
+}
  console.info(fibFor(9))
 
 /**
  * @desc 斐波那契数列 学习，递归函数解析
- * 
+ *
 */
 var fib= function(n){
-	if(n<2){
-		return 1
-	}
-	return fib(n-1)+fib(n-2)
+  if(n<2){
+  return 1
+    }
+    return fib(n-1)+fib(n-2)
 }
  console.info(fib(9))
 fib(8)
-// 入参 8 
+// 入参 8
 
 ```
+
 |序列|值|
 | ---- | ---- |
 第一步 | fib(7)+fib(6)
-第二步 | fib(6)+fib(5) + fib(5)+fib(4) 
-第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2) 
+第二步 | fib(6)+fib(5) + fib(5)+fib(4)
+第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2)
 第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
 第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
 第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
@@ -177,53 +200,72 @@ fib(8)
 第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
 
 ![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
-=======
 
 ## nuxt
 
 ### asyncData()
+
 - 导致session id不一直
 - 刷新都没有了
+
 ## nuxt.conf.js
+
 ## es6
-### let、const 
+
+### let、const
+
 - let  
-	- 不可重复声明变量
+  - 不可重复声明变量
   - 暂时临时死域
   - 作用域块
-- const 
-	- 必须先赋值
-	- 不可重复声明变量
-	- 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
+- const
+  - 必须先赋值
+  - 不可重复声明变量
+  - 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
 
- - var  
+- var  
   - var 声明，存在变量提升问题
   - var 是全局变量声明的方式
+
 ```js
   for(var i =0;i<5;i++){}
   console.info(i) // 5
 
   for(let i=0;i<5;i++){}
   console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
-``` 
+```
+
 ### Promise 对象
+
 #### 状态的变更
+
 ### resolve()
+
 - 只能入参一个，但可以是`数组`、`对象`
+
 ### reject()
+
 - 只能入参一个，但可以是`数组`、`对象`
+
 ### then()
+
 ### catch()
+
 ### finally()
+
 ### all()
+
 ### racr()
+
 ### async/await
+
 - 是Generator函数的语法糖
 - Generator 的改进
-	- 内置执行器
-	- 更好的语义
-	-更广的适用性
-	- 返回值是promise
+  - 内置执行器
+  - 更好的语义
+  - 更广的适用性
+  - 返回值是promise
+
 ### Generator
 
 ```js
@@ -235,53 +277,76 @@ function*a(){}
 
 
 function * hello(){
-	yield 'hello' //yield 表达式
-	yield 'world' //yield 表达式
-	return 'hellow and world'
+  yield 'hello' //yield 表达式
+  yield 'world' //yield 表达式
+  return 'hellow and world'
 }
 ```
+
 - 分段执行。`yiled` 表示暂停执行的标志，`next` 表示恢复执行
 - es6提供的异步编程解决方案。[阮一峰 Generator 函数的语法](http://es6.ruanyifeng.com/#docs/generator)
 - 状态机，封装了多个内部状态
-- 有*星号。function * a(){}
+- 有`*`星号function * a(){}
 - 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
+
 ### 字符串 String
+
 ### 数字 Number
+
 ### 数组 Array
+
 ### 对象 Object
+
 ### 枚举[`new`] symbol
+
 ### 类 class  
 
 ## lavas (尚未开始)
+
 ## node (尚未开始)
+
 ## pwa (尚未开始)
+
 ## react (尚未开始)
+
 ## php (尚未开始)
+
 ## linux (尚未开始)
+
 ## 基础概念
+
 ### 作用域
+
 ### this
+
 - this 总是指向函数的直接调用者（非间接）
 - 有new 关键字，指new 出来的那个对象（构造函数的实例，一般）
 - 事件中，指触发这个事件的对象。
 - 特殊的。IE中的attachEvent 的this 总是指向全局的window
 
 ### 以下三个方法都是为了改变上下文存在而是用的
+
 - call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 - apply 方法。调用一个函数，具有指定this 的值，一级作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
 - bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+
 ### call  会立即执行。
-	- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
+
+- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
+
 ### apply  会立即执行。
+
 ### bind 新函数，不会立即执行。
+
 ### call 与apply区别
 
 - call  入参是列表。
 - apply  入参是数组
+
 ```js
 function a(ob){
-	console.info(ob)
+  console.info(ob)
 };
 var cc ={t:'222'}
 var ob={name1:'lala'};
@@ -289,189 +354,227 @@ a.apply(null,([ob],cc))
 
 // undefined
 ```
+
 ### window  对象
+
 - 浏览器窗口
+
 ### document 对象
+
 - document对象，文档，window的属性
 
 ## 继承
+
 ### new 关键字都做了什么？
+
 [查看更多 js中的new()到底做了些什么？？](https://www.cnblogs.com/faith3/p/6209741.html)
+
 - 创建一个对象
 - 将构造函数的作用域赋给新对象。（`this` 此时指向新对象）
 - 执行构造数中的代码（对这新对象添加属性）
 - 返回新对象
+
 ### 如何实现继承
+
 - 构造继承 constructor
 - 原型继承 prototype。原型继承，就是函数对象的原型= 构造函数
+
 ```js
-	function PP(){
-		this.pp='爷爷'
-	}
-	function AA(){
-		this.aa='爸爸'
-	}
-	AA.prototype=new PP()
-	console.info(AA.prototype.pp) //爷爷 。 
+
+function PP(){
+  this.pp='爷爷'
+}
+function AA(){
+  this.aa='爸爸'
+}
+AA.prototype=new PP()
+console.info(AA.prototype.pp) //爷爷 .
 
 ```
+
 - 实例继承 instance
 - 拷贝继承 copy
+
 ### js继承的几种方式？
+
 - *构造函数继承 [阮一峰 Javascript面向对象编程（二）：构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
 - *非构造函数继承 [阮一峰 Javascript面向对象编程（三）：非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)
 
 ### 对象之间“非构造函数方法”。 [非构造函数方法实现]
+
 啥是非构造函数继承？因为两个都是普通对象，无法使用构造函数的方式继承
+
 ```js
-	// 中国人对象
-	var Chinese={
-		nation:'中国'
-	}
-	// 一个医生对象
-	var Doctor={
-		career:'医生'
-	}
+// 中国人对象
+var Chinese={
+  nation:'中国'
+}
+// 一个医生对象
+var Doctor={
+  career:'医生'
+}
 ```
 
 #### object()方法
+
 将子对象的prototype属性，指向父对象，从而子对象和父对象一起！！
 ！！！ 这™不是用函数的方式 new 一个构造函数嘛？？？
-```js
-	function object(o){
-		function F(){}
-		F.prototype=o;
-		return new F()
-	}
 
-	var Doctor= object(Chinese);
-	Doctor.career='医生' // 加子对象本身的属性？？
-	console.info(Doctor.nation);//中国
+```js
+function object(o){
+  function F(){}
+  F.prototype=o;
+  return new F()
+}
+
+var Doctor= object(Chinese);
+Doctor.career='医生' // 加子对象本身的属性？？
+console.info(Doctor.nation);//中国
 ```
+
 #### 浅拷贝
+
 将父对象属性，全部拷贝给子对象，实现继承。有问题的是，父对象有被褚篡改。
-```js
-	function extendCopy(p){
-		var c = {};
-		for(var i in p){
-			c[i]=p[i];
-		}
-		c.uber=p;
-		return c;
-	}
 
-	//usage
-	var Doctor= extendCopy(chinese);
-	Doctor.carret='医生'
-	console.info(Doctor.nation); // 中国
+```js
+function extendCopy(p){
+  var c = {};
+  for(var i in p){
+    c[i]=p[i];
+  }
+  c.uber=p;
+  return c;
+}
+
+//usage
+var Doctor= extendCopy(chinese);
+Doctor.carret='医生'
+console.info(Doctor.nation); // 中国
 ```
-#### 深拷贝 （JQuery当前使用的继承方式）
-真正意义上的，对象和数组的拷贝。原理是递归调用“浅拷贝”
-```js
-	function extendDeep(p,c){
-		var c=c||{};
-		for(var i in p){
-			if(typeof p[i] ==='object'){
-				c[i]=(p[i].constructor===Array)?[]:{};
-				extenDeep(p[i],c[i])
-			}else{
-				c[i]=p[i]
-			}
-		}
-		return c
-	
-	} 
-	//usage
-	var Doctor= extenDeep(Chinese)
 
-	// chinese.city=['北京']
-	// Doctor.city.push('天津')
-	console.info(Doctor.city) // 北京、天津
-	console.info(Chinese.city) // 北京
+#### 深拷贝 （JQuery当前使用的继承方式）
+
+真正意义上的，对象和数组的拷贝。原理是递归调用“浅拷贝”
+
+```js
+function extendDeep(p,c){
+  var c=c||{};
+  for(var i in p){
+    if(typeof p[i] ==='object'){
+      c[i]=(p[i].constructor===Array)?[]:{};
+      extenDeep(p[i],c[i])
+    }else{
+      c[i]=p[i]
+    }
+  }
+  return c
+}
+//usage
+var Doctor= extenDeep(Chinese)
+
+// chinese.city=['北京']
+// Doctor.city.push('天津')
+console.info(Doctor.city) // 北京、天津
+console.info(Chinese.city) // 北京
 ```
 
 ### 对象之间 “继承的五种方法”。[构造函数实现]
+
 - 构造函数绑定
 - prototype模式
 - 直接继承prototype
 - 利用空对象作为中介
 - 拷贝继承
-#### 构造函数绑定
-```js
-	// 定义一个动画的函数对象
-	function Animal(){
-		this.type='动物'
-	}
-	// 定义一个Dog的函数对象
-	function Dog(name,color){
-		this.name=name	
-		this.color=color
-	}
 
-	// ？ 如何让猫继承动物？？？？
-	function Dog(name,color){
-		Animal.apply(this,arguments) //此处的用意是什么? 将父对象的构造函数绑定在子对象上。
-		this.name=name;
-		this.color=color
-	}
-	var dog1 = new Dog('二哈','白色');
-	console.info(dog1)
+#### 构造函数绑定
+
+```js
+// 定义一个动画的函数对象
+function Animal(){
+  this.type='动物'
+}
+// 定义一个Dog的函数对象
+function Dog(name,color){
+  this.name=name
+  this.color=color
+}
+
+// ？ 如何让猫继承动物？？？？
+function Dog(name,color){
+  Animal.apply(this,arguments) //此处的用意是什么? 将父对象的构造函数绑定在子对象上。
+  this.name=name;
+  this.color=color
+}
+var dog1 = new Dog('二哈','白色');
+console.info(dog1)
 ```
+
 #### prototype 模式。
+
 - 每一个prototype都有一个构造函数的属性constructor，并指向它的构造函数
 - 每一个实例也有一个constructor
 - 如果替换prototype之后，必须为prototype的构造函数constructor指向它本身，否则会导致紊乱
+
 ```js
-	function Animal(){
-		this.type='动物'
-	}
-	function Dog(name,color){
-		this.name=name;
-		this.color=color;
-	}
-	Dog.prototype=new Animal() // 将Dog 的原型对象【prototype】对象指向Animal 的实例，完全删除原先的值，并赋予新值。
-	Dog.prototype.constructor=Dog;// 使得Dog 的原型对象的构造函数指向父级的animal
-	var dog2 = new Dog('三哈','绿色')
+function Animal(){
+  this.type='动物'
+}
+function Dog(name,color){
+  this.name=name;
+  this.color=color;
+}
+Dog.prototype=new Animal() // 将Dog 的原型对象【prototype】对象指向Animal 的实例，完全删除原先的值，并赋予新值。
+Dog.prototype.constructor=Dog;// 使得Dog 的原型对象的构造函数指向父级的animal
+var dog2 = new Dog('三哈','绿色')
 
 ```
+
 #### 直接继承prototype
+
 确定，Animal.prototype.constructor等于Dog
+
 ```js
-	function Animal(){}
-	Animal.prototype.type='动物'
-	function Dog(name,color){
-		this.name=name;
-		this.color=color
-	}
-	Dog.prototype = Animal.prototype; //直接继承 Animal的原型对象
-	Dog.prototype.constructor=Dog;
-	var cat3= new Dog('四哈','黒色')
-	console.info(cat3.type) // 动物
+function Animal(){}
+Animal.prototype.type='动物'
+function Dog(name,color){
+  this.name=name;
+  this.color=color
+}
+Dog.prototype = Animal.prototype; //直接继承 Animal的原型对象
+Dog.prototype.constructor=Dog;
+var cat3= new Dog('四哈','黒色')
+console.info(cat3.type) // 动物
 
 ```
+
 #### 利用空对象作为中介[略]
-#### 拷贝继承
-```js
-	function Animal(){}
-	Animal.prototyoe.type='动物'
 
-	// 实现拷贝的函数。
-	function extend(Child,Parent){
-		var p= Parent.prototype;
-		var c = Child.prototype;
-		for(var i in p){
-			c[i]=p[i]
-		}
-		c.uber.p
-	}
-	//将函数作用，就是将父对象的prototype对象中属性，拷贝给child对象的prototype对象
-	extend(Dog,Animal);
-	var dog4 = new Dog('五哈','棕色')
-	console.info(dog4.type) ;// 动物
+#### 拷贝继承
+
+```js
+function Animal(){}
+Animal.prototyoe.type='动物'
+
+// 实现拷贝的函数。
+function extend(Child,Parent){
+  var p= Parent.prototype;
+  var c = Child.prototype;
+  for(var i in p){
+    c[i]=p[i]
+  }
+  c.uber.p
+}
+//将函数作用，就是将父对象的prototype对象中属性，拷贝给child对象的prototype对象
+extend(Dog,Animal);
+var dog4 = new Dog('五哈','棕色')
+console.info(dog4.type) ;// 动物
 
 ```
+
 ## 对象
+
 ### 创建对象的方式
+
 - 自面量
 - fucntion 模拟无参的构造函数
 - function 模拟参构造函数实现（用this 定义构造函数的上下文属性）
@@ -479,204 +582,224 @@ a.apply(null,([ob],cc))
 - 原型的方式
 - 混合方式
 
+#### 无参实现
 
-####  无参实现
 ```js
 function Person(){}
 `var person = new Person()`
 person.name ='liao'
 person.onClick=function(){
-	console.info(person.name)//console.info(this.name)
-	
+  console.info(person.name)//console.info(this.name)
 }
 person.onClick()
 ```
 
 #### 有参实现(不需要 new 来实现这个继承，原理是直接使用对象函数来赋值)
+
 ```js
 function Person(name){
-	this.name=name ;//this作用域，指之前对象
-	this.onDelete=function(){
-		console.info(this.name)
-	}
+  this.name=name ;//this作用域，指之前对象
+  this.onDelete=function(){
+    console.info(this.name)
+  }
 }
 var person = Person('卡布达')
 person.onDelete()
 ```
 
 #### 工厂方式创建（内置对象）
+
 ```js
-	`var ob =new  Object();`
-	ob.name='中国'
-	ob.onPost=function(){
-		console.info(ob.name)
-	}
-	ob.onPost()
+`var ob =new  Object();`
+ob.name='中国'
+ob.onPost=function(){
+  console.info(ob.name)
+}
+ob.onPost()
 ```
 
 #### 原型方式
-```js
-	function D(){
 
-	}
-	D.prototype.name='狗狗'
-	D.prototype.onName=function(){
-		console.info(this.name)
-	}
-	`var d= new D()`
-	d.onName()
+```js
+function D(){}
+D.prototype.name='狗狗'
+D.prototype.onName=function(){
+  console.info(this.name)
+}
+`var d= new D()`
+d.onName()
 ```
+
 #### 混合方式。函数对象在原型上，普通对象直接 赋值
+
 ```js
 function A(name,p){
-	this.name=name;
-	this.p=p
+  this.name=name;
+  this.p=p
 }
 A.prototype.onGet=function(){
-	console.info(this.name)
+  console.info(this.name)
 }
 `var a= new A('机器人')`
 a.onGet()
 
 ```
-##原型与原型链(prototype，prototype chain)
-	原型与原型链对于一个将走进高级web前端来讲，是一个门槛。
+
+## 原型与原型链(prototype，prototype chain)
+
+原型与原型链对于一个将走进高级web前端来讲，是一个门槛。
+
 ### 概念定义
+
 ### 构造函数
+
 ### JS原型继承的几种方法
 
-
 ### 闭包(closure)
+
 闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数，
+
 ```js
-	function a(){
-		function b(){
-			
-		}
-	}
-	
+function a(){
+  function b(){
+  }
+}
 ```
 
 ### 一些流行的技术题目
+
 - ["1", "2", "3"].map(parseInt) 答案是多少？
-	 详细解析：http://blog.csdn.net/justjavac/article/details/19473199
+
+[详细解析](http://blog.csdn.net/justjavac/article/details/19473199)
+
 - map 用法考察
-```js 
-	//map 一定会执行funtion，必须会执行这个currentValu,index,arr
-	// thisValue 对象作为该执行回调时使用，传给函数,用作this 值，省略。this 为 undefined 
-	array.map(function(currentValue,index,arr), thisValue)
-```	 
-- parseInt 考察
+
 ```js
-	map:
-	["1","2","3"].map(function(value,index){
-		console.info(value,index)
-	})
-	结果：
-	1 0
-	2 1
-	3 2
-	于是，对于map后面加了一个方法parseInt，就相当于
-	parseInt('1',0) // 1	此时radix 0以10位基础
-	parseInt('2',1) // NaN  redix 为1，小于2，NaN
-	parseInt('3',2) // NaN	redix 为2，小于2不成立，但2进制不满足3
+  //map 一定会执行funtion，必须会执行这个currentValu,index,arr
+  // thisValue 对象作为该执行回调时使用，传给函数,用作this 值，省略。this 为 undefined
+  array.map(function(currentValue,index,arr), thisValue)
+  ```
 
-	parseInt() 用法
-	parseInt(string,radix) 
-	parseInt('8','7') 
-	string必填
-	radix 2~36，如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
-	parseInt("1", 0); 	// 十进制 1 
-	parseInt("2", 1); 	// 第二个参数不在 2-36 直接
-	parseInt("3", 2); 	// 二进制 NaN，因为二进制中，不存在3，所以报错
-	parseInt("4", 3); 	// 三进制
-	parseInt("5", 4); 	// 四进制
-	parseInt("6", 5);	// 五进制
-	parseInt("7", 6);	// 六进制
-	parseInt("8", 7);	// 七进制
-	parseInt("9", 8);	// 八进制 （0*8+9=17）9的八进制=11 因为八进制中，不存在9，所以报错
+- parseInt 考察
 
-	parseInt("10", 9);  // 九进制 （1*9+0 = 9） 10的九进制=11
-	parseInt("11", 10); // 十进制 （1*10+1 = 11）
-	parseInt("12", 11); // 十一进制 （1*11+2 = 13）
-	parseInt("13", 12); // 十二进制 （1*12+3 = 15）
-	parseInt("14", 13); // 十三进制 （1*13+4 = 17）
-	parseInt("15", 14); // 十四进制 （1*14+5 = 19）
-	parseInt("16", 15); // 十五进制 （1*15+6 = 21）
-	
+```js
+map:
+["1","2","3"].map(function(value,index){
+  console.info(value,index)
+})
+结果：
+1 0
+2 1
+3 2
+于是，对于map后面加了一个方法parseInt，就相当于
+parseInt('1',0) // 1 此时radix 0以10位基础
+parseInt('2',1) // NaN redix 为1，小于2，NaN
+parseInt('3',2) // NaNredix 为2，小于2不成立，但2进制不满足3
+
+parseInt() 用法
+parseInt(string,radix)
+parseInt('8','7')
+string必填
+radix 2~36，如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
+parseInt("1", 0); // 十进制 1
+parseInt("2", 1); // 第二个参数不在 2-36 直接
+parseInt("3", 2); // 二进制 NaN，因为二进制中，不存在3，所以报错
+parseInt("4", 3); // 三进制
+parseInt("5", 4); // 四进制
+parseInt("6", 5); // 五进制
+parseInt("7", 6); // 六进制
+parseInt("8", 7); // 七进制
+parseInt("9", 8); // 八进制 （0*8+9=17）9的八进制=11 因为八进制中，不存在9，所以报错
+parseInt("10", 9);  // 九进制 （1*9+0 = 9） 10的九进制=11
+parseInt("11", 10); // 十进制 （1*10+1 = 11）
+parseInt("12", 11); // 十一进制 （1*11+2 = 13）
+parseInt("13", 12); // 十二进制 （1*12+3 = 15）
+parseInt("14", 13); // 十三进制 （1*13+4 = 17）
+parseInt("15", 14); // 十四进制 （1*14+5 = 19）
+parseInt("16", 15); // 十五进制 （1*15+6 = 21）
 ```
 
 - 判断对象为空？
+
 ```js
-	let b={}
-	(JSON.stringify(b)).length  // 2
+let b={}
+(JSON.stringify(b)).length  // 2
 ```
+
 - 如何阻止冒泡？ [*]
-	e.stopPropagation()
-	旧的IE e.cancelButton=true
+  e.stopPropagation()
+  旧的IE e.cancelButton=true
 - firfox 与 IE的事件机制
-	IE 事件冒泡
-	FF 同时支持捕获型事件、冒泡型事件
+  IE 事件冒泡
+  FF 同时支持捕获型事件、冒泡型事件
 
 - js延迟加载
-	defer、async，动态创建dom方式【最多】，按需异步加载
-- ajax 异步传输 （html+js）	
+  defer、async，动态创建dom方式【最多】，按需异步加载
+- ajax 异步传输 （html+js）
 - ajax 缓存问题
 - 跨域问题
-	jsonp
-	iframe
-	window.name
-	window.postMessage
-	服务商设置代码页面
+  jsonp
+  iframe
+  window.name
+  window.postMessage
+  服务商设置代码页面
 - 模块化开发
-	立即执行函数，不暴露私有成员
+  立即执行函数，不暴露私有成员
 
-- AMD（异步模块定义，一开始写好，前置） https://github.com/amdjs/amdjs-api/wiki/AMD
-- CMD （require.js就近模式）https://github.com/seajs/seajs/issues/242 。 http://annn.me/how-to-realize-cmd-loader/
+- AMD（异步模块定义，一开始写好，前置） [AMD（异步模块定义，一开始写好，前置）](https://github.com/amdjs/amdjs-api/wiki/AMD)
+- CMD （require.js就近模式）[require.js就近模式](https://github.com/seajs/seajs/issues/242) [require.js就近模式1](http://annn.me/how-to-realize-cmd-loader/)
 - 异步加载js
-	- defer {IE}
-	- async
-	- 创建script
+  - defer {IE}
+  - async
+  - 创建script
 - document.write
 - document.innerHTML
 - ECMAScript 与 Javascript
-	- Javascript 是  ECMAScript 所实现的一个标准
-	- Javascript 是  ECMAScript的一种实现
-	- 一般讲js ：dom+bom+ECMAScript
-
+  - Javascript 是  ECMAScript 所实现的一个标准
+  - Javascript 是  ECMAScript的一种实现
+  - 一般讲js ：dom+bom+ECMAScript
 
 ## 附 2018阿里资深web前端面试题
+
 ## 附 2018网易高级web前端面试题
+
 ## 附 一次中级/高web前端面试题
+
 ### js 的异步机制
+
 - js 是单线程的
+
 - 任务队列 和事件循环(queue、eventLoop)
 - 定时器t
-- 异步机制 
+- 异步机制
 - 总结
 
 JavaScript单线程和其异步机制就如上所述。所谓的单线程并不孤单，它的背后有浏览器的其他线程为其服务，其异步也得靠其他线程来监听事件的响应，并将回调函数推入到任务队列等待执行。
 单线程所做的就是执行栈中的同步任务，执行完毕后，再从任务队列中取出一个事件（没有事件的话，就等待事件），然后开始执行栈中相关的同步任务，不断的这样循环。
 
-
-
 ### 浏览器的100
+
 - 101 webSocket  (size 0B)
+
 ### 浏览器的200状态的区别
+
 - 灰色的 200  from disk cache（来自磁盘缓存），比如f5百度之后的，某个js，或者 (from memory cache) （使用该功能，必须在chrome里面 Network取消勾选Disable cache）
 - 正常 200
+
 ### 了解chrome 控制台工具
+
 - Elements 元素
 - Console  控制台
 - Sources  源
 - Network 网络
 - Performance 性能
-- Memory	内存
-- Application	应用程序
-- Security	安全
-- Audits	审计/审查
+- Memory内存
+- Application 应用程序
+- Security 安全
+- Audits 审计/审查
 
 ### 浏览器的300状态
+
 - 304 （意义：原来缓存的文档还可以使用）png document。依然会与服务器通信。如果cache-control:max-age>0 直接从浏览器提取。否则，向服务器发送http请求，确认该资源是否修改，有200，无修改304
 
 ### svg 与canvas
@@ -685,39 +808,45 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 - canvas 数量大，密集，js绘制。像素级。可塑性高，可添加各类事件。处理处理重绘。效率高，复杂度高。
 
 ### base64 图片 与 src 引用图片
+
 - base64 好处。小文件嵌入，不需要额外的请求。
 - base64 坏处。浏览器不会缓存。
 
 - 根据 base64AndSrcImage.html 测试结果来看
-	width 1200px 下
-	base 编译的代码 灰色200，从内存取缓存 from memory cache
-	src ，正常200，从网络取 /304 产生7ms
+  - width 1200px 下
+  - base 编译的代码 灰色200，从内存取缓存 from memory cache
+  - src ，正常200，从网络取 /304 产生7ms
 
-	width 750px 下
-	base 编译的代码 灰色200，从内存取缓存 from memory cache
-	src，正常200.从网络取 /304 产生7ms
+  - width 750px 下
+  - base 编译的代码 灰色200，从内存取缓存 from memory cache
+  - src，正常200.从网络取 /304 产生7ms
 
-	得出的结论是，base占用内存，速度快。
-	css 响应式，src 按需加载。base64 
+- 得出的结论是，base占用内存，速度快。
+  - css 响应式，src 按需加载。base64
 
 ### css 有间隙
+
 - 当使用inline-block  父级设置font-size:0
 - 或者letter-spacing:0
+
 ### css l v h f a 记忆方法 ，倒叙记忆
+
 ### css 纯css 无法实现父选择器
+
 - 目前的实验上去测试了，发现以往的记忆是JQuery来实现的，纯css 无法实现该效果
+
 ### 二叉树
 
 - 特殊的二叉树，满二叉树。深入k且含有2^k - 1的节点，深度3，节点为2^3-1=7。满二叉树，一定是完全二叉树。
-		          ①
-	          ②        ③
-	        ④   ⑤    ⑥   ⑦
-	       ⑧ ⑨ ⑩ ⑪  ⑫ ⑫	⑫ ⑫
+            ①
+            ②        ③
+          ④   ⑤    ⑥  ⑦
+        ⑧ ⑨ ⑩ ⑪  ⑫ ⑫ ⑫ ⑫
 - 完全二叉树。 最后一层左边是满的，右边可能满或不满，其余层是满的。
-	              ①
-	          ②       ③
-	        ④   ⑤    ⑥  ⑦
-	       ⑧ ⑨ ⑩ ⑪  ⑫	 
+                ①
+            ②       ③
+          ④   ⑤    ⑥  ⑦
+        ⑧ ⑨ ⑩ ⑪  ⑫
 - 二叉树第i层最多有2^(i-1) 个节点，i>=1
 - 二叉树 深度为k 最多有 2^k-1个节点kk>=1
 
@@ -742,7 +871,6 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 - 结论3、否则将两个值转为数字类型，并返回和
 - 结论4、任何数字与NaN 相加都是NaN
 
-
 |toNumber|将值转为数字|
 |----|----|
 undefined   | NaN
@@ -750,7 +878,7 @@ null        | 0
 boolean     | true/1 false/0
 number      | 无需转换
 string      | 由字符串解析为数组 '324' ->324
-[]		    | 0
+[]          | 0
 
 |toString|将值转为数字|
 |----|----|
@@ -762,50 +890,54 @@ string      | 无需转换
 function(){}| 'function(){}'
 
 ```js
-	1+1  //2 typeof number
-	1+'1' // 11 typeof stirng
-	'1'+1 // 11 typeof string
-	1+'' // '1'
-	''+1 // '1'
-	1+undefined //NaN
-	''+undefined //undefined
-	true+undefined // NaN  Number(true)+Number(undefined)=NaN,String(true)+String(undefined)='trueundefined'
-	false+undefined // NaN
-	''+true // 'true'
-	' ' + true // ' true'
-	''+false//'false'
-	' '+false//' false'
-	1+function (){} //'1function(){}'
-	1+Object()//'1[object Object]'
-	'' +Object() // [object object]
-	1+Array() // 1+Array().toString()=>1 +[].toString()
-	1+Array //1 +Array.toString()= >1+function Array(){[native code]}
-	1+NaN // NaN
-	''+NaN //'NaN'
-	'1'+NaN //'1+NaN'
-	true+false //1
-	true+true //2
-	true+undefined //NaN
-	true+NaN //NaN
-	true+function(){} //'truefunction(){}'
+1+1  //2 typeof number
+1+'1' // 11 typeof stirng
+'1'+1 // 11 typeof string
+1+'' // '1'
+''+1 // '1'
+1+undefined //NaN
+''+undefined //undefined
+true+undefined // NaN  Number(true)+Number(undefined)=NaN,String(true)+String(undefined)='trueundefined'
+false+undefined // NaN
+''+true // 'true'
+' ' + true // ' true'
+''+false//'false'
+' '+false//' false'
+1+function (){} //'1function(){}'
+1+Object()//'1[object Object]'
+'' +Object() // [object object]
+1+Array() // 1+Array().toString()=>1 +[].toString()
+1+Array //1 +Array.toString()= >1+function Array(){[native code]}
+1+NaN // NaN
+''+NaN //'NaN'
+'1'+NaN //'1+NaN'
+true+false //1
+true+true //2
+true+undefined //NaN
+true+NaN //NaN
+true+function(){} //'truefunction(){}'
 
 ```
+
 ### replace 理解
+
 ```js
 let string='22dda';
 // $1   找到的
 // $2   找到所在的索引
 // $3   替换前的源码
 string.replace('要替换的正则、字符等',function($1,$2,$3){
-	return $2
+  return $2
 })
 
 '我是{{name}} ,年龄{{age}},性别{{sex}}'.replace(/\{{(.+?)\}}/g,function($1,$2,$3){
-			console.info($1)
-		})
+  console.info($1)
+})
 // {{name}}{{age}}{{sex}}
 ```
+
 ### sort 理解
+
 - sort 用户数组元素排序，排序可以使字母或者数字，并按升续降序
 - 默认是字母升序
 - 【注意】：数字是按字母顺序排序时 40 在 5前面
@@ -814,81 +946,98 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 - 会改变原始数组
 
 语法
+
 ```js
 let array=[]
 array.sort(sortFunction) //可选，但排序顺序，必须是函数
 function  sortFunction() {
   return Math.round(Math.random())?1:-1
 }
-// Math.round(0)// 0  四舍五入，向上取舍 
+// Math.round(0)// 0  四舍五入，向上取舍
 // Math.round(0.49)// 0  
 // Math.round(0.2)// 0
-// Math.round(0.5)// 1 
+// Math.round(0.5)// 1
 // 返回值
 // Array 对数组的引用，数组在原数组进行排序，不生成副本
 ```
+
 ### 冒泡算法
+
 - 有几种冒泡算法？
 - 分别实现冒泡算法?
+
 ### typeof 常见类型
+
 |typeof|值|
 | ----- | ---- |
-typeof null	 					|	"object"
-typeof undefined				|	"undefined"
-typeof []						|	"object"
-typeof ['']						|	"object"
-typeof ['a']					|	"object"
-typeof {}						|	"object"
-typeof {a:['test']}				|	"object"	
-typeof NaN						|	"number"
-typeof true						|	"boolean"
-typeof false					|	"boolean"
-typeof new Date()				|	"object"
-typeof function(){alert('22')}	|	"function"
-typeof console.info('tt')		|	"tt" "undefined"
-typeof console					|	"object"
-typeof 1						|	"number"
-typeof '2'						|	"string"
-typeof ''						|	"string"
+typeof null | "object"
+typeof undefined|"undefined"
+typeof [] |"object"
+typeof [''] |"object"
+typeof ['a']|"object"
+typeof {} | "object"
+typeof {a:['test']}|"object“
+typeof NaN | "number"
+typeof true | "boolean"
+typeof false | "boolean"
+typeof new Date()|"object"
+typeof function(){alert('22')} |"function"
+typeof console.info('tt')|"tt" "undefined"
+typeof console|"object"
+typeof 1|"number"
+typeof '2'|"string"
+typeof ''|"string"
 
 ### 用一行代码将[1,2,3,4]随机打乱
+
 ```js
-	[1,2,3,4].sort(function(){return  Math.round(Math.random())?1:-1})
+[1,2,3,4].sort(function(){return  Math.round(Math.random())?1:-1})
 ```
-### typeof null 
+
+### typeof null
+
 ```js
-	"object"
+"object"
 ```
+
 ### let domList = document.querySelectorAll('div')，一句话将domlist转为数组
+
 ```js
-	Array.from(domList)
+Array.from(domList)
 ```
+
 ### 哪个http response header 不会影响浏览器缓存行为
+
 a.cache-control   b.etag   c.age     d.last-modified
 
 通用首部字段（请求头报文+响应报文）
+
 - Cache-Control  控制缓存的行为
-- Pragma		http1.0 遗留，no-cache时禁用缓存
+- Pragma http1.0 遗留，no-cache时禁用缓存
+
 请求首部字段
-- If-Match 		比较ETag是否一致
+
+- If-Match 比较ETag是否一致
 - IF-None-Match 同上
-- If-Modified-Since	比较资源最后更新的时间是否一致
+- If-Modified-Since 比较资源最后更新的时间是否一致
 - IF-Unmodified-Since 比较资源最后更新的时间是否一致
+
 响应首部字段
-- ETag	资源的匹配信息
+
+- ETag 资源的匹配信息
+
 实体首部字段
+
 - Expires http1.0的遗留物，实体主体过期的时间
-- Last-Modified	资源的最后一次修改时间
+- Last-Modified 资源的最后一次修改时间
 
 [详见 浅谈浏览器http 的缓存机制](https://www.cnblogs.com/vajoy/p/5341664.html)
-
 
 ### 合理的前端项目结构分层
 
 ### 挑选自己活着公司项目，遇到的问题和解决的思路
 
 ### 全面解析一个任意url的所有参数为object，注意边界条件
-let url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B2&status=disabled'
 
 ```js
 var url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B2&status=disabled';
@@ -896,160 +1045,168 @@ var newUrl  = url.replace(/^.+(\?)/,'');
 var url1 = newUrl.split('&');
 var ob={}
 url1.map((item,index)=>{
-		var temp=[];
-		temp = item.split('=');
-		keys.push(temp[0]);
-		values.push(temp[1])
-		if(ob[temp[0]])	{
-			ob[temp[0]]=[ob[temp[0]]].concat(temp[1]) //如果存在 则合并成为数组
-		}else{
-			ob[temp[0]]=temp[1];
-		}
+var temp=[];
+temp = item.split('=');
+keys.push(temp[0]);
+values.push(temp[1])
+if(ob[temp[0]]){
+  ob[temp[0]]=[ob[temp[0]]].concat(temp[1]) //如果存在 则合并成为数组
+}else{
+  ob[temp[0]]=temp[1];
+}
 });
 console.info(ob)
 ```
 
-
 ```js
 ob={
-	user:'admin',
-	id:[23,555],//合并id相同的为数组
-	city:'颜色', //中文编码
-	enabled:true // 未指定的key约定值为true
+  user:'admin',
+  id:[23,555],//合并id相同的为数组
+  city:'颜色', //中文编码
+  enabled:true // 未指定的key约定值为true
 }
 ```
+
 ### 实现一个最简单的模板渲染引擎(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对replace的理解和正则，)
 
 - 要点一 replace 的用法 第一个替换的，第二回调函数，回调函数有三个参数，第一个要找到的，第二个找到的索引，第三个原先的字符
 - 对象key 转数组
 - 正则 从什么到任意的什么 \{{(.+?)\}}
 - 正则 这个或者那个 \{{|\}}
+
+结果：我是姓名，年龄18，性别 undefined
+
+```js
 let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
 let data ={
-
-	name:'姓名',
-	age:18,
+  name:'姓名',
+  age:18,
 }
-结果：我是姓名，年龄18，性别 undefined
-```js
-	let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
-	let data ={
-		name:'姓名',
-		age:18,
-	}
-	function cover(template,data){
-		let arr = Object.keys(data)
-		let temp= template.replace(/\{{(.+?)\}}/g,function($1){
-			for(let i=0;i<arr.length;i++){
-				if($1.indexOf(arr[i])>-1){
-					return $1.replace(arr[i],arr[i]).replace(/\{{|\}}/g,'')
-				}
-			}
-		})
-		return temp
-	}
-	cover(template,data)
+let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
+let data ={
+  name:'姓名',
+  age:18,
+}
+function cover(template,data){
+  let arr = Object.keys(data)
+  let temp= template.replace(/\{{(.+?)\}}/g,function($1){
+    for(let i=0;i<arr.length;i++){
+      if($1.indexOf(arr[i])>-1){
+        return $1.replace(arr[i],arr[i]).replace(/\{{|\}}/g,'')
+      }
+    }
+  })
+  return temp
+}
+cover(template,data)
 ```
 
-
 ### 字符串查找
+
 使用最基本遍历实现查找字符串，并返回第一次出现的问题，找不到返回-1
  a='34'  b='1234567'  返回2
  a='35'  b='1234567'  返回-1
  a='355' b=''12354355 返回5
+
  ```js
  function compare(a,b){
-	 return b.indexof(a)
+  return b.indexof(a)
  }
  compare(a,b)
  ```
 
- ### 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
+### 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
+
  [详见 MDN的 对象Object.defineProperty()方法的使用](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
- - 问题一  Object.defineProperty(obj,key,options)的使用
- - 其中 option 里面的选项以及主要的get 和set方法 
+- 问题一  Object.defineProperty(obj,key,options)的使用
+- 其中 option 里面的选项以及主要的get 和set方法
+
  ```js
-	get:function name (){
-		return '你要改变的值'
-	},
-	set:function name (value){
-		//set会返回一个value
-		//这个value就是变更后的值，怎么处理
-		obj.key= value
-	}
+get:function name (){
+  return '你要改变的值'
+},
+set:function name (value){
+  //set会返回一个value
+  //这个value就是变更后的值，怎么处理
+  obj.key= value
+}
  ```
- - bind()。【与此同类似的需要懂 call bind apply】其次是使用函数时候，怎么给另外一个对象绑定this，因为此题目用到一个返回并返回这个this，的key值，这时候需要处理
+
+- bind()。【与此同类似的需要懂 call bind apply】其次是使用函数时候，怎么给另外一个对象绑定this，因为此题目用到一个返回并返回这个this，的key值，这时候需要处理
+
  ```js
-	func.bind(obj)('你的参数') // func 是函数，里面有this， obj 就是要操作的函数的那个，
- ```
- let obj={
-	 key_1:1,
-	 key_2:2
- }
- function func(key){
-	 console.info(key+'的值子发生变化'+this[key])
- }
+func.bind(obj)('你的参数') // func 是函数，里面有this， obj 就是要操作的函数的那个
+let obj={
+  key_1:1,
+  key_2:2
+}
+function func(key){
+  console.info(key+'的值子发生变化'+this[key])
+}
  bindData(obj,func)
  obj.key_1=2;//此时自动输出 变化为2
  obje.key_2:1 //此时自动输出变化为1
-```js
+
  let obj={
-	 key_1:1,
-	 key_2:2
+  key_1:1,
+  key_2:2
  }
  function func(key){
-	 console.info(key+'的值子发生变化'+this[key])
+  console.info(key+'的值子发生变化'+this[key])
  }
 
 function bindData(obj,func){
-	for(let item in obj){
-		Object.defineProperty(obj,item,{
-			get:function(){
-				return obj.item;
-			},
-			set:function(value){
-				obj.item=value;
-				func.bind(obj)(item);
-			}
-		})
-	}
+  for(let item in obj){
+    Object.defineProperty(obj,item,{
+      get:function(){
+        return obj.item;
+      },
+      set:function(value){
+        obj.item=value;
+        func.bind(obj)(item);
+      }
+    })
+  }
 }
 bindData(obj,func)
 obj.key_1=2;//此时自动输出 变化为2
 obj.key_2=1 //此时自动输出变化为1
 
 ```
- ###  数据结构处理
- 输出有多个儿子的人的名字
+
+### 数据结构处理
+
+输出有多个儿子的人的名字
+
  ```js
- let data={
-	 name:'jack',
-	 child:[
-		 {name:'jack1'},
-		 {name:'jack2',child:[
-			 {name:'jack2_1',child:{name:'jack2-1-1'}},
-			 {name:'jack2_2'}
-		 ]},
-		 {name:'jack3',child:{name:'jack3-1'}}
-	 ]
- }
+let data={
+  name:'jack',
+  child:[
+    {name:'jack1'},
+    {name:'jack2',child:[
+      {name:'jack2_1',child:{name:'jack2-1-1'}},
+      {name:'jack2_2'}
+    ]},
+    {name:'jack3',child:{name:'jack3-1'}}
+  ]
+}
  ```
 
- ### 程序题1
+### 程序题1
 
  ```js
- for(var i=0;i<5;i++){
-	setTimeout(function(){
-		console.info(new Date,i)
-	},1000)
+for(var i=0;i<5;i++){
+setTimeout(function(){
+  console.info(new Date,i)
+},1000)
 };
 console.info(new Date,i)
  ```
 
  ```js
 function Person(name){
-	this.name=name
+  this.name=name
 }
 var a =  Person('a');
 var b = new Person('b');
@@ -1058,8 +1215,6 @@ console.info(a.name)
 console.info(b.name)
 console.info(c.name)
  ```
-
- 
 
 ——————————————————————-
 
