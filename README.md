@@ -189,10 +189,23 @@ fib(8)
 ### let、const 
 - let  
 	- 不可重复声明变量
+	- 块级作用域 es6 新增概念
+	- 不存在变量提升问题
+	- 临时性死区
+	- 意味着typeof 不在是100% 安全的操作
 - const 
 	- 必须先赋值
 	- 不可重复声明变量
 	- 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
+- var 对比var一个极端的例子,var的声明是全局的，而且for 循环的括号内是父级作用域，{}大括号是子作用域
+```js
+	for(var i=0;i<5;i++){}
+	console.log(i) //5
+
+	for(let i=0;i<5;i++){}
+	console.log(i) //Uncaught ReferenceError: i is not defined
+```	
+
 ### Promise 对象
 #### 状态的变更
 ### resolve()
@@ -534,16 +547,62 @@ a.onGet()
 
 
 ### 闭包(closure)
-闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数，
+
+- 闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数。
+- 指函数内部保留变量，被另外一个函数访问
+- 有权访问另外一个函数作用域内变量的函数都是闭包。
+- 变量被引用着，就不会被回收
 ```js
+	//1、demo1
 	function a(){
+		var n=0;
 		function b(){
-			
+			n++;
+			console.info(n);
 		}
+		b();
+		b();
+	}
+	a(); // 1 //2
+	//2、demo2
+	function f() {
+	  var n=0;
+	  this.inc=function() {
+	    n++;
+	    console.info(n);
+	  }
 	}
 	
+	var c= new a();
+	c.inc()//1
+	c.inc()//2
+	//3、demo3
+	function f() {
+	      var n=0;
+	      function inc(){
+	        n++;
+	        console.info(n);
+	      }
+	      return inc;
+	    }
+	    
+    var c= new f();
+    c()//1
+    c()//2
 ```
+- [应用]匿名自执行函数，立即执行，外部无法访问内部的变量，因此函数执行完就会立刻释放资源，不会污染全局对象
+```js
+var data={
+	name:'leo'
+}
+(function() {
+  //todo
+})(data)
 
+```
+- [应用]实现类和继承
+
+- [注意]退出函数之前，将不使用的局部变量全部删除。不然IE下导致内存泄露
 ### 一些流行的技术题目
 - ["1", "2", "3"].map(parseInt) 答案是多少？
 	 详细解析：http://blog.csdn.net/justjavac/article/details/19473199
