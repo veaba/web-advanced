@@ -96,7 +96,7 @@ cnpm run dev:test
   - 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
 - 内置对象
   - 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
-  - EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需是实例化
+  - EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需实例化
   - 内置对象是本地对象的子集
   - 包含`Global` 和`Math`
   - ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
@@ -406,7 +406,6 @@ a
 c
 第18s……
 
-（如果把i 用var 声明在 all函数 外面，呵呵，就好玩了 2、3、4 特么智障，不知道怎么回事）
 
 ```js
 // 第一个异步
@@ -554,7 +553,7 @@ function * hello(){
 ### 以下三个方法都是为了改变上下文存在而是用的
 
 - call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
-- apply 方法。调用一个函数，具有指定this 的值，一级作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+- apply 方法。调用一个函数，具有指定this 的值，以及作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
 - bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
@@ -961,21 +960,17 @@ function a(){
 parseInt('1',0) // 1 此时radix 0以10位基础
 parseInt('2',1) // NaN redix 为1，小于2，NaN
 parseInt('3',2) // NaNredix 为2，小于2不成立，但2进制不满足3
-
-parseInt() //用法
-parseInt(string,radix)
-parseInt('8','7')
-string //必填
-radix //(2~36)如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
+/*********************************************************/
+parseInt(string,radix) ////string 必填,radix(2~36)如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
 parseInt("1", 0); // 十进制 1
 parseInt("2", 1); // 第二个参数不在 2-36 直接
 parseInt("3", 2); // 二进制 NaN，因为二进制中，不存在3，所以报错
-parseInt("4", 3); // 三进制
-parseInt("5", 4); // 四进制
-parseInt("6", 5); // 五进制
-parseInt("7", 6); // 六进制
-parseInt("8", 7); // 七进制
-parseInt("9", 8); // 八进制 （0*8+9=17）9的八进制=11 因为八进制中，不存在9，所以报错
+parseInt("4", 3); // 三进制，4的3禁止，11，不含4
+parseInt("5", 4); // 四进制，5的4禁止，11，不含5
+parseInt("6", 5); // 五进制，6的5禁止，11，不含6
+parseInt("7", 6); // 六进制，7的6禁止，11，不含7
+parseInt("8", 7); // 七进制，8的7禁止，11，不含8
+parseInt("9", 8); // 9的八进制=11 因为八进制中，不存在9，所以报错
 parseInt("10", 9);  // 九进制 （1*9+0 = 9） 10的九进制=11
 parseInt("11", 10); // 十进制 （1*10+1 = 11）
 parseInt("12", 11); // 十一进制 （1*11+2 = 13）
@@ -1151,7 +1146,7 @@ string      | 由字符串解析为数组 '324' ->324
 undefined   | 'undefined'
 null        | 'null'
 boolean     | 'true'/'false'
-number      | 数字做字符串
+number      | 数字转字符串
 string      | 无需转换
 function(){}| 'function(){}'
 
@@ -1204,7 +1199,7 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 
 ### sort 理解
 
-- sort 用户数组元素排序，排序可以使字母或者数字，并按升续降序
+- sort 数组元素排序，排序可以使字母或者数字，并按升续降序
 - 默认是字母升序
 - 【注意】：数字是按字母顺序排序时 40 在 5前面
 - 【注意】：使用数字排序，必须通过一个函数作为参数调用
@@ -1301,7 +1296,7 @@ a.cache-control   b.etag   c.age     d.last-modified
 
 ### 合理的前端项目结构分层
 
-### 挑选自己活着公司项目，遇到的问题和解决的思路
+### 挑选自己或者公司项目，遇到的问题、解决的思路简单阐述下
 
 ### 全面解析一个任意url的所有参数为object，注意边界条件
 
@@ -1343,11 +1338,6 @@ ob={
 结果：我是姓名，年龄18，性别 undefined
 
 ```js
-let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
-let data ={
-  name:'姓名',
-  age:18,
-}
 let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
 let data ={
   name:'姓名',
