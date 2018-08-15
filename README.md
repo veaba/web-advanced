@@ -2,6 +2,20 @@
 
 进阶web高级前端知识体系
 
+##　比较难的部分（尚未完全掌握的部分）
+
+- this
+- 冒泡算法
+- 继承
+- react
+- 小程序
+- 闭包
+- 深拷贝
+- 浅拷贝
+- Generator
+- webgl
+- canvas
+
 ## vue 源码学习
 
 - [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
@@ -80,11 +94,34 @@ cnpm run dev:test
 
 - 为什么vue 的data 是一个函数?
 
-```text
+  - 由于js语法特性决定来使用一个函数赋值。
 
-```
 
 ## 概念
+
+###  XMLHttpRequest
+
+属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
+
+```js
+//一段通过纯文本发送请求个服务器
+function send(){
+  var request = new XMLHttpRequst 
+  request.open("POST","/login.php");//post 数据
+  request.setRequestHeader('Content-Type','text/plain;charset=UTF-8')
+  request.send('say hello world')
+
+}
+
+// 一段超时的代码
+//js权威指南p503
+```
+
+
+- 可以实现上传文件进度的监控，在js权威指南/p501有写道，可以监控HTTP上传的进度
+- 设置超时
+- 同源策略不允许XMLHttpRequest 进行跨域请求
+- withCredentitails boolean值，该值的存在是为了测试是否支持CORS@2特性一种方法
 
 ###　js三大对象
 [SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
@@ -208,7 +245,7 @@ fib(8)
 - 导致session id不一直
 - 刷新都没有了
 
-## nuxt.conf.js
+### nuxt.conf.js
 
 ## es6
 
@@ -531,6 +568,19 @@ function * hello(){
 
 ## node (尚未开始)
 
+### Comet 技术/SSE,基于服务器推送事件的Comet技术/SSE
+EventSource对象
+```js
+  var ticket =  new EventSource('source.php')
+  ticker.onmessage=function(e){
+    var type = e.type;
+    var data = e.data;
+    // todo
+
+  }
+
+```
+
 ## pwa (尚未开始)
 
 ## react (尚未开始)
@@ -660,7 +710,7 @@ console.info(Doctor.nation);//中国
 
 #### 浅拷贝
 
-将父对象属性，全部拷贝给子对象，实现继承。有问题的是，父对象有被褚篡改。
+将父对象属性，全部拷贝给子对象，实现继承。有问题的是，父对象有被篡改。
 
 ```js
 function extendCopy(p){
@@ -876,6 +926,21 @@ a.onGet()
 原型与原型链对于一个将走进高级web前端来讲，是一个门槛。
 
 ### 概念定义
+```js
+
+//定义一个函数test
+
+function test(){
+  console.log('I am test')
+}
+test.children='Leo';
+
+// 这时候如何取出Leo 的值？
+test.children 即可取到。
+
+// 假如很多呢？
+test.prototype.constructor.children // Leo
+```
 
 ### 构造函数
 
@@ -999,7 +1064,13 @@ let b={}
 - ajax 异步传输 （html+js）
 - ajax 缓存问题
 - 跨域问题
-  jsonp
+  jsonp 利用script标签不跨域的方式，让js文件发挥json格式的文件。
+  ```js
+  //jsonp 意味着需要信任远程服务器的脚本，否则会炸鸡。
+  // 请求jsonp
+    getSome({say:'hello'})
+  
+  ```
   iframe
   window.name
   window.postMessage
@@ -1026,6 +1097,70 @@ let b={}
 
 ## 附 一次中级/高web前端面试题
 
+## 附 一次2018年8月15日的电话面试基础题
+
+### css 部分
+
+- 什么是标准盒子模型？
+  - 即对doctype 定义时，默认是标准盒子模型，块的总宽度=width+margin(左右)+padding(左右)+border(左右)怪异模式下的，IE模型：总宽度=width+margin(左右)  =》(左右width包含padding+border)
+- 什么是IE盒子模型？
+  - 即不对doctype定义时，是
+- 如何将标准模型改为IE盒子模型？
+  - box-sizing:content-box 采。用标准模型解析计算，默认的
+  - box-sizing:border-box，采用怪异模型
+- 如何实现垂直居中?
+  - https://www.cnblogs.com/hutuzhu/p/4450850.html  稍后验证下这部分
+- 如果加一个背景，会影响盒子模型的哪部分?
+
+- absolute 和relative（仔细一看，突然了解了relative 的用法！！）
+  - absolute 绝对定位，相对于static定位以外的第一个父元素定定位，如果没有，那会是html？有left top right bottom 值。会超越overflow
+  - fixed 相对于窗口定位 类似absolute
+  - relative 相对定位，相对于自身的基础位置进行定位，left、top、right、bottom相对于其正常位置定位，lefy 20  则向元素left 位置添加20。【尽量避免用relative】
+  - static，默认值，没有定位 忽略top left right bottom z-index
+  - inherit 继承 
+
+### js 部分
+
+- js 基础类型？
+  - 基本类型
+    - 有undefined、boolean、number、string、null。按值访问的意思。
+    - 任何方法都无法给边基本类型的值，比如一个字符串
+
+    ```js
+    var name ='Veaba'
+    name.toUpperCase();//VEABA
+    console.log(name)// Veaba ，说明无法给边原始变量里面的值 
+    ```
+
+    - 不能给基本类型添加属性和方法
+    - 基本类型的比较是值的比较，只有他们的值相同的比较，最好使用三等号符
+    - 基本类型的变量是存放在栈区，内存里面的栈内存（那堆呢？）
+    - 赋值不影响
+
+  - 引用类型
+
+    - 对象。属性和方法的集合
+    - 引用类型可以拥有属性和方法，属性又可以包含基本类型和引用类型
+    - 引用类型的值是可以变的。
+    - 引用类型的值是同时保存在栈内存和堆内存的对象
+      - 操作对象的引用
+      - 栈区内存保存变量和标识符 和 指向堆内存中该对象的指针(该对象在对内存的地址)
+    - 引用类型的比较是引用的比较。
+    - 赋值会影响指向同一个对象
+- typeof null ？object
+- typeof array？ object
+- 如何判断array 的方法？
+  - Array.prototype.isPrototypeOf(obj) 原型
+    - Array.prototype.isPrototypeOf([])
+    - Array.prototype.isPrototypeOf({})
+  - obj instanceof Array 构造函数
+    - 'ff' instanceof Array
+    - [] instanceof Arrya 
+  - class 属性，跨原型链调用toString()
+    - Object.prototype.toString.call([]) '[object Array]'
+    - Object.prototype.toString.call({}) '[object Object]'
+    - Object.prototype.toString.call(null) '{object Null}'
+  - Array.isArray()//es6提供的
 ### js 的异步机制
 
 - js 是单线程的
@@ -1478,3 +1613,4 @@ console.info(c.name)
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
+`@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
