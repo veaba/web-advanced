@@ -2,7 +2,7 @@
 
 进阶web高级前端知识体系
 
-##　比较难的部分（尚未完全掌握的部分）
+## 比较难的部分（尚未完全掌握的部分）
 
 - this
 - 冒泡算法
@@ -143,10 +143,10 @@ document.body(document.createTextNode('abcdev!'));
 1. 写style 更改class
 
 ```js
-var dom = document.body.className="dom"
+document.body.className="dom"
 ```
 ```css
-.dom{
+.dom {
   padding:2px;
   border:1px solid;
   background-color:#ccc;
@@ -192,7 +192,8 @@ function send(){
 - 同源策略不允许XMLHttpRequest 进行跨域请求
 - withCredentitails boolean值，该值的存在是为了测试是否支持CORS@2特性一种方法
 
-###　js三大对象
+### js三大对象
+
 [SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
 
 - 本地对象
