@@ -1,9 +1,11 @@
 # web-advanced-frond-end
 
-进阶web高级前端知识体系
+进阶web高级前端知识体系，来自个人的面试经历、学习笔记、常见面试题！
+by@veaba
 
 ## 比较难的部分（尚未完全掌握的部分）
 
+###　一个不错的web前端知识体系梳理  https://www.jikexueyuan.com/zhiye/web
 - this
 - 冒泡算法
 - 继承
@@ -65,39 +67,52 @@ cnpm run dev:test
   - `sfc` 包含单文件组件(*.vue)解析逻辑。用到 package 中的 vue-template-compiler 依赖包。
   - 包含整个代码库中共享的实用程序。
 
-## Vue 技术栈相关知识
+## Vue 技术栈
 
+### vue 基础知识
+
+- Vue 响应式原理分析
+
+- 生命周期
+  - created
+
+- 组件通信
+
+  - 父传子
+    - $props
+
+  - 子传父
+    - $emit
+- api
+
+### vue-cli 3.0
+### vue-router  路由
 - vue router 懒加载
 - vue 路由的几种模式，history 和hash 的原理是什么？
-
-### Vue 响应式原理分析
-
-### 生命周期
-
-#### created
-
-### 组件通信
-
-#### 父传子
-
-- $props
-
-#### 子传父
-
-- $emit
-
-#### $refs || ref
-
-### 路由vue-router
-
 ### vue 相关面试题
 
 - 为什么vue 的data 是一个函数?
 
   - 由于js语法特性决定来使用一个函数赋值。
+### 基于vue-cli 3.0 demo项目框架 
+
+## http协议
+
+### http
+
+### https 
+
+### http和https 的比较
+
+## 业务技巧相关[尚未]
+
+### 跨域问题
+### 微信支付开发
+### 支付宝支付开发
+### github 授权登录
 
 ## 性能提升
-
+网页性能管理详解 ——阮一峰 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html 
 ### html/css 重绘回流(Repaint、Reflow)
 
 - display:none 不会发生回流和重绘
@@ -165,17 +180,20 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
   - color
 
 
-## 概念
+### 常见的内存泄露问题的
 
-### html/css re
-###  XMLHttpRequest
+## 概念
+### window 对象
+### document 对象
+
+### XMLHttpRequest
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
 
 ```js
 //一段通过纯文本发送请求个服务器
 function send(){
-  var request = new XMLHttpRequst 
+  var request = new XMLHttpRequst ;
   request.open("POST","/login.php");//post 数据
   request.setRequestHeader('Content-Type','text/plain;charset=UTF-8')
   request.send('say hello world')
@@ -308,6 +326,13 @@ fib(8)
 
 ![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 
+## nginx
+
+### nginx 的正向代理？
+### nginx 的反向代理？
+### 一段基于vue项目nginx 配置文件
+### 一段基于nuxt项目的nginx 配置文件
+
 ## nuxt
 
 ### asyncData()
@@ -336,6 +361,7 @@ fib(8)
   - 必须先赋值
   - 不可重复声明变量
   - 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的key
+  - 只能去改变引用类型(object array)，无法取改变基本类型(boolean number string null undefined)
 
 - var  
   - var 声明，存在变量提升问题
@@ -1060,6 +1086,8 @@ function a(){
     c()//2
 ```
 
+1.如何避免闭包?
+2.闭包的应用场景?
 ### 一些流行的技术题目
 
 - ["1", "2", "3"].map(parseInt) 答案是多少？
@@ -1114,7 +1142,11 @@ parseInt("16", 15); // 十五进制 （1*15+6 = 21）
 
 ```js
 let b={}
+// 判断是否是空对象
+JSON.stringify(b)==="{}"
+
 (JSON.stringify(b)).length  // 2
+
 ```
 
 - 如何阻止冒泡？ [*]
@@ -1163,6 +1195,58 @@ let b={}
 ## 附 一次中级/高web前端面试题
 
 ## 附 一次2018年8月15日的电话面试基础题
+
+## 附 一次2018年8月17日的面试题
+
+`地址是在滨江，两个妹纸面试，问的问题都是些基础题，我比较差。
+她们说这次的要求是，招一尊大神，当顾问，解决疑难杂症，会android+ios开发。
+我尴尬的笑了笑，这个就算了吧。
+以下是面试问到的问题，有些还没来得及写答案，有些不知道，有些重新梳理了知识：`
+1. 你了解http吗？讲一些http吧
+2. http 和 https 的区别
+3. http 有哪些方法？
+  - get
+  - post 
+  - put
+  - path
+  - delete
+4. get和post的区别
+5. put 和post 的区别 
+6. 讲一下IE下碰到的那些内存泄露问题
+7. 讲一下 碰到的兼容性问题
+8. 讲下闭包
+  - 原理
+  - 应用场景
+  - 如何解决闭包
+9. 跨域问题
+10. 布局问题，css 选择器有哪些?
+11. 布局问题，css左右布局，如何让右边自适应，左边固定？
+  - 垂直居中有哪几种方式？分别怎么实现
+12. vue 响应式原理
+  - defineprotoperty 的get 和set 分别做了什么？
+  - 观察者
+13. 如何用原生js+css 选择
+```html
+<div>
+  <div></div>
+  <p></p><!-- css 选择这个，用js 选择这个-->
+  <p></p> 
+</div>
+
+```     
+14. 原型链
+15. 前端缓存问题(这是那个脸红的妹纸问题的，其实她想问的是localstorage、和sessionstorage 和cookie的知识，但其实有多种)
+比较，彼此之间的异同。
+- Storage 存储
+  - cookie
+  - sessionStorage
+  - localstorage
+ - indexedDB还有这个
+
+- cache 缓存
+  - application Cache 我也说道这个
+  - cache storage
+16. setTimeout 设置执行时间，一定会执行吗？
 
 ### css 部分
 
@@ -1224,7 +1308,7 @@ let b={}
   - class 属性，跨原型链调用toString()
     - Object.prototype.toString.call([]) '[object Array]'
     - Object.prototype.toString.call({}) '[object Object]'
-    - Object.prototype.toString.call(null) '{object Null}'
+    - Object.prototype.toString.call(null) '[object Null]'
   - Array.isArray()//es6提供的
 ### js 的异步机制
 
