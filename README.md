@@ -182,9 +182,91 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 常见的内存泄露问题的
 
-## 概念
-### window 对象
+## js概念&基础知识
+
+
+### 字符串 String
+
+### 数字 Number
+
+### 数组 Array
+
+1. forEach 和map
+`https://www.jb51.net/article/134411.htm`
+- Arrary.prototype.forEach
+`array.forEach(function(currentValue,index,arr){},thisValue)`
+  1. `forEach()方法对数组每个元素执行一次提供的函数`
+  2. `对空数组不会执行回调函数`
+  3. `es3开始`
+  4. `返回值undefined`
+
+```js
+var arr=[561531,1231,112,12,2];
+arr.forEach(function(currentValue,index,arr){
+console.log(this)//String {"ttt"}
+},'ttt')
+```
+- Array.prototype.map
+`array.map(function(currentValue,index,arr){},thisValue)`
+  1. 返回新数组,数组元素为原始数组元素调用函数处理后的值
+  2. 原始数组次序依次处理元素
+  3. 不对空数组进行检测
+  4. 不改变原数组
+
+### 对象 Object
+
+### 枚举[`new`] symbol
+
+### 类 class  
+
+
+### 作用域
+
+### this
+
+- this 总是指向函数的直接调用者（非间接）
+- 有new 关键字，指new 出来的那个对象（构造函数的实例，一般）
+- 事件中，指触发这个事件的对象。
+- 特殊的。IE中的attachEvent 的this 总是指向全局的window
+
+### 以下三个方法都是为了改变上下文存在而是用的
+
+- call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+- apply 方法。调用一个函数，具有指定this 的值，以及作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+
+- bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+
+### call  会立即执行。
+
+- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
+
+### apply  会立即执行。
+
+### bind 新函数，不会立即执行。
+
+### call 与apply区别
+
+- call  入参是列表。
+- apply  入参是数组
+
+```js
+function a(ob){
+  console.info(ob)
+};
+var cc ={t:'222'}
+var ob={name1:'lala'};
+a.apply(null,([ob],cc))
+
+// undefined
+```
+
+### window  对象
+
+- 浏览器窗口
+
 ### document 对象
+
+- document对象，文档，window的属性
 
 ### XMLHttpRequest
 
@@ -655,18 +737,6 @@ function * hello(){
 - 有`*`星号function * a(){}
 - 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
 
-### 字符串 String
-
-### 数字 Number
-
-### 数组 Array
-
-### 对象 Object
-
-### 枚举[`new`] symbol
-
-### 类 class  
-
 ## node
 
 ### Comet 技术/SSE,基于服务器推送事件的Comet技术/SSE
@@ -681,57 +751,6 @@ EventSource对象
   }
 
 ```
-
-## 基础概念
-
-### 作用域
-
-### this
-
-- this 总是指向函数的直接调用者（非间接）
-- 有new 关键字，指new 出来的那个对象（构造函数的实例，一般）
-- 事件中，指触发这个事件的对象。
-- 特殊的。IE中的attachEvent 的this 总是指向全局的window
-
-### 以下三个方法都是为了改变上下文存在而是用的
-
-- call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
-- apply 方法。调用一个函数，具有指定this 的值，以及作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
-
-- bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
-
-### call  会立即执行。
-
-- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
-
-### apply  会立即执行。
-
-### bind 新函数，不会立即执行。
-
-### call 与apply区别
-
-- call  入参是列表。
-- apply  入参是数组
-
-```js
-function a(ob){
-  console.info(ob)
-};
-var cc ={t:'222'}
-var ob={name1:'lala'};
-a.apply(null,([ob],cc))
-
-// undefined
-```
-
-### window  对象
-
-- 浏览器窗口
-
-### document 对象
-
-- document对象，文档，window的属性
-
 ## 继承
 
 ### new 关键字都做了什么？
@@ -1247,6 +1266,7 @@ JSON.stringify(b)==="{}"
   - application Cache 我也说道这个
   - cache storage
 16. setTimeout 设置执行时间，一定会执行吗？
+17. setTimeout 会引起内存泄露吗？
 
 ### css 部分
 
@@ -1764,6 +1784,5 @@ console.info(c.name)
 `@1` AST ：抽象语法树。(abstract syntax tree)
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
-———————————————————————
 关于本作知识引用来源
-1.搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint） http://www.sohu.com/a/111695367_466959
+1. 搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint） http://www.sohu.com/a/111695367_466959
