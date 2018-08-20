@@ -22,6 +22,8 @@ by@veaba
 
 - [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
 - [HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
+- [Vue技术内幕-HcySunYang](http://hcysun.me/vue-design/)
+- [Vue.js 技术揭秘-ustbhuangyi](https://ustbhuangyi.github.io/vue-analysis/ )
 
 ### 启动
 
@@ -191,27 +193,110 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 数组 Array
 
-1. forEach 和map
-`https://www.jb51.net/article/134411.htm`
-- Arrary.prototype.forEach
-`array.forEach(function(currentValue,index,arr){},thisValue)`
-  1. `forEach()方法对数组每个元素执行一次提供的函数`
-  2. `对空数组不会执行回调函数`
-  3. `es3开始`
-  4. `返回值undefined`
+- 能用forEach()做到的，map()同样可以。反过来也是如此。
+- map()会分配内存空间存储新数组并返回，forEach()不会返回数据。
+- forEach()允许callback更改原始数组的元素。map()返回新的数组。
+#### 实例方法-不改变原始数组的方法
 
-```js
-var arr=[561531,1231,112,12,2];
-arr.forEach(function(currentValue,index,arr){
-console.log(this)//String {"ttt"}
-},'ttt')
-```
-- Array.prototype.map
-`array.map(function(currentValue,index,arr){},thisValue)`
-  1. 返回新数组,数组元素为原始数组元素调用函数处理后的值
-  2. 原始数组次序依次处理元素
-  3. 不对空数组进行检测
-  4. 不改变原数组
+  - `Array.prototype.concat(arr1, arr2,...,arrn)`
+    - 入参必填，可以是数组对象
+    - 返回新数组
+    - 链接数组
+  -  <sup>es6</sup>`Array.prototype.entries()`
+    ```js
+    var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    var temp=fruits.entries();
+    for(let item of temp) {
+      console.log(item); /*[key,value]*/
+    }
+    console.log(temp);/*/Array Iterator {}*/
+    console.log(fruits);/*不改變*/
+    ```  
+  -  <sup>es6</sup>`Array.prototype.every(function(crrrueValue,index,arr){},thisArr)` 
+    - 检测数组所有元素都符合指定条件，通过函数条件
+    - 如果有一个不满足条件，则会返回false，且剩余不再检测
+    - 如果全部都满足条件则返回true
+
+    ```js
+      var ages = [32, 33, 16, 40];
+      function checkAdult(age) {
+        console.log(age)/*如果没有return 则返回第一个，然后打断*/
+      /*     return age >= 18;*/
+      }
+      ages.every(checkAdult)
+    ```
+  - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`、
+    - 过滤数组
+    - 检查指定数组中符合条件的所有元素
+    - 不检测空数组
+    - 不改变原数组
+
+  - <sup>es6</sup>`Array.prototype.find(function(){currenValue,index,arr},thisValue)`
+    - 查找的意思
+    - 判断数组第一个元素的值
+    - 每个元素都调用一次函数
+    - 如果条件满足true，则返回符合条件的元素，之后的不再执行
+    - 如果都没有符合条件则返回undefined
+  - `Array.prototype.map(function(currentValue,index,arr){},thisValue)`
+    - 返回西安数组，比如对每个数组都*2
+    - 返回新数组,数组元素为原始数组元素调用函数处理后的值
+    - 原始数组次序依次处理元素
+    - 不对空数组进行检测
+    - 不改变原数组，返回新数组
+
+    ```js
+    /*demo1*/
+    var arr=[543153,1231,3215,12,12,42,45,4555,5];
+    var arrT = arr.map(function(value,index,arr){
+      console.log(value)
+      /*/ retrun value *2*/
+    });
+    console.log(arrT)/*/[undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]*/
+
+    /*demo2*/
+    var ages = [32, 33, 16, 40];
+
+    function checkAdult(age) {
+        return age >= 18;
+    };
+    var mapTemp = ages.map(checkAdult);
+    console.log(mapTemp)/*[true,true,false,true]*/
+    var filterTemp = ages.filter(checkAdult);
+    console.log(filterTemp)/*[32,33,40] 返回如何条件原数组的元素*/
+    
+    ```
+  - `Arrary.prototype.forEach(function(currentValue,index,arr){},thisValue)`
+    - 常用语，逐个做事情，打印，写入数据库
+    - forEach()方法对数组每个元素执行一次提供的函数
+    - 对空数组不会执行回调函数
+    - es3开始
+    - 返回值undefined
+    - 不能使用return,只针对每个元素调用函数
+
+    ```js
+    var arr=[561531,1231,112,12,2];
+    arr.forEach(function(currentValue,index,arr){
+    console.log(this)//String {"ttt"}
+    },'ttt')
+    ```
+#### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
+  - `Array.prototype.copyWithin()`
+    - 从数组指定元素拷贝元素到数组的另外一个指定位置
+
+    ```js
+    var arr=['西瓜','赵铁柱','王尼玛'];
+    var temp = arr.copyWithin(2,1)
+    console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", "赵铁柱", "赵铁柱"]
+    ```
+  - <sup>es6</sup>`Array.prototype.fill('帅哥',start,end)`
+    - 填充数组
+  ```js
+  var arr=['西瓜','赵铁柱','王尼玛'];
+  var temp = arr.fill('帅哥');//不入参的话其他不变
+  console.log(arr,temp)
+
+  ```
+#### 静态方法
 
 ### 对象 Object
 
@@ -260,11 +345,13 @@ a.apply(null,([ob],cc))
 // undefined
 ```
 
+## BOM 对象
+
 ### window  对象
 
 - 浏览器窗口
 
-### document 对象
+## DOM 对象
 
 - document对象，文档，window的属性
 
@@ -1058,10 +1145,61 @@ test.prototype.constructor.children // Leo
 
 ### 闭包(closure)
 
+
+```js
+//闭包
+	function test(){
+		var arr = [];
+		for(var i = 0; i < 10; i++){
+			arr[i] = function(){
+			console.log(i);
+			}
+		}
+		return arr;
+	}
+	var myArr = test();
+	for(var j = 0;j<10;j++){
+		myArr[j]();
+
+```
+```js
+// 立即执行函数解决闭包
+	function test(){
+		var arr = [];
+		for(var i = 0; i < 10; i++){
+			(function(j){
+				arr[j] = function(){
+					console.log(j);
+				}
+			}(i));
+		}
+		return arr;
+	}
+	var myArr = test();
+	for(var j = 0;j<10;j++){
+		myArr[j]();
+	}
+
+```
+闭包的特点
 - 闭包，是指有权访问另外一个函数作用域中变量的函数。a函数内，创建一个b函数。
 - 指函数内部保留变量，被另外一个函数访问
 - 有权访问另外一个函数作用域内变量的函数都是闭包。
 - 变量被引用着，就不会被回收
+- 技术上，所有js函数都是闭包，都是对象，关联到作用域链
+- 造成原始作用域链不释放，造成内存泄露
+
+闭包的场景
+- 闭包替代全局变量
+- 函数外或其他函数中访问某一个函数内部参数
+- 函数执行之前，为要执行后一个函数提供具体的参数
+- 为函数执行之前提供质优在函数执行或引用时才能知道的具体参数
+- 为节点循环绑定click 事件，在事件函数中使用档次循环的值或节点，而不是最后一次循环的值或节点
+```js
+
+```
+- 暂停执行（怎么理解）
+- 包装相关功能
 ```js
 function a(){
   function b(){
@@ -1785,4 +1923,5 @@ console.info(c.name)
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
 关于本作知识引用来源
-1. 搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint） http://www.sohu.com/a/111695367_466959
+1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)
+2. [闭包的应用场景一林枫山博客](https://www.cnblogs.com/star-studio/archive/2011/06/22/2086493.html)
