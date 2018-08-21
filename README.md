@@ -93,9 +93,13 @@ var app = new Vue({
 
 ### vue 基础知识
 
+| 英文 | 建议翻译 |
+| --- | --- |
+| observe/observer | 侦听/侦听器 |
+| watch/watcher | 侦听/侦听器 |
+| subs |订阅|
+| deps |依赖关系|
 - Vue 响应式原理分析
-  getter: 依赖收集
-  setter: 派发更新
 
   - 核心 Object.defineProperty 在一个对象上定义一个新属性，修改一个对象的现有属性，并返回这个对象。[mdn了解defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
     - 语法
@@ -155,7 +159,45 @@ var app = new Vue({
   - observe 
     - 监测数据的变化，定义在src/core/observer/index.js
     - 给非vnode对象类型数据添加一个Observer，添加或已有返回，否则满足一定情况下，实例化一个？Observer对象实例
-  - Observer 类
+  - getter: 依赖收集
+    - const dep = new Dep() 实例化一个Deo的的实例
+    - 通过dep.depend 收集依赖
+    - Dep 整个getter依赖收集的核心
+    - 依赖收集的目的是当这些响应式数据发送变化时，触发他们的setter的时候，能够知道通知哪些订阅者去做响应的逻辑处理，这过程叫派发更新。
+
+  - setter: 派发更新。收集的目的是为了修改数据时候，对相关的依赖派发更新
+    - 如果shallow 为false 对新设置的值变化成一个响应式对象
+    - dep.notity()通知所有订阅者。
+      - 遍历所有订阅者subs，也就是watcher的实例数组，然后调用watcher的update方法
+      - queueWatcher  放在nextTick队列，等待flushSchedulerQueue
+        - flushSchedulerQueue 队列排序。
+          - 先父到子
+          - 用户watcher 优先render watcher
+          - 执行期间被销毁则跳过
+        - flushSchedulerQueue 队列遍历
+          - watcher.run()每次都是queue.length求值。
+            - this.getAndInvoke方法，并传入watcher的回调函数。
+        - 状态恢复。
+          - resetSchedulerState  函数。
+            - 变量恢复到初始值，清空watcher队列
+
+  - Dep
+    - 一个依赖就是一个watcher
+    - 是一个class，有一个target静态属性，全局唯一Watcher,被认为是一个巧妙的设计，保证同一时间只有一个全局的watcher被计算。另外自身属性subs 也是watcher的数组。
+        - Dep 是watcher的一种管理，脱离watcher单独存在没有意义
+        - 触发getter时候，会调用dep.depend()方法，也会执行Dep.target.addDep(this)
+        - Dep.target已经被赋值为渲染watcher，会执行addDep方法，保证同一数据不会被添加多次。执行dep.addSub(this)，执行this.subs.push(sub)。把watcher订阅到这个数据持有的dep的subs中，为后续数据变化时候能通知到哪些subs做准备
+        - 完成依赖收集之后，再递归访问value，触发所有子项的getter—— popTarget()
+        - Dep.target=targetStack.pop() 返回成上一个状态，因为当前vm的数据依赖收集已完成。对应的Dep.target也需要改变，最后执行this.cleanUpDeps()
+        - this.cleanUpDeps()
+          - 变量deps，移除对dep的订阅。交换newDepIds 和depIds，newDeps和deps，并把newDepIds和newDeps清空
+  - defineReactive 方法 
+    - 定义一个响应式对象，给对象添加getter/setter，src/core/observer/index中
+    - 初始化Dep对象实例
+    - 对子对象递归调用observe方法，保证无论访问多少层的属性都能触发getter/setter
+    - 最后利用Object.defineProperty方法对obj属性的key 添加getter/setter
+
+  - Observer 通过Object.defineproperty实现对属性变化的监听。
     - 是一个类
     - 作用是，给对象的属性添加一个getter、setter，用于依赖收集和派发更新
     - 构造函数逻辑：实例化Dep对象
@@ -164,11 +206,20 @@ var app = new Vue({
       - 是数。调用observeArray 方法——先遍历数组再调用observe方法
       - 是纯对象。调用walk方法——先
       遍历对象，再调用defineReactive方法
-  - defineReactive 方法 
-    - 定义一个响应式对象，给对象添加getter/setter，src/core/observer/index中
-    - 初始化Dep对象实例
-    - 对子对象递归调用observe方法，保证无论访问多少层的属性都能触发getter/setter
-    - 最后利用Object.defineProperty方法对obj属性的key 添加getter/setter
+
+  - Watcher 订阅者。observe和compile之间，负责将变化的数据更新到视图
+    - 是一个class 。  
+    - this.deps Watcher实例持有Dep实例的数组
+    - this.newDeps Watcher实例持有Dep实例的数组
+    - this.desIds —— this.deps id Set结构
+    - this.newDepIds —— this.newDeps id Set结构
+    - 至于为什么又两个实例数组？
+    ```js
+      this.deps = []
+      this.newDeps = []
+      this.depIds = new Set()
+      this.newDepIds = new Set()
+    ```
 - 生命周期
   - created
 
@@ -1478,6 +1529,10 @@ JSON.stringify(b)==="{}"
   - 垂直居中有哪几种方式？分别怎么实现
 12. vue 响应式原理
   - defineprotoperty 的get 和set 分别做了什么？
+      - get 依赖收集
+        - 处理哪些订阅者去做响应式变化处理，
+      - set 派发更新
+        - 数据发送变化中触发setter逻辑，把依赖过程中订阅的所有观察者也就是watcher都触发update 过程，优化队列，在nextTick后执行素有watcher 的run
   - 观察者
 13. 如何用原生js+css 选择
 ```html
