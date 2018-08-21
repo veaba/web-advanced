@@ -5,7 +5,7 @@ by@veaba
 
 ## 比较难的部分（尚未完全掌握的部分）
 
-###　一个不错的web前端知识体系梳理  https://www.jikexueyuan.com/zhiye/web
+### 一个不错的web前端知识体系梳理  https://www.jikexueyuan.com/zhiye/web
 - this
 - 冒泡算法
 - 继承
@@ -17,7 +17,7 @@ by@veaba
 - Generator
 - webgl
 - canvas
-
+- proxy
 ## vue 源码学习
 
 - [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
@@ -70,11 +70,105 @@ cnpm run dev:test
   - 包含整个代码库中共享的实用程序。
 
 ## Vue 技术栈
+```html
+<div id="app" @click="send">
+{{message}}
+</div>
+```
+```js
+var app = new Vue({
+  el:"#app",/*可以是class？*/
+  data:{
+    message:"hello world!"
+  },
+  methods:{
+    send(){
+      this.message="change something ha?"
+    }
+  }
+
+})
+
+```
 
 ### vue 基础知识
 
 - Vue 响应式原理分析
+  getter: 依赖收集
+  setter: 派发更新
 
+  - 核心 Object.defineProperty 在一个对象上定义一个新属性，修改一个对象的现有属性，并返回这个对象。[mdn了解defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+    - 语法
+    ```js
+      /**
+      *@obj 要定义属性的对象
+      *@prop 要定义或修改的属性的名称
+      *@descriptor 定义或修改的属性描述符，一个对象。核心的是get/set
+      * get 给属性提供一个getter方法，访问该属性则触发getter方法
+      * set 给属性提供一个setter方法，当对属性修改时触发setter方法
+      */ 
+      Object.defineProperty(obj,prop,descriptor)
+    ```
+    - 一旦对象拥有了getter和setter，可以认为这个对象是响应式对象
+  - vue 把什么对象变成响应式对象?
+    - initState。初始化就是props、data变成响应式对象
+      - _init 方法执行时候，会执行initState(vm)方法，定义在src/core/instance/state.js
+      - initProps
+      - initData
+  - proxy 代理
+    - 作用时将props 和data上的属性都代理到vm实例上。
+    ```js
+    let comP={
+      props:{
+        msg:"hello"
+      },
+      methods:{
+        say(){
+          /*
+          *@desc  say函数通过this.msg访问到定义在props上的msg，这个过程就发生在proxy
+          */
+          console.log(this.msg)
+        }
+      }
+    }
+   
+    const sharePropertyfinition={
+      enumerable:true,
+      configurable:true,
+      get:noop,
+      set:noop
+    }
+     /*
+     *@desc proxy函数
+     *@desc 通过Object.defineProperty 把target[sourceKey][key]读写变成target[key]
+     */
+    export function proxy(target:Object,sourceKey:string,key:string){
+      sharePropertyDefinition.get=function proxyGetter(){
+        return this[sourceKey][key]
+      }
+      sharePropertyDefinition.set=function proxySetter(val){
+        this[sourceKey][key]=val
+      }
+      Object.defineProperty(target,key,sharePropertyDefinition)
+    }
+    ```
+  - observe 
+    - 监测数据的变化，定义在src/core/observer/index.js
+    - 给非vnode对象类型数据添加一个Observer，添加或已有返回，否则满足一定情况下，实例化一个？Observer对象实例
+  - Observer 类
+    - 是一个类
+    - 作用是，给对象的属性添加一个getter、setter，用于依赖收集和派发更新
+    - 构造函数逻辑：实例化Dep对象
+    - 为对象添加一个__ob__属性，调用def(封装的Object.defineproperty)
+    - 对value判断
+      - 是数。调用observeArray 方法——先遍历数组再调用observe方法
+      - 是纯对象。调用walk方法——先
+      遍历对象，再调用defineReactive方法
+  - defineReactive 方法 
+    - 定义一个响应式对象，给对象添加getter/setter，src/core/observer/index中
+    - 初始化Dep对象实例
+    - 对子对象递归调用observe方法，保证无论访问多少层的属性都能触发getter/setter
+    - 最后利用Object.defineProperty方法对obj属性的key 添加getter/setter
 - 生命周期
   - created
 
@@ -86,7 +180,9 @@ cnpm run dev:test
   - 子传父
     - $emit
 - api
-
+### api
+- el 
+可以是css 选择器，可以是HTMLElement 实例<sub>[HTMLElement实例是什么?](http://www.w3school.com.cn/xmldom/dom_htmlelement.asp)</sub>
 ### vue-cli 3.0
 ### vue-router  路由
 - vue router 懒加载
@@ -354,6 +450,7 @@ a.apply(null,([ob],cc))
 ## DOM 对象
 
 - document对象，文档，window的属性
+- xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
 
 ### XMLHttpRequest
 
@@ -1920,6 +2017,7 @@ console.info(c.name)
 ——————————————————————-
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
+
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
 关于本作知识引用来源
