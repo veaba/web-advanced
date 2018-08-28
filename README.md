@@ -103,7 +103,7 @@ var app = new Vue({
 
   - 核心 Object.defineProperty 在一个对象上定义一个新属性，修改一个对象的现有属性，并返回这个对象。[mdn了解defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
     - 语法
-    ```js
+    ```flow js
       /**
       *@obj 要定义属性的对象
       *@prop 要定义或修改的属性的名称
@@ -491,7 +491,17 @@ a.apply(null,([ob],cc))
 
 // undefined
 ```
+### Blob 对象
 
+- 相互转换的其他平台
+	- url
+	- web(XMLHttpRequest) 异步请求
+	- file system 文件系统
+	- database 数据库
+	- workers 窗口
+	- array buffer 二进制
+	- text 文本
+ 
 ## BOM 对象
 
 ### window  对象
@@ -1273,18 +1283,18 @@ a.onGet()
 ### 概念定义
 ```js
 
-//定义一个函数test
+/*定义一个函数test*/
 
 function test(){
   console.log('I am test')
 }
 test.children='Leo';
 
-// 这时候如何取出Leo 的值？
-test.children 即可取到。
+/* 这时候如何取出Leo 的值？*/
+test.children
 
-// 假如很多呢？
-test.prototype.constructor.children // Leo
+/* 假如很多呢？*/
+test.prototype.constructor.children
 ```
 
 ### 构造函数
@@ -1308,7 +1318,7 @@ test.prototype.constructor.children // Leo
 	var myArr = test();
 	for(var j = 0;j<10;j++){
 		myArr[j]();
-
+	}
 ```
 ```js
 // 立即执行函数解决闭包
@@ -1446,11 +1456,10 @@ parseInt("16", 15); // 十五进制 （1*15+6 = 21）
 - 判断对象为空？
 
 ```js
-let b={}
-// 判断是否是空对象
-JSON.stringify(b)==="{}"
+var b = {}
 
-(JSON.stringify(b)).length  // 2
+/* 判断是否是空对象*/
+JSON.stringify(b) === '{}'
 
 ```
 
@@ -1510,14 +1519,67 @@ JSON.stringify(b)==="{}"
 1. 你了解http吗？讲一些http吧
 2. http 和 https 的区别
 3. http 有哪些方法？
+
+[MDN http定义的请求方法](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)
+
+ - head
+    - 与get相似，没有响应体
+    - 请求头，放置参数
   - get
+    - 应用请求指定资源，用于获取数据
+    - 请求头，放置参数
   - post 
-  - put
-  - path
-  - delete
+    - 将实体提交到指定资源，状态或服务器的副作用更改，通俗讲，提交数据，或发送，并得到结果
+    - 请求体，放置参数
+  - put (放的意思)
+    - 请求有效载荷替换目标资源的所有当前表示
+    - 传输文件，自身不带验证机制
+    - 更新资源，幂等（多次提交更新 结果都和一次执行的一样）。
+    - 类似post
+    - 请求体，放置参数
+  - patch (补丁)
+    - 对资源应用部分修改
+  - `*`delete
+    - 删除指定资源。
+    - 请求参数放在哪？*
+    - 很少出现
+  - `*`connect (链接)
+    - 建立一个到由目标资源标识到服务器的隧道
+    - 请求链接转换到tcp/ip 通道
+  - `*`trace (追踪)
+    - 沿着目标资源的路径执行一个消息环回测试  
+  - options
+    - 返回服务器支持的http方法
 4. get和post的区别
+
+	|操作|get|post|
+	|---|---|---|
+	|后退/刷新|无害|重复提交|
+	|编码类型|application/x-www-form-urlencoded|application/x-www-form-urlencoded/multipart/form-data/二进制|
+	|历史|参数保留在浏览器history里|参数不会保留|
+	|数据类型限制|ASCII字符|没有限制|
+	|安全性|与post相比，比较差，敏感信息不要用get|post比get安全，参数不保留的缘故，在客户端和服务端|
+	|可见性|所有人在url可见|在url中不可见
+
 5. put 和post 的区别 
-6. 讲一下IE下碰到的那些内存泄露问题
+	
+	|操作|put|post|
+	|---|---|---|
+	|特性|幂等|非幂等|
+	|场景|更新资源，修改密码（因为提交参数不同，但结果一样，重复结果，多次不同请求的场景）|注册账号|
+6. 讲一下IE下碰到的那些内存泄露问题<sub>#IE内存泄漏问题总结</sub>
+
+	`参考@3`
+	
+	|泄露描述|解决方案|
+	|---|---|
+	|动态刷新||
+	|页面f5反复刷新，内存biubiu||
+	|退出变量占用内存的页面,内存依然无法回收||
+	|退出变量占用内存iframe,内存依然无法回收||
+	|span/td/js 变量||
+	|同作用域内，js对象引用dom对象，dom又引用同作用域内的js对象，将发生泄露||
+	|同作用域内，dom对象应用一个在函数内的闭包函数，如事件绑定，且闭包又引用上层对象||
 7. 讲一下 碰到的兼容性问题
 8. 讲下闭包
   - 原理
@@ -2071,10 +2133,13 @@ console.info(c.name)
 
 ——————————————————————-
 
+## 关于术语描述，描述 `<sup>`标签
+
 `@1` AST ：抽象语法树。(abstract syntax tree)
 
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
-关于本作知识引用来源
+## 关于本作知识引用来源，引用 `<sub>`标签
 1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)
 2. [闭包的应用场景一林枫山博客](https://www.cnblogs.com/star-studio/archive/2011/06/22/2086493.html)
+3. [IE内存泄漏问题总结](https://blog.csdn.net/rootes/article/details/8784240)
