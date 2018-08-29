@@ -1649,8 +1649,8 @@ JSON.stringify(b) === '{}'
 
     ```js
     var name ='Veaba'
-    name.toUpperCase();//VEABA
-    console.log(name)// Veaba ，说明无法给边原始变量里面的值 
+    name.toUpperCase();
+    console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */ 
     ```
 
     - 不能给基本类型添加属性和方法
