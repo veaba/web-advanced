@@ -2133,6 +2133,44 @@ console.info(c.name)
 
 ——————————————————————-
 
+## 附 一次2018年8月31日的面试题
+1. 以下代码运行结果符合预期？（还是没看懂这道题目！）
+```js
+/*demo1*/
+function f1() {
+  console.time('time span')
+}
+function f2() {
+  console.timeEnd('time span')
+}
+setTimeout(f1,100)
+setTimeout(f2,200)
+function waitForMs(n) {
+  var now = Date.now()
+  while (Date.now()-now<n) {}
+}
+
+/*demo2*/
+function f3() {
+  console.time('time span')
+}
+function f4() {
+  console.timeEnd('time span')
+}
+setTimeout(f3,1000)
+setTimeout(f4,2000)
+function waitForMs(n) {
+  var now = Date.now()
+  while (Date.now()-now<n) {}
+};
+waitForMs(500)
+
+```  
+`
+    当时选的打印是约500.077ms！回来一跑代码还是没看懂。
+    可以理解为？？
+` 
+
 ## 关于术语描述，描述 `<sup>`标签
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
