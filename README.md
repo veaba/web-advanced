@@ -331,25 +331,39 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 常见的内存泄露问题的
 
+
+
 ## js概念&基础知识
 
+### 全局函数
+
+### 正则 RegExp
 
 ### 字符串 String
 
 ### 数字 Number
+
+- 除法。先转为数字再进行除法操作
+```js
+    '40'%7/*等于多少?*/
+
+```
 
 ### 数组 Array
 
 - 能用forEach()做到的，map()同样可以。反过来也是如此。
 - map()会分配内存空间存储新数组并返回，forEach()不会返回数据。
 - forEach()允许callback更改原始数组的元素。map()返回新的数组。
+
 #### 实例方法-不改变原始数组的方法
 
   - `Array.prototype.concat(arr1, arr2,...,arrn)`
     - 入参必填，可以是数组对象
     - 返回新数组
     - 链接数组
+    
   -  <sup>es6</sup>`Array.prototype.entries()`
+  
     ```js
     var fruits = ["Banana", "Orange", "Apple", "Mango"];
     var temp=fruits.entries();
@@ -372,13 +386,15 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
       }
       ages.every(checkAdult)
     ```
-  - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`、
+  - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`
+  、
     - 过滤数组
     - 检查指定数组中符合条件的所有元素
     - 不检测空数组
     - 不改变原数组
 
   - <sup>es6</sup>`Array.prototype.find(function(){currenValue,index,arr},thisValue)`
+    
     - 查找的意思
     - 判断数组第一个元素的值
     - 每个元素都调用一次函数
@@ -413,6 +429,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     
     ```
   - `Arrary.prototype.forEach(function(currentValue,index,arr){},thisValue)`
+    
     - 常用语，逐个做事情，打印，写入数据库
     - forEach()方法对数组每个元素执行一次提供的函数
     - 对空数组不会执行回调函数
@@ -428,6 +445,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     ```
 #### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
   - `Array.prototype.copyWithin()`
+  
     - 从数组指定元素拷贝元素到数组的另外一个指定位置
 
     ```js
