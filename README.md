@@ -121,7 +121,7 @@ var app = new Vue({
       - initData
   - proxy 代理
     - 作用时将props 和data上的属性都代理到vm实例上。
-    ```js
+    ```flow.js
     let comP={
       props:{
         msg:"hello"
@@ -439,19 +439,19 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
     ```js
     var arr=[561531,1231,112,12,2];
-    arr.forEach(function(currentValue,index,arr){
+    arr.forEach(function(currentValue,index,arr2r){
     console.log(this)//String {"ttt"}
     },'ttt')
     ```
 #### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
-  - `Array.prototype.copyWithin()`
+  - `Array.prototype.copyWithin()`copyWithin
   
     - 从数组指定元素拷贝元素到数组的另外一个指定位置
 
     ```js
     var arr=['西瓜','赵铁柱','王尼玛'];
     var temp = arr.copyWithin(2,1)
-    console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", "赵铁柱", "赵铁柱"]
+    console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", 西瓜"赵铁柱", "赵铁柱"]
     ```
   - <sup>es6</sup>`Array.prototype.fill('帅哥',start,end)`
     - 填充数组
