@@ -121,7 +121,7 @@ var app = new Vue({
       - initData
   - proxy 代理
     - 作用时将props 和data上的属性都代理到vm实例上。
-    ```js
+    ```flow.js
     let comP={
       props:{
         msg:"hello"
@@ -331,25 +331,39 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 常见的内存泄露问题的
 
+
+
 ## js概念&基础知识
 
+### 全局函数
+
+### 正则 RegExp
 
 ### 字符串 String
 
 ### 数字 Number
+
+- 除法。先转为数字再进行除法操作
+```js
+    '40'%7/*等于多少?*/
+
+```
 
 ### 数组 Array
 
 - 能用forEach()做到的，map()同样可以。反过来也是如此。
 - map()会分配内存空间存储新数组并返回，forEach()不会返回数据。
 - forEach()允许callback更改原始数组的元素。map()返回新的数组。
+
 #### 实例方法-不改变原始数组的方法
 
   - `Array.prototype.concat(arr1, arr2,...,arrn)`
     - 入参必填，可以是数组对象
     - 返回新数组
     - 链接数组
+    
   -  <sup>es6</sup>`Array.prototype.entries()`
+  
     ```js
     var fruits = ["Banana", "Orange", "Apple", "Mango"];
     var temp=fruits.entries();
@@ -372,13 +386,15 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
       }
       ages.every(checkAdult)
     ```
-  - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`、
+  - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`
+  、
     - 过滤数组
     - 检查指定数组中符合条件的所有元素
     - 不检测空数组
     - 不改变原数组
 
   - <sup>es6</sup>`Array.prototype.find(function(){currenValue,index,arr},thisValue)`
+    
     - 查找的意思
     - 判断数组第一个元素的值
     - 每个元素都调用一次函数
@@ -413,6 +429,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     
     ```
   - `Arrary.prototype.forEach(function(currentValue,index,arr){},thisValue)`
+    
     - 常用语，逐个做事情，打印，写入数据库
     - forEach()方法对数组每个元素执行一次提供的函数
     - 对空数组不会执行回调函数
@@ -422,18 +439,19 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
     ```js
     var arr=[561531,1231,112,12,2];
-    arr.forEach(function(currentValue,index,arr){
+    arr.forEach(function(currentValue,index,arr2r){
     console.log(this)//String {"ttt"}
     },'ttt')
     ```
 #### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
-  - `Array.prototype.copyWithin()`
+  - `Array.prototype.copyWithin()`copyWithin
+  
     - 从数组指定元素拷贝元素到数组的另外一个指定位置
 
     ```js
     var arr=['西瓜','赵铁柱','王尼玛'];
     var temp = arr.copyWithin(2,1)
-    console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", "赵铁柱", "赵铁柱"]
+    console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", 西瓜"赵铁柱", "赵铁柱"]
     ```
   - <sup>es6</sup>`Array.prototype.fill('帅哥',start,end)`
     - 填充数组
@@ -517,6 +535,12 @@ a.apply(null,([ob],cc))
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
 
+- 如何发起http请求，在通用js环境下？步骤如下：
+    1. new XMLHttpRequest 一个对象
+    2. open
+        1. methods
+        2. 路径
+
 ```js
 //一段通过纯文本发送请求个服务器
 function send(){
@@ -529,6 +553,29 @@ function send(){
 
 // 一段超时的代码
 //js权威指南p503
+
+/*XMLHttpRequest 兼容ie6*/
+
+/*如果不存在，判断IE下不支持非标准的xmlHttpRequest*/
+if(window.XMLHttpRequest===undefined){
+    window.XMLHttpRequest=function() {
+      try {
+          //可用，则返回ActiveX对象的最新版本
+        return new ActiveXObject('Msxml3.XMLHTTP.6.0')
+      }
+      catch (e1) {
+        try {
+            // 否则，退回到较旧的版本
+          return new ActiveXObject('Msxml3.XMLHTTP.3.0')
+        }
+        catch (e2) {
+          //否则，都没有的话，抛出错误
+          throw new Error('不支持XMLHttpRequest')
+        }
+      }
+    }
+}
+
 ```
 
 
@@ -2171,6 +2218,44 @@ console.info(c.name)
  ```
 
 ——————————————————————-
+
+## 附 一次2018年8月31日的面试题
+1. 以下代码运行结果符合预期？（还是没看懂这道题目！）
+```js
+/*demo1*/
+function f1() {
+  console.time('time span')
+}
+function f2() {
+  console.timeEnd('time span')
+}
+setTimeout(f1,100)
+setTimeout(f2,200)
+function waitForMs(n) {
+  var now = Date.now()
+  while (Date.now()-now<n) {}
+}
+
+/*demo2*/
+function f3() {
+  console.time('time span')
+}
+function f4() {
+  console.timeEnd('time span')
+}
+setTimeout(f3,1000)
+setTimeout(f4,2000)
+function waitForMs(n) {
+  var now = Date.now()
+  while (Date.now()-now<n) {}
+};
+waitForMs(500)
+
+```  
+`
+    当时选的打印是约500.077ms！回来一跑代码还是没看懂。
+    可以理解为？？
+` 
 
 ## 关于术语描述，描述 `<sup>`标签
 
