@@ -535,6 +535,12 @@ a.apply(null,([ob],cc))
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
 
+- 如何发起http请求，在通用js环境下？步骤如下：
+    1. new XMLHttpRequest 一个对象
+    2. open
+        1. methods
+        2. 路径
+
 ```js
 //一段通过纯文本发送请求个服务器
 function send(){
@@ -547,6 +553,29 @@ function send(){
 
 // 一段超时的代码
 //js权威指南p503
+
+/*XMLHttpRequest 兼容ie6*/
+
+/*如果不存在，判断IE下不支持非标准的xmlHttpRequest*/
+if(window.XMLHttpRequest===undefined){
+    window.XMLHttpRequest=function() {
+      try {
+          //可用，则返回ActiveX对象的最新版本
+        return new ActiveXObject('Msxml3.XMLHTTP.6.0')
+      }
+      catch (e1) {
+        try {
+            // 否则，退回到较旧的版本
+          return new ActiveXObject('Msxml3.XMLHTTP.3.0')
+        }
+        catch (e2) {
+          //否则，都没有的话，抛出错误
+          throw new Error('不支持XMLHttpRequest')
+        }
+      }
+    }
+}
+
 ```
 
 
