@@ -1618,8 +1618,47 @@ JSON.stringify(b) === '{}'
   - application Cache 我也说道这个
   - cache storage
 16. setTimeout 设置执行时间，一定会执行吗？
-17. setTimeout 会引起内存泄露吗？
+  - 属于EventLoop部分的问题，假如栈里面没有其他任务的话，就会执行。
+  - 先执行stack 的普通console之类的
+  - 碰到setTimeout会放到 web Api中，交给浏览器的timer模块
+  - 执行引起处理其他之后，才会回来执行timer
+  - 基本流程如下：
+    1. 同步任务
+      - console 之类 主逻辑线
+    2. 微任务
+      - process.nextTick(node)
+      - promise
+      - mutataionObserver
+    3. 宏任务
+      - script 全局
+      - setTimeout
+      - setInterval
+      - setImmedidate
+      - I/O
+      - UI渲染
 
+
+17. setTimeout 会引起内存泄露吗？
+```js
+/*1 反复点击的代码~~*/
+function leap(){
+  var li = document.getElementsByClassName('li');
+  console.log('li');
+  for(var i=0;i<li.length;i++){
+    li[i].onclick=function(){
+      console.log('leap boooooooom')
+    }
+  }
+}
+
+/*2 避免卵用，以下代码可以保证不重复引用或者死循环*/
+var test = function(){
+		setTimeout(function(){
+			test();
+		},1000);
+	}
+	test();
+```
 ### css 部分
 
 - 什么是标准盒子模型？
