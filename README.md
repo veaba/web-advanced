@@ -247,6 +247,18 @@ var app = new Vue({
 
 ## http协议
 
+### REST API 和客户端库的区别
+`来源于一项API服务对比的页面，`
+
+|用例|REST API|客户端库|
+|---|---|---|
+转换短语音音频，例如无中间结果的命令（音频长度 < 15 秒）|是|是
+转换长音频（> 15 秒）|否|是
+流式传输具有所需中间结果的音频|否|是
+了解使用 LUIS 从音频转换的文本|是|是
+是不是HTTP|是|不一定，比如WebSocket
+
+
 ### http
 
 ### https 
@@ -1030,7 +1042,7 @@ function * hello(){
 - 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
 
 ## node
-
+- 【全文】狼叔：如何正确的学习Node.js https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7
 ### Comet 技术/SSE,基于服务器推送事件的Comet技术/SSE
 EventSource对象
 ```js
@@ -2328,6 +2340,7 @@ a1.prototype={
 ### 跨域
 ### http/https/http2.0
 ### 普通函数和构造函数的区别
+### web前端安全和常见的web安全问题
 
 	
 ## 关于术语描述，描述 `<sup>`标签
