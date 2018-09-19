@@ -90,7 +90,6 @@ var app = new Vue({
 })
 
 ```
-
 ### vue 基础知识
 
 | 英文 | 建议翻译 |
@@ -118,7 +117,11 @@ var app = new Vue({
     - initState。初始化就是props、data变成响应式对象
       - _init 方法执行时候，会执行initState(vm)方法，定义在src/core/instance/state.js
       - initProps
+      - initmethods
       - initData
+      - initComputed
+      - initWatch
+
   - proxy 代理
     - 作用时将props 和data上的属性都代理到vm实例上。
     ```flow.js
@@ -246,7 +249,82 @@ var app = new Vue({
 ### 基于vue-cli 3.0 demo项目框架 
 
 ## http协议
+### http
 
+- http 请求与响应
+  - request，请求
+  > key的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
+    - 请求头 header
+```js
+{
+  'Accept':'text/plain,text/html',/*指定客户端能够接受的内容类型，也可以是星号  */
+  'Accept-Encoding':'gzip, deflate, br',/*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/
+  'Accept-Language':'en,zh',/*语言*/
+  'Authorization':'Basic xxxx',/*HTTP授权的证书*/
+  'Cache-control':'no-cache',/*指定请求和响应遵从的缓存机制*/ 
+  'Content-Type':'text/html',
+  'Connection':'close',/*是否是持久链接，http1.1默认持久:Keep-Alive*/
+  'Content-Length':233,
+  'Date':'Tue, 18 Sep 2018 11:05:26 GMT',
+  'access-control-allow-origin':'*',/*允许所有域名的脚本访问该资源,保护静态资源么*/
+  'Status':200,
+  'Cookie':'xx'
+  'Host':'www.baidu.com',
+  'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'/*浏览器特征编码*/
+
+
+}
+```
+    - 请求体
+  - response，响应
+    - 响应头 header
+```js
+{
+  'Age':12,//原始服务器到代理缓存形成的估算时间
+  'Content-Type':'text/html;charts=utf-8',
+  'Cache-Control':'no-cache',/*告诉素有的缓存机制是否可以缓存以及哪种类型*/
+  'Content-Languge':'en,zh',
+  'Content-Length':2121,/*响应体的长度*/
+  'Date':'Tue, 18 Sep 2018 11:05:26 GMT',
+  'Expires':'Thu, 01 Dec 2010 16:00:00 GMT'/*响应过期的时间*/,
+  'Last-modified':'Thu, 01 Dec 2010 16:00:00 GMT',/*请求资源的最后修改时间*/
+  'Server':'IIS/Nginx/Tengine',
+  'Set-cookie':'xxxxx设置Cookie'
+}
+```
+- http状态码
+>@参考 https://www.jianshu.com/p/760b1b579b0f
+  - 1xx 临时响应
+    - 100 webSocket 请继续
+  - 2xx 成功
+    - 200 已成功
+    - 201 请求成功，服务器创建了新的资源
+    - 202 已接受，服务器已接受，但尚未处理
+    - 203 非授权，返回的信息可能来自另一个来源
+    - 204 无内容，处理了请求但没有返回任何内容
+  - 3xx 重定向
+    - 300
+    - 301 永久重定向，发生在访问`http://www.baidu.com`时重定向到443端口的`https://www.baidu.com`,可以访问下http://www.baidu.com，看下请求资源情况
+    - 302 临时重定向
+    - 303
+    - 304 未修改，自从上次请求后，网页未修改过。chrome允许缓存就大部分都是304
+    - 305
+    - 306
+    - 307 内部重定向?Internal Redirect
+  - 4xx 客户端
+    - 400 错误请求
+    - 401 未授权，请求要求身份验证，对于需要登录的网页服务器可能返回此响应
+    - 402 
+    - 403 禁止，服务器拒绝请求 forbidden
+    - 404 找不到，服务器未找到网页，网页丢失，not found
+  
+  - 5xx 服务端
+    - 500 服务器内部错误，服务器遇到错误，无法处理
+    - 501 无法识别，尚未实施，比如无法处理请求方法
+    - 502 错误网关，网关错误，服务器作为网关从上游服务器收到无效响应
+    - 503 服务不可用，停机维护，指暂停状态。
+    - 504 网关超时
+    - 505 HTTP版本不受支持，不支持请求所用的HTTP版本
 ### REST API 和客户端库的区别
 `来源于一项API服务对比的页面，`
 
@@ -259,8 +337,6 @@ var app = new Vue({
 是不是HTTP|是|不一定，比如WebSocket
 
 
-### http
-
 ### https 
 
 ### http和https 的比较
@@ -268,12 +344,37 @@ var app = new Vue({
 ## 业务技巧相关[尚未]
 
 ### 跨域问题
+>@https://segmentfault.com/a/1190000011145364
+  - JSONP 跨域
+    - **缺点：只支持get、不支持post**
+  - document.domain
+    > 引入iframe 时候，无法使用js交互操作
+    - 使用document.domain 将主页面和子页面都设置wie相同的域名就可以了
+    - **缺点：设置成自身或更高一级的父级，且主域必须相同**
+    - 原因：
+  - postMessage
+  - window.name 进行跨域
+  - 跨资源共享（CORS）
+  - nginx 代理跨域
+  - nodejs中间件代理跨域
+  - websocket 协议跨域
+  > 
 ### 微信支付开发
+> 已申请了微信开发者账号 9-17，有空再去看看。
 ### 支付宝支付开发
+> 已申请了支付宝开发者账号 9-17，有空再去看看。
 ### github 授权登录
 
 ## 性能提升
 网页性能管理详解 ——阮一峰 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html 
+
+### 前端常见的性能优化请求手段/加快资源的加载速度/减少白屏事件
+  - CDN 内容分发
+  - css Sprite  图片合并
+  - Compress/Gzip 资源文件压缩
+  - Async/Defer 异步加载
+  - HTTP Cache HTTP 缓存
+  ....
 ### html/css 重绘回流(Repaint、Reflow)
 
 - display:none 不会发生回流和重绘
@@ -343,11 +444,15 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 常见的内存泄露问题的
 
-
+## css部分
+### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
 ## js概念&基础知识
 
 ### 全局函数
+`http://www.w3school.com.cn/jsref/jsref_obj_global.asp`
+
+- decodeURL
 
 ### 正则 RegExp
 
@@ -712,6 +817,22 @@ fib(8)
 
 ![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 
+## PWA
+### Service worker 工作线程，子线程
+>2014年5月提出，前身是Application Cache`被移除`
+  - Application Cache 指定缓存策略 app.appcache
+  - 不能直接访问/操作 DOM 特定的API
+    - `全局`Promise/Fetch API/Cache API
+  - 生命周期内，需要时，直接唤醒，不需要则自动休眠，不随浏览器窗口关闭、站点的关闭而失效
+  - 离线内容可控
+  - 一旦安装，永远存活，除非手动卸载
+  - 必须HTTPS，除非本地环境下
+  - 广泛使用Promise
+  - 生命周期
+    Register - > Install -> activated
+  - 组织结构
+    - 注册sw 是一个脚本文件`延时注册`
+    - 工作时候的sw 又是另外一个脚本文件
 ## nginx
 
 ### nginx 的正向代理？
@@ -2333,7 +2454,8 @@ a1.prototype={
 ### 前端工程化
 ### 前端自动化
 ### vue/的生命周期
-### vue/props 是怎么实现的？
+### vue/props 是怎么实现的？跨域
+
 ### 同零开始构建项目
 ### webpack了解
 ### node.js的stream 流?
@@ -2342,7 +2464,8 @@ a1.prototype={
 ### 普通函数和构造函数的区别
 ### web前端安全和常见的web安全问题
 
-	
+## 符一次2018年9月18日的面试题
+> 这一次面试经历让我大吃一惊，这不是个人能力有问题，是我的记忆出现了严重问题，截止至今，待业了两个月了。有些问题都重复，再重复，结果一面试就是忘记。比如一个请求头有哪些？我记忆力，好像没有一个key 为header，想了想还是没印象，干脆说不知道。而实际上，header就是一个大对象啊！日了狗。很绝望这一天。
 ## 关于术语描述，描述 `<sup>`标签
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
