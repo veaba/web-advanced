@@ -90,6 +90,11 @@ var app = new Vue({
 })
 
 ```
+
+###  疑问点
+- vue 里面的打补丁 扮演何种角色？
+- vue如何处理定时器或者销毁定时器的？
+
 ### vue 基础知识
 
 | 英文 | 建议翻译 |
@@ -97,6 +102,7 @@ var app = new Vue({
 | observe/observer | 侦听/侦听器 |
 | watch/watcher | 侦听/侦听器 |
 | subs |订阅|
+| patch |打补丁？|
 | deps |依赖关系|
 - Vue 响应式原理分析
 
@@ -223,8 +229,32 @@ var app = new Vue({
       this.depIds = new Set()
       this.newDepIds = new Set()
     ```
-- 生命周期
-  - created
+- 生命周期，选项？？？这个在Vue构造器的传参中何种方式？
+  - beforeCreate 实例初始化后 data observer 和event/watcher 事件配置之前被调用
+  - created 实例创建完成被立即调用（data observe，属性和方法的运损，watch/event事件回调），此时`挂载`还没有开始,`$el`目前不可见
+  - beforeMount 挂载之前被调用，render函数首次被调用，该钩子在服务端渲染器件不被调用
+  - mounted `el`被新创建的`vm.$el`替换，并挂载到实例上调用，无法确保所有子组件都一起挂载。ssr不被调用。希望等到整个视图都渲染完毕，可以：
+  ```js
+    mounted(){
+      this.$nextTick(){
+        //拉拉
+      }
+    }
+  ```
+  - beforeUpdate 数据更新时，发生在爱DOM`打补丁`之前，适合更新之前访问现有的DOM，如手动移除已添加的事件监听器。SSR渲染期间不可用
+  - updated 数据更新导致虚拟DOM重新渲染和`打补丁`，DOM已更新，无法确保所有子组件全都一起被重绘。SSR渲染器件不可用。可以这样做：
+  ```js
+    updated(){
+      this.$nextTick(){
+        //拉拉
+      }
+    }
+  ```
+  - activated keep-alive 组件激活时被调用，SSR渲染期间不可用
+  - deactivated keep-alive 组件停用时调用，SSR渲染期间不可用
+  - beforeDestroy 实例销毁之前调用，在这一步实例依然完全可以用，SSR渲染期间不可用
+  - destroyed 实例销毁后被调用，调用后实例指示所有东西解绑，所有事件移除，子实例也被销毁，SSR渲染期间不可用
+  - errorCaptured 当捕获一个来自子孙组件的错误时被调用，(errorObj、发生错误组件实例、一个错误来源信息的字符串)，可以返回false阻止该错误向上传播
 
 - 组件通信
 
@@ -235,8 +265,42 @@ var app = new Vue({
     - $emit
 - api
 ### api
+
 - el 
 可以是css 选择器，可以是HTMLElement 实例<sub>[HTMLElement实例是什么?](http://www.w3school.com.cn/xmldom/dom_htmlelement.asp)</sub>
+
+- 全局
+```js
+  const Vue={
+  //config、全局配置
+  config:{
+      silent:false,//boolean 取消vue所有的日志的警告
+      optionMergeStrategies:{_test=function(){}},//{[key:string]:Function}//自定义合并策略的选项
+      devtools:true,//生产false,允许vue-devtools检查代码
+      errorHandle:function(err,vm,info){},//默认undefined，
+      warnHandler:function(msg,vm,trace){},//警告处理函数，开发环境下生效
+      ignoredElements:[],//Array<string|RegExp> 忽略vue之外定义的元素
+      keyCodes:{},//{ [key: string]: number | Array<number> }
+      performance:false,// true浏览器开发者工具性能跟踪
+      productionTip:true,//false 阻止vue启动时生成生产提示
+  },
+  //extend
+  extend:{}//使用vue构造器创建一个子类，拓展构造器！！！
+  // nextTick
+  nextTick:function(){}
+  // set
+  set：{target,key,value},//确保响应式更新
+  delete:{target,key}//避免被删除无法触发更新，但尽量少用它
+  directive:(id,[definition]),//指令
+  filter:(id,[defintion]),//注册或获取全局过滤器
+  component:(id,[definition]),//注册或获取全局组件
+  use:(object| Function),//安装vue 插件
+  mixin:{Object},//混入
+  compile:{string},//template 编译字符
+  version:string,//版本号
+
+```
+
 ### vue-cli 3.0
 ### vue-router  路由
 - vue router 懒加载
@@ -2464,8 +2528,11 @@ a1.prototype={
 ### 普通函数和构造函数的区别
 ### web前端安全和常见的web安全问题
 
-## 符一次2018年9月18日的面试题
+## 附一次2018年9月18日的面试题
 > 这一次面试经历让我大吃一惊，这不是个人能力有问题，是我的记忆出现了严重问题，截止至今，待业了两个月了。有些问题都重复，再重复，结果一面试就是忘记。比如一个请求头有哪些？我记忆力，好像没有一个key 为header，想了想还是没印象，干脆说不知道。而实际上，header就是一个大对象啊！日了狗。很绝望这一天。
+## 附一次2018年9月19日的面试题
+### 为什么其他语言不能使用set?
+### transform 和display none 回流问题
 ## 关于术语描述，描述 `<sup>`标签
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
