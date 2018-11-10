@@ -411,14 +411,17 @@ var app = new Vue({
 >@https://segmentfault.com/a/1190000011145364
   - JSONP 跨域
     - **缺点：只支持get、不支持post**
+    - 传递函数名
   - document.domain
     > 引入iframe 时候，无法使用js交互操作
-    - 使用document.domain 将主页面和子页面都设置wie相同的域名就可以了
+    - 使用document.domain 将主页面和子页面都设置为相同的域名就可以了
     - **缺点：设置成自身或更高一级的父级，且主域必须相同**
     - 原因：
-  - postMessage
+  - postMessage 跨文档通信API，跨窗口通信
   - window.name 进行跨域
   - 跨资源共享（CORS）
+    - > IE10 
+    - 依赖服务端改造 header
   - nginx 代理跨域
   - nodejs中间件代理跨域
   - websocket 协议跨域
@@ -429,6 +432,12 @@ var app = new Vue({
 > 已申请了支付宝开发者账号 9-17，有空再去看看。
 ### github 授权登录
 
+## web安全问题
+### CSRFs
+### XSS
+### DDOS
+### SQL注入
+### DNS劫持
 ## 性能提升
 网页性能管理详解 ——阮一峰 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html 
 
@@ -512,6 +521,95 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 ### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
 ## js概念&基础知识
+
+### 事件
+
+> 郁闷，2018年10月31日 这一天面试，其实我都有做过，而且自然而然的做过，竟然答不上来，知识体系全部混乱。
+这样下去，如果面试一些基础题，我真的可能找不到工作了。
+之前也没怎么考虑是事件委托还是代理，自然而然就这样处理事件了。 比如之前人工写的 轮播 在那个智能官网里面的，也没多想了，可谁知道那就是事件委托，哔了狗。
+
+
+- 如何去声明和使用事件，以点击事件来说
+```html
+
+<!--onclick--->
+.
+<button>  button</button>  
+
+<script>
+  var btn = document.querySeletor('button')
+
+  function changeColor (){
+    var randomCol = 'rgb('+random(255)+','+random(255)+','+random(255)+')';
+    btn.style.backgroundColor=randomCol
+  }
+  //方式1
+  btn.onclick=changeColor
+  //方式2  以添加addEventListener 函数来完成。具名函数方式
+  btn.addEventListener('click',changeColor)
+
+  //方式3 匿名函数来指代一下也是可以的
+  btn.addEventLisenter('click',,function(){
+      var randomCol = 'rgb('+random(255)+','+random(255)+','+random(255)+')';
+      btn.style.backgroundColor=randomCol
+  })
+  // 移除事件
+  btn.removeEventListener('click',changeColor)
+ // 添加多个事件
+
+ //  无法实现并存的方式，后者会覆盖前者
+  btn.onclick=changeColorA
+  btn.onclick=changeColorB
+
+  //使用事件监听器注册的话，就可以实现了!!兼容性，addEventListener只支持到IE9
+  btn.addEventListener('click',changeColorA)
+  btn.addEventListener('click',changeColorB)
+  //有些情况，如submit 事件总会使用preventDefault()阻止默认行为
+</script>
+
+```
+- 事件委托/事件代理
+  - 什么时候用到？for 循环里面 多个点击事件，一次操作就可以完成，减少DOM操作次数
+  - 原理：利用事件的`冒泡原理`来实现，
+  ```html
+    <ul>
+      <li> 1</li>
+      <li> 2</li>
+      <li> 3</li>
+      <li> 4</li>
+      <li> 5</li>
+    </ul>
+  ```
+  ```js
+  // 很蠢的对每个li 标签都循环做点击事件
+   window.onload= function(){
+     var ul = document.querySelector('ul')
+     var li = document.querySeletcor('li')
+     for(var i=0;i<li.length;i++){
+       li[i].onclick=function(){
+         alert(123)
+       }
+     }
+   }
+  
+  ```
+
+- 事件冒泡
+  - 什么是冒泡原理？
+  - 什么是事件冒泡？ 
+  >事件从最深的节点开始，逐步向上传播事件，div>ul>li>a ，给a添加事件，事件就会一层一层的往外执行，执行顺序为a->li->ul->div
+  - 机制
+  > 给最外面的div加点击事件，`这里理解？：它的后代都会被点击到`那么 ul li a 做点击的时候，都会冒泡到最外层div，也就是会触发。这就是事件委托，委托父级代为执行事件。反正最后都会被冒泡到？？
+  - 事件冒泡和事件捕获
+
+    - 捕获阶段
+      - 检查最外层`html`，是否在捕获阶段注册一个`onclick`事件处理程序，如果是，则运行
+      - 然后移动到下一个元素，并执行相同操作，直到实际点击的元素
+      - **结论是：事件始终从html层开始？**
+      - 顺序：父级——>子级 、外到里
+    - 冒泡阶段
+      - 检查实际点击元素是否在冒泡阶段注册`onclick`事件，如果是则运行
+      - 然后移动到直接祖先，然后同上，直至`html`元素
 
 ### 全局函数
 `http://www.w3school.com.cn/jsref/jsref_obj_global.asp`
@@ -663,6 +761,9 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 ### 以下三个方法都是为了改变上下文存在而是用的
 
 - call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+  - 语法 `function.call(thisObj,args...)`,如果thisObj 是null，则是全局对象,args作为参数传递给funciton
+
+
 - apply 方法。调用一个函数，具有指定this 的值，以及作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
 - bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
@@ -694,6 +795,7 @@ a.apply(null,([ob],cc))
 
 - 相互转换的其他平台
 	- url
+    - URL.CreateObject(stream)//创建一个流的URL对象
 	- web(XMLHttpRequest) 异步请求
 	- file system 文件系统
 	- database 数据库
@@ -1241,6 +1343,7 @@ EventSource对象
 
 ```
 ## 继承
+### 通过原型继承有什么缺点？
 
 ### new 关键字都做了什么？
 
@@ -1521,10 +1624,59 @@ a.onGet()
 ```
 
 ## 原型与原型链(prototype，prototype chain)
+> 继承是为了方便代码的复用（数值、函数方法、属性），JS采用了原型方案来实现继承，原型就是继承的实现方式之一！
 
-原型与原型链对于一个将走进高级web前端来讲，是一个门槛。
+> 原型与原型链对于一个将走进高级web前端来讲，是一个门槛。由于概念性比较多，截止目前2018年10月31日13:58:06，我依然还是比较模糊。
 
 ### 概念定义
+  - `prototype`
+```js
+/*例子demo*/
+function Animal(name){
+  this.name =name;
+  this.getName= function(){
+    return this.name
+  }
+}
+
+function Cat(name,age){
+  Animal.call(this,name)
+  this.age=age||1
+  this.meow= function(){
+    return 'name:'+this.getName() + '\n'+'age:'+ this.age
+  }
+}
+ const cat = new Cat('Lily',2)
+ console.log(cat.meow())
+/**
+*@desc 注释解析 demo
+*/
+// 声明一个函数Animal，这里一定要入参name 值，否则函数里面的this 是一个undefined
+function Animal(name){
+  this.name =name;// 实例会有一个name 属性和 一个getName的方法，会返回name的值
+  this.getName= function(){
+    return this.name
+  }
+  //此时的this > Cat={name:Lily,age:2,getName:function(){},meow:function(){}}
+}
+
+// 声明一只猫
+function Cat(name,age){
+  //通过call改变上下文的方法，去入参Lily 去调用 Animal方法，此时入参的this 是什么？!!!
+  // name 这里传递给函数Animal，而使用function 声明的函数，都是函数对象，它就是一个object
+  Animal.call(this,name)
+  this.age=age||1
+  this.meow= function(){
+    return 'name:'+this.getName() + '\n'+'age:'+ this.age
+  }
+}
+ const cat = new Cat('Lily',2)
+ console.log(cat.meow())
+```
+
+
+  - `__proto__`
+  - `constructor`
 ```js
 
 /*定义一个函数test*/
@@ -2519,8 +2671,8 @@ a1.prototype={
 ### 前端自动化
 ### vue/的生命周期
 ### vue/props 是怎么实现的？跨域
-
-### 同零开始构建项目
+### 如何处理文件上传的进度条
+### 从零开始构建项目
 ### webpack了解
 ### node.js的stream 流?
 ### 跨域
