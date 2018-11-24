@@ -10,10 +10,11 @@ by@veaba
 - 冒泡算法
 - 继承
 - react
-- 小程序
+- 小程序/微信/百度/快应用/支付宝
 - 闭包
 - 深拷贝
 - 浅拷贝
+- class
 - Generator
 - webgl
 - canvas
@@ -406,7 +407,7 @@ var app = new Vue({
 ### http和https 的比较
 
 ## 业务技巧相关[尚未]
-
+###  RESTful 与 GraphQL 比较
 ### 跨域问题
 >@https://segmentfault.com/a/1190000011145364
   - JSONP 跨域
@@ -518,10 +519,53 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 ### 常见的内存泄露问题的
 
 ## css部分
+
+- zoom与transform scale区别
+
+
 ### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
 ## js概念&基础知识
 
+### 概念
+- JavaScript
+  - ECMAScript
+  - DOM
+  - BOM
+### 关键字
+  - 如果使用关键字name 声明一个值，只能是string 类型！！！
+### 语句
+  - swtich
+    - case 必须紧接着跟值/变量/简单表达式/&&/function，不确定能使用||
+  ```js
+  // 以下产生一个bug，不管怎么样使用关键字name 声明一个值，只能是string 类型！！！
+  var name = '22';var tt='22';
+  var name1 =22;var tt1=22;
+  // demo1
+  switch (name) {
+        // 终止错误，合并两个条件
+        case '22':
+        case 'AbortError':
+        default:
+          console.info('NotFoundError:找不到满足错误的类型');
+      }
+  //demo2
+    switch (name) {
+        // 终止错误，合并两个条件
+        case tt:
+        case 'AbortError':
+        default:
+          console.info('NotFoundError:找不到满足错误的类型');
+      }
+  //demo3
+    switch (name1) {
+        // 终止错误，合并两个条件,数值为number 类型时候，无法进入此条件
+        case tt1:
+        case 'AbortError':
+        default:
+          console.info('NotFoundError:找不到满足错误的类型');
+      }
+  ```
 ### 事件
 
 > 郁闷，2018年10月31日 这一天面试，其实我都有做过，而且自然而然的做过，竟然答不上来，知识体系全部混乱。
@@ -621,7 +665,18 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
       - 通过委托父级，addEventLisenter 设置在父节点上，将事件监听器气泡的影响每个子节点，而不是每个子节点都设置事件监听器
 
 
+###  前端路由实现
+>API，利用两个API修改URL，而不会引起页面的刷新
+- 方式一 pushState ajax
+  - history.pushState 增加一条新的记录
+  - history.replaceState 替换当前的历史记录
+- 方式二 hash+ajax
+  - "#" 锚点，web不会解析hash，“#”后面，web服务会被自动忽略
+  - js可以通过localtion.hash读取，解析后可以实现响应不同的路径逻辑
+  - hashchange 监听hash 变化触发事件
 
+
+  
 ### 全局函数
 `http://www.w3school.com.cn/jsref/jsref_obj_global.asp`
 
@@ -691,7 +746,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     - 如果条件满足true，则返回符合条件的元素，之后的不再执行
     - 如果都没有符合条件则返回undefined
   - `Array.prototype.map(function(currentValue,index,arr){},thisValue)`
-    - 返回西安数组，比如对每个数组都*2
+    - 返回新数组，比如对每个数组都*2
     - 返回新数组,数组元素为原始数组元素调用函数处理后的值
     - 原始数组次序依次处理元素
     - 不对空数组进行检测
