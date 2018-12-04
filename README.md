@@ -116,7 +116,7 @@ cnpm run dev:test
 
 ```
 
-### 项目结构
+### 源码项目结构
 
 [vue官方开发文档](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#development-setup)
 
@@ -312,7 +312,7 @@ var app = new Vue({
     ```
 - 生命周期，选项？？？这个在Vue构造器的传参中何种方式？
   - beforeCreate 实例初始化后 data observer 和event/watcher 事件配置之前被调用
-  - created 实例创建完成被立即调用（data observe，属性和方法的运损，watch/event事件回调），此时`挂载`还没有开始,`$el`目前不可见
+  - created 实例创建完成被立即调用（data observe，属性和方法的运损，watch/event事件回调），此时`挂载`还没有开始,`$el`目前不可见。当然此时也是可以通过nextTick()来取到document的
   - beforeMount 挂载之前被调用，render函数首次被调用，该钩子在服务端渲染器件不被调用
   - mounted `el`被新创建的`vm.$el`替换，并挂载到实例上调用，无法确保所有子组件都一起挂载。ssr不被调用。希望等到整个视图都渲染完毕，可以：
   ```js
@@ -539,7 +539,7 @@ var app = new Vue({
     - 渐进(incremental)。一个frame发生渐进reflow时，前面没变，自己内部发生变化。
     - 改变大小。容器边界发生变化，内部没变，复用内部状态
     - 样式改变。整个frame都会遍历
-    - dirty。（脏的）已花奴才能多个子元素的渐进回流时。
+    - dirty。（脏的）已缓存了多个子元素的渐进回流时。
   - 具体的操作原因：
     - 窗口大小变化
     - 更改文档默认字体
@@ -649,6 +649,51 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
           console.info('NotFoundError:找不到满足错误的类型');
       }
   ```
+### 函数
+#### 声明函数的几种函数，目前三种
+```js
+/*1 函数声明*/
+function test(){
+  //todo
+}
+/*2 函数表达式*/
+const test=  function(){
+  //todo 
+}
+/*3 匿名函数*/
+function(){
+  //todo
+}
+```
+#### 立即执行
+> 因为立即执行函数和外部的全局作用域的命名空间不同，于是name1 和 this.name1 属于不同的空间,私有命名空间
+
+
+```js
+
+/*立即函数的几种声明方式 1  匿名函数包括在一个括号运算符*/
+(function(test){
+  console.log(test)
+})(123)
+
+/*立即函数的几种声明方式 2  匿名函数跟一个效果好。并包括一个原算法*/
+(function(test){
+  console.log(test)
+}(123))
+
+/*demo*/
+  var name1 ='World!';
+(function(window){
+	console.log(window.name1,this.name1,name1)//window,window,undefined
+	if(typeof name1 === 'undefined'){
+		var name1 ='JACK';
+		console.log('hello,'+name1)
+	}else{
+		console.log('Goodbye' + name1)
+	}
+})(window)
+
+```
 ### 事件
 
 > 郁闷，2018年10月31日 这一天面试，其实我都有做过，而且自然而然的做过，竟然答不上来，知识体系全部混乱。
@@ -963,6 +1008,130 @@ a.apply(null,([ob],cc))
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
 
+|属性|方法|描述
+|---|---|---|
+|element.accessKey||*设置或者返回accessKey一个元素|
+|element.attributes||返回一个元素的属性数组|
+|element.childNodes||返回一个元素的子元素数组|
+|element.childrent||返回一个子元素的集合|
+|element.classList||*返回元素的类型，作为DOM Token对象|
+|element.className||设置或者返回class名称|
+|element.clientHeight||返回整数，浏览器当前视窗的文档高度|
+|element.clienWidth||返回整数，浏览器当前视窗的文档宽度|
+|element.contentEditable||如果设置为true 则可编辑。false 不可编辑|
+|element.dir|||
+|element.firstChild|||
+|element.id|||
+|element.innerHTML|||
+|element.isContentEdiable|||
+|element.lang|||
+|element.lastChild|||
+|element.namespaceURL|||
+|element.nextSibing|||
+|element.nextElementSibing|||
+|element.nodeName|||
+|element.nodeType|||
+|element.nodeValue|||
+|element.offsetHeight|||
+|element.offsetWidth|||
+|element.offsetLeft|||
+|element.offsetParent|||
+|element.offsetTop|||
+|element.ownerDocument|||
+|element.parentNode|||
+|element.previousSibing|||
+|element.previousElementSibing|||
+|element.scrollHeight|||
+|element.scrollLeft|||
+|element.scrollTop|||
+|element.scrollWidth|||
+|element.style|||
+|element.tabInde|||
+|element.tagName|||
+|element.textContent|||
+|nodeList.length|||
+||element.addEventListener()|指定元素添加事件句柄？？句柄啥玩意|
+||element.appendChild()|添加一个子元素|
+||element.cloneNode()||
+||element.compareDocumentPosition()||
+||element.focus()||
+||element.getAttribute()||
+||element.getAttributeNode()||
+||element.getElementsByTagName()||
+||element.getElementsByClassName()||
+||element.getFeature()||
+||element.getUserData()||
+||element.hasAttribute()||
+||element.hasAttributes()||
+||element.hasChildNodes()||
+||element.hasFocus()||
+||element.insertBefore()||
+||element.isDefaultNamespace()||
+||element.isEquaNode()||
+||element.isSameNode()||
+||element.isSupported()||
+||element.normalize()||
+||document.querySelector()||
+||document.querySelectorAll()||
+||element.removeAttribute()||
+||element.removeAttributeNode()||
+||element.removeChild()||
+||element.removeEventLisenter()||
+||element.replaceChild()||
+||element.setAttribute()||
+||element.setAttributeNode()||
+||element.setIdAttribute()||
+||element.setIdAttributeNode()||
+||element.setUserData()||
+||element.toString()||
+||nodeList.item()||
+||||
+
+
+
+### elment.accessKey
+### addEventListener()
+### replaceChild()
+```js
+  var textnode=document.createTextNode("Water");
+  var item=document.getElementById("myList").childNodes[0];
+  item.replaceChild(textnode,item.childNodes[0]);
+```
+
+### appendChild()
+```js
+
+  var node=document.createElement("LI");
+  var textnode=document.createTextNode("Water");
+  node.appendChild(textnode);
+  document.getElementById("myList").appendChild(node);
+
+```
+### removeChild()
+```js
+  var list=document.getElementById("myList");
+  list.removeChild(list.childNodes[0]);
+
+```
+### insertBefore() 在父级里面找到某个子级的后面插入一个节点标签
+> 已选择的.insertBefore(parentNode,ChildNode)
+```js
+  var a=document.createElement('a');
+  a.href='sb';
+  a.textContent='sbsbsbbs'
+  var sping= document.querySelector('li:nth-child(4)')
+  document.querySelector('ul').insertBefore(a,sping)
+```
+### document.querySelector API
+
+>2018年11月29日，在一家面试到这个API，我清晰的笃定说其实这个API是可以向JQuery一样使用css的选择器的，去选择第四的li标签，然后被驳回了，说只能用document.querySelectorAll
+但通过测试来看，其实是可以的。
+
+```js
+  document.querySelector('#app > div > ul > li:nth-child(4)') 
+  /*或者*/
+  document.querySelector('li:nth-child(3)') 
+```
 ### XMLHttpRequest
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
@@ -2832,6 +3001,27 @@ a1.prototype={
 ## 附一次2018年9月18日的面试题
 > 这一次面试经历让我大吃一惊，这不是个人能力有问题，是我的记忆出现了严重问题，截止至今，待业了两个月了。有些问题都重复，再重复，结果一面试就是忘记。比如一个请求头有哪些？我记忆力，好像没有一个key 为header，想了想还是没印象，干脆说不知道。而实际上，header就是一个大对象啊！日了狗。很绝望这一天。
 ## 附一次2018年9月19日的面试题
+## 附一次2018年12月 的面试题
+1.阅读代码，立即执行函数
+> 运算符的优先级 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+```js
+/**1*/
+var name1 ='World!';
+(function(){
+	console.log(this)
+	if(typeof name1 === 'undefined'){
+		var name1 ='JACK';
+		console.log('hello,'+name1)
+	}else{
+		console.log('Goodbye' + name1)
+	}
+})()
+
+/**2 运算符的优先级*/
+var val = 'smtg';
+console.log('Value is ' +(val==='smtg')?'Something':'Nothing');
+
+```
 ### 为什么其他语言不能使用set?
 ### transform 和display none 回流问题
 ## 关于术语描述，描述 `<sup>`标签
