@@ -944,7 +944,58 @@ function(){
 
 
 ### 作用域
+js 没有作用域块，导致var 声明时 是全局作用域。但如果是let声明，情况就不一样。let 让变量有了作用域。
 
+>以下代码让很感到困惑
+```js
+  if(1){
+    var ha = 'hello,world!'
+  }
+  console.log(ha) //得到多少?
+```
+>但如果是 let 开头的话，就不一样了
+```js
+if(1){
+	let ha ='hello world'
+}
+console.log(ha)
+```
+>这也就是能解释了，为什么 当使用var声明for循环出来后，总是最后一个值的原因（let 则相反）
+```js
+for(var i=0;i<5;i++){
+ 
+}
+ console.log(i)
+```
+>所以优秀的代码，其实可以这样去避免
+```js
+for(var i=0;i<5;i++){
+ 
+}
+ console.log(i)
+ i=null
+
+```
+> 函数内部，相当于一个作用域
+```js
+/*demo1*/
+test(){
+  var t = 'hello'
+  return t+',world!'
+
+}
+test()
+console.log(t)//
+
+/*demo2*/
+test(){
+  t2 = 'hello'
+  return t2+',world!'
+
+}
+test()
+console.log(t2)//可以访问到
+```
 ### this
 
 - this 总是指向函数的直接调用者（非间接）
@@ -2395,8 +2446,15 @@ var test = function(){
 
 ### js 部分
 
-- js 基础类型？
+- js 基础类型与引用类型
+
+> typeof 操作符区分 基本类型
+
+> instanceof 操作符区分 引用类型
+
+
   - 基本类型
+> 什么叫堆内存？自己买菜做饭，就是堆，主动的
     - 有undefined、boolean、number、string、null。按值访问的意思。
     - 任何方法都无法给边基本类型的值，比如一个字符串
 
@@ -2412,7 +2470,7 @@ var test = function(){
     - 赋值不影响
 
   - 引用类型
-
+> 去菜馆吃饭，叫栈，被动
     - 对象。属性和方法的集合
     - 引用类型可以拥有属性和方法，属性又可以包含基本类型和引用类型
     - 引用类型的值是可以变的。
@@ -2429,7 +2487,7 @@ var test = function(){
     - Array.prototype.isPrototypeOf({})
   - obj instanceof Array 构造函数
     - 'ff' instanceof Array
-    - [] instanceof Arrya 
+    - [] instanceof Array
   - class 属性，跨原型链调用toString()
     - Object.prototype.toString.call([]) '[object Array]'
     - Object.prototype.toString.call({}) '[object Object]'
