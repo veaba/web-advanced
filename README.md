@@ -1549,6 +1549,49 @@ eat(); // undefined
 //当然了。如果小改动了一下
 
 speak.bind(obj)()//这样就可以了~~
+
+// demo2 ，知道结果可能如下，但不太理解这样的方式
+function Animal() { }
+
+Animal.prototype.speak = function() {
+  return this;
+}
+
+Animal.eat = function() {
+  return this;
+}
+
+let obj = new Animal();
+let speak = obj.speak;
+speak(); // global object
+
+let eat = Animal.eat;
+eat(); // global object
+```
+- Object.setPrototypeOf() 继承常规对象
+- extends 创建子类
+```js
+  // 父类
+  class Animal{
+    constructor (name){
+      this.name=name
+    }
+    speak(){
+      console.log(this.name+'Noise')
+    }
+  }
+  // 子类
+  class Dog extends Animal{
+    speak(){
+      //此处基础父类的this 属性name 值
+      console.log(this.name+'by dog')
+    }
+  }
+
+  //实例化
+  const d = new Dog('Lilei')
+  d.speak()
+
 ```
 ### Promise 对象
 >状态的变更
