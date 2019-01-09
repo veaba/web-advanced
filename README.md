@@ -1448,9 +1448,6 @@ fib(8)
 
 ### nuxt.conf.js
 
-## flow.js[尚未]
-- https://flow.org/
-
 ## TypeScript[尚未]
 
 ## lavas[尚未]
@@ -1481,42 +1478,107 @@ fib(8)
   console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
 ```
 
+### class 类
+> `特殊的函数`=> `类表达式`、`类声明`
+- 只能有且只有一个`constructor`方法
+- 一个构造函数可以使用`super` 关键字来调用一个父类的构造函数
+- `static` 关键字定义一个类的静态方法。可以不需要实例化该类，但不能通过一个`类实例调用静态方法`
+```js
+//demo1 
+class Home{
+  //构造函数
+  constructor(height,width){
+    this.height=height;
+    this.width=width
+  },
+  // getter，隐藏的get属性
+  get area(){
+    return this.all()
+  },
+  //methods
+  all(){
+    return this.height*this.width
+  }
+}
+
+const h= new Home(360,480)
+console.log(h.height)//360
+console.log(h.area)//就可以调用
+console.log(h.area())//报错。get 的属性值不是一个function
+
+
+// demo2  `static` 关键字定义一个类的静态方法。可以不需要实例化该类，但不能通过一个`类实例调用静态方法`
+class Point{
+  constructor (x,y){
+    this.x=x
+    this.y=y
+  }
+  //static 关键字，顶一个类的静态方法
+  static distance(a,b){
+    const dx = a.x-b.x
+    const dy = a.y-b.y
+    return Math.hypot(dx,dy)//参数平方和的平方根
+  }
+}
+
+const p1 = new Point(5,5)
+const p2 = new Point(10,10)
+console.log(Point.distance(p1,p2))
+// 相当于Point.distance({x:5,y:10},{x:10,y:5})
+```
+- 用原型和静态方法包装
+```js
+class Animal { 
+  speak() {
+    return this;
+  }
+  static eat() {
+    return this;
+  }
+}
+
+let obj = new Animal();
+obj.speak(); // Animal {}
+let speak = obj.speak;
+speak(); // undefined
+
+Animal.eat() // class Animal
+let eat = Animal.eat;
+eat(); // undefined
+
+//当然了。如果小改动了一下
+
+speak.bind(obj)()//这样就可以了~~
+```
 ### Promise 对象
+>状态的变更
 
-#### 状态的变更
+- resolve()
+  - 只能入参一个，但可以是`数组`、`对象`
 
-### resolve()
-
-- 只能入参一个，但可以是`数组`、`对象`
-
-### reject()
+- reject()
 
 - 只能入参一个，但可以是`数组`、`对象`
 
-### then()
+- then()
 
-### catch()
+- catch()
 
-### finally()
+- finally()
 
-### all()
+- all()
 
-### racr()
+- racr()
 
-### async/await
+### Generator
 
-- 是Generator函数的语法糖
+### async await
+- generator的语法糖
 - Generator 的改进
   - 内置执行器
   - 更好的语义
   - 更广的适用性
   - 返回值是promise
-
-### Generator
-
-### async await
-
-- generator的语法糖
 - async 函数的的返回值是Promise 对象，aysnc 表示 该函数内部有异步操作
 - await 命令后可以是Promise 对象和原始类型的值（数值，字符串，布尔值，此时等同于同步操作）
 - 如果包装成为一个函数，then里面表示当遇到await是执行then然后才执行后面
