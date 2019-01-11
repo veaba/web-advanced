@@ -178,7 +178,29 @@ var app = new Vue({
 ###  疑问点
 - vue 里面的打补丁 扮演何种角色？
 - vue如何处理定时器或者销毁定时器的？
-
+> 在beforeDestory里面处理
+```js
+  data(){
+    return {
+      second:5,
+      timer:null
+    }
+  },
+  mounted(){
+    this.timer=setInterval(()=>{
+      if(this.second===0) this.backPre()
+      else this.second--
+    },1000)
+  },
+  beforeDestroy(){
+    clearInterval(this.timer)
+  },
+  methods:{
+    backPre(){
+      return 'Do you want what me to do,ha?'
+    }
+  }
+```
 ### vue 基础知识
 
 | 英文 | 建议翻译 |
@@ -473,6 +495,77 @@ var app = new Vue({
     - 503 服务不可用，停机维护，指暂停状态。
     - 504 网关超时
     - 505 HTTP版本不受支持，不支持请求所用的HTTP版本
+
+>一份来自node 的http相应代码 
+```js
+
+const http= require('http')
+console.log(http.STATUS_CODES)
+ {'100': 'Continue',
+  '101': 'Switching Protocols',
+  '102': 'Processing',
+  '103': 'Early Hints',
+  '200': 'OK',
+  '201': 'Created',
+  '202': 'Accepted',
+  '203': 'Non-Authoritative Information',
+  '204': 'No Content',
+  '205': 'Reset Content',
+  '206': 'Partial Content',
+  '207': 'Multi-Status',
+  '208': 'Already Reported',
+  '226': 'IM Used',
+  '300': 'Multiple Choices',
+  '301': 'Moved Permanently',
+  '302': 'Found',
+  '303': 'See Other',
+  '304': 'Not Modified',
+  '305': 'Use Proxy',
+  '307': 'Temporary Redirect',
+  '308': 'Permanent Redirect',
+  '400': 'Bad Request',
+  '401': 'Unauthorized',
+  '402': 'Payment Required',
+  '403': 'Forbidden',
+  '404': 'Not Found',
+  '405': 'Method Not Allowed',
+  '406': 'Not Acceptable',
+  '407': 'Proxy Authentication Required',
+  '408': 'Request Timeout',
+  '409': 'Conflict',
+  '410': 'Gone',
+  '411': 'Length Required',
+  '412': 'Precondition Failed',
+  '413': 'Payload Too Large',
+  '414': 'URI Too Long',
+  '415': 'Unsupported Media Type',
+  '416': 'Range Not Satisfiable',
+  '417': 'Expectation Failed',
+  '418': 'I\'m a Teapot',
+  '421': 'Misdirected Request',
+  '422': 'Unprocessable Entity',
+  '423': 'Locked',
+  '424': 'Failed Dependency',
+  '425': 'Unordered Collection',
+  '426': 'Upgrade Required',
+  '428': 'Precondition Required',
+  '429': 'Too Many Requests',
+  '431': 'Request Header Fields Too Large',
+  '451': 'Unavailable For Legal Reasons',
+  '500': 'Internal Server Error',
+  '501': 'Not Implemented',
+  '502': 'Bad Gateway',
+  '503': 'Service Unavailable',
+  '504': 'Gateway Timeout',
+  '505': 'HTTP Version Not Supported',
+  '506': 'Variant Also Negotiates',
+  '507': 'Insufficient Storage',
+  '508': 'Loop Detected',
+  '509': 'Bandwidth Limit Exceeded',
+  '510': 'Not Extended',
+  '511': 'Network Authentication Required' 
+  }
+```    
 ### REST API 和客户端库的区别
 `来源于一项API服务对比的页面，`
 
@@ -1593,15 +1686,91 @@ eat(); // global object
   d.speak()
 
 ```
+- species
+> 派生数组类。返回Array 对象，允许覆盖默认的构造函数。类似`map()`返回默认构造函数的方法时，希望返回一个父Array 对象，而不是Arr，可以`Symbol.species`
+
+```js
+class Arr extends Array{
+  static get [Symbol.species](){return Array}
+}
+const a = new Arr(1,2,3)
+const mapped = a.map(x=>x*x)
+console.log(mapped instanceof Arr)
+console.log(mapped instanceof Array)
+```
+- supper
+> `supper` 关键字用于调用对象的父对象上的函数
+
+```js
+// demo1 这个demo 看不出来什么
+class Cat{
+  constructor(name){
+    this.name=name
+  }
+  speack(){
+    console.log(this.name+' makes a noise')
+    return 2
+  }
+}
+class Lio extends Cat{
+  speak(){
+    super.speak()
+    console.log(this.name+' for Lio')
+    return 111
+  }
+}
+const animal =new  Lio('litter red')
+
+/** demo2 super 简单应用 */
+// 声明一个对象
+const Family={
+  name:'Jo Home'
+}
+// 再生一个对象，内含一个函数`getName`
+const main ={
+  getName(){
+    return super.name
+  }
+}
+let home = main.getName()
+console.log(home)
+//以上这样做并没有什么卵用，但是如果使用了Object.setPrototypeOf(要设置在原型上的对象，prototype)
+// 在home前面增加
+Object.setPrototypeOf(main,Family)
+/** demo3 关于class*/
+supper.name
+// 等同于 属性
+Object.getPrototypeOf(this).name
+// 等同于 方法
+Object.getPrototypeOf(this).name.call(this)
+```
 ### Promise 对象
 >状态的变更
 
+> 缺点：无法向外抛出错误移除，并主动中断这样的流程结果
+```js
+ const promise =  new Promose((resolve,reject)=>{
+    const a=1
+    if(a===1){
+      resolve('ddd')
+    }else{
+      reject('sss')//最好是返回一个变量，不然某些环境下，会导致警告或者报错，可以是字符串、数组、对象，但只能是一个参数
+    }
+  })
+
+  promise()
+    .then(res=>{
+      console.log(res)
+    })
+    .cacth(err=>{
+      console.log()
+    })
+```
 - resolve()
   - 只能入参一个，但可以是`数组`、`对象`
 
 - reject()
-
-- 只能入参一个，但可以是`数组`、`对象`
+  - 只能入参一个，但可以是`数组`、`对象`
 
 - then()
 
@@ -1868,6 +2037,112 @@ function * hello(){
 
 ## node
 - 【全文】狼叔：如何正确的学习Node.js https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7
+### fs
+
+> 不建议在调用 fs.open()、fs.readFile() 或 fs.writeFile() 之前使用 fs.access() 检查文件的可访问性。 这样做会引入竞争条件，因为其他进程可能会在两个调用之间更改文件的状态。 相反，用户代码应该直接打开、读取或写入文件，并处理在文件无法访问时引发的错误。
+- `.unlink()`  删除文件 异步
+  ```js
+    const fs= require('fs')
+    fs.unlink('./tmp/hello.js',(err)=>{
+      if(err) throw err
+      console.log('删除成功')
+    })
+  ```
+- `.unlinkSync()` 删除文件 ，同步
+  ```js
+    const fs = require('fs')
+    try(
+      fs.unlinkSync('./tmp/hello.js')
+      console.log('删除成功')
+    ) catch(err){
+      console.log(err,'删除失败')
+    }
+  ```
+- `.rename()`
+```js
+  fs.rename('./tmp/hello.js','./tmp/world.js',(err)=>{
+    if(err) throw err
+    console.log('rename done')
+  })
+```
+
+- `.open()` 完成操作后，需要关闭描述符，否则可能导致内存泄漏
+  - `wx` flag 
+  -  `r`
+
+线程池
+> 除了fs.FSWatcher() 和 显式同步的方法之外，都使用了`libuv` 线程池，这对于某些应用程序可能会产生其他负面性能问题，详见 http://nodejs.cn/api/cli.html#cli_uv_threadpool_size_size
+- `fs.FSWatcher()`
+>成功调用一个fs.watch 方法都会返回一个新的fs.FSWatcher对象
+- `fs.access(path,[.mode],callback)`
+- `fs.Dirent`类
+  - `.dirent.isBlockDevice()` boolean
+
+```js
+  const fs = require('fs')
+  fs.open('./tmp/hello.js','r',(err,fd)=>{
+    if(err) throw err
+    fs.fstat(fd,(err1,stat)=>{
+      if(err1) throw err1
+      //文件属性
+      console.log(stat) 
+
+      //关闭文件描述符
+      fs.close(fd,(errC)=>{
+        if(errC) throw errC
+        console.loh('关闭')
+      })
+    })
+  })
+```
+- `fs.ReadStream` 类
+- `fs.WriteSteam`类
+- `fs.Stats` 类  
+  - `fs.stat()`
+    ```js
+      fs.stat('./tmp/world.js',(err,stats)=>{
+        if(err) throw err
+        conosle.log(stats)
+      })
+    ```
+  - `fs.lsate()`
+  - `.fstat`
+  ```js
+    fs.fstat(fd,(err1,stat)=>{
+        if(err1) throw err1
+      //文件属性
+        console.log(stat) 
+        //关闭文件描述符
+        fs.close(fd,(errC)=>{
+        if(errC) throw errC
+          console.log('关闭')
+        })
+    })
+  ```
+- `fs.close()`
+- `fs.appendFile(path,data[,options],callback)` 
+> 异步地将数据追加到文件中，如果文件不存在，则创建该文件，`data`可以使字符串或者`Buffer`
+```js
+  fs.appendFile('/tmp.append.txt','hello world append file for node.js fs.appendFile function'+new Date(),(err)=>{
+    if(err) throw err
+  })
+```
+
+> 异步方法，顺序无法保证
+
+```js
+  fs.rename('./tmp/hello.js','./tmp/world.js',(err)=>{
+    if(err) throw err
+    console.log('rename done')
+  })
+  //stat可能在rename 之前，
+  fs.stat('./tmp/world.js',(err,stats)=>{
+    if(err) throw err
+    conosle.log(stats)
+  })
+```
+> 方法时，在回调内部
+
 ### Comet 技术/SSE,基于服务器推送事件的Comet技术/SSE
 EventSource对象
 ```js
@@ -3209,6 +3484,13 @@ a1.prototype={
 		B.on('message',function(data){})
 	请实现，消息代理功能。补充完成function EventEmitter(){}
 ### js写一个ajax get 请求
+> emm，无数次都会放假的面试题。（再我又重新去补充该部分的时候）
+```js
+  const xhr = new XMLHttpRequest()
+  xhr.open('GET','http://baidu.com',false)
+  xhr.send('hello')
+  console.log(xhr.responseText)
+```
 ## 附一次2018年9月11日的面试题
 	首先，这次面试印象很浅，其次对方需求，说不上来，怎么讲，就是有点鄙视对方的意思。有些术语，问到的，看出来对方不严谨。但部分面试题，还是可以学习的
 ### https://www.cnblogs.com/chenguangliang/p/5856701.html CommonJS AMD CMD
@@ -3222,6 +3504,42 @@ a1.prototype={
 ### node.js的stream 流?
 ### 跨域
 ### http/https/http2.0
+>用node.js  启动https 服务
+```js
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};
+
+https.createServer(options, (req, res) => {
+  res.writeHead(200);
+  res.end('hello world\n');
+}).listen(8000);
+```
+>用node.js启动http2服务
+```js
+const http2 = require('http2')
+const fs = require('fs')
+const server = http2.createSecureServer({
+    key: fs.readFileSync('./localhost-privkey.pem'),
+    cert: fs.readFileSync('./localhost-cert.pem')
+})
+server.on('error', (err) => console.error(err));
+
+server.on('stream', (stream, headers) => {
+  // stream is a Duplex
+  stream.respond({
+    'content-type': 'text/html',
+    ':status': 200
+  });
+  stream.end('<h1>Hello world</h1>')
+});
+
+server.listen(8443);
+```
 ### 普通函数和构造函数的区别
 ### web前端安全和常见的web安全问题
 
