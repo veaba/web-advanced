@@ -705,7 +705,95 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 ### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
 ## js概念&基础知识
+### 静态方法
+> xxx.prototype  在 constructor里面就看到了,
+### 数据类型构造属性及方法(静态)
+- 疑问：比较MediaSource.prototype 与Array.isArray()
+> Array.isArray() `静态方法?`，可在chrome打印出来并不是灰色
+![Array.isArray()](./static/images/isArray.jpg)
+> MediaSource.isTypeSupported() `静态方法` ,在chrome打印出来是亮色
+![MediaSource.isTypeSupported](./static/images/isTypeSupported.jpg)
 
+> 共性
+
+|类型或者构造函数|arguments|caller|length|name|prototype|__proto__|[[Scopes]]|
+|----|----|----|----|----|----|----|----|
+String|||1|String||||
+Boolean|||1|Boolean||||
+Number|||1|Number||||
+Object|||1|Object||||
+Array|||1|Array||||
+Symbol|||0|Symbol||||
+MediaSources||||||||
+||||||||
+- String
+  - fromCharCode
+  - raw
+- Boolean 
+- Number
+  - EPSILON:2.220446049250313e-16
+  - MAX_SAFE_INTEGER: 9007199254740991
+  - MAX_VALUE:1.7976931348623157e+308
+  - MIN_SAFE_INTEGER: -9007199254740991
+  - MIN_VALUE:5e-324
+  - NEGATIVE_INFINITY: -Infinity
+  - NaN: NaN
+  - POSITIVE_INFINITY: Infinity
+  - isFinite()
+  - isInteger()
+  - isNaN()
+  - isSafeInteger()
+  - parseFloat()
+  - parsetInt()
+- Object
+  - assign()
+  - create()
+  - defineProperties()
+  - defineProperty()
+  - entries()
+  - freeze()
+  - getOwnPropertyDescriptor()
+  - getOwnPropertyDescriptors()
+  - getOwnPropertyNames()
+  - getOwnPropertySymbols()
+  - getPrototypeOf()
+  - is()
+  - isExtensible()
+  - isFrozen()
+  - isSealed()
+  - keys()
+  - preventExtensions()
+  - seal()
+  - setPrototypeOf()
+  - values()
+- Array
+  - from()
+  - isArray()
+  - of()
+  - Symbol(Symbol.species)
+  - get Symbol(Symbol.species):()
+- Symbol
+  - asyncIterator
+  - for()
+  - hadInstance
+  - isConcatSpreadable
+  - iterator
+  - keyFor()
+  - match
+  - replace
+  - search
+  - species
+  - split
+  - toPrimitive
+  - toStringTag
+  - unscopables
+- Weboscoket
+  - `CLOSED:3`
+  - `CLOSING:2`
+  - `OPEN:1`
+  - `CONNECTING:0`
+- MediaSources 
+  - `isTypeSuported()` 静态方法
 ### 概念
 - JavaScript
   - ECMAScript
