@@ -1447,7 +1447,7 @@ function factory(name,age,job){
   return obj
 }
 //use
-const p=new factory('张三','28','前端狗')
+const p=new; factory('张三','28','前端狗')
 ```
 #### new操作符都干吗了？
 1. 创建一个新对象
