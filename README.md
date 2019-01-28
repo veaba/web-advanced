@@ -496,7 +496,7 @@ var app = new Vue({
     - 504 网关超时
     - 505 HTTP版本不受支持，不支持请求所用的HTTP版本
 
->一份来自node 的http相应代码 
+>一份来自node 的http响应代码 
 ```js
 
 const http= require('http')
@@ -992,6 +992,74 @@ function(){
 ### 全局函数
 `http://www.w3school.com.cn/jsref/jsref_obj_global.asp`
 
+- Global  `ES 内置单体对象` 全局对象
+
+|属性|方法|描述|
+|----|----|----|
+||isNaN()||
+||isFinite()||
+||parseInt()||
+||parsetFloat()||
+||encodeURI()|`对空格转换`|
+||decodeURI()||
+||encodeURIComponent()|`非标准字符全部编码`|
+||decodeURIComponent()||
+||eval()||
+|undefined||`特殊值`|
+|NaN||`not a number 特殊值`|
+|Infinity||`特殊值`|
+|Object||`构造函数`|
+|Array||`构造函数`|
+|Function||`构造函数`|
+|Boolean||`构造函数`|
+|String||`构造函数`|
+|Number||`构造函数`|
+|Date||`构造函数`|
+|RegExp||`构造函数`|
+|Error||`构造函数`|
+|EvalError||`构造函数`|
+|RangeError||`构造函数`|
+|ReferenceError||`构造函数`|
+|SyntaxError||`构造函数`|
+|TypeError||`构造函数`|
+|URIError||`构造函数`|
+||||
+
+- Math `ES 内置单体对象`
+比较数组大小
+```js
+const arr =[11231,238,5,21]
+Math.max.apply(Math,arr)
+```
+|属性|方法|描述|
+|----|----|----|
+|E||`自然对数的底数，常量e的值`|
+|LN10||`10的自然对数`|
+|LN2||`2的自然对数`|
+|LOG2E||`2为底的e的对数`|
+|LOG10E||`10为底的e的对数`|
+|PI|||
+|SQRT1_2||`1/2的平方根，2的平方根的倒数`|
+|SQRT2||`2的平方根`|
+||min()|`(1,3,9,4)`|
+||max()|`(9,3,11)`|
+||ceil()|向上取舍|
+||floor()|向下取舍|
+||round()||
+||random()|`0-1随机数，技巧：Math.random()*100+1`|
+||abs(num)|`绝对值`|
+||exp(num)|`Math.E的num次幂`|
+||log(num)||
+||pow(num,power)||
+||aqrt(num)|`num的平方根`|
+||acros(x)|`x的反余弦值`|
+||asin(x)|`x的反正弦值`|
+||atan()|`x的反正切值`|
+||atan2(y,x)|`y/x的反正切值`|
+||cos(x)|`x的余弦值`|
+||sin(x)|`x正弦值`|
+||tan(x)|`x正切值`|
+||||
 - decodeURL
 
 ### 正则 RegExp
@@ -1120,13 +1188,272 @@ function(){
   ```
 #### 静态方法
 
-### 对象 Object
 
 ### 枚举[`new`] symbol
 
 ### 类 class  
 
+### 面向对象,程序设计
+> 一个标志，类的概念 
+|概念/方法|描述|
+|----|----|
+|数据属性||
+|访问器属性|||
+|Object.defineProperty(obj,name,{})|`定义单个`|
+|Object.defineProperties(obj,{xx:{value:1}})|`同时编辑多个，定义多个属性`|
+|Object.getOwnPropertyDescriptor()|`取得 给定属性的描述符`|
+|||
 
+#### 创建对象-工厂模式
+> 普通方式，字面量方式，代码量比较多
+
+> 优点：一个函数，即可创建对象
+1. 只要一个函数，可多次调用
+> 缺点：
+1. 没有解决对象识别（知道一个对象的类型？？）
+2. 返回默认的，如果不处理则会返回固定的
+```js
+function factory(name,age,job){
+  // const obj=Object.create({})//带有普通对象的__proto__ 类似  const obj = new Object()
+  // const obj=Object.create(null)//则没有_proto__！
+  const obj= new Object()
+  obj.age=age
+  obj.name=name
+  obj.job=job
+  obj.sayName=function(){
+    return this.name
+  }
+  return obj
+}
+//use
+const p= factory('张三','28','前端狗')
+```
+#### 创建对象-构造函数
+>优点：
+1. 没有显示地创建对象
+2. 直接将方法和属性赋值给this对象
+3. 没有return
+>缺点：
+1. 每个方法都要在每个实例上重新创建一边，`p1.sayName===p2.sayName` 同样任务，但两遍，两者不等于，证明这一点
+>特点：
+1. 大写构造函数首字母，惯例
+2. 它的实例都有一个constractor（构造函数）属性，指向他的构造函数
+```js
+function ConstractorFn(name,age,job){
+  this.name=name
+  this.age=age
+  this.job=job
+  this.sayName=function(){
+    return this.name
+  }
+}
+// use
+const p1 = new ConstractorFn('李四6i7','29','后端喵')
+// 监测类型
+console.log(p1 instanceof ConstractorFn)//true,同样都是Object的实例
+
+```
+> 当做构造函数，见上面
+
+> 当普通函数
+```js
+ConstractorFn('李四6i7','29','后端喵')
+window.sayName()
+```
+> 在另外一个对象的作用域中调用
+```js
+const ob = {}
+ConstractorFn.call(ob,"王五",'30','python')
+// ConstractorFn.apply(ob,["王五",'30','python']) 或者这样
+
+on.sayName()
+```
+> 缺点（原型模式解决）：
+1. 在全局作用域下声明函数，只能被某个对象调用，意思是，专属的函数
+2. 而如果需要定义多个函数的，那么你需要声明多个函数。。。
+3. 如何对构造函数进行优化呢？属性和函数定义区分开,
+```js
+function ConstractorFn(name,age,job){
+  this.name=name
+  this.age=age
+  this.job=job
+  this.sayName=sayName
+}
+function sayName(){
+  return this.name
+}
+const p1 = new ConstructorFn('孙六','31','产品汪')
+```
+#### 创建对象-原型模式
+> 特点：
+1. 所有实例都共享原型的属性和方法
+> 优点：
+1. 修改单一个实例，不会影响到其他实例
+2. 
+> 缺点：
+1. 
+```js
+function Proto(){}
+Proto.prototype.name="刘七"
+Proto.prototype.age="32"
+Proto.prototype.job="设计狮"
+Proto.prototype.sayName=function(){
+  return this.name
+}
+var p1 = new Proto()
+var p2 = new Proto()
+p1.sayName==p2.sayName//true
+```
+> 理解原型对象
+1. 默认情况，原型对象自动取得constractor属性，其他方法和属性都是从Object继承
+2. 使用`Person.isPrototypeOf()`测试实例是否有一个纸箱构造函数`prototype`的指针
+3. `hasOwnProperty()` 访问的值是不是实例的属性,该方法会忽略从原型链继承到的属性
+4. `Objecet.getOwnPrototypeDescriptor()` 用于实例属性
+> 原型与in操作符
+1. `"name" in p1`查找该实例上的属性，不管是`实例上还是原型上`
+2. IE早期版本出现bug，导致无法被`in` 出来，所以替代的方案是 `Object.keys()`，可列出可枚举的字符串数组
+> 更简单的原型语法，
+1. [x]字面量包装`prototype`，但！`constractor`没有指向构造函数了
+```js
+function Proto(){}
+Proto.prototype={
+  name:"xx",
+  age:'44',
+  job:'ceo',
+  sayName(){
+    return this.name
+  }
+}
+```
+2. [x]字面量包装`prototype`，初始化回来`constractor`。！但是，此时，`constractor` 是可以被枚举的。
+```js
+function Proto(){}
+Proto.prototype={
+  constractor:Proto,//重新指向
+  name:"xx",
+  age:'44',
+  job:'ceo',
+  sayName(){
+    return this.name
+  }
+}
+```
+3.[√]所以只能用es5的,Object.defineProperty()
+```js
+function Proto(){}
+Proto.prototype={
+  name:"xx",
+  age:'44',
+  job:'ceo',
+  sayName(){
+    return this.name
+  }
+}
+/*只允许在支持es5 Object.defineProperty()方法的环境下使用这样的方式*/
+Object.defineProperty(Person.prototype,'constractor',{
+  enumerable:false,
+  value:Person
+})
+```
+> 原型的动态性 **实例中的指针仅指向原型，并不是指向构造函数**，当时`new 出来 的prototype`，即`最初原型`，以下代码说明这一点：
+```js
+function Proto(){}
+var p1 = new Proto()
+Proto.prototype={
+  name:"xx",
+  age:'44',
+  job:'ceo',
+  sayName(){
+    return this.name
+  }
+}
+p1
+
+```
+> 原生对象的原型
+- 给原型对象，添加方法，再`new` 出来
+> 原型对象的问题
+1. 忽略构造函数传递初始化参数
+2. 所有实例获取相同的属性值
+3. `共享`的本质
+```js
+function Proto(){}
+Proto.prototype={
+  name:"xx",
+  age:'44',
+  job:'ceo',
+  test:['men','women'],
+  sayName(){
+    return this.name
+  }
+}
+var p1 = new Proto()
+var p2 = new Proto()
+p1.test.push('son')
+// 此时
+p1.test===p2.test //true
+```
+#### [√]创建对象-混淆大法！组合使用构造函数 +原型模式！`目前最广泛，最好的方式`
+> 构造函数写属性，方法则用原型继承
+```js
+function Fn(name,age,job){
+  this.name=name
+  this.age= age
+  this.job=job
+  this.test=['man','woman']
+}
+Fn.prototype={
+  constructor:Fn,
+  sayName(){
+    return this.name
+  }
+}
+var p1 = new Fn('xsa','tt','te')
+var p2 = new Fn('xsa2','tt2','te2')
+p1.test.push('son')
+p1.test===p2.test
+
+``` 
+#### 创建对象-动态原型模式
+> 缺点
+- 不能使用字面量重写原型,否则会切断联系
+> 通过if来判断
+```js
+function Fn(name,age,job){
+  this.name=name
+  this.age=age
+  this.job=job
+  if(typeof this.sayName !=='function'){
+    Fn.prototype.sayName=function(){
+      return this.name
+    }
+  }
+}
+```
+#### 创建对象-寄生构造函数模式
+> 比工厂模式多了一个new
+
+```js
+function factory(name,age,job){
+  // const obj=Object.create({})//带有普通对象的__proto__ 类似  const obj = new Object()
+  // const obj=Object.create(null)//则没有_proto__！
+  const obj= new Object()
+  obj.age=age
+  obj.name=name
+  obj.job=job
+  obj.sayName=function(){
+    return this.name
+  }
+  return obj
+}
+//use
+const p=new factory('张三','28','前端狗')
+```
+#### new操作符都干吗了？
+1. 创建一个新对象
+2. 构造函数的作用域赋值给新对象，this指向这个新对象
+3. 执行构造函数代码，为这个新对象添加属性
+4. 返回新对象
 ### 作用域
 js 没有作用域块，导致var 声明时 是全局作用域。但如果是let声明，情况就不一样。let 让变量有了作用域。
 
