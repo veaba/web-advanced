@@ -693,7 +693,26 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 
 ### 常见的内存泄露问题的
-
+#### 闭包在IE9之前的版本会导致一些特殊的问题。
+```js
+  // 内存泄漏
+  function click(){
+    const element = document.querySelector('.test')
+    element.onclick=function(){
+      console.log(elment.id)
+    }
+  }
+  // fix 版本
+  funtion click(){
+    const element = document.querySelector('.test')
+    const id = element.id//比保重引用，消除变量循环引用
+    element.onclick=function(){
+      console.log(elment.id)
+    }
+    // 设置为null，解除对DOM对象的引用，减少计数
+    element=null
+  }
+```
 ## css部分
 
 - zoom与transform scale区别
@@ -834,7 +853,13 @@ MediaSources||||||||
       }
   ```
 ### 函数
+>特点：
+- 函数声明提升
+
 #### 声明函数的几种函数，目前三种
+- 函数声明
+- 函数表达式
+- 匿名函数/拉姆达函数，`name` 是空字符串
 ```js
 /*1 函数声明*/
 function test(){
@@ -849,6 +874,149 @@ function(){
   //todo
 }
 ```
+#### 一种危险的函数使用
+> 应该使用函数表达式
+```js
+if(true){
+  function say(){
+    console.log('hi')
+  }
+}else{
+  function say(){
+    console.log('no hi!')
+  }
+}
+```
+#### 递归
+-----------------------------------------------------------------------------------------
+> 以下来自红宝石：
+- 使用`arguments.callee`，指向正在执行函数的指针
+```js
+
+function factorial(num){
+if(num<=1){
+  return 1
+}else{
+  return num*factorial(num-1)
+  }
+}
+// ①如果设置中途转了一层
+var anthorFactorial= factorial
+factorial=null
+console.log(anthorFactorial(4))//error
+// ② 上面可以变为
+function factorial(num){
+  if(num<=1){
+    return 1
+  }else{
+    return num*arguments.callee(num-1)//但是在严格模式下，无法访问这个属性，所以会导致错误
+  }
+}
+// ③ 更有效的方案，匿名函数的方式
+var factorial=(function f(num){
+  if(num<=1){
+    return 1
+  }else{
+    return num*f(num-1)
+  }
+})
+```
+-----------------------------------------------------------------------------------------
+> 以下来自自己的摸索和总结：
+
+`函数自己调用自己,就是递归`，由于递归需要具备超前的临时计算能力，对于我来讲，是很难一个学习难点。随后在网络上找到一个方法、函数来加深理解。
+
+```js
+
+// 用递归 来求 5 的阶乘 ，翻译过来就是 1*2*3*4*5 =120
+// n! = n * (n-1)!
+
+// 定义一个函数，用于求 n 的阶乘
+function func(n)
+{
+    if (n == 1)
+    {
+        return 1;
+    }
+
+    // func(n-1) 因为传递的参数是 n-1,那么就是求 (n-1) 的阶乘
+    return n * func(n-1);
+}
+console.log(func(5));
+
+// 所以计算的结果是
+// 第一步 return 5 *(func(4))
+// 第二步 return 5 *(4*(func(3)))
+// 第二步 return 5 *(4*3*2(func(2)))
+// 第二步 return 5 *(4*3*2(*1*func(1)))
+// 第二步 return 5 *(4*3*2*1) = 120
+```
+
+> 再看一个斐波那契数列的递归数列，加深对递归概念的理解，小于2则return 1, 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
+
+- 基本规则
+
+ |序列|值|
+ |----- | ---- |
+ 0 | 1
+ 1 | 1
+ 2 | 2
+ 3 | 3
+ 4 | 5
+ 5 | 8
+ 6 | 13
+ 7 | 21
+ 8 | 34
+ 9 | 55
+ |||
+
+ ```js
+ /**
+  * @desc for 循环实现 ，借用三个变量来存放
+  * */
+var fibFor =function(n){
+let n1=1,n2=1,n3=0
+  if(n<2){
+    return 1
+    }
+    for(let i =0;i<n-1;i++){
+      n3=n1+n2;
+      n1=n2;
+      n2=n3
+      }
+      return n3
+}
+ console.info(fibFor(9))
+
+/**
+ * @desc 斐波那契数列 学习，递归函数解析
+ *
+*/
+var fib= function(n){
+  if(n<2){
+  return 1
+    }
+    return fib(n-1)+fib(n-2)
+}
+ console.info(fib(9))
+fib(8)
+// 入参 8
+
+```
+
+|序列|值|
+| ---- | ---- |
+第一步 | fib(7)+fib(6)
+第二步 | fib(6)+fib(5) + fib(5)+fib(4)
+第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2)
+第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
+第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
+第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
+第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
+
+![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 #### 立即执行
 > 因为立即执行函数和外部的全局作用域的命名空间不同，于是name1 和 this.name1 属于不同的空间,私有命名空间
 
@@ -1430,14 +1598,19 @@ function Fn(name,age,job){
   }
 }
 ```
-#### 创建对象-寄生构造函数模式
-> 比工厂模式多了一个new
+#### [x]创建对象-寄生构造函数模式
+> 比工厂模式多了一个new，使用工厂模式new 出来
 
+>特点：
+1. 返回的对象与构造函数或者与构造函数的原型属性之间没有关系`[1]`
+2. 构造函数return的对象与构造函数外部创建的对象没有什么不同`[2]`
+3. 不能使用instanceof操作符确定对象类型
+4. 在红宝石上书，不推荐此模式
 ```js
 function factory(name,age,job){
   // const obj=Object.create({})//带有普通对象的__proto__ 类似  const obj = new Object()
   // const obj=Object.create(null)//则没有_proto__！
-  const obj= new Object()
+  const obj= new Object() //此处不一定是Object对象，可以是Array对象，具体看业务操作
   obj.age=age
   obj.name=name
   obj.job=job
@@ -1449,13 +1622,40 @@ function factory(name,age,job){
 //use
 const p=new; factory('张三','28','前端狗')
 ```
+#### 创建对象-稳妥构造函数模式
+>由道格拉斯·克罗克福斯 发明了该模式——稳妥对象（durable obajects）
+
+> 特点：
+1. 遵从寄生构造函数类似模式
+2. 新创建对象方法的实例不引用this
+3. 不适用new操作调用构造函数
+4. 丢掉无关属性或者说是丢掉无效入参
+5. 没有其他方式可以访问其数据成员
+6. 为安全性考虑的js设计模式 
+
+```js
+function durable(name,age,job){
+  var obj= new Object()
+  // todo 定义私有变量和属性
+  obj.sayName(){
+    console.log(name)//
+  }
+  return obj
+}
+
+// use
+var p1 = durable('柳十','41','CFO管钱的')
+durable.sayName()
+```
 #### new操作符都干吗了？
 1. 创建一个新对象
 2. 构造函数的作用域赋值给新对象，this指向这个新对象
 3. 执行构造函数代码，为这个新对象添加属性
 4. 返回新对象
+[查看更多 js中的new()到底做了些什么？？](https://www.cnblogs.com/faith3/p/6209741.html)
 ### 作用域
-js 没有作用域块，导致var 声明时 是全局作用域。但如果是let声明，情况就不一样。let 让变量有了作用域。
+- `js 没有作用域块`，导致var 声明时 是全局作用域。但如果是let声明，情况就不一样。let 让变量有了作用域。
+- 可以使用过匿名函数来解决，模仿块级作用域
 
 >以下代码让很感到困惑
 ```js
@@ -1507,12 +1707,72 @@ test(){
 test()
 console.log(t2)//可以访问到
 ```
+### 私有变量
+> 如何让外部的函数访问到内部的变量和设置
+- 通过构造函数的方式
+```js
+function Main(name){
+  this.getName=function(){
+    return name
+  }
+  this.setName=function(value){
+    name=value
+  }
+}
+var p1 = new Main('李四')
+console.log(p1.getName())
+p1.setName('王五')
+console.log(p1.getName())
+```
 ### this
 
 - this 总是指向函数的直接调用者（非间接）
 - 有new 关键字，指new 出来的那个对象（构造函数的实例，一般）
 - 事件中，指触发这个事件的对象。
 - 特殊的。IE中的attachEvent 的this 总是指向全局的window
+- 闭包中`this`是window对象
+
+> this 竟然不是上一个函数对象
+- 自动取得两个特殊的变量
+- 内部搜索到this arguments时，只会搜索到其活动对象为止，因此`永远不可能直接访问外部函数的中的两个变量`
+```js
+var name = "I am window"
+var object={
+  name:"I am object",
+  getName:function(){
+    return function(){
+      console.log(this)
+      return this.name
+    }
+  }
+}
+console.log(object.getName()())//竟然是window！！！
+```
+> `将外部作用域中的this 对象，保存在一个闭包能够访问到的变量力，就可以让闭包访问到该对象了`!!
+```js
+
+var name ="I am window"
+var object={
+  name:"I am object",
+  getName:function(){
+    var that=this;
+    return function(){
+      console.log(this)
+      return that.name
+    }
+  }
+}
+//demo1 
+var object={
+  name:"I am object",
+  getName:function(){
+    return function(){
+      console.log(this)
+      return that.name
+    }.call(this)//bind 、call
+  }
+}
+```
 
 ### 以下三个方法都是为了改变上下文存在而是用的
 
@@ -1558,7 +1818,7 @@ a.apply(null,([ob],cc))
 	- workers 窗口
 	- array buffer 二进制
 	- text 文本
- 
+## JavaScript 设计模式 
 ## BOM 对象
 
 ### window  对象
@@ -1767,101 +2027,6 @@ if(window.XMLHttpRequest===undefined){
   - 所有非本地对象都是宿主对象
   - 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
   - 所有DOM 和 BOM 对象都属于宿主对象
-
-### 递归
-
-`函数自己调用自己,就是递归`，由于递归需要具备超前的临时计算能力，对于我来讲，是很难一个学习难点。随后在网络上找到一个方法、函数来加深理解。
-
-```js
-
-// 用递归 来求 5 的阶乘 ，翻译过来就是 1*2*3*4*5 =120
-// n! = n * (n-1)!
-
-// 定义一个函数，用于求 n 的阶乘
-function func(n)
-{
-    if (n == 1)
-    {
-        return 1;
-    }
-
-    // func(n-1) 因为传递的参数是 n-1,那么就是求 (n-1) 的阶乘
-    return n * func(n-1);
-}
-console.log(func(5));
-
-// 所以计算的结果是
-// 第一步 return 5 *(func(4))
-// 第二步 return 5 *(4*(func(3)))
-// 第二步 return 5 *(4*3*2(func(2)))
-// 第二步 return 5 *(4*3*2(*1*func(1)))
-// 第二步 return 5 *(4*3*2*1) = 120
-```
-
-再看一个斐波那契数列的递归数列，加深对递归概念的理解，小于2则return 1, 公式 f[n]=f[n-1]+f(n-2) 递归结束条件f[1]=1;f[2]=1
-
-- 基本规则
-
- |序列|值|
- |----- | ---- |
- 0 | 1
- 1 | 1
- 2 | 2
- 3 | 3
- 4 | 5
- 5 | 8
- 6 | 13
- 7 | 21
- 8 | 34
- 9 | 55
-
- ```js
- /**
-  * @desc for 循环实现 ，借用三个变量来存放
-  * */
-var fibFor =function(n){
-let n1=1,n2=1,n3=0
-  if(n<2){
-    return 1
-    }
-    for(let i =0;i<n-1;i++){
-      n3=n1+n2;
-      n1=n2;
-      n2=n3
-      }
-      return n3
-}
- console.info(fibFor(9))
-
-/**
- * @desc 斐波那契数列 学习，递归函数解析
- *
-*/
-var fib= function(n){
-  if(n<2){
-  return 1
-    }
-    return fib(n-1)+fib(n-2)
-}
- console.info(fib(9))
-fib(8)
-// 入参 8
-
-```
-
-|序列|值|
-| ---- | ---- |
-第一步 | fib(7)+fib(6)
-第二步 | fib(6)+fib(5) + fib(5)+fib(4)
-第三步 | fib(5)+fib(4) + fib(4)+fib(3) + fib(4)+fib(3) + fib(3)+fib(2)
-第四步 | fib(4)+fib(3) + fib(3)+fib(2) + fib(3)+fib(2) + fib(2)+fib(1) + fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0)
-第五步 | fib(3)+fib(2) + fib(2)+fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第六步 | fib(2)+fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第七步 | fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1) + fib(1)+fib(0) +fib(1) + fib(1)+fib(0) + fib(1)+fib(0) + fib(1)+ fib(1)+fib(0) + fib(1) + fib(1) + fib(0)
-第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
-第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
-
-![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
 
 ## PWA
 ### Service worker 工作线程，子线程
@@ -2566,47 +2731,202 @@ EventSource对象
     var type = e.type;
     var data = e.data;
     // todo
-
   }
 
 ```
 ## 继承
-### 通过原型继承有什么缺点？
-
-### new 关键字都做了什么？
-
-[查看更多 js中的new()到底做了些什么？？](https://www.cnblogs.com/faith3/p/6209741.html)
-
-- 创建一个对象
-- 将构造函数的作用域赋给新对象。（`this` 此时指向新对象）
-- 执行构造数中的代码（对这新对象添加属性）
-- 返回新对象
-
-### 如何实现继承
-
-- 构造继承 constructor
-- 原型继承 prototype。原型继承，就是函数对象的原型= 构造函数
-
-```js
-
-function PP(){
-  this.pp='爷爷'
-}
-function AA(){
-  this.aa='爸爸'
-}
-AA.prototype=new PP()
-console.info(AA.prototype.pp) //爷爷 .
-
-```
-
-- 实例继承 instance
-- 拷贝继承 copy
+- OO语言概念，两种继承方式（接口继承、实现继承）。es 只支持`实现继承`
+- JavaScript 主要通过原型链实现继承，原型链的构建是通过将一个`类型的实例`赋值给另一个`构造函数的原型`实现的
+- 使用最多的是 `组合继承`，原型链继承共享的属性和方法，借用构造函数继承实例属性
+- 最有效的是寄生组合式继承，集 `寄生式继承`+`组合继承的优点`
+--------------------------------------------------------
+> 以下摘录来自《JavaScript 高级程序设计》
 
 ### js继承的几种方式？
+- 原型链
+- 借用构造函数
+- 组合继承
+- 原型式继承
+- 寄生式继承
+- 寄生组合式继承
 
-- *构造函数继承 [阮一峰 Javascript面向对象编程（二）：构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)
-- *非构造函数继承 [阮一峰 Javascript面向对象编程（三）：非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)
+### `继承的方式-原型链`
+> 原理：利用原型让一个引用类型继承另一个引用类型的属性和方法
+> 疑问：通过原型继承有什么缺点?
+1. 包含引用类型值的原型
+2. 因为包含引用类型的值的原型属性会被所有实例给共享
+### `[x]继承的方式-借用构造函数/伪造对象/经典继承`（很少用）
+> 原理：子类型构造函数内部调用超类型构造函数，通过apply/call方法执行新创建对象上执行构造函数
+
+> 缺点：
+1. 方法都在构造函数中定义，函数无法复用
+2. 超类对子类方法不可见
+```js
+  function SuperType(){
+    this.colors=['r','g','b']
+  }
+  function SubType(){
+    //继承了SuperType,意思是这里执行了构造函数
+    SuperType.call(this)`[3]` //此处应该怎么样去深刻的理解呢？
+    // 1 SuperType.apply(this)`[3]`
+    // 2 SuperType.bind(this)()`[3]`//再次执行
+  }
+  var instance1 =new SubType()
+  instance1.colors.push('o')
+  console.log(instance1.colors)//'r,g,b,o'
+  var instance2 = new SubType()
+  instance2.colors.push('v')
+  console.log(instance2.colors)
+```
+### `[√]继承的方式-组合继承/伪经典继承`
+>原理：将原型链和借用构造函数的技术组合到一起
+```js
+  function SuperType(name){
+    this.name=name
+    this.colors=['r','g','b']
+  }
+  SuperType.prototype.sayName=function(){
+    console.log(this.name)
+  }
+  function SubType(name,age){
+    //继承属性
+    SuperType.call(this,name)
+    this.age=age
+  }
+  // 继承方法
+  SubType.prototype= new SuperType()
+  SubType.prototype.constractor=SubType
+  SubType.prototype.sayAge=function(){
+    console.log(this.age)
+    return this.age
+  }
+  var instance1 = new SubType('张三',30)
+  instance1.colors.push('o')
+  console.log(instance1.colors)
+  instance1.sayName()
+  instance1.sayAge()
+
+  var instance2 = new SubType('李四',40)
+  instance2.colors.push('v')
+  console.log(instance2.colors)
+  instance2.sayName()
+  instance2.sayAge()
+```
+### `继承的方式-原型式继承`
+> 所给出的demo
+```js
+function object(obj){
+  function F(){}
+  F.prototype=obj
+  return new F()
+}
+```
+> 实质上,浅拷贝:
+- 这种方式，导致其中一个实例变更，其他实例也会跟着变更,被共享
+```js
+function object(obj){
+  function F(){}
+  F.prototype=obj
+  return new F()
+}
+var p1 ={
+  name:"张三",
+  colors:['red','green','blue']
+}
+var anthor =object(p1)
+anthor.name="贾克斯"
+anthor.colors.push('voilet')
+
+var other=object(p1)
+other.name="伊泽瑞尔"
+other.colors.push('orange')
+console.log(p1.colors)
+```
+>es5 中的Object.create()规范原型继承，
+```js
+//demo1 传入一个参数此时，和object方法行为相同
+var p1 ={
+  name:"张三",
+  colors:['red','green','blue']
+}
+var anthor =Object.create(p1)
+anthor.name="贾克斯"
+anthor.colors.push('voilet')
+
+var other=Object.create(p1)
+other.name="伊泽瑞尔"
+other.colors.push('orange')
+console.log(p1.colors)//还是全出来
+
+// demo2 使用第二个参数，与defineProperties方法第二个参数相同，通过自己的描述符定义，会覆盖原型对上上的同名属性
+var p2= {
+    name:"李四",
+    colors:['red','green','blue']
+}
+var anthor=Object.create(p2,{
+  name:{
+    value:"Orange"
+  }
+})
+console.log(anthor.name)//Orange
+```
+### `继承的方式-寄生式继承`
+> 一个函数返回prototype，另外一个函数添加方法，并返回该函数。层层合并，最后工厂函数的模式被新函数继承。
+
+> 缺点：
+1. 由于不能复用函数，从而效率比较低，与构造函数模式类似
+```js
+function object(obj){
+  function F(){}
+  F.prototype=obj
+  return new F()
+}
+function create(obj){
+  var clone = object(obj)
+  clone.sayHi=function(){
+    console.log('hi')
+  }
+  return clone
+}
+var p1 ={
+    name:"李四",
+    colors:['red','green','blue']
+}
+var anthor=create(p1)
+anthor.sayHi()
+```
+### `[√]继承的方式-寄生组合式继承`
+>特点：
+1. 两次超类型构造函数的调用，一次创建子类型原型式，另外次在子类型构造函数内部
+2. 被认为是应用类型最理想的继承范式
+```js
+  function object(obj){
+    function F(){}
+    F.prototype=obj
+    return new F()
+  }
+  function inhertPrototype(subType,superType){
+    var prototype= object(superType.prototype)
+    prototype.constructor=subType
+    subType.prototype=prototype
+  }
+  function SuperType(name){
+    this.name=name
+    this.colors=['red','green']
+  }
+  SuperType.prototype.sayName=function(){
+    console.log(this.name)
+  }
+  function SubType(name,age){
+    SuperType.call( this,name)//第一次调用 SuperType
+    this.age=age
+  }
+  inhertPrototype(SubType,SuperType)
+  SubType.prototype.sayAge=function(){
+    console.log(this.age)
+  }
+```
+--------------------------------------------------------
 
 ### 对象之间“非构造函数方法”。 [非构造函数方法实现]
 
@@ -2779,78 +3099,6 @@ console.info(dog4.type) ;// 动物
 
 ```
 
-### 创建对象的方式
-
-- 自面量
-- fucntion 模拟无参的构造函数
-- function 模拟参构造函数实现（用this 定义构造函数的上下文属性）
-- 工厂方式
-- 原型的方式
-- 混合方式
-
-#### 无参实现
-
-```js
-function Person(){}
-`var person = new Person()`
-person.name ='liao'
-person.onClick=function(){
-  console.info(person.name)//console.info(this.name)
-}
-person.onClick()
-```
-
-#### 有参实现(不需要 new 来实现这个继承，原理是直接使用对象函数来赋值)
-
-```js
-function Person(name){
-  this.name=name ;//this作用域，指之前对象
-  this.onDelete=function(){
-    console.info(this.name)
-  }
-}
-var person = Person('卡布达')
-person.onDelete()
-```
-
-#### 工厂方式创建（内置对象）
-
-```js
-`var ob =new  Object();`
-ob.name='中国'
-ob.onPost=function(){
-  console.info(ob.name)
-}
-ob.onPost()
-```
-
-#### 原型方式
-
-```js
-function D(){}
-D.prototype.name='狗狗'
-D.prototype.onName=function(){
-  console.info(this.name)
-}
-`var d= new D()`
-d.onName()
-```
-
-#### 混合方式。函数对象在原型上，普通对象直接 赋值
-
-```js
-function A(name,p){
-  this.name=name;
-  this.p=p
-}
-A.prototype.onGet=function(){
-  console.info(this.name)
-}
-`var a= new A('机器人')`
-a.onGet()
-
-```
-
 ## 原型与原型链(prototype，prototype chain)
 > 继承是为了方便代码的复用（数值、函数方法、属性），JS采用了原型方案来实现继承，原型就是继承的实现方式之一！
 
@@ -2925,11 +3173,11 @@ test.prototype.constructor.children
 
 ### JS原型继承的几种方法
 
-### 闭包(closure)
-
-
+### 闭包(closure)`函数`
+>定义：指 有权访问另外一个函数作用域中变量的函数！
+- 闭包只能取到包含函数中任何变量的最后一个的值
 ```js
-//闭包
+//闭包，不符合预期
 	function test(){
 		var arr = [];
 		for(var i = 0; i < 10; i++){
@@ -3025,9 +3273,13 @@ function a(){
     c()//2
 ```
 
-1.如何避免闭包?
-2.闭包的应用场景?
-### 一些流行的技术题目
+1. 如何避免闭包?
+2. 闭包的应用场景?
+
+---------------------------------------------------------------------------------------------------
+>  Hello world ！以下为技术题目：
+---------------------------------------------------------------------------------------------------
+## 一些流行的技术题目
 
 - ["1", "2", "3"].map(parseInt) 答案是多少？
 
