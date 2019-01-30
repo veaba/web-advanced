@@ -5,23 +5,23 @@
 
 # 目录 web-advanced-frond-end
 
-1. [比较难的部分（尚未完全掌握的部分）]('#比较难的部分（尚未完全掌握的部分）')
+1. [比较难的部分_尚未掌握]('#比较难的部分_尚未掌握')
 2. [Canvas](#Canvas)
 3. [vue源码学习](#vue源码学习)
 4. [Vue技术栈](#Vue技术栈)
 5. [Http协议](#Http协议)
-6. [业务技巧相关*尚未](#业务技巧相关*尚未)
+6. [业务技巧相关_尚未](#业务技巧相关_尚未)
 7. [Web安全问题](#Web安全问题)
 8. [性能提升](#性能提升)
 10. [Css部分](#Css部分)
-11. [Js概念&基础知识](#Js概念&基础知识)
+11. [Js概念_基础知识](#Js概念_基础知识)
 12. [JavaScript设计模式](#JavaScript设计模式)
 13. [BOM对象](#BOM对象)
 14. [DOM对象](#DOM对象)
 15. [PWA](#PWA)
 16. [Nginx](#Nginx)
 17. [Nuxt](#Nuxt)
-18. [TypeScript*尚未](#TypeScript*尚未)
+18. [TypeScript_尚未](#TypeScript_尚未)
 19. [Lavas](#Lavas)
 20. [Es6](#Es6)
 21. [Node.js](#Node.js)
@@ -30,10 +30,10 @@
 
 24. [一些流行的技术题目](#一些流行的技术题目)
 
-25. [附1__2018年阿里资深web前端面试题*未附](#附1__2018年阿里资深web前端面试题*未附)
-26. [附2__2018年网易高级web前端面试题*未附](#附2__2018年网易高级web前端面试题*未附)
-27. [附3__2018年中级/高级web前端面试题*未附](#附3__2018年中级/高级web前端面试题*未附)
-28. [附4__2018年8月15日电话面试基础题*未附](#附4__2018年8月15日电话面试基础题*未附)
+25. [附1__2018年阿里资深web前端面试题_未附](#附1__2018年阿里资深web前端面试题_未附)
+26. [附2__2018年网易高级web前端面试题_未附](#附2__2018年网易高级web前端面试题_未附)
+27. [附3__2018年中级/高级web前端面试题_未附](#附3__2018年中级/高级web前端面试题_未附)
+28. [附4__2018年8月15日电话面试基础题_未附](#附4__2018年8月15日电话面试基础题_未附)
 29. [附5__2018年8月17日面试题](#附5__2018年8月17日面试题)
 30. [附6__2018年8月31日面试题](#附6__2018年8月31日面试题)
 31. [附7__2018年9月11日面试题](#附7__2018年9月11日面试题)
@@ -41,12 +41,12 @@
 33. [附9__2018年9月19日面试题](#附9__2018年9月19日面试题)
 34. [附10__2018年12月份面试题](#附10__2018年12月份面试题)
 
-35. [描述__关于术语描述，描述`sup标签`](#描述__关于术语描述，描述`sup标签`)
-36. [索引__关于本作知识引用来源，描述`sub标签`](#索引__关于本作知识引用来源，描述`sub标签`)
+35. [描述__关于术语描述sup标签](#描述__关于术语描述sup标签)
+36. [索引__关于本作知识引用来源sub标签](#索引__关于本作知识引用来源sub标签)
 
 -----------------------------------------------------------------
 
-## 比较难的部分（尚未完全掌握的部分）
+## 比较难的部分_尚未掌握
 
 ### 未来需要了解的内容 
 >一个不错的web前端知识体系梳理   https://www.jikexueyuan.com/zhiye/web
@@ -66,7 +66,7 @@
 ## Canvas 
 ### RequestAnimationFrame
 
-## vue 源码学习
+## vue源码学习
 
 - [勾三股四 Vue.js 源码学习笔记](http://jiongks.name/blog/vue-code-review/)
 - [HcySunYang Vue2.1.7源码学习](http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/)
@@ -194,7 +194,7 @@ cnpm run dev:test
   - `sfc` 包含单文件组件(*.vue)解析逻辑。用到 package 中的 vue-template-compiler 依赖包。
   - 包含整个代码库中共享的实用程序。
 
-## Vue 技术栈
+## Vue技术栈
 ```html
 <div id="app" @click="send">
 {{message}}
@@ -630,7 +630,7 @@ const httpCode= {
 
 ### http和https 的比较
 
-## 业务技巧相关[尚未]
+## 业务技巧相关
 ###  RESTful 与 GraphQL 比较
 ### 跨域问题
 >@https://segmentfault.com/a/1190000011145364
@@ -771,7 +771,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
-## js概念&基础知识
+## js概念_基础知识
 ### 静态方法
 > xxx.prototype  在 constructor里面就看到了,
 ### 数据类型构造属性及方法(静态)
@@ -1863,14 +1863,14 @@ a.apply(null,([ob],cc))
 	- workers 窗口
 	- array buffer 二进制
 	- text 文本
-## JavaScript 设计模式 
-## BOM 对象
+## JavaScript设计模式 
+## BOM对象
 
-### window  对象
+### window对象
 
 - 浏览器窗口
 
-## DOM 对象
+## DOM对象
 
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
@@ -2166,9 +2166,9 @@ if(window.XMLHttpRequest===undefined){
 
 ### Nuxt.conf.js
 
-## TypeScript[尚未]
+## TypeScript_尚未
 
-## Lavas[尚未]
+## Lavas_尚未
 
 ## Es6
 
@@ -3461,13 +3461,13 @@ JSON.stringify(b) === '{}'
   - Javascript 是  ECMAScript的一种实现
   - 一般讲js ：dom+bom+ECMAScript
 
-## 附1__2018阿里资深web前端面试题*未附
+## 附1__2018阿里资深web前端面试题_未附
 
-## 附2__2018网易高级web前端面试题*未附
+## 附2__2018网易高级web前端面试题_未附
 
-## 附3__2018年中级/高web前端面试题*未附
+## 附3__2018年中级/高web前端面试题_未附
 
-## 附4__2018年8月15日的电话面试基础题*未附
+## 附4__2018年8月15日的电话面试基础题_未附
 
 ## 附5__2018年8月17日的面试题
 
@@ -4318,13 +4318,13 @@ console.log('Value is ' +(val==='smtg')?'Something':'Nothing');
 ```
 ### 为什么其他语言不能使用set?
 ### transform 和display none 回流问题
-## 描述__关于术语描述，描述`sup标签`
+## 描述__关于术语描述sup标签
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
 
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
-## 索引__关于本作知识引用来源，描述`sub标签`
+## 索引__关于本作知识引用来源sub标签 
 1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)
 2. [闭包的应用场景一林枫山博客](https://www.cnblogs.com/star-studio/archive/2011/06/22/2086493.html)
 3. [IE内存泄漏问题总结](https://blog.csdn.net/rootes/article/details/8784240)
