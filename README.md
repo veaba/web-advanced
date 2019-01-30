@@ -75,7 +75,7 @@
 ### vue3.0 `先占坑`
 >https://www.bilibili.com/video/av36787459/ vue.js 3.0 最新进展，来自 Vue Conf 杭州
 
-#### 模板编译、Vitrual Dom runtime性能
+#### 模板编译、Virtual Dom runtime性能
   - Virtual DOM 实现 `完全重构，100%，减少运行时开销（潜在），编译时来提供性能`
     - 重构原生HTML标签的判断逻辑，编译时，判断标签，在运行时生成响应的标签或组件
     - 生成虚拟Node，保持“形状一致”，同样个数的参数，利于JavaScript引擎优化
@@ -84,7 +84,7 @@
     - 拆分父组件和子组件的耦合关系，引入生成函数，scope、slot统一称为一个函数，由子组件决定是否调用函数，并把传入的内容分配给子组件来完成收集，避免不要的组件渲染
     - 真正依赖某个数据的组件，才会可能重新渲染，不存在手动优化组件过度重绘问题
   - 静态内容提取
-    - 检测到一部分模板不会变，直接提取，在之后更新中，直接复用 vitrual dom，甚至可以在比对过程跳过整个树
+    - 检测到一部分模板不会变，直接提取，在之后更新中，直接复用 Virtual dom，甚至可以在比对过程跳过整个树
     - 包含深度动态内容时，如果元素所有的属性都是静态的，提取属性对象，比对元素时，发现data都一样，便可跳过，去比对children即可
   - 内联事件函数提取
     `<Com @event="count++">`
@@ -127,12 +127,12 @@
     - 铺路 IDE工具链，如 vetur 作者作为vscode团队成员参与vue 3.0的开发 
 #### 多端渲染支持
   - 场景
-    - vue native
-    - wexx
-    - mpvue 小程序
+    - `vue native`
+    - `wexx`
+    - `mpvue` 小程序
   - vue作为runtime编译到多端
-    - 独立出真正的 custome render API，在 import {createRenderer} from '@vue/runtime-core'，平台无关vue runtime
-    - vue组件和 vitrual Dom 直接渲染到元素的对象上去
+    - 独立出真正的 customer render API，在 `import {createRenderer} from '@vue/runtime-core'`，平台无关vue runtime
+    - vue组件和 Virtual Dom 直接渲染到元素的对象上去
 #### 响应式数据监听API
   - 实现跨组件的状态共享
   - 排查组件更新的触发原因
@@ -175,7 +175,7 @@ cnpm run dev:test
 - `src` 包含源代码。基本代码是es2015编写的，并用flow 来做类型注释
   - `compiler` 编译器。包含模板转函数编译器的代码。
   - `parse` 解析器（将字符串模板转为抽象语法树AST）
-  - `optimizer` 优化器（检测用于vdom呈现优化的静态树）
+  - `optimizer` 优化器（检测用于`vdom`呈现优化的静态树）
   - `code generator`代码生成器（将抽象语法树生成渲染函数代码）
 
   代码生成器直接从抽象语法树生成字符串，这样做的代码规格较小，因为编译器在独立构建中，发送给浏览器的
@@ -219,7 +219,7 @@ var app = new Vue({
 ###  疑问点
 - vue 里面的打补丁 扮演何种角色？
 - vue如何处理定时器或者销毁定时器的？
-> 在beforeDestory里面处理
+> 在`beforeDestroy`里面处理
 ```ecmascript 6
 export default {
 	
@@ -274,7 +274,7 @@ export default {
     - initState。初始化就是props、data变成响应式对象
       - _init 方法执行时候，会执行initState(vm)方法，定义在src/core/instance/state.js
       - initProps
-      - initmethods
+      - initMethods
       - initData
       - initComputed
       - initWatch
@@ -327,7 +327,7 @@ export default {
 
   - setter: 派发更新。收集的目的是为了修改数据时候，对相关的依赖派发更新
     - 如果shallow 为false 对新设置的值变化成一个响应式对象
-    - dep.notity()通知所有订阅者。
+    - dep.notify()通知所有订阅者。
       - 遍历所有订阅者subs，也就是watcher的实例数组，然后调用watcher的update方法
       - queueWatcher  放在nextTick队列，等待flushSchedulerQueue
         - flushSchedulerQueue 队列排序。
@@ -357,11 +357,11 @@ export default {
     - 对子对象递归调用observe方法，保证无论访问多少层的属性都能触发getter/setter
     - 最后利用Object.defineProperty方法对obj属性的key 添加getter/setter
 
-  - Observer 通过Object.defineproperty实现对属性变化的监听。
+  - Observer 通过Object.defineProperty实现对属性变化的监听。
     - 是一个类
     - 作用是，给对象的属性添加一个getter、setter，用于依赖收集和派发更新
     - 构造函数逻辑：实例化Dep对象
-    - 为对象添加一个__ob__属性，调用def(封装的Object.defineproperty)
+    - 为对象添加一个__ob__属性，调用def(封装的Object.defineProperty)
     - 对value判断
       - 是数。调用observeArray 方法——先遍历数组再调用observe方法
       - 是纯对象。调用walk方法——先
@@ -720,7 +720,8 @@ document.body(document.createTextNode('abcdev!'));
 ```js
 document.body.className="dom"
 ```
-```css
+
+```html
 .dom {
   padding:2px;
   border:1px solid;
@@ -854,7 +855,7 @@ MediaSources||||||||
   - toPrimitive
   - toStringTag
   - unscopables
-- Weboscoket
+- WebSocket
   - `CLOSED:3`
   - `CLOSING:2`
   - `OPEN:1`
@@ -869,7 +870,7 @@ MediaSources||||||||
 ### 关键字
   - 如果使用关键字name 声明一个值，只能是string 类型！！！
 ### 语句
-  - swtich
+  - switch
     - case 必须紧接着跟值/变量/简单表达式/&&/function，不确定能使用||
   ```js
   // 以下产生一个bug，不管怎么样使用关键字name 声明一个值，只能是string 类型！！！
@@ -1064,7 +1065,8 @@ fib(8)
 第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
 第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
 
-![斐波那契数列](/static/images/fib.jpg "斐波那契数列")
+![斐波那契数列](./static/images/fib.jpg "斐波那契数列")
+
 #### 立即执行
 > 因为立即执行函数和外部的全局作用域的命名空间不同，于是name1 和 this.name1 属于不同的空间,私有命名空间
 
@@ -1103,38 +1105,35 @@ fib(8)
 
 - 如何去声明和使用事件，以点击事件来说
 ```html
-
 <!--onclick--->
-.
-<button>  button</button>  
+<button>button</button>  
 
 <script>
-  var btn = document.querySeletor('button')
-
+  const btn = document.querySelector('button');
+  function changeColorA() {}
+  function changeColorB() {}
   function changeColor (){
-    var randomCol = 'rgb('+random(255)+','+random(255)+','+random(255)+')';
-    btn.style.backgroundColor=randomCol
+    btn.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16)
   }
   //方式1
-  btn.onclick=changeColor
+  btn.onclick=changeColor;
   //方式2  以添加addEventListener 函数来完成。具名函数方式
-  btn.addEventListener('click',changeColor)
+  btn.addEventListener('click',changeColor);
 
   //方式3 匿名函数来指代一下也是可以的
-  btn.addEventLisenter('click',,function(){
-      var randomCol = 'rgb('+random(255)+','+random(255)+','+random(255)+')';
-      btn.style.backgroundColor=randomCol
-  })
+  btn.addEventListener('click',,function(){
+      btn.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16)
+  });
   // 移除事件
-  btn.removeEventListener('click',changeColor)
+  btn.removeEventListener('click',changeColor);
  // 添加多个事件
-
+  
  //  无法实现并存的方式，后者会覆盖前者
-  btn.onclick=changeColorA
-  btn.onclick=changeColorB
+  btn.onclick=changeColorA;
+  btn.onclick=changeColorB;
 
   //使用事件监听器注册的话，就可以实现了!!兼容性，addEventListener只支持到IE9
-  btn.addEventListener('click',changeColorA)
+  btn.addEventListener('click',changeColorA);
   btn.addEventListener('click',changeColorB)
   //有些情况，如submit 事件总会使用preventDefault()阻止默认行为
 </script>
@@ -1200,7 +1199,7 @@ fib(8)
   - history.replaceState 替换当前的历史记录
 - 方式二 hash+ajax
   - "#" 锚点，web不会解析hash，“#”后面，web服务会被自动忽略
-  - js可以通过localtion.hash读取，解析后可以实现响应不同的路径逻辑
+  - js可以通过location.hash读取，解析后可以实现响应不同的路径逻辑
   - hashchange 监听hash 变化触发事件
 
 
@@ -1215,7 +1214,7 @@ fib(8)
 ||isNaN()||
 ||isFinite()||
 ||parseInt()||
-||parsetFloat()||
+||parseFloat()||
 ||encodeURI()|`对空格转换`|
 ||decodeURI()||
 ||encodeURIComponent()|`非标准字符全部编码`|
@@ -1453,7 +1452,7 @@ const p= factory('张三','28','前端狗')
 1. 每个方法都要在每个实例上重新创建一边，`p1.sayName===p2.sayName` 同样任务，但两遍，两者不等于，证明这一点
 >特点：
 1. 大写构造函数首字母，惯例
-2. 它的实例都有一个constractor（构造函数）属性，指向他的构造函数
+2. 它的实例都有一个`constructor`（构造函数）属性，指向他的构造函数
 ```js
 function ConstractorFn(name,age,job){
   this.name=name
@@ -1521,7 +1520,7 @@ var p2 = new Proto()
 p1.sayName==p2.sayName//true
 ```
 > 理解原型对象
-1. 默认情况，原型对象自动取得constractor属性，其他方法和属性都是从Object继承
+1. 默认情况，原型对象自动取得constructor属性，其他方法和属性都是从Object继承
 2. 使用`Person.isPrototypeOf()`测试实例是否有一个纸箱构造函数`prototype`的指针
 3. `hasOwnProperty()` 访问的值是不是实例的属性,该方法会忽略从原型链继承到的属性
 4. `Objecet.getOwnPrototypeDescriptor()` 用于实例属性
@@ -1529,7 +1528,7 @@ p1.sayName==p2.sayName//true
 1. `"name" in p1`查找该实例上的属性，不管是`实例上还是原型上`
 2. IE早期版本出现bug，导致无法被`in` 出来，所以替代的方案是 `Object.keys()`，可列出可枚举的字符串数组
 > 更简单的原型语法，
-1. [x]字面量包装`prototype`，但！`constractor`没有指向构造函数了
+1. [x]字面量包装`prototype`，但！`constructor`没有指向构造函数了
 ```js
 function Proto(){}
 Proto.prototype={
@@ -1541,11 +1540,11 @@ Proto.prototype={
   }
 }
 ```
-2. [x]字面量包装`prototype`，初始化回来`constractor`。！但是，此时，`constractor` 是可以被枚举的。
+2. [x]字面量包装`prototype`，初始化回来`constructor`。！但是，此时，`constructor` 是可以被枚举的。
 ```js
 function Proto(){}
 Proto.prototype={
-  constractor:Proto,//重新指向
+  constructor:Proto,//重新指向
   name:"xx",
   age:'44',
   job:'ceo',
@@ -1566,7 +1565,7 @@ Proto.prototype={
   }
 }
 /*只允许在支持es5 Object.defineProperty()方法的环境下使用这样的方式*/
-Object.defineProperty(Person.prototype,'constractor',{
+Object.defineProperty(Person.prototype,'constructor',{
   enumerable:false,
   value:Person
 })
@@ -2840,7 +2839,7 @@ EventSource对象
   }
   // 继承方法
   SubType.prototype= new SuperType()
-  SubType.prototype.constractor=SubType
+  SubType.prototype.constructor=SubType
   SubType.prototype.sayAge=function(){
     console.log(this.age)
     return this.age
@@ -3652,27 +3651,29 @@ var test = function(){
     - 有undefined、boolean、number、string、null。按值访问的意思。
     - 任何方法都无法给边基本类型的值，比如一个字符串
 
-    ```js
-    var name ='Veaba'
-    name.toUpperCase();
-    console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */ 
-    ```
+```js
+var name ='Veaba'
+name.toUpperCase();
+console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */ 
+```
 
-    - 不能给基本类型添加属性和方法
-    - 基本类型的比较是值的比较，只有他们的值相同的比较，最好使用三等号符
-    - 基本类型的变量是存放在栈区，内存里面的栈内存（那堆呢？）
-    - 赋值不影响
+- 不能给基本类型添加属性和方法
+- 基本类型的比较是值的比较，只有他们的值相同的比较，最好使用三等号符
+- 基本类型的变量是存放在栈区，内存里面的栈内存（那堆呢？）
+- 赋值不影响
 
   - 引用类型
 > 去菜馆吃饭，叫栈，被动
-    - 对象。属性和方法的集合
-    - 引用类型可以拥有属性和方法，属性又可以包含基本类型和引用类型
-    - 引用类型的值是可以变的。
-    - 引用类型的值是同时保存在栈内存和堆内存的对象
-      - 操作对象的引用
-      - 栈区内存保存变量和标识符 和 指向堆内存中该对象的指针(该对象在对内存的地址)
-    - 引用类型的比较是引用的比较。
-    - 赋值会影响指向同一个对象
+
+- 对象。属性和方法的集合
+- 引用类型可以拥有属性和方法，属性又可以包含基本类型和引用类型
+- 引用类型的值是可以变的。
+- 引用类型的值是同时保存在栈内存和堆内存的对象
+  - 操作对象的引用
+  - 栈区内存保存变量和标识符 和 指向堆内存中该对象的指针(该对象在对内存的地址)
+- 引用类型的比较是引用的比较。
+- 赋值会影响指向同一个对象
+
 - typeof null ？object
 - typeof array？ object
 - 如何判断array 的方法？
