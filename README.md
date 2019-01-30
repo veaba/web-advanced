@@ -1,14 +1,55 @@
-# web-advanced-frond-end
 
-> 进阶web高级前端知识体系，来自个人的面试经历、学习笔记、参考大神们的blog，以及常见面试题！不代表内容的正确性！！！！有一部分还在带着问号！
+> 进阶web高级前端知识体系，来自个人的面试经历、学习笔记、参考大神们的blog，以及常见面试题！不代表内容的正确性！！！！有一部分还在带着问号！以下内容是随手记下的笔记，还在学习中，等哪天觉得成熟了，才会整理更好的内容梳理。 by@veaba
 
-> 以下内容是随手记下的笔记，还在学习中，等哪天觉得成熟了，才会整理更好的内容梳理。
+-----------------------------------------------------------------
 
-by@veaba
+# 目录 web-advanced-frond-end
+
+1. [比较难的部分（尚未完全掌握的部分）]('#比较难的部分（尚未完全掌握的部分）')
+2. [Canvas](#Canvas)
+3. [vue源码学习](#vue源码学习)
+4. [Vue技术栈](#Vue技术栈)
+5. [Http协议](#Http协议)
+6. [业务技巧相关*尚未](#业务技巧相关*尚未)
+7. [Web安全问题](#Web安全问题)
+8. [性能提升](#性能提升)
+10. [Css部分](#Css部分)
+11. [Js概念&基础知识](#Js概念&基础知识)
+12. [JavaScript设计模式](#JavaScript设计模式)
+13. [BOM对象](#BOM对象)
+14. [DOM对象](#DOM对象)
+15. [PWA](#PWA)
+16. [Nginx](#Nginx)
+17. [Nuxt](#Nuxt)
+18. [TypeScript*尚未](#TypeScript*尚未)
+19. [Lavas](#Lavas)
+20. [Es6](#Es6)
+21. [Node.js](#Node.js)
+22. [继承](#继承)
+23. [原型与原型链(prototype,prototype chain)](#原型与原型链(prototype,prototype chain))
+
+24. [一些流行的技术题目](#一些流行的技术题目)
+
+25. [附1__2018年阿里资深web前端面试题*未附](#附1__2018年阿里资深web前端面试题*未附)
+26. [附2__2018年网易高级web前端面试题*未附](#附2__2018年网易高级web前端面试题*未附)
+27. [附3__2018年中级/高级web前端面试题*未附](#附3__2018年中级/高级web前端面试题*未附)
+28. [附4__2018年8月15日电话面试基础题*未附](#附4__2018年8月15日电话面试基础题*未附)
+29. [附5__2018年8月17日面试题](#附5__2018年8月17日面试题)
+30. [附6__2018年8月31日面试题](#附6__2018年8月31日面试题)
+31. [附7__2018年9月11日面试题](#附7__2018年9月11日面试题)
+32. [附8__2018年9月18日面试题](#附8__2018年9月18日面试题)
+33. [附9__2018年9月19日面试题](#附9__2018年9月19日面试题)
+34. [附10__2018年12月份面试题](#附10__2018年12月份面试题)
+
+35. [描述:关于术语描述，描述`sup标签`](#描述:关于术语描述，描述`sup标签`)
+36. [索引:关于本作知识引用来源，描述`sub标签`](#索引:关于本作知识引用来源，描述`sub标签`)
+
+-----------------------------------------------------------------
 
 ## 比较难的部分（尚未完全掌握的部分）
 
-### 一个不错的web前端知识体系梳理  https://www.jikexueyuan.com/zhiye/web
+### 未来需要了解的内容 
+>一个不错的web前端知识体系梳理   https://www.jikexueyuan.com/zhiye/web
 - this
 - 冒泡算法
 - 继承
@@ -22,8 +63,8 @@ by@veaba
 - webgl
 - canvas
 - proxy
-## canvas 
-### requestAnimationFrame
+## Canvas 
+### RequestAnimationFrame
 
 ## vue 源码学习
 
@@ -179,14 +220,16 @@ var app = new Vue({
 - vue 里面的打补丁 扮演何种角色？
 - vue如何处理定时器或者销毁定时器的？
 > 在beforeDestory里面处理
-```js
+```ecmascript 6
+export default {
+	
   data(){
     return {
       second:5,
       timer:null
     }
   },
-  mounted(){
+  mounted:function(){
     this.timer=setInterval(()=>{
       if(this.second===0) this.backPre()
       else this.second--
@@ -200,6 +243,8 @@ var app = new Vue({
       return 'Do you want what me to do,ha?'
     }
   }
+}
+
 ```
 ### vue 基础知识
 
@@ -340,21 +385,25 @@ var app = new Vue({
   - created 实例创建完成被立即调用（data observe，属性和方法的运损，watch/event事件回调），此时`挂载`还没有开始,`$el`目前不可见。当然此时也是可以通过nextTick()来取到document的
   - beforeMount 挂载之前被调用，render函数首次被调用，该钩子在服务端渲染器件不被调用
   - mounted `el`被新创建的`vm.$el`替换，并挂载到实例上调用，无法确保所有子组件都一起挂载。ssr不被调用。希望等到整个视图都渲染完毕，可以：
-  ```js
-    mounted(){
-      this.$nextTick(){
-        //拉拉
-      }
-    }
+  ```ecmascript 6
+    export default {
+	 mounted(){
+          this.$nextTick=function(){
+            //拉拉
+          }
+        }
+  }
   ```
   - beforeUpdate 数据更新时，发生在爱DOM`打补丁`之前，适合更新之前访问现有的DOM，如手动移除已添加的事件监听器。SSR渲染期间不可用
   - updated 数据更新导致虚拟DOM重新渲染和`打补丁`，DOM已更新，无法确保所有子组件全都一起被重绘。SSR渲染器件不可用。可以这样做：
-  ```js
+  ```ecmascript 6
+  export default {
     updated(){
-      this.$nextTick(){
-        //拉拉
+          this.$nextTick=function(){  
+        	  // todo
+			}
+        }
       }
-    }
   ```
   - activated keep-alive 组件激活时被调用，SSR渲染期间不可用
   - deactivated keep-alive 组件停用时调用，SSR渲染期间不可用
@@ -381,7 +430,7 @@ var app = new Vue({
   //config、全局配置
   config:{
       silent:false,//boolean 取消vue所有的日志的警告
-      optionMergeStrategies:{_test=function(){}},//{[key:string]:Function}//自定义合并策略的选项
+      optionMergeStrategies:{_test:function(){}},//{[key:string]:Function}//自定义合并策略的选项
       devtools:true,//生产false,允许vue-devtools检查代码
       errorHandle:function(err,vm,info){},//默认undefined，
       warnHandler:function(msg,vm,trace){},//警告处理函数，开发环境下生效
@@ -391,20 +440,20 @@ var app = new Vue({
       productionTip:true,//false 阻止vue启动时生成生产提示
   },
   //extend
-  extend:{}//使用vue构造器创建一个子类，拓展构造器！！！
+  extend:{},//使用vue构造器创建一个子类，拓展构造器！！！
   // nextTick
-  nextTick:function(){}
+  nextTick:function(){},
   // set
-  set：{target,key,value},//确保响应式更新
-  delete:{target,key}//避免被删除无法触发更新，但尽量少用它
+  set:{target,key,value},//确保响应式更新
+  delete:{target,key},//避免被删除无法触发更新，但尽量少用它
   directive:(id,[definition]),//指令
   filter:(id,[defintion]),//注册或获取全局过滤器
   component:(id,[definition]),//注册或获取全局组件
   use:(object| Function),//安装vue 插件
   mixin:{Object},//混入
   compile:{string},//template 编译字符
-  version:string,//版本号
-
+  version:string//版本号
+}
 ```
 
 ### vue-cli 3.0
@@ -418,7 +467,7 @@ var app = new Vue({
   - 由于js语法特性决定来使用一个函数赋值。
 ### 基于vue-cli 3.0 demo项目框架 
 
-## http协议
+## Http协议
 ### http
 
 - http 请求与响应
@@ -426,7 +475,7 @@ var app = new Vue({
   > key的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
     - 请求头 header
 ```js
-{
+const json ={
   'Accept':'text/plain,text/html',/*指定客户端能够接受的内容类型，也可以是星号  */
   'Accept-Encoding':'gzip, deflate, br',/*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/
   'Accept-Language':'en,zh',/*语言*/
@@ -438,18 +487,16 @@ var app = new Vue({
   'Date':'Tue, 18 Sep 2018 11:05:26 GMT',
   'access-control-allow-origin':'*',/*允许所有域名的脚本访问该资源,保护静态资源么*/
   'Status':200,
-  'Cookie':'xx'
+  'Cookie':'xx',
   'Host':'www.baidu.com',
   'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'/*浏览器特征编码*/
-
-
 }
 ```
     - 请求体
   - response，响应
     - 响应头 header
 ```js
-{
+const json ={
   'Age':12,//原始服务器到代理缓存形成的估算时间
   'Content-Type':'text/html;charts=utf-8',
   'Cache-Control':'no-cache',/*告诉素有的缓存机制是否可以缓存以及哪种类型*/
@@ -501,69 +548,70 @@ var app = new Vue({
 
 const http= require('http')
 console.log(http.STATUS_CODES)
- {'100': 'Continue',
-  '101': 'Switching Protocols',
-  '102': 'Processing',
-  '103': 'Early Hints',
-  '200': 'OK',
-  '201': 'Created',
-  '202': 'Accepted',
-  '203': 'Non-Authoritative Information',
-  '204': 'No Content',
-  '205': 'Reset Content',
-  '206': 'Partial Content',
-  '207': 'Multi-Status',
-  '208': 'Already Reported',
-  '226': 'IM Used',
-  '300': 'Multiple Choices',
-  '301': 'Moved Permanently',
-  '302': 'Found',
-  '303': 'See Other',
-  '304': 'Not Modified',
-  '305': 'Use Proxy',
-  '307': 'Temporary Redirect',
-  '308': 'Permanent Redirect',
-  '400': 'Bad Request',
-  '401': 'Unauthorized',
-  '402': 'Payment Required',
-  '403': 'Forbidden',
-  '404': 'Not Found',
-  '405': 'Method Not Allowed',
-  '406': 'Not Acceptable',
-  '407': 'Proxy Authentication Required',
-  '408': 'Request Timeout',
-  '409': 'Conflict',
-  '410': 'Gone',
-  '411': 'Length Required',
-  '412': 'Precondition Failed',
-  '413': 'Payload Too Large',
-  '414': 'URI Too Long',
-  '415': 'Unsupported Media Type',
-  '416': 'Range Not Satisfiable',
-  '417': 'Expectation Failed',
-  '418': 'I\'m a Teapot',
-  '421': 'Misdirected Request',
-  '422': 'Unprocessable Entity',
-  '423': 'Locked',
-  '424': 'Failed Dependency',
-  '425': 'Unordered Collection',
-  '426': 'Upgrade Required',
-  '428': 'Precondition Required',
-  '429': 'Too Many Requests',
-  '431': 'Request Header Fields Too Large',
-  '451': 'Unavailable For Legal Reasons',
-  '500': 'Internal Server Error',
-  '501': 'Not Implemented',
-  '502': 'Bad Gateway',
-  '503': 'Service Unavailable',
-  '504': 'Gateway Timeout',
-  '505': 'HTTP Version Not Supported',
-  '506': 'Variant Also Negotiates',
-  '507': 'Insufficient Storage',
-  '508': 'Loop Detected',
-  '509': 'Bandwidth Limit Exceeded',
-  '510': 'Not Extended',
-  '511': 'Network Authentication Required' 
+const httpCode= {
+	'100': 'Continue',
+	'101': 'Switching Protocols',
+	'102': 'Processing',
+	'103': 'Early Hints',
+	'200': 'OK',
+	'201': 'Created',
+	'202': 'Accepted',
+	'203': 'Non-Authoritative Information',
+	'204': 'No Content',
+	'205': 'Reset Content',
+	'206': 'Partial Content',
+	'207': 'Multi-Status',
+	'208': 'Already Reported',
+	'226': 'IM Used',
+	'300': 'Multiple Choices',
+	'301': 'Moved Permanently',
+	'302': 'Found',
+	'303': 'See Other',
+	'304': 'Not Modified',
+	'305': 'Use Proxy',
+	'307': 'Temporary Redirect',
+	'308': 'Permanent Redirect',
+	'400': 'Bad Request',
+	'401': 'Unauthorized',
+	'402': 'Payment Required',
+	'403': 'Forbidden',
+	'404': 'Not Found',
+	'405': 'Method Not Allowed',
+	'406': 'Not Acceptable',
+	'407': 'Proxy Authentication Required',
+	'408': 'Request Timeout',
+	'409': 'Conflict',
+	'410': 'Gone',
+	'411': 'Length Required',
+	'412': 'Precondition Failed',
+	'413': 'Payload Too Large',
+	'414': 'URI Too Long',
+	'415': 'Unsupported Media Type',
+	'416': 'Range Not Satisfiable',
+	'417': 'Expectation Failed',
+	'418': 'I\'m a Teapot',
+	'421': 'Misdirected Request',
+	'422': 'Unprocessable Entity',
+	'423': 'Locked',
+	'424': 'Failed Dependency',
+	'425': 'Unordered Collection',
+	'426': 'Upgrade Required',
+	'428': 'Precondition Required',
+	'429': 'Too Many Requests',
+	'431': 'Request Header Fields Too Large',
+	'451': 'Unavailable For Legal Reasons',
+	'500': 'Internal Server Error',
+	'501': 'Not Implemented',
+	'502': 'Bad Gateway',
+	'503': 'Service Unavailable',
+	'504': 'Gateway Timeout',
+	'505': 'HTTP Version Not Supported',
+	'506': 'Variant Also Negotiates',
+	'507': 'Insufficient Storage',
+	'508': 'Loop Detected',
+	'509': 'Bandwidth Limit Exceeded',
+	'510': 'Not Extended',
+	'511': 'Network Authentication Required' 
   }
 ```    
 ### REST API 和客户端库的区别
@@ -703,7 +751,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     }
   }
   // fix 版本
-  funtion click(){
+  function click(){
     const element = document.querySelector('.test')
     const id = element.id//比保重引用，消除变量循环引用
     element.onclick=function(){
@@ -713,7 +761,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
     element=null
   }
 ```
-## css部分
+## Css部分
 
 - zoom与transform scale区别
 - CSS IFC inline formatting context
@@ -869,10 +917,10 @@ function test(){
 const test=  function(){
   //todo 
 }
-/*3 匿名函数*/
-function(){
-  //todo
-}
+/*3 匿名函数/立即执行*/
+(function(){
+   //todo
+ })()
 ```
 #### 一种危险的函数使用
 > 应该使用函数表达式
@@ -1620,7 +1668,7 @@ function factory(name,age,job){
   return obj
 }
 //use
-const p=new; factory('张三','28','前端狗')
+const p=new factory('张三','28','前端狗')
 ```
 #### 创建对象-稳妥构造函数模式
 >由道格拉斯·克罗克福斯 发明了该模式——稳妥对象（durable obajects）
@@ -1637,15 +1685,14 @@ const p=new; factory('张三','28','前端狗')
 function durable(name,age,job){
   var obj= new Object()
   // todo 定义私有变量和属性
-  obj.sayName(){
-    console.log(name)//
+  obj.sayName=function(){
+    console.log(name)
   }
   return obj
 }
-
 // use
 var p1 = durable('柳十','41','CFO管钱的')
-durable.sayName()
+p1.sayName()
 ```
 #### new操作符都干吗了？
 1. 创建一个新对象
@@ -1690,21 +1737,19 @@ for(var i=0;i<5;i++){
 > 函数内部，相当于一个作用域
 ```js
 /*demo1*/
-test(){
+const test=function(){
   var t = 'hello'
   return t+',world!'
-
 }
 test()
 console.log(t)//
 
 /*demo2*/
-test(){
+const test2=function(){
   t2 = 'hello'
   return t2+',world!'
-
 }
-test()
+test2()
 console.log(t2)//可以访问到
 ```
 ### 私有变量
@@ -2044,7 +2089,7 @@ if(window.XMLHttpRequest===undefined){
   - 组织结构
     - 注册sw 是一个脚本文件`延时注册`
     - 工作时候的sw 又是另外一个脚本文件
-## nginx
+## Nginx
 > https://blog.csdn.net/tsummerb/article/details/79248015 对nginx 正向、反向带来写的比较好的文章
 ### nginx 的正向代理？
 > 我忘记是2018年在哪一家公司面试了，面试官问我，你知道什么是nginx 正向代理？我楞了下，说不知道，后面想一直知道这个知识点。直到我直到这个知识点后，傻楞了，我一个前端知道个锤子nginx 正向代理啊，我去！ 算了，本着学习的心态，不想回忆起这个沙雕面试官了。
@@ -2052,7 +2097,7 @@ if(window.XMLHttpRequest===undefined){
 -  内网服务 主动要求请求外网的地址服务， 内网服务->访问->外网 。（(⊙_⊙)?，所以我ssh 到服务器 curl 百度 ，也算了）
 - (`应该可以本来按着a 页面返回给用户，结果我让百度页面返回给用户？恩？`)
 - 以 通过代理软件访问facebook 这样的例子，比较形象
-```js
+```txt
   server{
     resolver 8.8.8.8
   }
@@ -2078,7 +2123,7 @@ if(window.XMLHttpRequest===undefined){
   - url_hash 
   > 根据url+hash 结果，每次请求的url都指定到后端固定服务器，nginx作为静态服务器下，提高缓存效率。需要安装hash 软件包
 ### 一段基于vue项目nginx 配置文件
-```js
+```txt
 {
   worker_processes  1;
   events {
@@ -2112,20 +2157,20 @@ if(window.XMLHttpRequest===undefined){
 ```
 ### 一段基于nuxt项目的nginx 配置文件
 
-## nuxt
+## Nuxt
 
-### asyncData()
+### AsyncData()
 
 - 导致session id不一直
 - 刷新都没有了
 
-### nuxt.conf.js
+### Nuxt.conf.js
 
 ## TypeScript[尚未]
 
-## lavas[尚未]
+## Lavas[尚未]
 
-## es6
+## Es6
 
 ### let、const
 
@@ -2163,11 +2208,11 @@ class Home{
   constructor(height,width){
     this.height=height;
     this.width=width
-  },
+  }
   // getter，隐藏的get属性
   get area(){
     return this.all()
-  },
+  }
   //methods
   all(){
     return this.height*this.width
@@ -2631,10 +2676,10 @@ function * hello(){
 - `.unlinkSync()` 删除文件 ，同步
   ```js
     const fs = require('fs')
-    try(
+    try{
       fs.unlinkSync('./tmp/hello.js')
       console.log('删除成功')
-    ) catch(err){
+    }catch(err){
       console.log(err,'删除失败')
     }
   ```
@@ -3280,6 +3325,44 @@ function a(){
 >  Hello world ！以下为技术题目：
 ---------------------------------------------------------------------------------------------------
 ## 一些流行的技术题目
+### 双等于号比较
+>结论：
+1. 字符串和布尔值 是一组，空字符串 和false
+2. null 和undefined 是一组，以上两组互不相等，同组的组员或者自己相等
+3. NaN属于Number，自称一派 
+
+> 如果按书写字符长度分布，用以下记忆表格
+
+| | 两字符空字符  |  三个字符NaN  |  四个字符null  |  五个字符false  |  九个字符undefined  |
+|----|----|----|----|----|----|
+||`''`|`NaN`|`null`|`false`|`undefined`|
+|`''`|<font color=green size=4em>true</font>|`false`|`false`|<font color=green size=4em>true</font>|`false`
+|`false`|<font color=green size=4em>true</font>|`false`|`false`|<font color=green size=4em>true</font>|`false`
+|`NaN`|`false`|`false`|`false`|`false`|`false`
+|`null`|`false`|`false`|<font color=green size=4em>true</font>|`false`|<font color=green size=4em>true</font>
+|`undefined`|`false`|`false`|<font color=green size=4em>true</font>|`false`|<font color=green size=4em>true</font>
+
+> 如何按分布可以用一些记忆表格
+
+|    |    |    |    |    |    |
+|----|----|----|----|----|----|
+||`''`|`false`|`NaN`|`null`|`undefined`|
+|`''`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>|`false`|`false`|`false`
+|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>|`false`|`false`|`false`
+|`NaN`|`false`|`false`|`false`|`false`|`false`
+|`null`|`false`|`false`|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>
+|`undefined`|`false`|`false`|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>
+||||||
+### 三等于号比较
+|-|-|-|-|-|
+|----|----|----|----|----|
+||`''`|`false`|`NaN`|`null`|`undefined`|
+|`''`|a|||
+|`false`|2|8||||
+|`NaN`|3|8||||
+|`null`|4|5||||
+|`undefined`|6|7|||
+||||||
 
 - ["1", "2", "3"].map(parseInt) 答案是多少？
 
@@ -3378,15 +3461,15 @@ JSON.stringify(b) === '{}'
   - Javascript 是  ECMAScript的一种实现
   - 一般讲js ：dom+bom+ECMAScript
 
-## 附 2018阿里资深web前端面试题
+## 附1__2018阿里资深web前端面试题*未附
 
-## 附 2018网易高级web前端面试题
+## 附2__2018网易高级web前端面试题*未附
 
-## 附 一次中级/高web前端面试题
+## 附3__一次中级/高web前端面试题*未附
 
-## 附 一次2018年8月15日的电话面试基础题
+## 附4__一次2018年8月15日的电话面试基础题*未附
 
-## 附 一次2018年8月17日的面试题
+## 附5__一次2018年8月17日的面试题
 
 `地址是在滨江，两个妹纸面试，问的问题都是些基础题，我比较差。
 她们说这次的要求是，招一尊大神，当顾问，解决疑难杂症，会android+ios开发。
@@ -4055,7 +4138,7 @@ console.info(c.name)
 
 ——————————————————————-
 
-## 附 一次2018年8月31日的面试题
+## 附6__一次2018年8月31日面试题
 ### 以下代码运行结果符合预期？（还是没看懂这道题目！）
 - 目前测试的结果是，入参大于100+300的时候，time span 的打印时间会在0.0x毫秒以下，否则100ms左右
 ```js
@@ -4094,7 +4177,7 @@ waitForMs2(500)
     当时选的打印是约500.077ms！回来一跑代码还是没看懂。
     可以理解为？？
 ` 
-2.
+2. 
 3. 
 4. 
 ### 以下哪个结果为真？
@@ -4102,7 +4185,6 @@ waitForMs2(500)
 	- B. null == undefined
 	- C. NaN ==NaN
 	- D. false == undefined
-
 1. `instanceof`用法 
 	- 用于测试其原型链上是否存在一个构造函数的prototype属性。
 	- 检测constructor.prototype 是否存在参数object的原型链
@@ -4158,7 +4240,7 @@ a1.prototype={
   xhr.send('hello')
   console.log(xhr.responseText)
 ```
-## 附一次2018年9月11日的面试题
+## 附7__一次2018年9月11日面试题
 	首先，这次面试印象很浅，其次对方需求，说不上来，怎么讲，就是有点鄙视对方的意思。有些术语，问到的，看出来对方不严谨。但部分面试题，还是可以学习的
 ### https://www.cnblogs.com/chenguangliang/p/5856701.html CommonJS AMD CMD
 ### 前端工程化
@@ -4210,10 +4292,10 @@ server.listen(8443);
 ### 普通函数和构造函数的区别
 ### web前端安全和常见的web安全问题
 
-## 附一次2018年9月18日的面试题
+## 附8__一次2018年9月18日面试题
 > 这一次面试经历让我大吃一惊，这不是个人能力有问题，是我的记忆出现了严重问题，截止至今，待业了两个月了。有些问题都重复，再重复，结果一面试就是忘记。比如一个请求头有哪些？我记忆力，好像没有一个key 为header，想了想还是没印象，干脆说不知道。而实际上，header就是一个大对象啊！日了狗。很绝望这一天。
-## 附一次2018年9月19日的面试题
-## 附一次2018年12月 的面试题
+## 附9__一次2018年9月19日面试题
+## 附10__一次2018年12月份面试题
 1.阅读代码，立即执行函数
 > 运算符的优先级 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
 ```js
@@ -4236,13 +4318,13 @@ console.log('Value is ' +(val==='smtg')?'Something':'Nothing');
 ```
 ### 为什么其他语言不能使用set?
 ### transform 和display none 回流问题
-## 关于术语描述，描述 `<sup>`标签
+## 描述__关于术语描述，描述`sup标签`
 
 `@1` AST ：抽象语法树。(abstract syntax tree)
 
 `@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
 
-## 关于本作知识引用来源，引用 `<sub>`标签
+## 索引__关于本作知识引用来源，描述`sub标签`
 1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)
 2. [闭包的应用场景一林枫山博客](https://www.cnblogs.com/star-studio/archive/2011/06/22/2086493.html)
 3. [IE内存泄漏问题总结](https://blog.csdn.net/rootes/article/details/8784240)
