@@ -5,12 +5,12 @@
 
 # 目录 web-advanced-frond-end
 
-1. [比较难的部分_尚未掌握]('#比较难的部分_尚未掌握')
+1. [比较难的部分_尚未掌握](#比较难的部分_尚未掌握)
 2. [Canvas](#Canvas)
 3. [vue源码学习](#vue源码学习)
 4. [Vue技术栈](#Vue技术栈)
 5. [Http协议](#Http协议)
-6. [业务技巧相关_尚未](#业务技巧相关_尚未)
+6. [业务技巧相关_尚未](#业务技巧相关)
 7. [Web安全问题](#Web安全问题)
 8. [性能提升](#性能提升)
 10. [Css部分](#Css部分)
@@ -22,7 +22,7 @@
 16. [Nginx](#Nginx)
 17. [Nuxt](#Nuxt)
 18. [TypeScript_尚未](#TypeScript_尚未)
-19. [Lavas](#Lavas)
+19. [Lavas](#Lavas_尚未)
 20. [Es6](#Es6)
 21. [Node.js](#Node.js)
 22. [继承](#继承)
@@ -2660,7 +2660,7 @@ function * hello(){
 - 有`*`星号function * a(){}
 - 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
 
-## node
+## Node.js
 - 【全文】狼叔：如何正确的学习Node.js https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7
 ### fs
 
@@ -3461,9 +3461,9 @@ JSON.stringify(b) === '{}'
   - Javascript 是  ECMAScript的一种实现
   - 一般讲js ：dom+bom+ECMAScript
 
-## 附1__2018阿里资深web前端面试题_未附
+## 附1__2018年阿里资深web前端面试题_未附
 
-## 附2__2018网易高级web前端面试题_未附
+## 附2__2018年网易高级web前端面试题_未附
 
 ## 附3__2018年中级/高web前端面试题_未附
 
