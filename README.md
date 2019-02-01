@@ -1866,13 +1866,119 @@ a.apply(null,([ob],cc))
 ## BOM对象
 
 ### window对象
-
 - 浏览器窗口
+### location对象
+> 是window 对象也是document对象。其中search不实用，需要改造函数来实现
 
+>  可以去往这个对象增加新属性，但无法对原来的属性值作出随意变更赋值
+
+|属性|方法|值|描述|
+|----|----|----|----|
+|ancestorOrigins||||
+|hash||||
+|hostname||`www.baidu.com`||
+|href||`https://www.baidu.com/#dsad?dsd=dsd`||
+|origin||`https://www.baidu.com`||
+|pathname||`/`||
+|protocol||`https`||
+|search||||
+||assign(url)||`生成一个location并跳转`|
+||reload()|||
+||replace()||`传递true，则强制刷新`|
+||toString()|||
+### Navigator对象
+> 可以去往这个对象增加新属性，但无法对原来的属性值作出随意变更赋值。可以使用 `Object.defineProperty(navigator,'userAgent',{value:'xxoo'})` 来修改
+- chrome 和firefox 参数都有自己的，相同的属性或者同属性的值挺少的。
+
+- TODO 制作node去判断用户代理字段的特征值
+
+- 红宝石书中有一段检查浏览器、厂商、平台、操作系统的完全代码
+
+### Screen 对象
+> 用处不大，表明客户端的能力，DPI之类 屏幕像素宽高等
+
+### History 对象
+> 无法得知浏览过的url，但可以通过实现前进和后退
+- go(-)
+
+|属性|方法|值|描述|
+|----|-----|----|----|
+||go(1)|整数|整数，前进，负数，后退|
+||back()||等同于go(负数)|
+||forward()||等同于go(正数)|
+|length||整数，0就是第一个目标页面|表示历史记录有几条|
+|||||
 ## DOM对象
+
 
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
+
+### Document对象 属性+方法
+> http://www.runoob.com/jsref/dom-obj-document.html
+
+|属性|方法|描述
+|---|---|---|
+|document.activeElement||返回当前获取焦点元素|
+||documeent.addEventListener()|向文档添加句柄|
+||document.adoptNode(node)||
+|document.anchors||`a标签中需要含有name才能获取！`|
+|document.baseURI||返回绝对基础URI|
+|document.body||返回文档body元素|
+||document.close()|关闭document.open的输出流 [document.close]('./static/js/document.js#L1')|
+|document.cookie||返回所有的cookie字符串|
+||document.createAttribute()|创建属性节点|
+||document.createComment()|竟然能创建一段注释的节点，亮瞎狗眼|
+||document.createDocumentFragment()|创建空DocumentFragment并返回|
+||document.createElement()|创建元素节点|
+||document.createTextNode()|创建文档节点,不太实际|
+|document.doctype|||
+|document.documentElement||返回根节点|
+|document.documentMode||返回渲染模式|
+|document.documentURI|||
+|document.domain|||
+|document.embeds|||
+|document.forms|||
+||document.`getElementByClassName()`|返回指定class 的NodeList对象|
+||document.`getElementById()`|id 第一个对象引用|
+||document.`getElementByName`|名称对象集合|
+||document.`getElementByTagName`|标签对象集合|
+|document.`images`||返回所有Image对象引用|
+|document.implementation||啥玩意|
+||document.import()||
+|document.inputEncoding||返回文档编码方式，比如`UTF-8`|
+|document.lastModified||返回文档最后被修改的时间|
+|document.links||返回所有a标签|
+||document.normalize()|删除空文本节点，并连接相邻及节点，createTextNode 创建的节点。|
+||document.normalizeDocument()||
+||document.open()|打开一个流，以收集任何document.write | writenlen()方法的输出 [document.close]('./static/js/document.js#L1')|
+||`document.querySelector()`|匹配css 选择器的第一个元素|
+||`document.querySelectorAll()`|返回匹配css选择的所有元素节点的列表|
+|document.readyState||返回文档状态 `uninitialized ` `loading ` `interactive ` `complete `|
+|document.referer||返回上一个文档的URL|
+||document.removeEventListener()|移除addEventListener()添加的句柄|
+|document.scripts||返回所有脚本的集合|
+|document.title||返回title|
+|document.URL||返回完整的URL|
+||document.write()|写html表达式或者js代码，重写整个文档|
+||document.writelen()|等同write，但带有换行符|
+||||
+### HTML DOM 属性对象
+
+|属性|方法|描述
+|---|---|---|
+|attr.idId||是id，true，否则false|
+|attr.name|||
+|attr.value|||
+|attr.specified||返回被指定的属性，true，否则false|
+||nodemap.getNamedItem|`btn.attributes.getNamedItem("onclick").textContent;` 返回onclick|
+||nodemap.item()||
+||nodemap.length|查看元素带有多少个属性。`error`|
+||nodemap.removeNamedItem|移除指定属性节点|
+||nodemap.setNamedItem|设置指定属性节点，通过名称|
+||||
+### HTML DOM 元素对象 
+> http://www.runoob.com/jsref/dom-obj-all.html
 
 |属性|方法|描述
 |---|---|---|
@@ -1917,7 +2023,7 @@ a.apply(null,([ob],cc))
 |element.textContent|||
 |nodeList.length|||
 ||element.addEventListener()|指定元素添加事件句柄？？句柄啥玩意|
-||element.appendChild()|添加一个子元素|
+||element.`appendChild()`|添加一个子元素|
 ||element.cloneNode()||
 ||element.compareDocumentPosition()||
 ||element.focus()||
@@ -1931,7 +2037,7 @@ a.apply(null,([ob],cc))
 ||element.hasAttributes()||
 ||element.hasChildNodes()||
 ||element.hasFocus()||
-||element.insertBefore()||
+||element.`insertBefore()`|插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore]("./static/js/document.js/#L26")|
 ||element.isDefaultNamespace()||
 ||element.isEquaNode()||
 ||element.isSameNode()||
@@ -1943,7 +2049,7 @@ a.apply(null,([ob],cc))
 ||element.removeAttributeNode()||
 ||element.removeChild()||
 ||element.removeEventLisenter()||
-||element.replaceChild()||
+||element.`replaceChild()`|替换|
 ||element.setAttribute()||
 ||element.setAttributeNode()||
 ||element.setIdAttribute()||
@@ -1952,45 +2058,41 @@ a.apply(null,([ob],cc))
 ||element.toString()||
 ||nodeList.item()||
 ||||
+### HTML DOM事件，见 `## DOM事件`
+> 单独拎出来
 
+### Console 对象
+### cssStyle 对象
+|属性|方法|描述|
+|----|----|----|
+|cssText||style属性,`document.body[0].style.cssText`|
+|length|||
+|parentRule|||
+||getPropertyPriority()|指定是否设置了 `!important` 属性|
+||getPropertyValue()|返回指定的css属性值|
+||item()|通过索引方式返回css声明的css属性名|
+||removeProperty()|移除css声明中的css属性|
+||setProperty()|在css声明块中新建或者修改css属性|
+||||
+## DOM事件`TODO`
+> http://www.runoob.com/jsref/dom-obj-event.html
+### 鼠标
+### 键盘
+### 框架/对象 事件
+### 表单事件
+### 剪切板
+### 打印事件
+### 拖动事件
+### 多媒体(Media)事件
+### 动画事件
+### 过渡事件
+### 其他事件
+### 事件对象
+## 一些常用的 API
 
-
-### elment.accessKey
-### addEventListener()
-### replaceChild()
-```js
-  var textnode=document.createTextNode("Water");
-  var item=document.getElementById("myList").childNodes[0];
-  item.replaceChild(textnode,item.childNodes[0]);
-```
-
-### appendChild()
-```js
-
-  var node=document.createElement("LI");
-  var textnode=document.createTextNode("Water");
-  node.appendChild(textnode);
-  document.getElementById("myList").appendChild(node);
-
-```
-### removeChild()
-```js
-  var list=document.getElementById("myList");
-  list.removeChild(list.childNodes[0]);
-
-```
-### insertBefore() 在父级里面找到某个子级的后面插入一个节点标签
-> 已选择的.insertBefore(parentNode,ChildNode)
-```js
-  var a=document.createElement('a');
-  a.href='sb';
-  a.textContent='sbsbsbbs'
-  var sping= document.querySelector('li:nth-child(4)')
-  document.querySelector('ul').insertBefore(a,sping)
-```
 ### document.querySelector API
 
->2018年11月29日，在一家面试到这个API，我清晰的笃定说其实这个API是可以向JQuery一样使用css的选择器的，去选择第四的li标签，然后被驳回了，说只能用document.querySelectorAll
+>2018年11月29日，在一家面试到这个API，我清晰的笃定说其实这个API是可以像JQuery一样使用css的选择器的，去选择第四的li标签，然后被驳回了，说只能用document.querySelectorAll
 但通过测试来看，其实是可以的。
 
 ```js
@@ -1998,7 +2100,7 @@ a.apply(null,([ob],cc))
   /*或者*/
   document.querySelector('li:nth-child(3)') 
 ```
-### XMLHttpRequest
+####XMLHttpRequest
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
 
