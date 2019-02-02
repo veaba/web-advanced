@@ -1,50 +1,43 @@
 
 > 进阶web高级前端知识体系：来自个人的面试经历、学习笔记、参考大神们的blog，以及常见面试题！不代表内容的正确性！！！！有一部分还在带着问号！以下内容是随手记下的笔记，还在学习中，等哪天觉得成熟了，才会整理更好的内容梳理。 by@veaba
-
 -----------------------------------------------------------------
-
 # 目录 web-advanced-frond-end
-
-1. [比较难的部分_尚未掌握](#比较难的部分_尚未掌握)
-2. [Canvas](#Canvas)
-3. [vue源码学习](#vue源码学习)
-4. [Vue技术栈](#Vue技术栈)
-5. [Http协议](#Http协议)
-6. [业务技巧相关_尚未](#业务技巧相关)
-7. [Web安全问题](#Web安全问题)
-8. [性能提升](#性能提升)
-10. [Css部分](#Css部分)
-11. [Js概念_基础知识](#Js概念_基础知识)
-12. [JavaScript设计模式](#JavaScript设计模式)
-13. [BOM对象](#BOM对象)
-14. [DOM对象](#DOM对象)
-15. [PWA](#PWA)
-16. [Nginx](#Nginx)
-17. [Nuxt](#Nuxt)
-18. [TypeScript_尚未](#TypeScript_尚未)
-19. [Lavas](#Lavas_尚未)
-20. [Es6](#Es6)
-21. [Node.js](#Node.js)
-22. [继承](#继承)
-23. [原型与原型链](#原型与原型链)
-
-24. [一些流行的技术题目](#一些流行的技术题目)
-
-25. [附1__2018年阿里资深web前端面试题_未附](#附1__2018年阿里资深web前端面试题_未附)
-26. [附2__2018年网易高级web前端面试题_未附](#附2__2018年网易高级web前端面试题_未附)
-27. [附3__2018年中级/高级web前端面试题_未附](#附3__2018年中级/高级web前端面试题_未附)
-28. [附4__2018年8月15日电话面试基础题_未附](#附4__2018年8月15日电话面试基础题_未附)
-29. [附5__2018年8月17日面试题](#附5__2018年8月17日面试题)
-30. [附6__2018年8月31日面试题](#附6__2018年8月31日面试题)
-31. [附7__2018年9月11日面试题](#附7__2018年9月11日面试题)
-32. [附8__2018年9月18日面试题](#附8__2018年9月18日面试题)
-33. [附9__2018年9月19日面试题](#附9__2018年9月19日面试题)
-34. [附10__2018年12月份面试题](#附10__2018年12月份面试题)
-
-35. [描述__关于术语描述sup标签](#描述__关于术语描述sup标签)
-36. [索引__关于本作知识引用来源sub标签](#索引__关于本作知识引用来源sub标签)
-
------------------------------------------------------------------
+- [比较难的部分_尚未掌握](#比较难的部分_尚未掌握)
+- [Canvas](#Canvas)
+- [vue源码学习](#vue源码学习)
+- [Vue技术栈](#Vue技术栈)
+- [Http协议](#Http协议)
+- [业务技巧相关_尚未](#业务技巧相关)
+- [Web安全问题](#Web安全问题)
+- [性能提升](#性能提升)
+- [Css部分](#Css部分)
+- [Js概念_基础知识](#Js概念_基础知识)
+- [JavaScript设计模式](#JavaScript设计模式)
+- [BOM对象](#BOM对象)
+- [DOM对象](#DOM对象)
+- [PWA](#PWA)
+- [Nginx](#Nginx)
+- [Nuxt](#Nuxt)
+- [TypeScript_尚未](#TypeScript_尚未)
+- [Lavas](#Lavas_尚未)
+- [Es6](#Es6)
+- [Node.js](#Node.js)
+- [继承](#继承)
+- [原型与原型链](#原型与原型链)
+- [一些流行的技术题目](#一些流行的技术题目)
+- [附1__2018年阿里资深web前端面试题_未附](#附1__2018年阿里资深web前端面试题_未附)
+- [附2__2018年网易高级web前端面试题_未附](#附2__2018年网易高级web前端面试题_未附)
+- [附3__2018年中级/高级web前端面试题_未附](#附3__2018年中级/高级web前端面试题_未附)
+- [附4__2018年8月15日电话面试基础题_未附](#附4__2018年8月15日电话面试基础题_未附)
+- [附5__2018年8月17日面试题](#附5__2018年8月17日面试题)
+- [附6__2018年8月31日面试题](#附6__2018年8月31日面试题)
+- [附7__2018年9月11日面试题](#附7__2018年9月11日面试题)
+- [附8__2018年9月18日面试题](#附8__2018年9月18日面试题)
+- [附9__2018年9月19日面试题](#附9__2018年9月19日面试题)
+- [附10__2018年12月份面试题](#附10__2018年12月份面试题)
+- [描述__关于术语描述sup标签](#描述__关于术语描述sup标签)
+- [索引__关于本作知识引用来源sub标签](#索引__关于本作知识引用来源sub标签)
+------------------------------------------------------------------
 
 ## 比较难的部分_尚未掌握
 
@@ -1908,8 +1901,21 @@ a.apply(null,([ob],cc))
 ||forward()||等同于go(正数)|
 |length||整数，0就是第一个目标页面|表示历史记录有几条|
 |||||
-## DOM对象
 
+### 存储对象-seesionStorage 回话存储 localStorage 本地存储
+
+|属性|方法|描述|实例|
+|----|----|----|----|
+|length||||
+||key(n)|||
+||getItem(keyname)|||
+||setItem(keyname,value)|||
+||removeItem(keyname)|||
+||clear()|||
+|||||
+
+
+## DOM对象
 
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
@@ -1925,7 +1931,7 @@ a.apply(null,([ob],cc))
 |document.anchors||`a标签中需要含有name才能获取！`|
 |document.baseURI||返回绝对基础URI|
 |document.body||返回文档body元素|
-||document.close()|关闭document.open的输出流 [document.close]('./static/js/document.js#L1')|
+||document.close()|关闭document.open的输出流 [document.close](/static/js/document.js#L1)|
 |document.cookie||返回所有的cookie字符串|
 ||document.createAttribute()|创建属性节点|
 ||document.createComment()|竟然能创建一段注释的节点，亮瞎狗眼|
@@ -1951,7 +1957,7 @@ a.apply(null,([ob],cc))
 |document.links||返回所有a标签|
 ||document.normalize()|删除空文本节点，并连接相邻及节点，createTextNode 创建的节点。|
 ||document.normalizeDocument()||
-||document.open()|打开一个流，以收集任何document.write | writenlen()方法的输出 [document.close]('./static/js/document.js#L1')|
+||document.open()|打开一个流，以收集任何document.write | writenlen()方法的输出 [document.close](/static/js/document.js#L1)|
 ||`document.querySelector()`|匹配css 选择器的第一个元素|
 ||`document.querySelectorAll()`|返回匹配css选择的所有元素节点的列表|
 |document.readyState||返回文档状态 `uninitialized ` `loading ` `interactive ` `complete `|
@@ -2037,7 +2043,7 @@ a.apply(null,([ob],cc))
 ||element.hasAttributes()||
 ||element.hasChildNodes()||
 ||element.hasFocus()||
-||element.`insertBefore()`|插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore]("./static/js/document.js/#L26")|
+||element.`insertBefore()`|插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore]("/static/js/document.js/#L26)|
 ||element.isDefaultNamespace()||
 ||element.isEquaNode()||
 ||element.isSameNode()||
@@ -2077,17 +2083,187 @@ a.apply(null,([ob],cc))
 ## DOM事件`TODO`
 > http://www.runoob.com/jsref/dom-obj-event.html
 ### 鼠标
+|事件|描述|例子|
+|----|----|----|
+|`onclick`||`document.body.onclick=function(){}`|
+|oncontextmenu|对内容右键，firefox支持 contentmenu||
+|onmousedown|||
+|onmouseenter|||
+|onmouseleave|||
+|onmousemove|||
+|onmouseout|||
+|onmouseup|||
+||||
 ### 键盘
+|事件|描述|例子|
+|----|----|----|
+|onkeydown|||
+|onkeypress|||
+|onkeyup|||
+||||
 ### 框架/对象 事件
+|事件|描述|例子|
+|----|----|----|
+|onabort|||
+|`onbeforeload`|||
+|`onerror`|图片src加载错误，常用||
+|onhashchange|||
+|`onload`|||
+|onpageshow|一打开页面就出现，一般在body||
+|onpagehide|用户离开网页时触发||
+|onresize|||
+|onscroll|||
+|onunload|body frameset||
+||||
 ### 表单事件
+|事件|描述|例子|
+|----|----|----|
+|onblur|||
+|onchange|||
+|onfocus|||
+|onfocusin|||
+|onfocusout|||
+|oninput|||
+|onreset|||
+|onsearch|input="search"||
+|onselect|选取文档||
+|onsubmit|||
+||||
 ### 剪切板
+|事件|描述|例子|
+|----|----|----|
+|oncopy|||
+|oncut|||
+|onpaste|||
+||||
 ### 打印事件
+|属性|描述|例子|
+|----|----|----|
+|onafterprint|||
+|obbeforeprint|||
+||||
 ### 拖动事件
+|事件|描述|例子|
+|----|----|----|
+|ondrag|||
+|ondraged|||
+|ondragenter|||
+|ondragleave|||
+|ondragover|||
+|ondragstart|||
+|ondrop|||
+||||
 ### 多媒体(Media)事件
+|事件|描述|例子|
+|----|----|----|
+|onabort|||
+|oncanplay|||
+|oncanplaythrough|||
+|ondurationchange|||
+|onemptied|||
+|onended|||
+|onerror|||
+|onloadeddata|||
+|onloadedmetadata|||
+|onloadstart|||
+|onpause|||
+|onplay|||
+|onplaying|||
+|onprogress|||
+|onratechange|||
+|onseeked|||
+|onstalled|||
+|onsuspend|||
+|ontimeupdate|||
+|onvolumechange|||
+|onwaiting|||
+||||
 ### 动画事件
+|事件|描述|例子|
+|----|----|----|
+|animationed|||
+|animationteration|重复播放||
+|animationstart|||
+||||
 ### 过渡事件
+|事件|描述|例子|
+|----|----|----|
+|transitionend||css过渡后触发|
+||||
 ### 其他事件
+|事件|描述|例子|
+|----|----|----|
+|onmeesage|websocket、 web worker、 event source 、frame||
+|onmousewheel->onwheel|||
+|ononline|||
+|onoffine|||
+|onpopstate|||
+|onshow|||
+|onstorage|||
+|ontoggle|`<details>`||
+|onwheel|滚轮||
+||||
 ### 事件对象
+|属性|方法|静态变量|描述|例子|
+|----|----|----|----|----|
+|||CAPTURING-PHASE|当前事件阶段为——捕获阶段||
+|||AT-TARGET|当前事件时目标阶段，在评估目标事件||
+|||BUBBLING-PHASE|当前的事件为——冒泡阶段||
+|bubbles|||||
+|cancelable|||||
+|currentTarget|||||
+|eventPhase|||||
+|target|||||
+|timeStamp|||||
+|type|||||
+||initEvent()||||
+||`prevenDefault()`||||
+||`stopPropation()`||||
+|||||||
+### 目标事件对象
+
+|属性|方法|描述|例子|
+|----|----|----|----|
+||`addEventListener()`|允许在目标事件中监听事件（IE8=attachEvent()）||
+||dispatchEvent()|发送事件到监听器(IE8=fireEvent())||
+||removeEventListener()|运行一次注册在事件目标上的监听事件（IE8=detachEvent()）||
+|||||
+### 事件监听对象
+
+|属性|方法|描述|例子|
+|----|----|----|----|
+||handleEvent()|把任意对象注册为事件处理程序||
+|||||
+
+### 文档事件对象
+
+|属性|方法|描述|例子|
+|----|----|----|----|
+||createEvent()|||
+|||||
+### 鼠标/键盘事件对象
+
+|属性|方法|描述|例子|
+|----|----|----|----|
+|altKey||||
+|button||event.button可以知道是鼠标的那个按键 左、右、中||
+|clientX||||
+|clientY||||
+|ctrlKey||||
+|Location||||
+|charCode||||
+|key||||
+|keyCode||||
+|which||||
+|metaKey||||
+|relatedTarget||||
+|screenX||||
+|screenY||||
+|shiftKey||||
+||initMouseEvent()|初始化鼠标事件对象|||
+||initKeyboardEvent()|初始化键盘事件对象|||
+||||||
+## HTML5
 ## 一些常用的 API
 
 ### document.querySelector API
