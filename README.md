@@ -188,6 +188,8 @@ cnpm run dev:test
   - 包含整个代码库中共享的实用程序。
 
 ## Vue技术栈
+- [更多关于VUE API人工整理手记，见 /docs/vue-api.md @veaba](./docs/vue-api.md)
+
 ```html
 <div id="app" @click="send">
 {{message}}
@@ -3621,36 +3623,35 @@ function a(){
 3. NaN属于Number，自称一派 
 
 > 如果按书写字符长度分布，用以下记忆表格
+- 前两个，后两个交叉
+- NaN全false
 
-| | 两字符空字符  |  三个字符NaN  |  四个字符null  |  五个字符false  |  九个字符undefined  |
-|----|----|----|----|----|----|
-||`''`|`NaN`|`null`|`false`|`undefined`|
-|`''`|<font color=green size=4em>true</font>|`false`|`false`|<font color=green size=4em>true</font>|`false`
-|`false`|<font color=green size=4em>true</font>|`false`|`false`|<font color=green size=4em>true</font>|`false`
-|`NaN`|`false`|`false`|`false`|`false`|`false`
-|`null`|`false`|`false`|<font color=green size=4em>true</font>|`false`|<font color=green size=4em>true</font>
-|`undefined`|`false`|`false`|<font color=green size=4em>true</font>|`false`|<font color=green size=4em>true</font>
+|    |    |    |    |    |
+|----|----|----|----|----|
+|a==a|`''`|`null`|`false`|`undefined`|
+|`''`|true|`false`|true|`false`|`false`
+|`null`|`false`|true|`false`|true|
+|`false`|true|`false`|true|`false`
+|`undefined`|`false`|true|`false`|true|
 
-> 如何按分布可以用一些记忆表格
+> 如何按分布可以用一些记忆表格(这个比较好记忆)
 
-|    |    |    |    |    |    |
-|----|----|----|----|----|----|
-||`''`|`false`|`NaN`|`null`|`undefined`|
-|`''`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>|`false`|`false`|`false`
-|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>|`false`|`false`|`false`
-|`NaN`|`false`|`false`|`false`|`false`|`false`
-|`null`|`false`|`false`|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>
-|`undefined`|`false`|`false`|`false`|<font color=green size=4em>true</font>|<font color=green size=4em>true</font>
+|    |    |    |    |    |
+|----|----|----|----|----|
+|a==a|`''`|`false`|`null`|`undefined`|
+|`''`|true|true|`false`|`false`|`false`
+|`false`|true|true|`false`|`false`|`false`
+|`null`|`false`|`false`|true|true
+|`undefined`|`false`|`false`|true|true
 ||||||
 ### 三等于号比较
-|-|-|-|-|-|
+|-|-|-|-|-
 |----|----|----|----|----|
-||`''`|`false`|`NaN`|`null`|`undefined`|
-|`''`|a|||
-|`false`|2|8||||
-|`NaN`|3|8||||
-|`null`|4|5||||
-|`undefined`|6|7|||
+|三等于比较a===a|`''`|`false`|`null`|`undefined`|
+|`''`|`true`|false|false|false|
+|`false`|false|`true`|false|false|
+|`null`|false|false|false|`true`|false|
+|`undefined`|false|false|false|false|`true`|
 ||||||
 
 - ["1", "2", "3"].map(parseInt) 答案是多少？
