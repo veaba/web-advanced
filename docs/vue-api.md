@@ -4,13 +4,52 @@ ____________________________________________________________________
 - @vue API 文档 cn https://cn.vuejs.org/v2/api
 - @desc 以下内容为@veaba 根据自己的理解和参考文档整理
 - @疑问 为什么有了en 和cn api文档，我还这么抄一遍人家官方的大纲？
-> 答：里面会掺杂 我过去两年使用vue作为企业级开发框架的实践化经验，会以demo的形式 加以解释，以便加深记忆。整理出来的原因是，本人记忆力日渐衰减，我必须以文本形式整理出来加以记忆，不然等于没学没做过项目一样，vue还是有很多我还没用过的地方，有些理解比较薄弱或者新增加的特性，还没实践到实际的企业项目开发中，毕竟还在学习中，如果有理解不对的地方，麻烦提issue，一起进步，一些学习
+> 答：里面会掺杂 我过去两年使用vue作为企业级开发框架的实践化经验，会以demo的形式加以解释，以便加深记忆。整理出来的原因是以为，本人记忆力日渐衰减，我必须以文本形式整理出来加以记忆，不然等于没学没做过项目一样，vue还是有很多我还没用过的地方，有些理解比较薄弱或者新增加的特性，还没实践到实际的企业项目开发中，毕竟还在学习中。如果有理解不对的地方，麻烦提issue，一起进步，一起学习
 - @version vue v2 对应2019年2月15日 官方en版本
 - @TODO 后续如果内容比较多的话，可能会拆为子 仓库。
+- @TODO 翻写 一个vue框架！2020 Flag
 ____________________________________________________________________
 ## 从prototype角度 去看`vue函数`的结构
-> 在用vue开发的网站上，在console 里输入 Vue.prototype 去看 这个vue 构造函数,vue.version 2.6.6
-- 
+> 在用vue开发的网站上，在console 里输入 Vue.prototype 去看 这个vue 构造函数，vue.version 2.6.6
+
+![vue-prototype](/static/images/vue-prototype.png)
+- `$delete`: function del(target,key)
+- `$destroy`: funcion()
+- `$emit`: function(event)
+- `$forceUpdate`:function()
+- `$inspect`:function()
+- `$mount`:function(el,hydrating)
+- `$nextTick`:function(fn)
+- `$off`:function(event,fn)
+- `$on`:function(event,fn) 
+- `$once`:function(event,fn)
+- `$set`:funtion(target,key,val)
+- `$watch`:function(expOrFn,cb,options)
+- `__patch__`:patch(oldVnode,vnode,hydrating,removeOnly)
+- `_b`:function bindObjectProps(data,tag,value,asProp, isSync)
+- `_d`:function bindDynamicKeys(baseObj,values)
+- `_e`:function (text)
+- `_f`:funtion resolveFilter(id)
+- `_g`:bindObjectListeners(data,value)
+- `_i`:function looseIndexOf(val,render)
+- `_init`:function options()
+- `_k`:checkKeyCodes(eventKeyCode,key,builtKeyCode,eventKeyName,builtKeyName)
+- `_l`:function renderList(val,render)
+- `_m`:function renderStatic(index,isInFor)
+- `_n`:function toNumber(val)
+- `_o`:function markOnce(tree,index,key)
+- `_p`:function prependModifier(value,symbol)
+- `_q`:function looseEqual(a,b)
+- `_render`:function()
+- `_s`:function toString(val)
+- `_t`:function renderSlot(name,fallback,props,bindObject)
+- `_u`:function resolveScopedSlots(fns,res)
+- `_update`:function (vnode,hydrating)
+- `_v`:createTextVNode(val)
+- `$data`:undefined
+- `$isServer`:false
+- `$props`:undefined
+- `$ssrContent`:undefined
 ## 从函数对象角度去看，`vue` 内部属性
 > 因为`Vue`实质上，就是一个函数对象，这时候，我们通过`Object.keys(Vue)`去打印出来它本身可枚举属性组成的数组，这和for... in 一样。`Object.keys(Vue)`只能打印属性，无法打印方法，如果是打印Vue的方法呢？
 ## 基础概念
