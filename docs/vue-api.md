@@ -52,6 +52,29 @@ ____________________________________________________________________
 - `$ssrContent`:undefined
 ## 从函数对象角度去看，`vue` 内部属性
 > 因为`Vue`实质上，就是一个函数对象，这时候，我们通过`Object.keys(Vue)`去打印出来它本身可枚举属性组成的数组，这和for... in 一样。`Object.keys(Vue)`只能打印属性，无法打印方法，如果是打印Vue的方法呢？
+- `util`
+    - `defineReactive`
+    - `extend`
+    - `mergeOptions`
+    - `warn`
+- `set`: fn 
+- `delete`: fn 
+- `nextTick`: fn 
+- `observable`: fn 
+- `options`
+    - `components`
+    - `directives`
+    - `filters`
+    - `_base`
+- `use`: fn 
+- `mixin`: fn 
+- `cid`: 0
+- `extend`: fn 
+- `component`: fn 
+- `directive`: fn 
+- `filter`: fn 
+- `version`:"2.6.6"
+- `compile`: fn 
 ## 基础概念
 ## 疑问
 - 如果把vue 看做一种设计模式，那么 实例化  `const vue = new Vue() `这个过程中，vue 是什么设计模式 的呢？
@@ -75,22 +98,129 @@ Vue.prototyoe.$emit=function(){
 
 ```
 - 从main.js中看到。vue
+
+- [疑问]为什么在`vue.prototype` 找不到`config`呢？
+
 ## 重点
 ____________________________________________________________________
-## Global config
+## Global config `为什么有这个，Vue函数里面找不到，或者说应该怎么找，如果不看文档情况下~`
+### `config.silent`
+### `config.optionMergeStrategies`
+### `config.devtools`
+### `config.errorHandler`
+### `config.warnHangdler`
+### `config.ignoreElements`
+### `config.keyCodes`
+### `config.preformance`
+### `config.productionTip`
 ## Global API
+### `Vue.extend`
+### `Vue.nextTick`
+### `Vue.set`
+### `Vue.delete`
+### `Vue.directive`
+### `Vue.filter`
+### `Vue.component`
+### `Vue.use`
+### `Vue.mixin`
+### `Vue.compile`
+### `Vue.observable`
+### `Vue.version`
 ## Options/Data
+### `data`
+### `props`
+### `propsData`
+### `computed`
+### `methods`
+### `watch`
 ## Options/DOM
+### `el`
+### `template`
+### `render`
+### `renderError`
 ## Options/Lifecycle Hooks
+### beforeCreate
+### created
+### beforeMount
+### mounted
+### beforeUpdate
+### updated
+### activated
+### deactivated
+### beforeDestroy
+### destroyed
+### errorCaptured
 ## Options/Assets
+### directives
+### filters
+### components
 ## Options/Composition
+### parent
+### mixins
+### extends
+### provide/inject
 ## Options/Mics
+### name
+### delimiters
+### functional
+### model
+### inheriAttrs
+### comments
 ## Instance Properties
-## Instanee Methods/Data
+### `vm.$data`
+### `vm.$props`
+### `vm.$el`
+### `vm.$options`
+### `vm.$parent`
+### `vm.$root`
+### `vm.$children`
+### `vm.$slots`
+### `vm.$copedSlots`
+### `vm.$refs`
+### `vm.$isServer`
+### `vm.$attrs`
+### `vm.$listeners`
+## Instance Methods/Data
+### `vm.$watch`
+### `vm.$set`
+### `vm.$delete`
 ## Instance Methods/Events
+### `vm.$on`
+### `vm.$once`
+### `vm.$off`
+### `vm.$emit`
 ## Instance Methods/Lifecle
+### `vm.$mount`
+### `vm.$forceUpdate`
+### `vm.$nextTick`
+### `vm.$destroy`
 ## Directives
+### `v-text`
+### `v-html`
+### `v-show`
+### `v-if`
+### `v-else`
+### `v-else-if`
+### `v-for`
+### `v-on`
+### `v-bind`
+### `v-model`
+### `v-slot`
+### `v-pre`
+### `v-cloak`
+### `v-once`
 ## Special Attributes
+### key
+### ref
+### is
+### slot
+### slot-scope
+### scope
 ## Built-ln Components
+### component
+### transtion
+### transtion-group
+### keep-alive
+### slot
 ## VNode-Interface
 ## Server-Side Rendering
