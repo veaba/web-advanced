@@ -190,7 +190,7 @@ cnpm run dev:test
 ## Vue技术栈
 - [更多关于VUE API人工整理手记，见 /docs/vue-api.md @veaba](./docs/vue-api.md)
 
-```html
+```vue
 <div id="app" @click="send">
 {{message}}
 </div>
@@ -226,7 +226,7 @@ export default {
   },
   mounted:function(){
     this.timer=setInterval(()=>{
-      if(this.second===0) this.backPre()
+      if(this.second===0) this.backPre();
       else this.second--
     },1000)
   },
@@ -250,21 +250,25 @@ export default {
 | subs |订阅|
 | patch |打补丁？|
 | deps |依赖关系|
+
 - Vue 响应式原理分析
 
   - 核心 Object.defineProperty 在一个对象上定义一个新属性，修改一个对象的现有属性，并返回这个对象。[mdn了解defineProperty](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
     - 语法
-    ```flow js
-      /**
-      *@obj 要定义属性的对象
-      *@prop 要定义或修改的属性的名称
-      *@descriptor 定义或修改的属性描述符，一个对象。核心的是get/set
-      * get 给属性提供一个getter方法，访问该属性则触发getter方法
-      * set 给属性提供一个setter方法，当对属性修改时触发setter方法
-      */ 
-      Object.defineProperty(obj,prop,descriptor)
-    ```
+ 
+	```js
+	/**
+	*@obj 要定义属性的对象
+	*@prop 要定义或修改的属性的名称
+	*@descriptor 定义或修改的属性描述符，一个对象。核心的是get/set
+	* get 给属性提供一个getter方法，访问该属性则触发getter方法
+	* set 给属性提供一个setter方法，当对属性修改时触发setter方法
+	*/ 
+	Object.defineProperty(obj,prop,descriptor)
+	  
+	```
     - 一旦对象拥有了getter和setter，可以认为这个对象是响应式对象
+  
   - vue 把什么对象变成响应式对象?
     - initState。初始化就是props、data变成响应式对象
       - _init 方法执行时候，会执行initState(vm)方法，定义在src/core/instance/state.js
@@ -276,41 +280,43 @@ export default {
 
   - proxy 代理
     - 作用时将props 和data上的属性都代理到vm实例上。
-    ```flow.js
-    let comP={
-      props:{
-        msg:"hello"
-      },
-      methods:{
-        say(){
-          /*
-          *@desc  say函数通过this.msg访问到定义在props上的msg，这个过程就发生在proxy
-          */
-          console.log(this.msg)
-        }
-      }
-    }
-   
-    const sharePropertyfinition={
-      enumerable:true,
-      configurable:true,
-      get:noop,
-      set:noop
-    }
-     /*
-     *@desc proxy函数
-     *@desc 通过Object.defineProperty 把target[sourceKey][key]读写变成target[key]
-     */
-    export function proxy(target:Object,sourceKey:string,key:string){
-      sharePropertyDefinition.get=function proxyGetter(){
-        return this[sourceKey][key]
-      }
-      sharePropertyDefinition.set=function proxySetter(val){
-        this[sourceKey][key]=val
-      }
-      Object.defineProperty(target,key,sharePropertyDefinition)
-    }
-    ```
+    
+	```js
+	let comP={
+	  props:{
+	    msg:"hello"
+	  },
+	  methods:{
+	    say(){
+	      /*
+	      *@desc  say函数通过this.msg访问到定义在props上的msg，这个过程就发生在proxy
+	      */
+	      console.log(this.msg)
+	    }
+	  }
+	};
+	
+	const sharePropertyfinition={
+	  enumerable:true,
+	  configurable:true,
+	  get:noop,
+	  set:noop
+	};
+	 /*
+	 *@desc proxy函数
+	 *@desc 通过Object.defineProperty 把target[sourceKey][key]读写变成target[key]
+	 */
+	export function proxy(target,sourceKey,key){
+	  sharePropertyDefinition.get=function proxyGetter(){
+	    return this[sourceKey][key]
+	  };
+	  sharePropertyDefinition.set=function proxySetter(val){
+	    this[sourceKey][key]=val
+	  };
+	  Object.defineProperty(target,key,sharePropertyDefinition)
+	}
+
+	```
   - observe 
     - 监测数据的变化，定义在src/core/observer/index.js
     - 给非vnode对象类型数据添加一个Observer，添加或已有返回，否则满足一定情况下，实例化一个？Observer对象实例
@@ -368,11 +374,11 @@ export default {
     - this.newDeps Watcher实例持有Dep实例的数组
     - this.desIds —— this.deps id Set结构
     - this.newDepIds —— this.newDeps id Set结构
-    - 至于为什么又两个实例数组？
+    - 至于为什么有两个实例数组？
     ```js
-      this.deps = []
-      this.newDeps = []
-      this.depIds = new Set()
+      this.deps = [];
+      this.newDeps = [];
+      this.depIds = new Set();
       this.newDepIds = new Set()
     ```
 - 生命周期，选项？？？这个在Vue构造器的传参中何种方式？
@@ -395,7 +401,7 @@ export default {
   export default {
     updated(){
           this.$nextTick=function(){  
-        	  // todo
+        	  // do something
 			}
         }
       }
@@ -452,6 +458,15 @@ export default {
 ```
 
 ### vue-cli 3.0
+- 则选择typescript+vue的开始模式
+- 也支持预装
+#### 开发者注意以下问题
+
+- product 环境下，关闭sourceMap
+- product 环境下，尽量关闭console
+- 配置devServer
+- 多页应用,会导致页面重复大一倍
+
 ### vue-router  路由
 - vue router 懒加载
 - vue 路由的几种模式，history 和hash 的原理是什么？
@@ -541,8 +556,8 @@ const json ={
 >一份来自node 的http响应代码 
 ```js
 
-const http= require('http')
-console.log(http.STATUS_CODES)
+const http= require('http');
+console.log(http.STATUS_CODES);
 const httpCode= {
 	'100': 'Continue',
 	'101': 'Switching Protocols',
@@ -738,24 +753,27 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### 常见的内存泄露问题的
 #### 闭包在IE9之前的版本会导致一些特殊的问题。
+
 ```js
+
   // 内存泄漏
-  function click(){
-    const element = document.querySelector('.test')
+  function click1(){
+    let element = document.querySelector('.test');
     element.onclick=function(){
-      console.log(elment.id)
+      console.log(element.id)
     }
   }
   // fix 版本
-  function click(){
-    const element = document.querySelector('.test')
-    const id = element.id//比保重引用，消除变量循环引用
-    element.onclick=function(){
-      console.log(elment.id)
-    }
+  function click2(){
+    let element2 = document.querySelector('.test');
+    let id = element2.id;// 引用赋值，消除变量循环引用
+    element2.onclick=function(){
+      console.log(id)
+    };
     // 设置为null，解除对DOM对象的引用，减少计数
-    element=null
+    element2=null
   }
+  
 ```
 ## Css部分
 
@@ -767,7 +785,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
 
 ### CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
 
-## js概念_基础知识
+## js概念/基础知识
 ### 静态方法
 > xxx.prototype  在 constructor里面就看到了,
 ### 数据类型构造属性及方法(静态)
@@ -910,28 +928,32 @@ function test(){
   //todo
 }
 /*2 函数表达式*/
-const test=  function(){
+const test1=  function(){
   //todo 
-}
+};
 /*3 匿名函数/立即执行*/
 (function(){
    //todo
  })()
 ```
 #### 一种危险的函数使用
+为什么说它危险？
 > 应该使用函数表达式
+
 ```js
 if(true){
   function say(){
     console.log('hi')
   }
 }else{
-  function say(){
+  function say2(){
     console.log('no hi!')
   }
 }
 ```
+
 #### 递归
+
 -----------------------------------------------------------------------------------------
 > 以下来自红宝石：
 - 使用`arguments.callee`，指向正在执行函数的指针
@@ -945,11 +967,11 @@ if(num<=1){
   }
 }
 // ①如果设置中途转了一层
-var anthorFactorial= factorial
-factorial=null
-console.log(anthorFactorial(4))//error
+var anthorFactorial= factorial;
+factorial=null;
+console.log(anthorFactorial(4));//error
 // ② 上面可以变为
-function factorial(num){
+function factorial1(num){
   if(num<=1){
     return 1
   }else{
@@ -957,7 +979,7 @@ function factorial(num){
   }
 }
 // ③ 更有效的方案，匿名函数的方式
-var factorial=(function f(num){
+var factorial2=(function f(num){
   if(num<=1){
     return 1
   }else{
@@ -978,7 +1000,7 @@ var factorial=(function f(num){
 // 定义一个函数，用于求 n 的阶乘
 function func(n)
 {
-    if (n == 1)
+    if (n === 1)
     {
         return 1;
     }
@@ -1161,8 +1183,8 @@ fib(8)
   ```js
   // 很蠢的对每个li 标签都循环做点击事件
    window.onload= function(){
-     var ul = document.querySelector('ul')
-     var li = document.querySeletcor('li')
+     var ul = document.querySelector('ul');
+     var li = document.querySeletcor('li');
      for(var i=0;i<li.length;i++){
        li[i].onclick=function(){
          alert(123)
@@ -1250,7 +1272,7 @@ fib(8)
 - Math `ES 内置单体对象`
 比较数组大小
 ```js
-const arr =[11231,238,5,21]
+const arr =[11231,238,5,21];
 Math.max.apply(Math,arr)
 ```
 |属性|方法|描述|
@@ -1292,7 +1314,8 @@ Math.max.apply(Math,arr)
 
 - 除法。先转为数字再进行除法操作
 ```js
-    '40'%7/*等于多少?*/
+   console.log('40'%7); // 等于多少? 取模
+   console.log('40'/7) // 等于多少? 取模
 
 ```
 
@@ -1361,7 +1384,7 @@ Math.max.apply(Math,arr)
       console.log(value)
       /*/ retrun value *2*/
     });
-    console.log(arrT)/*/[undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]*/
+    console.log(arrT);/*/[undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]*/
 
     /*demo2*/
     var ages = [32, 33, 16, 40];
@@ -1370,7 +1393,7 @@ Math.max.apply(Math,arr)
         return age >= 18;
     };
     var mapTemp = ages.map(checkAdult);
-    console.log(mapTemp)/*[true,true,false,true]*/
+    console.log(mapTemp);/*[true,true,false,true]*/
     var filterTemp = ages.filter(checkAdult);
     console.log(filterTemp)/*[32,33,40] 返回如何条件原数组的元素*/
     
@@ -1397,7 +1420,7 @@ Math.max.apply(Math,arr)
 
     ```js
     var arr=['西瓜','赵铁柱','王尼玛'];
-    var temp = arr.copyWithin(2,1)
+    var temp = arr.copyWithin(2,1);
     console.log(arr,temp);//["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", 西瓜"赵铁柱", "赵铁柱"]
     ```
   - <sup>es6</sup>`Array.prototype.fill('帅哥',start,end)`
@@ -1416,7 +1439,9 @@ Math.max.apply(Math,arr)
 ### 类 class  
 
 ### 面向对象,程序设计
+
 > 一个标志，类的概念 
+
 |概念/方法|描述|
 |----|----|
 |数据属性||
@@ -1438,13 +1463,13 @@ Math.max.apply(Math,arr)
 function factory(name,age,job){
   // const obj=Object.create({})//带有普通对象的__proto__ 类似  const obj = new Object()
   // const obj=Object.create(null)//则没有_proto__！
-  const obj= new Object()
-  obj.age=age
-  obj.name=name
-  obj.job=job
+  const obj= {};
+  obj.age=age;
+  obj.name=name;
+  obj.job=job;
   obj.sayName=function(){
     return this.name
-  }
+  };
   return obj
 }
 //use
@@ -1462,15 +1487,15 @@ const p= factory('张三','28','前端狗')
 2. 它的实例都有一个`constructor`（构造函数）属性，指向他的构造函数
 ```js
 function ConstractorFn(name,age,job){
-  this.name=name
-  this.age=age
-  this.job=job
+  this.name=name;
+  this.age=age;
+  this.job=job;
   this.sayName=function(){
     return this.name
   }
 }
 // use
-const p1 = new ConstractorFn('李四6i7','29','后端喵')
+const p1 = new ConstractorFn('李四6i7','29','后端喵');
 // 监测类型
 console.log(p1 instanceof ConstractorFn)//true,同样都是Object的实例
 
@@ -1479,13 +1504,13 @@ console.log(p1 instanceof ConstractorFn)//true,同样都是Object的实例
 
 > 当普通函数
 ```js
-ConstractorFn('李四6i7','29','后端喵')
+ConstractorFn('李四6i7','29','后端喵');
 window.sayName()
 ```
 > 在另外一个对象的作用域中调用
 ```js
-const ob = {}
-ConstractorFn.call(ob,"王五",'30','python')
+const ob = {};
+ConstractorFn.call(ob,"王五",'30','python');
 // ConstractorFn.apply(ob,["王五",'30','python']) 或者这样
 
 on.sayName()
@@ -1496,9 +1521,9 @@ on.sayName()
 3. 如何对构造函数进行优化呢？属性和函数定义区分开,
 ```js
 function ConstractorFn(name,age,job){
-  this.name=name
-  this.age=age
-  this.job=job
+  this.name=name;
+  this.age=age;
+  this.job=job;
   this.sayName=sayName
 }
 function sayName(){
@@ -1516,14 +1541,14 @@ const p1 = new ConstructorFn('孙六','31','产品汪')
 1. 
 ```js
 function Proto(){}
-Proto.prototype.name="刘七"
-Proto.prototype.age="32"
-Proto.prototype.job="设计狮"
+Proto.prototype.name="刘七";
+Proto.prototype.age="32";
+Proto.prototype.job="设计狮";
 Proto.prototype.sayName=function(){
   return this.name
-}
-var p1 = new Proto()
-var p2 = new Proto()
+};
+var p1 = new Proto();
+var p2 = new Proto();
 p1.sayName==p2.sayName//true
 ```
 > 理解原型对象
@@ -1619,9 +1644,9 @@ p1.test===p2.test //true
 > 构造函数写属性，方法则用原型继承
 ```js
 function Fn(name,age,job){
-  this.name=name
-  this.age= age
-  this.job=job
+  this.name=name;
+  this.age= age;
+  this.job=job;
   this.test=['man','woman']
 }
 Fn.prototype={
@@ -1629,10 +1654,10 @@ Fn.prototype={
   sayName(){
     return this.name
   }
-}
-var p1 = new Fn('xsa','tt','te')
-var p2 = new Fn('xsa2','tt2','te2')
-p1.test.push('son')
+};
+var p1 = new Fn('xsa','tt','te');
+var p2 = new Fn('xsa2','tt2','te2');
+p1.test.push('son');
 p1.test===p2.test
 
 ``` 
@@ -1642,9 +1667,9 @@ p1.test===p2.test
 > 通过if来判断
 ```js
 function Fn(name,age,job){
-  this.name=name
-  this.age=age
-  this.job=job
+  this.name=name;
+  this.age=age;
+  this.job=job;
   if(typeof this.sayName !=='function'){
     Fn.prototype.sayName=function(){
       return this.name
@@ -1664,13 +1689,13 @@ function Fn(name,age,job){
 function factory(name,age,job){
   // const obj=Object.create({})//带有普通对象的__proto__ 类似  const obj = new Object()
   // const obj=Object.create(null)//则没有_proto__！
-  const obj= new Object() //此处不一定是Object对象，可以是Array对象，具体看业务操作
-  obj.age=age
-  obj.name=name
-  obj.job=job
+  const obj= {}; //此处不一定是Object对象，可以是Array对象，具体看业务操作
+  obj.age=age;
+  obj.name=name;
+  obj.job=job;
   obj.sayName=function(){
     return this.name
-  }
+  };
   return obj
 }
 //use
@@ -1689,15 +1714,15 @@ const p=new factory('张三','28','前端狗')
 
 ```js
 function durable(name,age,job){
-  var obj= new Object()
+  var obj= {};
   // todo 定义私有变量和属性
   obj.sayName=function(){
     console.log(name)
-  }
+  };
   return obj
 }
 // use
-var p1 = durable('柳十','41','CFO管钱的')
+var p1 = durable('柳十','41','CFO管钱的');
 p1.sayName()
 ```
 #### new操作符都干吗了？
@@ -1736,7 +1761,7 @@ for(var i=0;i<5;i++){
 for(var i=0;i<5;i++){
  
 }
- console.log(i)
+ console.log(i);
  i=null
 
 ```
@@ -1744,18 +1769,18 @@ for(var i=0;i<5;i++){
 ```js
 /*demo1*/
 const test=function(){
-  var t = 'hello'
+  var t = 'hello';
   return t+',world!'
-}
-test()
-console.log(t)//
+};
+test();
+console.log(t);//
 
 /*demo2*/
 const test2=function(){
-  t2 = 'hello'
+  t2 = 'hello';
   return t2+',world!'
-}
-test2()
+};
+test2();
 console.log(t2)//可以访问到
 ```
 ### 私有变量
@@ -1765,14 +1790,14 @@ console.log(t2)//可以访问到
 function Main(name){
   this.getName=function(){
     return name
-  }
+  };
   this.setName=function(value){
     name=value
   }
 }
-var p1 = new Main('李四')
-console.log(p1.getName())
-p1.setName('王五')
+var p1 = new Main('李四');
+console.log(p1.getName());
+p1.setName('王五');
 console.log(p1.getName())
 ```
 ### this
@@ -1787,38 +1812,38 @@ console.log(p1.getName())
 - 自动取得两个特殊的变量
 - 内部搜索到this arguments时，只会搜索到其活动对象为止，因此`永远不可能直接访问外部函数的中的两个变量`
 ```js
-var name = "I am window"
+var name = "I am window";
 var object={
   name:"I am object",
   getName:function(){
     return function(){
-      console.log(this)
+      console.log(this);
       return this.name
     }
   }
-}
+};
 console.log(object.getName()())//竟然是window！！！
 ```
 > `将外部作用域中的this 对象，保存在一个闭包能够访问到的变量力，就可以让闭包访问到该对象了`!!
 ```js
 
-var name ="I am window"
+var name ="I am window";
 var object={
   name:"I am object",
   getName:function(){
     var that=this;
     return function(){
-      console.log(this)
+      console.log(this);
       return that.name
     }
   }
-}
+};
 //demo1 
 var object={
   name:"I am object",
   getName:function(){
     return function(){
-      console.log(this)
+      console.log(this);
       return that.name
     }.call(this)//bind 、call
   }
@@ -1837,11 +1862,46 @@ var object={
 
 ### call  会立即执行。
 
-- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。（我以为就我一个人先发现这个记忆方法的，尴尬！，后面才发现别人也是这么记的。）
+- 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。
 
 ### apply  会立即执行。
+- 最多入参65536个参数
+- 假如数组的长度很长。切块后循环传入目标方法
+
+#### apply 讲数组添加到另一个数组
+- 数组a，数组b
+- a里面含有b的元素
+
+```js
+const list1 = [1,2];
+const list2 = [3,4];
+list1.push.apply(list1,list2);
+console.info("list1:",list1);
+console.info("list2:",list2);
+
+```
+
+#### apply和内置函数，允许Math.max/Math.min 找出数组中最大值/最小值
+
+```js
+// 最大值
+const list1=[12,1,456,6,16];
+const max = Math.max.apply(null,list1);
+console.info(max);
+
+// 最小值
+const min= Math.min.apply(null,list1);
+console.info(min);
+
+
+```
+
+
+
+#### 使用apply来链接构造器
 
 ### bind 新函数，不会立即执行。
+- 创建一个新的函数
 
 ### call 与apply区别
 
@@ -1852,9 +1912,9 @@ var object={
 function a(ob){
   console.info(ob)
 };
-var cc ={t:'222'}
+var cc ={t:'222'};
 var ob={name1:'lala'};
-a.apply(null,([ob],cc))
+a.apply(null,[ob],cc)
 
 // undefined
 ```
@@ -2290,7 +2350,7 @@ a.apply(null,([ob],cc))
   /*或者*/
   document.querySelector('li:nth-child(3)') 
 ```
-####XMLHttpRequest
+### XMLHttpRequest
 
 属于Http API 的一个范畴，使用的时候，需要实例化XMLHttpRequest对象
 
@@ -2347,18 +2407,18 @@ if(window.XMLHttpRequest===undefined){
 
 [SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
 
-- 本地对象
+#### 本地对象
   - 与宿主无关，独立于宿主环境的ECMAScript 实现提供的对象
   - ECMA-262 定义的类（引用类型）
   - 该类引用类型在运行过程中需要通过new 创建所需的实例对象
   - 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
-- 内置对象
+#### 内置对象
   - 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
   - EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需实例化
   - 内置对象是本地对象的子集
   - 包含`Global` 和`Math`
   - ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
-- 宿主对象
+#### 宿主对象
   - 由ECMAScript 实现的宿主环境提供的对象，包含两个大类，一个是宿主提供，一个是自定义类对象
   - 所有非本地对象都是宿主对象
   - 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
@@ -2486,7 +2546,20 @@ if(window.XMLHttpRequest===undefined){
   for(let i=0;i<5;i++){}
   console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
 ```
+### 函数
+- 剩余参数(rest参数)的表示法，同样，items是最后一个参数
+```js
+// 此时的items 是一个数组
+function push(array, ...items) {
+    items.forEach(function(item) {
+        array.push(item);
+    });
+}
 
+let a = [];
+push(a, 1, 2, 3);
+console.log(a)//[1,2,3]
+```
 ### class 类
 > `特殊的函数`=> `类表达式`、`类声明`
 - 只能有且只有一个`constructor`方法
@@ -2510,28 +2583,28 @@ class Home{
   }
 }
 
-const h= new Home(360,480)
-console.log(h.height)//360
-console.log(h.area)//就可以调用
-console.log(h.area())//报错。get 的属性值不是一个function
+const h= new Home(360,480);
+console.log(h.height);//360
+console.log(h.area);//就可以调用
+console.log(h.area());//报错。get 的属性值不是一个function
 
 
 // demo2  `static` 关键字定义一个类的静态方法。可以不需要实例化该类，但不能通过一个`类实例调用静态方法`
 class Point{
   constructor (x,y){
-    this.x=x
+    this.x=x;
     this.y=y
   }
   //static 关键字，顶一个类的静态方法
   static distance(a,b){
-    const dx = a.x-b.x
-    const dy = a.y-b.y
+    const dx = a.x-b.x;
+    const dy = a.y-b.y;
     return Math.hypot(dx,dy)//参数平方和的平方根
   }
 }
 
-const p1 = new Point(5,5)
-const p2 = new Point(10,10)
+const p1 = new Point(5,5);
+const p2 = new Point(10,10);
 console.log(Point.distance(p1,p2))
 // 相当于Point.distance({x:5,y:10},{x:10,y:5})
 ```
@@ -2551,24 +2624,24 @@ obj.speak(); // Animal {}
 let speak = obj.speak;
 speak(); // undefined
 
-Animal.eat() // class Animal
+Animal.eat(); // class Animal
 let eat = Animal.eat;
 eat(); // undefined
 
 //当然了。如果小改动了一下
 
-speak.bind(obj)()//这样就可以了~~
+speak.bind(obj)();//这样就可以了~~
 
 // demo2 ，知道结果可能如下，但不太理解这样的方式
 function Animal() { }
 
 Animal.prototype.speak = function() {
   return this;
-}
+};
 
 Animal.eat = function() {
   return this;
-}
+};
 
 let obj = new Animal();
 let speak = obj.speak;
@@ -2598,7 +2671,7 @@ eat(); // global object
   }
 
   //实例化
-  const d = new Dog('Lilei')
+  const d = new Dog('Lilei');
   d.speak()
 
 ```
@@ -2609,9 +2682,9 @@ eat(); // global object
 class Arr extends Array{
   static get [Symbol.species](){return Array}
 }
-const a = new Arr(1,2,3)
-const mapped = a.map(x=>x*x)
-console.log(mapped instanceof Arr)
+const a = new Arr(1,2,3);
+const mapped = a.map(x=>x*x);
+console.log(mapped instanceof Arr);
 console.log(mapped instanceof Array)
 ```
 - supper
@@ -2624,39 +2697,39 @@ class Cat{
     this.name=name
   }
   speack(){
-    console.log(this.name+' makes a noise')
+    console.log(this.name+' makes a noise');
     return 2
   }
 }
 class Lio extends Cat{
   speak(){
-    super.speak()
-    console.log(this.name+' for Lio')
+    super.speak();
+    console.log(this.name+' for Lio');
     return 111
   }
 }
-const animal =new  Lio('litter red')
+const animal =new  Lio('litter red');
 
 /** demo2 super 简单应用 */
 // 声明一个对象
 const Family={
   name:'Jo Home'
-}
+};
 // 再生一个对象，内含一个函数`getName`
 const main ={
   getName(){
     return super.name
   }
-}
-let home = main.getName()
-console.log(home)
+};
+let home = main.getName();
+console.log(home);
 //以上这样做并没有什么卵用，但是如果使用了Object.setPrototypeOf(要设置在原型上的对象，prototype)
 // 在home前面增加
-Object.setPrototypeOf(main,Family)
+Object.setPrototypeOf(main,Family);
 /** demo3 关于class*/
-supper.name
+supper.name;
 // 等同于 属性
-Object.getPrototypeOf(this).name
+Object.getPrototypeOf(this).name;
 // 等同于 方法
 Object.getPrototypeOf(this).name.call(this)
 ```
@@ -2666,13 +2739,13 @@ Object.getPrototypeOf(this).name.call(this)
 > 缺点：无法向外抛出错误移除，并主动中断这样的流程结果
 ```js
  const promise =  new Promose((resolve,reject)=>{
-    const a=1
+    const a=1;
     if(a===1){
       resolve('ddd')
     }else{
       reject('sss')//最好是返回一个变量，不然某些环境下，会导致警告或者报错，可以是字符串、数组、对象，但只能是一个参数
     }
-  })
+  });
 
   promise()
     .then(res=>{
@@ -2727,7 +2800,7 @@ async function all(){
     setTimeout(()=>{
       console.log(1,time1*10*5000);
       resolve(time1*10*5000)
-    },time1*10*5000)
+    },time1*10*5000);
 
     // 第二个异步
 
@@ -2743,15 +2816,15 @@ all()
   })
   .catch(err=>{
     console.log(4,err)
-  })
+  });
 
 /*************************************************/
 // 第一个异步
 async function all1 () {
   return new Promise((resolve, reject) => {
-    let time1 = Math.random()
+    let time1 = Math.random();
     setTimeout(() => {
-      console.log(1, time1 * 10 * 1000)
+      console.log(1, time1 * 10 * 1000);
       resolve(time1)
     }, time1 * 10 * 1000)
   })
@@ -2760,7 +2833,7 @@ async function all1 () {
 // 第二个异步
 async function all2 () {
   return new Promise((resolve, reject) => {
-    let time2 = Math.random()
+    let time2 = Math.random();
     setTimeout(() => {
       console.log(2, time2 * 10 * 1000)
     }, time2 * 10 * 1000)
@@ -2769,10 +2842,10 @@ async function all2 () {
 
 // 一个普通async 函数里面，执行两个异步函数会怎么样呢?
 async function all () {
-  console.log('a')
-  await all1()
-  console.log('b')
-  await all2()
+  console.log('a');
+  await all1();
+  console.log('b');
+  await all2();
   console.log('c') //这个不会执行，以为还在等待promise 的回来
 }
 all()
@@ -2785,9 +2858,9 @@ all()
 // 第一个异步
 async function all1 () {
   return new Promise((resolve, reject) => {
-    let time1 = Math.random()
+    let time1 = Math.random();
     setTimeout(() => {
-      console.log(1, time1 * 10 * 1000)
+      console.log(1, time1 * 10 * 1000);
       resolve(time1 * 10 * 1000)
     }, time1 * 10 * 1000)
   })
@@ -2795,9 +2868,9 @@ async function all1 () {
 // 第二个异步
 async function all2 () {
   return new Promise((resolve, reject) => {
-    let time2 = Math.random()
+    let time2 = Math.random();
     setTimeout(() => {
-      console.log(2, time2 * 10 * 1000)
+      console.log(2, time2 * 10 * 1000);
       resolve(time2 * 10 * 1000)
     }, time2 * 10 * 1000)
   })
@@ -2805,16 +2878,16 @@ async function all2 () {
 
 // 一个普通async 函数里面，执行两个异步函数会怎么样呢?
 async function all () {
-  console.log('a')
+  console.log('a');
   await all1()
     .then(res1 => {
       console.log(res1)
-    })
-  console.log('b')
+    });
+  console.log('b');
   await all2()
     .then(res2 => {
       console.log(res2)
-    })
+    });
   console.log('c')
 }
 all()
@@ -2847,9 +2920,9 @@ c
 // 第一个异步
 async function all1 () {
   return new Promise((resolve, reject) => {
-    let time1 = 10
-    setTimeout(() => {
-      console.log(1, time1)
+    let time1 = 10;
+    setTimeout(() => {;
+      console.log(1, time1);
       resolve(time1)
     }, time1*1000)
   })
@@ -2857,9 +2930,9 @@ async function all1 () {
 // 第二个异步
 async function all2 () {
   return new Promise((resolve, reject) => {
-    let time2 =8
+    let time2 =8;
     setTimeout(() => {
-      console.log(2, time2)
+      console.log(2, time2);
       resolve(time2)
     }, time2 * 1000)
   })
@@ -2870,17 +2943,17 @@ async function all () {
 let i=0;
 setInterval(()=>{
   console.log(i++)
-},1000)
-  console.log('a')
+},1000);
+  console.log('a');
 await all1()
 .then(res1 => {
   console.log(res1)
-})
-  console.log('b')
+});
+  console.log('b');
 await all2()
 .then(res2 => {
   console.log(res2)
-})
+});
   console.log('c')
 }
 all()
@@ -2901,14 +2974,14 @@ c
 ```js
 // 第一个异步
 async function all1 () {
-    let time1 = 10
+    let time1 = 10;
     setTimeout(() => {
       console.log(1, time1)
     }, time1*1000)
 }
 // 第二个异步
 async function all2 () {
-    let time2 =8
+    let time2 =8;
     setTimeout(() => {
       console.log(2, time2)
     }, time2 * 1000)
@@ -2920,11 +2993,11 @@ async function all () {
 let i=0;
 setInterval(()=>{
   console.log(i++)
-},1000)
-console.log('a')
-await all1()
-console.log('b')
-await all2()
+},1000);
+console.log('a');
+await all1();
+console.log('b');
+await all2();
 console.log('c')
 }
 all()
@@ -2939,8 +3012,8 @@ function*a(){}
 
 
 function * hello(){
-  yield 'hello' //yield 表达式
-  yield 'world' //yield 表达式
+  yield 'hello'; //yield 表达式
+  yield 'world'; //yield 表达式
   return 'hellow and world'
 }
 ```
@@ -2958,17 +3031,17 @@ function * hello(){
 > 不建议在调用 fs.open()、fs.readFile() 或 fs.writeFile() 之前使用 fs.access() 检查文件的可访问性。 这样做会引入竞争条件，因为其他进程可能会在两个调用之间更改文件的状态。 相反，用户代码应该直接打开、读取或写入文件，并处理在文件无法访问时引发的错误。
 - `.unlink()`  删除文件 异步
   ```js
-    const fs= require('fs')
+    const fs= require('fs');
     fs.unlink('./tmp/hello.js',(err)=>{
-      if(err) throw err
+      if(err) throw err;
       console.log('删除成功')
     })
   ```
 - `.unlinkSync()` 删除文件 ，同步
   ```js
-    const fs = require('fs')
+    const fs = require('fs');
     try{
-      fs.unlinkSync('./tmp/hello.js')
+      fs.unlinkSync('./tmp/hello.js');
       console.log('删除成功')
     }catch(err){
       console.log(err,'删除失败')
@@ -2977,7 +3050,7 @@ function * hello(){
 - `.rename()`
 ```js
   fs.rename('./tmp/hello.js','./tmp/world.js',(err)=>{
-    if(err) throw err
+    if(err) throw err;
     console.log('rename done')
   })
 ```
@@ -2995,17 +3068,17 @@ function * hello(){
   - `.dirent.isBlockDevice()` boolean
 
 ```js
-  const fs = require('fs')
+  const fs = require('fs');
   fs.open('./tmp/hello.js','r',(err,fd)=>{
-    if(err) throw err
+    if(err) throw err;
     fs.fstat(fd,(err1,stat)=>{
-      if(err1) throw err1
+      if(err1) throw err1;
       //文件属性
-      console.log(stat) 
+      console.log(stat) ;
 
       //关闭文件描述符
       fs.close(fd,(errC)=>{
-        if(errC) throw errC
+        if(errC) throw errC;
         console.loh('关闭')
       })
     })
@@ -3017,7 +3090,7 @@ function * hello(){
   - `fs.stat()`
     ```js
       fs.stat('./tmp/world.js',(err,stats)=>{
-        if(err) throw err
+        if(err) throw err;
         conosle.log(stats)
       })
     ```
@@ -3025,12 +3098,12 @@ function * hello(){
   - `.fstat`
   ```js
     fs.fstat(fd,(err1,stat)=>{
-        if(err1) throw err1
+        if(err1) throw err1;
       //文件属性
-        console.log(stat) 
+        console.log(stat) ;
         //关闭文件描述符
         fs.close(fd,(errC)=>{
-        if(errC) throw errC
+        if(errC) throw errC;
           console.log('关闭')
         })
     })
@@ -3048,12 +3121,12 @@ function * hello(){
 
 ```js
   fs.rename('./tmp/hello.js','./tmp/world.js',(err)=>{
-    if(err) throw err
+    if(err) throw err;
     console.log('rename done')
-  })
+  });
   //stat可能在rename 之前，
   fs.stat('./tmp/world.js',(err,stats)=>{
-    if(err) throw err
+    if(err) throw err;
     conosle.log(stats)
   })
 ```
@@ -3062,7 +3135,7 @@ function * hello(){
 ### Comet 技术/SSE,基于服务器推送事件的Comet技术/SSE
 EventSource对象
 ```js
-  var ticket =  new EventSource('source.php')
+  var ticket =  new EventSource('source.php');
   ticker.onmessage=function(e){
     var type = e.type;
     var data = e.data;
@@ -3107,45 +3180,45 @@ EventSource对象
     // 1 SuperType.apply(this)`[3]`
     // 2 SuperType.bind(this)()`[3]`//再次执行
   }
-  var instance1 =new SubType()
-  instance1.colors.push('o')
-  console.log(instance1.colors)//'r,g,b,o'
-  var instance2 = new SubType()
-  instance2.colors.push('v')
+  var instance1 =new SubType();
+  instance1.colors.push('o');
+  console.log(instance1.colors); //'r,g,b,o'
+  var instance2 = new SubType();
+  instance2.colors.push('v');
   console.log(instance2.colors)
 ```
 ### `[√]继承的方式-组合继承/伪经典继承`
 >原理：将原型链和借用构造函数的技术组合到一起
 ```js
   function SuperType(name){
-    this.name=name
+    this.name=name;
     this.colors=['r','g','b']
   }
   SuperType.prototype.sayName=function(){
     console.log(this.name)
-  }
+  };
   function SubType(name,age){
     //继承属性
-    SuperType.call(this,name)
+    SuperType.call(this,name);
     this.age=age
   }
   // 继承方法
-  SubType.prototype= new SuperType()
-  SubType.prototype.constructor=SubType
+  SubType.prototype= new SuperType();
+  SubType.prototype.constructor=SubType;
   SubType.prototype.sayAge=function(){
-    console.log(this.age)
+    console.log(this.age);
     return this.age
-  }
-  var instance1 = new SubType('张三',30)
-  instance1.colors.push('o')
-  console.log(instance1.colors)
-  instance1.sayName()
-  instance1.sayAge()
+  };
+  var instance1 = new SubType('张三',30);
+  instance1.colors.push('o');
+  console.log(instance1.colors);
+  instance1.sayName();
+  instance1.sayAge();
 
-  var instance2 = new SubType('李四',40)
-  instance2.colors.push('v')
-  console.log(instance2.colors)
-  instance2.sayName()
+  var instance2 = new SubType('李四',40);
+  instance2.colors.push('v');
+  console.log(instance2.colors);
+  instance2.sayName();
   instance2.sayAge()
 ```
 ### `继承的方式-原型式继承`
@@ -3153,7 +3226,7 @@ EventSource对象
 ```js
 function object(obj){
   function F(){}
-  F.prototype=obj
+  F.prototype=obj;
   return new F()
 }
 ```
@@ -3162,20 +3235,20 @@ function object(obj){
 ```js
 function object(obj){
   function F(){}
-  F.prototype=obj
+  F.prototype=obj;
   return new F()
 }
 var p1 ={
   name:"张三",
   colors:['red','green','blue']
-}
-var anthor =object(p1)
-anthor.name="贾克斯"
-anthor.colors.push('voilet')
+};
+var anthor =object(p1);
+anthor.name="贾克斯";
+anthor.colors.push('voilet');
 
-var other=object(p1)
-other.name="伊泽瑞尔"
-other.colors.push('orange')
+var other=object(p1);
+other.name="伊泽瑞尔";
+other.colors.push('orange');
 console.log(p1.colors)
 ```
 >es5 中的Object.create()规范原型继承，
@@ -3184,26 +3257,26 @@ console.log(p1.colors)
 var p1 ={
   name:"张三",
   colors:['red','green','blue']
-}
+};
 var anthor =Object.create(p1)
-anthor.name="贾克斯"
-anthor.colors.push('voilet')
+anthor.name="贾克斯";
+anthor.colors.push('voilet');
 
-var other=Object.create(p1)
-other.name="伊泽瑞尔"
-other.colors.push('orange')
+var other=Object.create(p1);
+other.name="伊泽瑞尔";
+other.colors.push('orange');
 console.log(p1.colors)//还是全出来
 
 // demo2 使用第二个参数，与defineProperties方法第二个参数相同，通过自己的描述符定义，会覆盖原型对上上的同名属性
 var p2= {
     name:"李四",
     colors:['red','green','blue']
-}
+};
 var anthor=Object.create(p2,{
   name:{
     value:"Orange"
   }
-})
+});
 console.log(anthor.name)//Orange
 ```
 ### `继承的方式-寄生式继承`
@@ -3214,20 +3287,20 @@ console.log(anthor.name)//Orange
 ```js
 function object(obj){
   function F(){}
-  F.prototype=obj
+  F.prototype=obj;
   return new F()
 }
 function create(obj){
-  var clone = object(obj)
+  var clone = object(obj);
   clone.sayHi=function(){
     console.log('hi')
-  }
+  };
   return clone
 }
 var p1 ={
     name:"李四",
     colors:['red','green','blue']
-}
+};
 var anthor=create(p1)
 anthor.sayHi()
 ```
@@ -3238,26 +3311,26 @@ anthor.sayHi()
 ```js
   function object(obj){
     function F(){}
-    F.prototype=obj
+    F.prototype=obj;
     return new F()
   }
   function inhertPrototype(subType,superType){
-    var prototype= object(superType.prototype)
-    prototype.constructor=subType
+    var prototype= object(superType.prototype);
+    prototype.constructor=subType;
     subType.prototype=prototype
   }
   function SuperType(name){
-    this.name=name
+    this.name=name;
     this.colors=['red','green']
   }
   SuperType.prototype.sayName=function(){
     console.log(this.name)
-  }
+  };
   function SubType(name,age){
     SuperType.call( this,name)//第一次调用 SuperType
     this.age=age
   }
-  inhertPrototype(SubType,SuperType)
+  inhertPrototype(SubType,SuperType);
   SubType.prototype.sayAge=function(){
     console.log(this.age)
   }
@@ -3272,7 +3345,7 @@ anthor.sayHi()
 // 中国人对象
 var Chinese={
   nation:'中国'
-}
+};
 // 一个医生对象
 var Doctor={
   career:'医生'
@@ -3292,7 +3365,7 @@ function object(o){
 }
 
 var Doctor= object(Chinese);
-Doctor.career='医生' // 加子对象本身的属性？？
+Doctor.career='医生'; // 加子对象本身的属性？？
 console.info(Doctor.nation);//中国
 ```
 
@@ -3312,7 +3385,7 @@ function extendCopy(p){
 
 //usage
 var Doctor= extendCopy(chinese);
-Doctor.carret='医生'
+Doctor.carret='医生';
 console.info(Doctor.nation); // 中国
 ```
 
@@ -3334,11 +3407,11 @@ function extendDeep(p,c){
   return c
 }
 //usage
-var Doctor= extenDeep(Chinese)
+var Doctor= extenDeep(Chinese);
 
 // chinese.city=['北京']
 // Doctor.city.push('天津')
-console.info(Doctor.city) // 北京、天津
+console.info(Doctor.city); // 北京、天津
 console.info(Chinese.city) // 北京
 ```
 
@@ -3359,13 +3432,13 @@ function Animal(){
 }
 // 定义一个Dog的函数对象
 function Dog(name,color){
-  this.name=name
+  this.name=name;
   this.color=color
 }
 
 // ？ 如何让猫继承动物？？？？
 function Dog(name,color){
-  Animal.apply(this,arguments) //此处的用意是什么? 将父对象的构造函数绑定在子对象上。
+  Animal.apply(this,arguments); //此处的用意是什么? 将父对象的构造函数绑定在子对象上。
   this.name=name;
   this.color=color
 }
@@ -3387,7 +3460,7 @@ function Dog(name,color){
   this.name=name;
   this.color=color;
 }
-Dog.prototype=new Animal() // 将Dog 的原型对象【prototype】对象指向Animal 的实例，完全删除原先的值，并赋予新值。
+Dog.prototype=new Animal(); // 将Dog 的原型对象【prototype】对象指向Animal 的实例，完全删除原先的值，并赋予新值。
 Dog.prototype.constructor=Dog;// 使得Dog 的原型对象的构造函数指向父级的animal
 var dog2 = new Dog('三哈','绿色')
 
@@ -3399,14 +3472,14 @@ var dog2 = new Dog('三哈','绿色')
 
 ```js
 function Animal(){}
-Animal.prototype.type='动物'
+Animal.prototype.type='动物';
 function Dog(name,color){
   this.name=name;
   this.color=color
 }
 Dog.prototype = Animal.prototype; //直接继承 Animal的原型对象
 Dog.prototype.constructor=Dog;
-var cat3= new Dog('四哈','黒色')
+var cat3= new Dog('四哈','黒色');
 console.info(cat3.type) // 动物
 
 ```
@@ -3417,7 +3490,7 @@ console.info(cat3.type) // 动物
 
 ```js
 function Animal(){}
-Animal.prototyoe.type='动物'
+Animal.prototyoe.type='动物';
 
 // 实现拷贝的函数。
 function extend(Child,Parent){
@@ -3430,7 +3503,7 @@ function extend(Child,Parent){
 }
 //将函数作用，就是将父对象的prototype对象中属性，拷贝给child对象的prototype对象
 extend(Dog,Animal);
-var dog4 = new Dog('五哈','棕色')
+var dog4 = new Dog('五哈','棕色');
 console.info(dog4.type) ;// 动物
 
 ```
@@ -3452,14 +3525,14 @@ function Animal(name){
 }
 
 function Cat(name,age){
-  Animal.call(this,name)
-  this.age=age||1
+  Animal.call(this,name);
+  this.age=age||1;
   this.meow= function(){
     return 'name:'+this.getName() + '\n'+'age:'+ this.age
   }
 }
- const cat = new Cat('Lily',2)
- console.log(cat.meow())
+ const cat = new Cat('Lily',2);
+ console.log(cat.meow());
 /**
 *@desc 注释解析 demo
 */
@@ -3476,13 +3549,13 @@ function Animal(name){
 function Cat(name,age){
   //通过call改变上下文的方法，去入参Lily 去调用 Animal方法，此时入参的this 是什么？!!!
   // name 这里传递给函数Animal，而使用function 声明的函数，都是函数对象，它就是一个object
-  Animal.call(this,name)
-  this.age=age||1
+  Animal.call(this,name);
+  this.age=age||1;
   this.meow= function(){
     return 'name:'+this.getName() + '\n'+'age:'+ this.age
   }
 }
- const cat = new Cat('Lily',2)
+ const cat = new Cat('Lily',2);
  console.log(cat.meow())
 ```
 
@@ -3499,7 +3572,7 @@ function test(){
 test.children='Leo';
 
 /* 这时候如何取出Leo 的值？*/
-test.children
+test.children;
 
 /* 假如很多呢？*/
 test.prototype.constructor.children
@@ -3616,6 +3689,8 @@ function a(){
 >  Hello world ！以下为技术题目：
 ---------------------------------------------------------------------------------------------------
 ## 一些流行的技术题目
+### 所有类型，string|number|NaN|boolean|array|object|function|，共用的属性是什么？除了，null、undefined。(自己出的)
+> toString()、valueOf()
 ### 哪些数据类型有length 这个属性？(自己出的)
 |string|number|NaN|null|undefined|boolean|array|object|function|
 |------|------|---|----|---------|-------|-----|------|--------|
@@ -3648,7 +3723,9 @@ function a(){
 |`null`|`false`|`false`|true|true
 |`undefined`|`false`|`false`|true|true
 ||||||
+
 ### 三等于号比较
+
 |-|-|-|-|-
 |----|----|----|----|----|
 |三等于比较a===a|`''`|`false`|`null`|`undefined`|
@@ -3678,16 +3755,16 @@ function a(){
 // map:
 ["1","2","3"].map(function(value,index){
   console.info(value,index)
-})
+});
 //1 0
 //2 1
 //3 2
 //于是，对于map后面加了一个方法parseInt，就相当于
-parseInt('1',0) // 1 此时radix 0以10位基础
-parseInt('2',1) // NaN redix 为1，小于2，NaN
-parseInt('3',2) // NaNredix 为2，小于2不成立，但2进制不满足3
+parseInt('1',0); // 1 此时radix 0以10位基础
+parseInt('2',1); // NaN redix 为1，小于2，NaN
+parseInt('3',2); // NaNredix 为2，小于2不成立，但2进制不满足3
 /*********************************************************/
-parseInt(string,radix) ////string 必填,radix(2~36)如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
+parseInt(string,radix); ////string 必填,radix(2~36)如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
 parseInt("1", 0); // 十进制 1
 parseInt("2", 1); // 第二个参数不在 2-36 直接
 parseInt("3", 2); // 二进制 NaN，因为二进制中，不存在3，所以报错
@@ -3709,7 +3786,7 @@ parseInt("16", 15); // 十五进制 （1*15+6 = 21）
 - 判断对象为空？
 
 ```js
-var b = {}
+var b = {};
 
 /* 判断是否是空对象*/
 JSON.stringify(b) === '{}'
@@ -3909,7 +3986,7 @@ var test = function(){
 		setTimeout(function(){
 			test();
 		},1000);
-	}
+	};
 	test();
 ```
 ### css 部分
@@ -3947,7 +4024,7 @@ var test = function(){
     - 任何方法都无法给边基本类型的值，比如一个字符串
 
 ```js
-var name ='Veaba'
+var name ='Veaba';
 name.toUpperCase();
 console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */ 
 ```
@@ -4108,32 +4185,32 @@ string      | 无需转换
 function(){}| 'function(){}'
 
 ```js
-1+1  //2 typeof number
-1+'1' // 11 typeof stirng
-'1'+1 // 11 typeof string
-1+'' // '1'
-''+1 // '1'
-1+undefined //NaN
-''+undefined //undefined
-true+undefined // NaN  Number(true)+Number(undefined)=NaN,String(true)+String(undefined)='trueundefined'
-false+undefined // NaN
-''+true // 'true'
-' ' + true // ' true'
-''+false//'false'
-' '+false//' false'
-1+function (){} //'1function(){}'
-1+Object()//'1[object Object]'
-'' +Object() // [object object]
-1+Array() // 1+Array().toString()=>1 +[].toString()
-1+Array //1 +Array.toString()= >1+function Array(){[native code]}
-1+NaN // NaN
-''+NaN //'NaN'
-'1'+NaN //'1+NaN'
-true+false //1
-true+true //2
-true+undefined //NaN
-true+NaN //NaN
-true+function(){} //'truefunction(){}'
+console.info(1+1); //2 typeof number
+console.info(1+'1'); // 11 typeof stirng
+console.info('1'+1); // 11 typeof string
+console.info(1+''); // '1'
+console.info(''+1); // '1'
+console.info(1+undefined); //NaN
+console.info(''+undefined); //undefined
+console.info(true+undefined); // NaN  Number(true)+Number(undefined)=NaN,String(true)+String(undefined)='trueundefined'
+console.info(false+undefined); // NaN
+console.info(''+true); // 'true'
+console.info(' ' + true); // ' true'
+console.info(''+false);//'false'
+console.info(' '+false);//' false'
+console.info(1+function (){}); //'1function(){}'
+console.info(1+Object());//'1[object Object]'
+console.info('' +Object()); // [object object]
+console.info(1+Array()); // 1+Array().toString()=>1 +[].toString()
+console.info(1+Array); //1 +Array.toString()= >1+function Array(){[native code]}
+console.info(1+NaN); // NaN
+console.info(''+NaN); //'NaN'
+console.info('1'+NaN); //'1+NaN'
+console.info(true+false); //1
+console.info(true+true); //2
+console.info(true+undefined); //NaN
+console.info(true+NaN); //NaN
+console.info(true+function(){}); //'truefunction(){}'
 
 ```
 
@@ -4146,7 +4223,7 @@ let string='22dda';
 // $3   替换前的源码
 string.replace('要替换的正则、字符等',function($1,$2,$3){
   return $2
-})
+});
 
 '我是{{name}} ,年龄{{age}},性别{{sex}}'.replace(/\{{(.+?)\}}/g,function($1,$2,$3){
   console.info($1)
@@ -4166,8 +4243,8 @@ string.replace('要替换的正则、字符等',function($1,$2,$3){
 语法
 
 ```js
-let array=[]
-array.sort(sortFunction) //可选，但排序顺序，必须是函数
+let array=[];
+array.sort(sortFunction); //可选，但排序顺序，必须是函数
 function  sortFunction() {
   return Math.round(Math.random())?1:-1
 }
@@ -4352,22 +4429,22 @@ cover(template,data)
 - bind()。【与此同类似的需要懂 call bind apply】其次是使用函数时候，怎么给另外一个对象绑定this，因为此题目用到一个返回并返回这个this，的key值，这时候需要处理
 
  ```js
-func.bind(obj)('你的参数') // func 是函数，里面有this， obj 就是要操作的函数的那个
+func.bind(obj)('你的参数'); // func 是函数，里面有this， obj 就是要操作的函数的那个
 let obj={
   key_1:1,
   key_2:2
-}
+};
 function func(key){
   console.info(key+'的值子发生变化'+this[key])
 }
- bindData(obj,func)
+ bindData(obj,func);
  obj.key_1=2;//此时自动输出 变化为2
- obje.key_2=1 //此时自动输出变化为1
+ obje.key_2=1; //此时自动输出变化为1
 
  let obj={
   key_1:1,
   key_2:2
- }
+ };
  function func(key){
   console.info(key+'的值子发生变化'+this[key])
  }
@@ -4385,7 +4462,7 @@ function bindData(obj,func){
     })
   }
 }
-bindData(obj,func)
+bindData(obj,func);
 obj.key_1=2;//此时自动输出 变化为2
 obj.key_2=1 //此时自动输出变化为1
 
@@ -4427,8 +4504,8 @@ function Person(name){
 var a =  Person('a');
 var b = new Person('b');
 var c = Person;
-console.info(a.name)
-console.info(b.name)
+console.info(a.name);
+console.info(b.name);
 console.info(c.name)
  ```
 
@@ -4445,14 +4522,14 @@ function f1() {
 function f2() {
   console.timeEnd('time span')
 }
-setTimeout(f1,100)
-setTimeout(f2,200)
+setTimeout(f1,100);
+setTimeout(f2,200);
 function waitForMs1(n) {
-  var now = Date.now()
+  var now = Date.now();
   while (Date.now()-now<n) {}
 }
 
-waitForMs1(500)
+waitForMs1(500);
 /*demo2*/
 function f3() {
   console.time('time span')
@@ -4460,10 +4537,10 @@ function f3() {
 function f4() {
   console.timeEnd('time span')
 }
-setTimeout(f3,1000)
-setTimeout(f4,2000)
+setTimeout(f3,1000);
+setTimeout(f4,2000);
 function waitForMs2(n) {
-  var now = Date.now()
+  var now = Date.now();
   while (Date.now()-now<n) {}
 }
 waitForMs2(500)
@@ -4488,7 +4565,7 @@ waitForMs2(500)
 	- 最好分辨的是，使用关键字`new`出来
 	
 	```js
-		console.info(({}) instanceof Object)/*true*/
+		console.info(({}) instanceof Object);/*true*/
 		console.info(3 instanceof Number); /*false*/
 	```
 ### 关于dom事件流的表述哪些不正确?
@@ -4531,9 +4608,9 @@ a1.prototype={
 ### js写一个ajax get 请求
 > emm，无数次都会放假的面试题。（再我又重新去补充该部分的时候）
 ```js
-  const xhr = new XMLHttpRequest()
-  xhr.open('GET','http://baidu.com',false)
-  xhr.send('hello')
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET','http://baidu.com',false);
+  xhr.send('hello');
   console.log(xhr.responseText)
 ```
 ## 附7__2018年9月11日面试题
@@ -4566,12 +4643,12 @@ https.createServer(options, (req, res) => {
 ```
 >用node.js启动http2服务
 ```js
-const http2 = require('http2')
-const fs = require('fs')
+const http2 = require('http2');
+const fs = require('fs');
 const server = http2.createSecureServer({
     key: fs.readFileSync('./localhost-privkey.pem'),
     cert: fs.readFileSync('./localhost-cert.pem')
-})
+});
 server.on('error', (err) => console.error(err));
 
 server.on('stream', (stream, headers) => {
@@ -4598,14 +4675,14 @@ server.listen(8443);
 /**1*/
 var name1 ='World!';
 (function(){
-	console.log(this)
+	console.log(this);
 	if(typeof name1 === 'undefined'){
 		var name1 ='JACK';
 		console.log('hello,'+name1)
 	}else{
 		console.log('Goodbye' + name1)
 	}
-})()
+})();
 
 /**2 运算符的优先级*/
 var val = 'smtg';
