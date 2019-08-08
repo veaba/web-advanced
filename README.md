@@ -3616,6 +3616,10 @@ function a(){
 >  Hello world ！以下为技术题目：
 ---------------------------------------------------------------------------------------------------
 ## 一些流行的技术题目
+### 哪些数据类型有length 这个属性？(自己出的)
+|string|number|NaN|null|undefined|boolean|array|object|function|
+|------|------|---|----|---------|-------|-----|------|--------|
+|`success`|error|undefined|error|error|undefined|`success`|undefined|0,始终是0|
 ### 双等于号比较
 >结论：
 1. 字符串和布尔值 是一组，空字符串 和false
