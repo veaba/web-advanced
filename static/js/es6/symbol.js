@@ -200,13 +200,52 @@
 
 /*Symbol.for()、Symbol.keyFor()*/
 
-let s1 = Symbol.for('a1');
-let s2 = Symbol.for('b1');
-let s3 = Symbol.for('a1');
+// let s1 = Symbol.for('a1');
+// let s2 = Symbol.for('b1');
+// let s3 = Symbol.for('a1');
+//
+// console.info(s1);
+// console.info(s2);
+// console.info(s3);
+//
+// console.info(s1 === s2); // false
+// console.info(s1 === s3); // true
+//
+// const arr=[54654,,55];
+// const result =Array.apply(null,arr);
+// console.info(result);
+// const obj={
+// 	f(){
+// 		console.info(this===obj);
+// 	}
+// };
+// const f = function(){
+// 	obj.f.apply(obj)
+// };
+// $('#button').on('click',f);
+// console.info(obj);
+//
 
-console.info(s1);
-console.info(s2);
-console.info(s3);
+// const ob1 = {};
+// const obj2 = {
+// 	name:1
+// };
+// console.info(ob1 === obj2); // false
+//
+// const fn = function () {
+// 	return this
+// };
+// console.info(fn.call(obj2)===obj2);
+//
+// console.info(obj2===obj2);
 
-console.info(s1 === s2); // false
-console.info(s1 === s3); // true
+// console.info(ob1===ob1);
+
+const d = new Date();
+console.info(d.getTime());
+console.info(new Date().getTime());
+
+const p = d.getTime;
+
+console.info(p.call(d));
+console.info(p.call(new Date));

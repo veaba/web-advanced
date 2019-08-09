@@ -1324,6 +1324,8 @@ Math.max.apply(Math,arr)
 - 能用forEach()做到的，map()同样可以。反过来也是如此。
 - map()会分配内存空间存储新数组并返回，forEach()不会返回数据。
 - forEach()允许callback更改原始数组的元素。map()返回新的数组。
+- forEach 跳过空元素，但不跳过`undefined`
+
 
 #### 实例方法-不改变原始数组的方法
 
@@ -1809,6 +1811,8 @@ console.log(p1.getName())
 - 事件中，指触发这个事件的对象。
 - 特殊的。IE中的attachEvent 的this 总是指向全局的window
 - 闭包中`this`是window对象
+- dom实例，this指向这个dom对象实例
+
 
 > this 竟然不是上一个函数对象
 - 自动取得两个特殊的变量
@@ -1854,9 +1858,10 @@ var object={
 
 ### 以下三个方法都是为了改变上下文存在而是用的
 
+- <sub>[绑定-this-的方法](##索引__关于本作知识引用来源sub标签 )</sub>
+
 - call  方法。调用一个函数，具有一个指定this值和分别地提供参数 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
   - 语法 `function.call(thisObj,args...)`,如果thisObj 是null，则是全局对象,args作为参数传递给funciton
-
 
 - apply 方法。调用一个函数，具有指定this 的值，以及作为一个数组提供的参数。 [MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
@@ -1865,6 +1870,21 @@ var object={
 ### call  会立即执行。
 
 - 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。
+- call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。
+- 应用：调用对象的原生方法
+
+```js
+var obj = {};
+obj.hasOwnProperty('toString'); // false
+
+// 覆盖掉继承的 hasOwnProperty 方法
+obj.hasOwnProperty = function () {
+  return true;
+};
+obj.hasOwnProperty('toString'); // true
+
+Object.prototype.hasOwnProperty.call(obj, 'toString') // false
+```
 
 ### apply  会立即执行。
 - 最多入参65536个参数
@@ -1898,9 +1918,29 @@ console.info(min);
 
 ```
 
+#### 将数组空元素转为`undefined`
+
+```js
+const arr=[54654,,55];
+const result =Array.apply(null,arr);
+console.info(result);//[ 54654, undefined, 55 ]
+
+``` 
 
 
 #### 使用apply来链接构造器
+
+#### 转换类数组对象
+
+```js
+Array.prototype.slice.apply({0:1,length:1}); // [1]
+Array.prototype.slice.apply({0:1,length:99}) // (99) [1, empty × 98]
+
+```
+#### 绑定回调函数的对象
+```js
+
+```
 
 ### bind 新函数，不会立即执行。
 - 创建一个新的函数。
@@ -1915,6 +1955,30 @@ const bind= function() {
 }
 
 ```
+
+- 因为bind每次都生成一个函数。所以需要注意以下：
+
+```js
+const o={
+	m(){
+		console.info("hello");
+	}
+};
+const ele=document.querySelector('xx');
+ele.addEventListener('click',o.m.bind(o));
+
+// 而是
+
+const listener= o.m.bind(o);
+ele.addEventListener('click',listener);
+
+// 否则无法remove事件监听
+
+ele.removeEventListener('click',listener);
+
+
+```
+
 
 ### call 与apply区别
 
@@ -2167,8 +2231,45 @@ a.apply(null,[ob],cc)
 ||removeProperty()|移除css声明中的css属性|
 ||setProperty()|在css声明块中新建或者修改css属性|
 ||||
+
 ## DOM事件`TODO`
 > http://www.runoob.com/jsref/dom-obj-event.html
+
+### 事件的传播
+
+- 第一阶段。从window 对象传导到目标节点（上层传递到下层），捕获阶段 capture
+- 第二阶段。在目标节点触发，目标阶段 target 
+- 第三阶段。目标节点传导回window对象（底层传回下层），冒泡阶段 bubbling
+
+
+### 事件代理
+
+- 事件在冒泡阶段，始终会传导到父级别，所以，在父级别定义监听函数即可。此行为叫 事件的代理
+```js
+
+const ul= document.querySelector('ul');
+ul.addEventListener('click',(event)=>{
+	if(event.target.tagName.toLowerCase()==='li'){
+		console.info('这就是li');
+	}
+})
+```
+
+- 如需要以上代码不需要传播到window，则可以使用stopPropagation方法阻止传播
+	- stopPropagation方法，阻止继续向下传播
+	- 事件冒泡到p，不再继续向上冒泡
+
+
+```js
+p.addEventListener('click',()=>{
+	if(event.target.tagName.toLowerCase()==='li'){
+        console.info('这就是li');
+        event.stopPropagation()
+	}
+},true)
+```
+
+
 ### 鼠标
 |事件|描述|例子|
 |----|----|----|
@@ -2181,6 +2282,8 @@ a.apply(null,[ob],cc)
 |onmouseout|||
 |onmouseup|||
 ||||
+
+
 ### 键盘
 |事件|描述|例子|
 |----|----|----|
@@ -3056,7 +3159,7 @@ function * hello(){
 - Symbol.for()与Symbol()前者调用返回存在的值，否则每次都新建
 #### 消除魔术字符串
 
-#### 属性名遍历
+#### 属性名遍历``
 
 ```js
 const obj={
@@ -3785,7 +3888,7 @@ function a(){
 
 [详细解析](http://blog.csdn.net/justjavac/article/details/19473199)
 
-- map 用法考察
+###  map 用法考察
 
 ```js
   //map 一定会执行funtion，必须会执行这个currentValu,index,arr
@@ -3795,7 +3898,7 @@ function a(){
   })
   ```
 
-- parseInt 考察
+###  parseInt 考察
 
 ```js
 // map:
@@ -3829,7 +3932,7 @@ parseInt("15", 14); // 十四进制 （1*14+5 = 19）
 parseInt("16", 15); // 十五进制 （1*15+6 = 21）
 ```
 
-- 判断对象为空？
+###  判断对象为空？
 
 ```js
 var b = {};
@@ -3839,18 +3942,18 @@ JSON.stringify(b) === '{}'
 
 ```
 
-- 如何阻止冒泡？ [*]
+###  如何阻止冒泡？ [*]
   e.stopPropagation()
   旧的IE e.cancelButton=true
-- firfox 与 IE的事件机制
+###  firfox 与 IE的事件机制
   IE 事件冒泡
   FF 同时支持捕获型事件、冒泡型事件
 
-- js延迟加载
+###  js延迟加载
   defer、async，动态创建dom方式【最多】，按需异步加载
-- ajax 异步传输 （html+js）
-- ajax 缓存问题
-- 跨域问题
+###  ajax 异步传输 （html+js）
+###  ajax 缓存问题
+###  跨域问题
   jsonp 利用script标签不跨域的方式，让js文件发挥json格式的文件。
   ```js
   //jsonp 意味着需要信任远程服务器的脚本，否则会炸鸡。
@@ -3862,21 +3965,21 @@ JSON.stringify(b) === '{}'
   window.name
   window.postMessage
   服务商设置代码页面
-- 模块化开发
+###  模块化开发
   立即执行函数，不暴露私有成员
-- CommonJS （通用环境）node的实现、webpack也是
-- AMD-require.js/curl.js（异步模块定义，一开始写好，前置，适合浏览器环境） [AMD（异步模块定义，一开始写好，前置）](https://github.com/amdjs/amdjs-api/wiki/AMD)
-- CMD （sea.js实现-）[require.js就近模式](https://github.com/seajs/seajs/issues/242) [require.js就近模式1](http://annn.me/how-to-realize-cmd-loader/)
-- 异步加载js
-  - defer {IE}
-  - async
-  - 创建script
-- document.write
-- document.innerHTML
-- ECMAScript 与 Javascript
-  - Javascript 是  ECMAScript 所实现的一个标准
-  - Javascript 是  ECMAScript的一种实现
-  - 一般讲js ：dom+bom+ECMAScript
+###  CommonJS （通用环境）node的实现、webpack也是
+###  AMD-require.js/curl.js（异步模块定义，一开始写好，前置，适合浏览器环境） [AMD（异步模块定义，一开始写好，前置）](https://github.com/amdjs/amdjs-api/wiki/AMD)
+###  CMD （sea.js实现-）[require.js就近模式](https://github.com/seajs/seajs/issues/242) [require.js就近模式1](http://annn.me/how-to-realize-cmd-loader/)
+###  异步加载js
+-  defer {IE}
+-  async
+-  创建script
+###  document.write
+###  document.innerHTML
+###  ECMAScript 与 Javascript
+- Javascript 是  ECMAScript 所实现的一个标准
+- Javascript 是  ECMAScript的一种实现
+- 一般讲js ：dom+bom+ECMAScript
 
 ## 附1__2018年阿里资深web前端面试题_未附
 
@@ -4747,3 +4850,4 @@ console.log('Value is ' +(val==='smtg')?'Something':'Nothing');
 1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)
 2. [闭包的应用场景一林枫山博客](https://www.cnblogs.com/star-studio/archive/2011/06/22/2086493.html)
 3. [IE内存泄漏问题总结](https://blog.csdn.net/rootes/article/details/8784240)
+4. [绑定-this-的方法](https://wangdoc.com/javascript/oop/this.html#%E7%BB%91%E5%AE%9A-this-%E7%9A%84%E6%96%B9%E6%B3%95)
