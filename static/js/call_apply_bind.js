@@ -176,10 +176,93 @@ const dogObj = {
 
 // 方法2
 
+// apply 最大最小值
+// const list1=[12,1,456,6,16];
+// const max = Math.max.apply(null,list1);
+// console.info(max);
+//
+// const min= Math.min.apply(null,list1);
+// console.info(min);
 
-const list1=[12,1,456,6,16];
-const max = Math.max.apply(null,list1);
-console.info(max);
+// function add(a, b) {
+// 	console.info('a+b');
+// 	return a + b;
+// }
+//
+// function sub(a, b) {
+// 	console.info('a-b');
+// 	return a - b;
+// }
+//
+// const result = add.call(sub, 5, 3);//此时sub干嘛？这里？
+// console.info(result);
+//
+// const res1 = add.call(null, 5, 3);
+// console.info(res1);
 
-const min= Math.min.apply(null,list1);
-console.info(min);
+
+// 实现类似bind的方法
+// 要点1、返回一个返回
+// apply的衍生实现也是需要调用apply、call?！
+// Function.prototype.RealizeBind = function (thisArg) {
+// 	// console.info('jaja');
+// 	// console.info(this);
+// 	// console.info(this.arguments);
+// 	// console.info(arguments);
+// 	// console.info(this.constructor);
+// 	// console.info(this.prototype);
+// 	// console.info(this.prototype.arguments);
+// 	// 检查this 是不是function
+// 	if (typeof this !=='function'){
+// 		return
+// 	}
+// 	console.info(arguments);
+// 	const w= this;
+// 	const args= Array.prototype.slice.call(arguments,1);
+// 	return function () {
+// 		console.info(args);//[8,5]
+// 		console.info(Array.prototype.slice.call(arguments));//[]
+// 		return w.apply(thisArg,args.concat(Array.prototype.slice.call(arguments)))
+// 	}
+// };
+//
+// function sub(a, b) {
+// 	return a - b;
+// }
+//
+// const res = sub.RealizeBind(null,8,5)();
+
+// console.info(res);
+
+// function hello(a,b) {
+// 	console.info(a,b);
+// 	return function (){
+// 		console.info('return');
+// 		console.info(this);//始终是全局
+// 	}
+// }
+//
+// hello(99,66)
+
+// 手写call
+
+Function.prototype.theCall = function (ctx, ...arr) {
+	if (ctx === null || ctx === undefined) {
+		ctx = this;//自动指向
+	} else ctx = Object(ctx);//原始值的this 指向该原始值的实例对象
+	
+	const tempPrototype = Symbol('hahh');
+	ctx[tempPrototype] = this;
+	let result = ctx[tempPrototype](...arr);
+	delete ctx[tempPrototype];
+	return result;
+};
+
+const x = function (a, b) {
+	console.info(a, b);
+};
+
+x.theCall(null, 999, 666);
+// 手写bind
+
+// 手写apply

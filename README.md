@@ -1436,6 +1436,8 @@ Math.max.apply(Math,arr)
 
 ### 枚举[`new`] symbol
 
+
+
 ### 类 class  
 
 ### 面向对象,程序设计
@@ -1549,7 +1551,7 @@ Proto.prototype.sayName=function(){
 };
 var p1 = new Proto();
 var p2 = new Proto();
-p1.sayName==p2.sayName//true
+p1.sayName===p2.sayName//true
 ```
 > 理解原型对象
 1. 默认情况，原型对象自动取得constructor属性，其他方法和属性都是从Object继承
@@ -1901,7 +1903,18 @@ console.info(min);
 #### 使用apply来链接构造器
 
 ### bind 新函数，不会立即执行。
-- 创建一个新的函数
+- 创建一个新的函数。
+- 新函数的this 是bind的第一个参数指定的
+- 其余参数作为新函数的参数使用
+```js
+
+const bind= function() {
+  return function() {
+	// do something    
+  }
+}
+
+```
 
 ### call 与apply区别
 
@@ -3005,10 +3018,15 @@ all()
 
 ```js
 // 以下声明都成立
-function * a(){}
-function* a(){}
-function *a(){}
-function*a(){}
+function * a1(){}
+function* a2(){}
+function *a3(){}
+function*a4(){}
+
+a1();
+a2();
+a3();
+a4();
 
 
 function * hello(){
@@ -3024,14 +3042,42 @@ function * hello(){
 - 有`*`星号function * a(){}
 - 函数体内部使用了yield表达式，定义不同的内部状态(yield 产出的意思) function * a(){yield 'hello';};var func = a();
 
+### Symbol 
+
+- 无法计算
+- 描述值相同，两个值也是不相同的
+- 无法使用`new` 命令，symbol 不是一个对象
+- 描述值是一个对象，则调用该对象的toString()方法转为字符
+- Symbol 无法与其他类型进行运算
+- 每个Symbol值都不相等，保证不会出现同名的属性
+- Symbol作为属性名，不会出现在`for...in`、`for...of`循环中
+- 无法被`Object.keys()`、`Object.getOwnPropertyNames()`、`JSON.stringify()`返回
+- 可通过 `Object.getOwnPropertySymbols`方法,返回一个数组，成员是当前对象的所有用作属性名的Symbol值
+- Symbol.for()与Symbol()前者调用返回存在的值，否则每次都新建
+#### 消除魔术字符串
+
+#### 属性名遍历
+
+```js
+const obj={
+	[Symbol(21)]:8
+};
+Object.getOwnPropertySymbols(obj)
+
+```
+#### Symbol.for()
+
+#### Symbol.keysFor()
+
+
 ## Node.js
-- 【全文】狼叔：如何正确的学习Node.js https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7
+- [如何正确的学习Node.js](https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7)
 ### fs
 
 > 不建议在调用 fs.open()、fs.readFile() 或 fs.writeFile() 之前使用 fs.access() 检查文件的可访问性。 这样做会引入竞争条件，因为其他进程可能会在两个调用之间更改文件的状态。 相反，用户代码应该直接打开、读取或写入文件，并处理在文件无法访问时引发的错误。
 - `.unlink()`  删除文件 异步
   ```js
-    const fs= require('fs');
+    const fs= require("fs");
     fs.unlink('./tmp/hello.js',(err)=>{
       if(err) throw err;
       console.log('删除成功')
@@ -3384,7 +3430,7 @@ function extendCopy(p){
 }
 
 //usage
-var Doctor= extendCopy(chinese);
+const Doctor= extendCopy(chinese);
 Doctor.carret='医生';
 console.info(Doctor.nation); // 中国
 ```
