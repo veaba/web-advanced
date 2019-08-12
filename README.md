@@ -66,7 +66,7 @@
 - [Vue技术内幕-HcySunYang](http://hcysun.me/vue-design/)
 - [Vue.js 技术揭秘-ustbhuangyi](https://ustbhuangyi.github.io/vue-analysis/ )
 ### vue3.0 `先占坑`
->https://www.bilibili.com/video/av36787459/ vue.js 3.0 最新进展，来自 Vue Conf 杭州
+>https://www.bilibili.com/video/av36787459/ vue-v2.5.16.js 3.0 最新进展，来自 Vue Conf 杭州
 
 #### 模板编译、Virtual Dom runtime性能
   - Virtual DOM 实现 `完全重构，100%，减少运行时开销（潜在），编译时来提供性能`
@@ -4766,6 +4766,23 @@ a1.prototype={
 	首先，这次面试印象很浅，其次对方需求，说不上来，怎么讲，就是有点鄙视对方的意思。有些术语，问到的，看出来对方不严谨。但部分面试题，还是可以学习的
 ### https://www.cnblogs.com/chenguangliang/p/5856701.html CommonJS AMD CMD
 ### 前端工程化
+- 模块化
+	1. JS 模块化：CommonJS/AMD/CMD/es6 module
+	2. CSS模块化：Sass/Less/Stylus/css module
+	3. 资源模块化：JS 管理文件关系
+- 组件化
+	1. UI组件
+	2. 业务组件
+- 规范化
+	1. 编码规范。
+	2. 联调规范。
+	3. 文件命名。
+	4. 样式管理规范。
+	5. git规范
+	6. code review
+- 自动化
+	1. webpack
+	2. Jenkins
 ### 前端自动化
 ### vue/的生命周期
 ### vue/props 是怎么实现的？跨域
