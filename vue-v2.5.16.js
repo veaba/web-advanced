@@ -16,6 +16,7 @@
 
 	// these helpers produces better vm code in JS engines due to their
 	// explicitness and function inlining
+	// 帮助器。在JS引擎中产生VM代码。
 	function isUndef(v) {
 		return v === undefined || v === null;
 	}
@@ -5472,15 +5473,17 @@
 		}
 		return elm;
 	}
-
+	// 创建一个具有指定的命名空间URL和限定名称的元素
 	function createElementNS(namespace, tagName) {
 		return document.createElementNS(namespaceMap[namespace], tagName);
 	}
 
+	// 创建一个文本节点
 	function createTextNode(text) {
 		return document.createTextNode(text);
 	}
 
+	// 创建注释
 	function createComment(text) {
 		return document.createComment(text);
 	}
@@ -8216,6 +8219,7 @@
 		});
 	}
 
+	// 指令
 	var directive = {
 		inserted: function inserted(el, binding, vnode, oldVnode) {
 			if (vnode.tag === 'select') {
