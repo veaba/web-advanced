@@ -252,6 +252,7 @@
 
 	/**
 	 * Mix properties into target object.
+	 * 混合属性到目标对象。
 	 */
 	function extend(to, _from) {
 		for (var key in _from) {

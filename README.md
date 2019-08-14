@@ -1627,7 +1627,9 @@ p1
 1. 忽略构造函数传递初始化参数
 2. 所有实例获取相同的属性值
 3. `共享`的本质
+
 ```js
+
 function Proto(){}
 Proto.prototype={
   name:"xx",
@@ -1637,12 +1639,13 @@ Proto.prototype={
   sayName(){
     return this.name
   }
-}
-var p1 = new Proto()
-var p2 = new Proto()
-p1.test.push('son')
+};
+var p1 = new Proto();
+var p2 = new Proto();
+p1.test.push('son');
 // 此时
-p1.test===p2.test //true
+console.info(p1.test===p2.test); //true
+
 ```
 #### [√]创建对象-混淆大法！组合使用构造函数 +原型模式！`目前最广泛，最好的方式`
 > 构造函数写属性，方法则用原型继承
@@ -1662,7 +1665,7 @@ Fn.prototype={
 var p1 = new Fn('xsa','tt','te');
 var p2 = new Fn('xsa2','tt2','te2');
 p1.test.push('son');
-p1.test===p2.test
+console.info(p1.test===p2.test);
 
 ``` 
 #### 创建对象-动态原型模式

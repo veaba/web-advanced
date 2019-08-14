@@ -84,11 +84,11 @@ ____________________________________________________________________
 ```js
 function Vue(options){
     if(typeof options !=='object' &&typeof options!=='function'){
-        console.log('error')
+        console.log('error');
         return false
     }
-    this.util=options.util
-    this.set=options.set
+    this.util=options.util;
+    this.set=options.set;
     this.delete=opitions.delete
     // ...
 }
@@ -224,3 +224,5 @@ ____________________________________________________________________
 ### slot
 ## VNode-Interface
 ## Server-Side Rendering
+
+## 根据vue的打印数据，其他应该是这样的 见 /static/js/aVue.js
