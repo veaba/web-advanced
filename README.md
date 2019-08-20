@@ -22,6 +22,7 @@
 - [Lavas](#Lavas_尚未)
 - [Es6](#Es6)
 - [Node.js](#Node.js)
+- [亮点楼主自己发现](#亮点)
 - [继承](#继承)
 - [原型与原型链](#原型与原型链)
 - [一些流行的技术题目](#一些流行的技术题目)
@@ -3295,6 +3296,61 @@ EventSource对象
   }
 
 ```
+
+## 亮点
+
+楼主通过瞎折腾发现的一些特性，仅供参考，
+
+[测试文件](/static/js/test_function_name_anonymous_arrow.js)
+
+具名函数：
+```js
+
+console.time('具名函数');
+var a=[66,99,44].map(function hello(item) {
+  return item*2
+});
+// console.info('                         '+a);
+console.timeEnd('具名函数');
+```
+
+不清楚和以下有什么区别：
+```js
+console.time('匿名函数');
+var b =[66,99,44].map(function(item) {
+  return item*2
+});
+// console.info('                         '+b);
+console.timeEnd('匿名函数');
+`````
+
+而如果使用箭头函数，则为：
+
+```js
+console.time('箭头函数');
+var c=[66,99,44].map(item=>item*2);
+// console.info('                         '+c);
+console.timeEnd('箭头函数');
+```
+
+测试如下：
+
+|测试次数|具名函数|匿名函数|箭头函数|
+|---|---|---|---|
+|1||
+|2||
+|3||
+|4||
+|5||
+|6||
+|7||
+|8||
+|9||
+|10||
+
+测试结果：
+函数执行时间所需时间：箭头函数<匿名函数<具名函数
+
 ## 继承
 - OO语言概念，两种继承方式（接口继承、实现继承）。es 只支持`实现继承`
 - JavaScript 主要通过原型链实现继承，原型链的构建是通过将一个`类型的实例`赋值给另一个`构造函数的原型`实现的
