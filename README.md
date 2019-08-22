@@ -3366,7 +3366,7 @@ console.timeEnd('箭头函数');
 - 原型式继承
 - 寄生式继承
 - 寄生组合式继承
-
+- 使用Object.assign()方法实现继承
 ### `继承的方式-原型链`
 > 原理：利用原型让一个引用类型继承另一个引用类型的属性和方法
 > 疑问：通过原型继承有什么缺点?
@@ -3713,6 +3713,98 @@ function extend(Child,Parent){
 extend(Dog,Animal);
 var dog4 = new Dog('五哈','棕色');
 console.info(dog4.type) ;// 动物
+
+```
+
+### 使用Object.assign()来实现方法继承（own）
+
+axios 里 utils 有一个方法是为了让Axios prototype 的方法copy的实例上面去，如下:
+```js
+/**
+ * Create an instance of Axios
+ * @file /lib/axios.js
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// lib/utils.js
+
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+```
+
+
+以下为关于这个部分的个人理解：
+```js
+function a (){}
+
+a.prototype.hi=()=>{
+    console.log('hi')
+}
+function b (){}
+
+b.prototype.b1=()=>{
+    console.log('b1')
+}
+b.prototype.b2=()=>{
+    console.log('b2')
+}
+
+var c =Object.assign(a,b)
+console.log(c)
+
+// 1. 上面。此时没有合并prototype上面的方法。此时c指向a
+
+// 2. 下面。此时d将同时 继承 a和b的prototype的方法
+var d =Object.assign(a.prototype,b.prototype)
+console.log(d)
+d.constructor.prototype.d1=()=>{
+    console.log('di')
+}
+console.log('d:',d)
+console.log('a:',a.prototype)
+
+// 3. 为了干净点
+var e= Object.assign(Object.create(null),a.prototype,b.prototype)//这样就不会有乱七八糟的东西了
+// var e= Object.assign({},a.prototype,b.prototype)// 有乱七八糟的继承
+console.log('e:',e)
+
+
+// 4. 一个干净的对象
+var obj1={name:'obj1'}
+var obj2={name1:"obj2",age:32}
+
+console.log(Object.assign(Object.create(null),obj1,obj2))
 
 ```
 
