@@ -2666,6 +2666,71 @@ if(window.XMLHttpRequest===undefined){
   for(let i=0;i<5;i++){}
   console.info(i) // 抛出未定义 且 for 括号和 大括号是不同的作用域
 ```
+
+
+### 箭头函数
+> https://www.cnblogs.com/mengff/p/9656486.html
+
+1. 箭头函数this是父作用域的this，不是调用时的this
+	- 如何知道当前的父作用域
+	
+2. 箭头函数不能作为构造函数，不能使用new
+
+3. 箭头函数没有arguments和caller、callee
+
+4. 箭头函数通过call、apply调用不会改变this指向，只会入参
+
+5. 箭头函数没有原型属性
+
+```js
+
+const fn =()=>{
+	
+};
+console.log(fn.prototype)
+```
+
+6. 箭头函数不能作为Generator函数，不能使用yield关键字
+
+7. 箭头函数返回对象需要加括号
+
+8. 箭头函数不能在ES6 class中声明的方法为实例方法，不是原型方法
+
+````js
+
+//deom1
+class Super{
+    sayName(){
+        //do some thing here
+    }
+}
+//通过Super.prototype可以访问到sayName方法，这种形式定义的方法，都是定义在prototype上
+var a = new Super();
+var b = new Super();
+a.sayName === b.sayName; //true
+//所有实例化之后的对象共享prototypy上的sayName方法
+
+
+//demo2
+class Super{
+    sayName =()=>{
+        //do some thing here
+    }
+}
+//通过Super.prototype访问不到sayName方法，该方法没有定义在prototype上
+var a = new Super();
+var b = new Super();
+a.sayName === b.sayName; //false
+//实例化之后的对象各自拥有自己的sayName方法，比demo1需要更多的内存空间
+
+````
+
+9. 多重箭头函数是高阶函数，相当于内嵌函数，就是闭包函数
+
+
+
+
+
 ### 函数
 - 剩余参数(rest参数)的表示法，同样，items是最后一个参数
 ```js
@@ -2941,7 +3006,7 @@ all()
 /*************************************************/
 // 第一个异步
 async function all1 () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let time1 = Math.random();
     setTimeout(() => {
       console.log(1, time1 * 10 * 1000);
@@ -2952,7 +3017,7 @@ async function all1 () {
 
 // 第二个异步
 async function all2 () {
-  return new Promise((resolve, reject) => {
+  return new Promise(() => {
     let time2 = Math.random();
     setTimeout(() => {
       console.log(2, time2 * 10 * 1000)
@@ -2977,7 +3042,7 @@ all()
 ```js
 // 第一个异步
 async function all1 () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let time1 = Math.random();
     setTimeout(() => {
       console.log(1, time1 * 10 * 1000);
@@ -2987,7 +3052,7 @@ async function all1 () {
 }
 // 第二个异步
 async function all2 () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let time2 = Math.random();
     setTimeout(() => {
       console.log(2, time2 * 10 * 1000);
@@ -3039,9 +3104,9 @@ c
 ```js
 // 第一个异步
 async function all1 () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let time1 = 10;
-    setTimeout(() => {;
+    setTimeout(() => {
       console.log(1, time1);
       resolve(time1)
     }, time1*1000)
@@ -3049,7 +3114,7 @@ async function all1 () {
 }
 // 第二个异步
 async function all2 () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let time2 =8;
     setTimeout(() => {
       console.log(2, time2);
@@ -3077,6 +3142,7 @@ await all2()
   console.log('c')
 }
 all()
+
 ```
 
 再看，把async/await 里面有两个普通的定时任务会怎么样?
