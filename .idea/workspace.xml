@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="62141673-866f-44df-9326-23fbfdcc8e9c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vuejs File" />
+        <option value="Markdown" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="iioYoYvH" />
+  </component>
+  <component name="ProjectId" id="1abenKH7xUoqkZNxXw6hALldSqr" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="10.14.1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Github\web-advanced-frond-end\scripts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Github\web-advanced-frond-end\docs\.vuepress\public" />
+      <recent name="F:\Github\web-advanced-frond-end\static" />
+      <recent name="F:\Github\web-advanced-frond-end\docs\vue" />
+      <recent name="F:\Github\web-advanced-frond-end\static\js\es6" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="62141673-866f-44df-9326-23fbfdcc8e9c" name="Default Changelist" comment="" />
+      <created>1548829539737</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1548829539737</updated>
+      <workItem from="1548829540829" duration="6492000" />
+      <workItem from="1548839561404" duration="17000" />
+      <workItem from="1548840177655" duration="34000" />
+      <workItem from="1565262706752" duration="7129000" />
+      <workItem from="1565313798240" duration="17096000" />
+      <workItem from="1565581076693" duration="6806000" />
+      <workItem from="1565678544289" duration="3376000" />
+      <workItem from="1565700656421" duration="649000" />
+      <workItem from="1565749674664" duration="5921000" />
+      <workItem from="1565780795856" duration="1344000" />
+      <workItem from="1565832698808" duration="1364000" />
+      <workItem from="1565839551557" duration="1133000" />
+      <workItem from="1566293790302" duration="733000" />
+      <workItem from="1566629627299" duration="1771000" />
+      <workItem from="1567058620013" duration="43000" />
+      <workItem from="1569228251568" duration="470000" />
+      <workItem from="1587008888026" duration="10570000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2334" y="194" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587016900341">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2334" y="194" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587016900341" />
+    <state x="2594" y="339" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587018899512">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2594" y="339" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587018899512" />
+    <state width="1898" height="210" key="GridCell.Tab.0.bottom" timestamp="1587020724200">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1898" height="210" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587020724200" />
+    <state width="1898" height="210" key="GridCell.Tab.0.center" timestamp="1587020724200">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1898" height="210" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587020724200" />
+    <state width="1898" height="210" key="GridCell.Tab.0.left" timestamp="1587020724200">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1898" height="210" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587020724200" />
+    <state width="1898" height="210" key="GridCell.Tab.0.right" timestamp="1587020724200">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1898" height="210" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587020724200" />
+    <state x="366" y="21" width="1570" height="1004" key="dock-window-1" timestamp="1587019836970">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="366" y="21" width="1570" height="1004" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587019836970" />
+    <state x="2582" y="274" width="596" height="532" key="find.popup" timestamp="1587021135930">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2582" y="274" width="596" height="532" key="find.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587021135930" />
+    <state x="2543" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1587020729900">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2543" y="235" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587020729900" />
+  </component>
+</project>
