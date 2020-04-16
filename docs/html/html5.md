@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # HTML5 
 ## 标签
 ## 拖放

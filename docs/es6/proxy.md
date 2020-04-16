@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Proxy
 
 - 只能是针对Proxy实例，如直接访问原对象不会有变化

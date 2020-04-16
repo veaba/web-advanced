@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 解析Vue.js文件
 
 ## config

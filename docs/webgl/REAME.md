@@ -1,1 +1,4 @@
+---
+sidebar: auto
+---
 # WebGL

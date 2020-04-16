@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 一些常用的 API
 
 ## document.querySelector API

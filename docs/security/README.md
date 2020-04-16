@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # web安全问题
 ## CSRFs
 ## XSS

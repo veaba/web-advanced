@@ -1,7 +1,13 @@
-## js概念/基础知识
-### 静态方法
+---
+sidebar: auto
+---
+
+# js概念/基础知识
+
+## 静态方法
 > xxx.prototype  在 constructor里面就看到了,
-### 数据类型构造属性及方法(静态)
+
+## 数据类型构造属性及方法(静态)
 - 疑问：比较MediaSource.prototype 与Array.isArray()
 
 > Array.isArray() `静态方法?`，可在chrome打印出来并不是灰色
@@ -90,14 +96,17 @@ MediaSources||||||||
   - `CONNECTING:0`
 - MediaSources 
   - `isTypeSuported()` 静态方法
-### 概念
+  
+## 概念
 - JavaScript
   - ECMAScript
   - DOM
   - BOM
-### 关键字
+  
+## 关键字
   - 如果使用关键字name 声明一个值，只能是string 类型！！！
-### 语句
+  
+## 语句
   - switch
     - case 必须紧接着跟值/变量/简单表达式/&&/function，不确定能使用||
   ```js
@@ -129,11 +138,11 @@ MediaSources||||||||
           console.info('NotFoundError:找不到满足错误的类型');
       }
   ```
-### 函数
+## 函数
 >特点：
 - 函数声明提升
 
-#### 声明函数的几种函数，目前三种
+### 声明函数的几种函数，目前三种
 - 函数声明
 - 函数表达式
 - 匿名函数/拉姆达函数，`name` 是空字符串
@@ -151,7 +160,8 @@ const test1=  function(){
    //todo
  })()
 ```
-#### 一种危险的函数使用
+
+### 一种危险的函数使用
 为什么说它危险？
 > 应该使用函数表达式
 
@@ -167,7 +177,7 @@ if(true){
 }
 ```
 
-#### 递归
+### 递归
 
 -----------------------------------------------------------------------------------------
 > 以下来自红宝石：
@@ -299,7 +309,7 @@ fib(8)
 
 ![斐波那契数列](/images/fib.jpg "斐波那契数列")
 
-#### 立即执行
+### 立即执行
 > 因为立即执行函数和外部的全局作用域的命名空间不同，于是name1 和 this.name1 属于不同的空间,私有命名空间
 
 
@@ -328,8 +338,9 @@ fib(8)
 })(window)
 
 ```
-### 事件
-#### 焦点事件
+
+## 事件
+### 焦点事件
 > 判断浏览器是否支持：`document.implementation.hasFeature("FcousEvent"),"3.0"`
 
 |触发次序|冒泡事件|非冒泡事件|描述|用例|
@@ -436,7 +447,7 @@ fib(8)
       - 通过委托父级，addEventLisenter 设置在父节点上，将事件监听器气泡的影响每个子节点，而不是每个子节点都设置事件监听器
 
 
-###  前端路由实现
+##  前端路由实现
 >API，利用两个API修改URL，而不会引起页面的刷新
 - 方式一 pushState ajax
   - history.pushState 增加一条新的记录
@@ -448,7 +459,7 @@ fib(8)
 
 
   
-### 全局函数
+## 全局函数
 `http://www.w3school.com.cn/jsref/jsref_obj_global.asp`
 
 - Global  `ES 内置单体对象` 全局对象
@@ -521,11 +532,11 @@ Math.max.apply(Math,arr)
 ||||
 - decodeURL
 
-### 正则 RegExp
+## 正则 RegExp
 
-### 字符串 String
+## 字符串 String
 
-### 数字 Number
+## 数字 Number
 
 - 除法。先转为数字再进行除法操作
 ```js
@@ -534,7 +545,7 @@ Math.max.apply(Math,arr)
 
 ```
 
-### 数组 Array
+## 数组 Array
 
 - 能用forEach()做到的，map()同样可以。反过来也是如此。
 - map()会分配内存空间存储新数组并返回，forEach()不会返回数据。
@@ -542,7 +553,7 @@ Math.max.apply(Math,arr)
 - forEach 跳过空元素，但不跳过`undefined`
 
 
-#### 实例方法-不改变原始数组的方法
+### 实例方法-不改变原始数组的方法
 
   - `Array.prototype.concat(arr1, arr2,...,arrn)`
     - 入参必填，可以是数组对象
@@ -630,7 +641,7 @@ Math.max.apply(Math,arr)
     console.log(this)//String {"ttt"}
     },'ttt')
     ```
-#### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
+### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
   - `Array.prototype.copyWithin()`copyWithin
   
     - 从数组指定元素拷贝元素到数组的另外一个指定位置
@@ -648,16 +659,16 @@ Math.max.apply(Math,arr)
   console.log(arr,temp)
 
   ```
-#### 静态方法
+### 静态方法
 
 
-### 枚举[`new`] symbol
+## 枚举[`new`] symbol
 
 
 
-### 类 class  
+## 类 class  
 
-### 面向对象,程序设计
+## 面向对象,程序设计
 
 > 一个标志，类的概念 
 
@@ -694,7 +705,7 @@ function factory(name,age,job){
 //use
 const p= factory('张三','28','前端狗')
 ```
-#### 创建对象-构造函数
+### 创建对象-构造函数
 >优点：
 1. 没有显示地创建对象
 2. 直接将方法和属性赋值给this对象
@@ -862,7 +873,8 @@ p1.test.push('son');
 console.info(p1.test===p2.test); //true
 
 ```
-#### [√]创建对象-混淆大法！组合使用构造函数 +原型模式！`目前最广泛，最好的方式`
+
+### [√]创建对象-混淆大法！组合使用构造函数 +原型模式！`目前最广泛，最好的方式`
 > 构造函数写属性，方法则用原型继承
 ```js
 function Fn(name,age,job){
@@ -883,7 +895,8 @@ p1.test.push('son');
 console.info(p1.test===p2.test);
 
 ``` 
-#### 创建对象-动态原型模式
+
+### 创建对象-动态原型模式
 > 缺点
 - 不能使用字面量重写原型,否则会切断联系
 > 通过if来判断
@@ -899,7 +912,8 @@ function Fn(name,age,job){
   }
 }
 ```
-#### [x]创建对象-寄生构造函数模式
+
+### [x]创建对象-寄生构造函数模式
 > 比工厂模式多了一个new，使用工厂模式new 出来
 
 >特点：
@@ -923,7 +937,8 @@ function factory(name,age,job){
 //use
 const p=new factory('张三','28','前端狗')
 ```
-#### 创建对象-稳妥构造函数模式
+
+### 创建对象-稳妥构造函数模式
 >由道格拉斯·克罗克福斯 发明了该模式——稳妥对象（durable obajects）
 
 > 特点：
@@ -947,13 +962,15 @@ function durable(name,age,job){
 var p1 = durable('柳十','41','CFO管钱的');
 p1.sayName()
 ```
-#### new操作符都干吗了？
+
+### new操作符都干吗了？
 1. 创建一个新对象
 2. 构造函数的作用域赋值给新对象，this指向这个新对象
 3. 执行构造函数代码，为这个新对象添加属性
 4. 返回新对象
 [查看更多 js中的new()到底做了些什么？？](https://www.cnblogs.com/faith3/p/6209741.html)
-### 作用域
+
+## 作用域
 - `js 没有作用域块`，导致var 声明时 是全局作用域。但如果是let声明，情况就不一样。let 让变量有了作用域。
 - 可以使用过匿名函数来解决，模仿块级作用域
 
@@ -1005,7 +1022,7 @@ const test2=function(){
 test2();
 console.log(t2)//可以访问到
 ```
-### 私有变量
+## 私有变量
 > 如何让外部的函数访问到内部的变量和设置
 - 通过构造函数的方式
 ```js
@@ -1074,7 +1091,7 @@ var object={
 }
 ```
 
-### 以下三个方法都是为了改变上下文存在而是用的
+## 以下三个方法都是为了改变上下文存在而是用的
 
 - <sub>[绑定-this-的方法](##索引__关于本作知识引用来源sub标签 )</sub>
 
@@ -1085,7 +1102,7 @@ var object={
 
 - bind 方法。创建一个新的函数。被调用时，其this关键字 设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
-### call  会立即执行。
+## call  会立即执行。
 
 - 入参是一个 (a,b,c)的列表形式，记忆方式，“C” 类似括号“（”。
 - call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。
@@ -1104,11 +1121,11 @@ obj.hasOwnProperty('toString'); // true
 Object.prototype.hasOwnProperty.call(obj, 'toString') // false
 ```
 
-### apply  会立即执行。
+## apply  会立即执行。
 - 最多入参65536个参数
 - 假如数组的长度很长。切块后循环传入目标方法
 
-#### apply 讲数组添加到另一个数组
+### apply 讲数组添加到另一个数组
 - 数组a，数组b
 - a里面含有b的元素
 
@@ -1121,7 +1138,7 @@ console.info("list2:",list2);
 
 ```
 
-#### apply和内置函数，允许Math.max/Math.min 找出数组中最大值/最小值
+### apply和内置函数，允许Math.max/Math.min 找出数组中最大值/最小值
 
 ```js
 // 最大值
@@ -1136,7 +1153,7 @@ console.info(min);
 
 ```
 
-#### 将数组空元素转为`undefined`
+### 将数组空元素转为`undefined`
 
 ```js
 const arr=[54654,,55];
@@ -1146,21 +1163,21 @@ console.info(result);//[ 54654, undefined, 55 ]
 ``` 
 
 
-#### 使用apply来链接构造器
+### 使用apply来链接构造器
 
-#### 转换类数组对象
+### 转换类数组对象
 
 ```js
 Array.prototype.slice.apply({0:1,length:1}); // [1]
 Array.prototype.slice.apply({0:1,length:99}) // (99) [1, empty × 98]
 
 ```
-#### 绑定回调函数的对象
+### 绑定回调函数的对象
 ```js
 
 ```
 
-### bind 新函数，不会立即执行。
+## bind 新函数，不会立即执行。
 - 创建一个新的函数。
 - 新函数的this 是bind的第一个参数指定的
 - 其余参数作为新函数的参数使用
@@ -1198,7 +1215,7 @@ ele.removeEventListener('click',listener);
 ```
 
 
-### call 与apply区别
+## call 与apply区别
 
 - call  入参是列表。
 - apply  入参是数组
@@ -1213,7 +1230,7 @@ a.apply(null,[ob],cc)
 
 // undefined
 ```
-### Blob 对象
+## Blob 对象
 
 - 相互转换的其他平台
 	- url
@@ -1229,20 +1246,20 @@ a.apply(null,[ob],cc)
 ## js三大对象
 [SegmentFault 查看更多，作者Adrain](https://segmentfault.com/a/1190000011467723)
 
-### 本地对象
+## 本地对象
   - 与宿主无关，独立于宿主环境的ECMAScript 实现提供的对象
   - ECMA-262 定义的类（引用类型）
   - 该类引用类型在运行过程中需要通过new 创建所需的实例对象
   - 包含 `Object`、`Array`、`Date`、`RegExp`、`Function`、`Boolean`、`Number`、`String` 等
   
-### 内置对象
+## 内置对象
   - 与宿主无关，独立于宿主环境的ECMAScript实现提供的对象
   - EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需实例化
   - 内置对象是本地对象的子集
   - 包含`Global` 和`Math`
   - ECMAScript 5中新增了`JSON`这个存在于全局的内置对象
   
-### 宿主对象
+## 宿主对象
   - 由ECMAScript 实现的宿主环境提供的对象，包含两个大类，一个是宿主提供，一个是自定义类对象
   - 所有非本地对象都是宿主对象
   - 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`

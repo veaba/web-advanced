@@ -1,2 +1,6 @@
-## Canvas 
-### RequestAnimationFrame
+---
+sidebar: auto
+---
+
+# Canvas 
+## RequestAnimationFrame

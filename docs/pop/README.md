@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 流行常见前端面试技术题
 
 ## 所有类型，string|number|NaN|boolean|array|object|function|，共用的属性是什么？除了，null、undefined。(自己出的)

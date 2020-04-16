@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Node.js
 - [如何正确的学习Node.js](https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7)
 

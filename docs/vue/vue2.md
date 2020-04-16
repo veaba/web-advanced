@@ -1,5 +1,9 @@
-## Vue
-- [更多关于VUE API人工整理手记，见 /docs/vue-api.md @veaba](vue2-api.md)
+---
+sidebar: auto
+---
+
+# Vue
+- [更多关于VUE API人工整理手记，见 /docs/vue-api.md @veaba](/vue/vue2-api/)
 
 ```vue
 <div id="app" @click="send">

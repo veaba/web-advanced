@@ -1,3 +1,6 @@
+---
+sidebar: auto
+---
 # Nuxt
 
 ## AsyncData()

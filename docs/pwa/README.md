@@ -1,5 +1,9 @@
-## PW
-## Service worker 工作线程，子线程
+---
+sidebar: auto
+---
+
+# PWA
+# Service worker 工作线程，子线程
 >2014年5月提出，前身是Application Cache`被移除`
   - Application Cache 指定缓存策略 app.appcache
   - 不能直接访问/操作 DOM 特定的API

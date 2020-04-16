@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # DOM对象
 
 - document对象，文档，window的属性

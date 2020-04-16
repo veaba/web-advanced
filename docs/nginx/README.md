@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Nginx
 > https://blog.csdn.net/tsummerb/article/details/79248015 对nginx 正向、反向带来写的比较好的文章
 ## nginx 的正向代理？

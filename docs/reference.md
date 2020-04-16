@@ -1,3 +1,6 @@
+---
+sidebar: auto
+---
 # 引用
 > 索引__关于本作知识引用来源sub标签 
 1. [搜狐 - 如何减少HTML页面回流与重绘（Reflow & Repaint）](http://www.sohu.com/a/111695367_466959)

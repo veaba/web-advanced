@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 业务技巧相关
 ##  RESTful 与 GraphQL 比较
 ## 跨域问题

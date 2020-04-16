@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Es6
 
 ## let、const

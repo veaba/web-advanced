@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # DOM事件`TODO`
 > http://www.runoob.com/jsref/dom-obj-event.html
 
