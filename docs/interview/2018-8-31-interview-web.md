@@ -1,0 +1,106 @@
+# 2018年8月31日面试题
+
+## 以下代码运行结果符合预期？（还是没看懂这道题目！）
+- 目前测试的结果是，入参大于100+300的时候，time span 的打印时间会在0.0x毫秒以下，否则100ms左右
+```js
+/*demo1*/
+function f1() {
+  console.time('time span')
+}
+function f2() {
+  console.timeEnd('time span')
+}
+setTimeout(f1,100);
+setTimeout(f2,200);
+function waitForMs1(n) {
+  var now = Date.now();
+  while (Date.now()-now<n) {}
+}
+
+waitForMs1(500);
+/*demo2*/
+function f3() {
+  console.time('time span')
+}
+function f4() {
+  console.timeEnd('time span')
+}
+setTimeout(f3,1000);
+setTimeout(f4,2000);
+function waitForMs2(n) {
+  var now = Date.now();
+  while (Date.now()-now<n) {}
+}
+waitForMs2(500)
+
+```  
+`
+    当时选的打印是约500.077ms！回来一跑代码还是没看懂。
+    可以理解为？？
+` 
+2. 
+3. 
+4. 
+## 以下哪个结果为真？
+	- A. null instanceof Object
+	- B. null == undefined
+	- C. NaN ==NaN
+	- D. false == undefined
+1. `instanceof`用法 
+	- 用于测试其原型链上是否存在一个构造函数的prototype属性。
+	- 检测constructor.prototype 是否存在参数object的原型链
+	- 语法`object instanceof constructor`
+	- 最好分辨的是，使用关键字`new`出来
+	
+	```js
+		console.info(({}) instanceof Object);/*true*/
+		console.info(3 instanceof Number); /*false*/
+	```
+ 
+## 关于dom事件流的表述哪些不正确?
+	- A. 事件流包含两个阶段：事件捕获阶段，事件冒泡阶段
+	- B. IE跟标准浏览器对于DOM事件流实现不一样
+	- C. 假设parentEle是childEle的父节点，绑定事件：parentEl.addEventListener('click',fn1.false),
+	和childEle.addEventListener('click',fn2,false)，当点击childEle的时候，fn1先于fn2触发
+	- D. addEventListener第三个参数true代表支持捕获，false代表不支持捕获
+	
+## 关于原型的说法不正确的是？
+```js
+function a1(name,age){
+	this.name=name;
+	this.age=age;
+}
+a1.prototype={
+	name:'children',
+	hasOwnproperty:function() {
+	  return false
+	}
+}
+```
+	- A.js对象用两个不同的属性，一种是自身属性，另外一种是原型链上的继承的属性	`√`
+	- B.instance.name == 'xx' 为true `问题应该是这个，因为this指向，导致undefined，除非构造函数的时候入参`
+	```js
+	var a = new a1('children')就可以
+	```
+	
+	- C.instance.hasOwnproperty('age')结果是false `√`
+	- D.所有对象都继承来自Object.prototype `√`
+
+## 写程序
+参考 http://www.cnblogs.com/TomXu/archive/2012/03/02/2355128.html
+基本相同的题目来源 https://www.cnblogs.com/LoveOrHate/p/4457010.html
+1. 对象A直接调用对象B的某个方法，实现交互逻辑。但导致的问题是A和B紧密耦合，修改B可能造成A调用B的方法失效。
+2. 为了解决耦合问题，设计为：
+	对象A生成消息->将消息通知给一个消息处理器(Observable)->消息处理器将消息传递给B具体的调用过程变成：
+		A.emit('message',data);
+		B.on('message',function(data){})
+	请实现，消息代理功能。补充完成function EventEmitter(){}
+
+## js写一个ajax get 请求
+> emm，无数次都会放假的面试题。（再我又重新去补充该部分的时候）
+```js
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET','http://baidu.com',false);
+  xhr.send('hello');
+  console.log(xhr.responseText)
+```

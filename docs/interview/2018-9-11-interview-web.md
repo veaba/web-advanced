@@ -1,0 +1,72 @@
+# 2018年9月11日面试题
+
+> 首先，这次面试印象很浅，其次对方需求，说不上来，怎么讲，就是有点鄙视对方的意思。有些术语，问到的，看出来对方不严谨。但部分面试题，还是可以学习的
+
+## https://www.cnblogs.com/chenguangliang/p/5856701.html CommonJS AMD CMD
+
+## 前端工程化
+- 模块化
+	1. JS 模块化：CommonJS/AMD/CMD/es6 module
+	2. CSS模块化：Sass/Less/Stylus/css module
+	3. 资源模块化：JS 管理文件关系
+- 组件化
+	1. UI组件
+	2. 业务组件
+- 规范化
+	1. 编码规范。
+	2. 联调规范。
+	3. 文件命名。
+	4. 样式管理规范。
+	5. git规范
+	6. code review
+- 自动化
+	1. webpack
+	2. Jenkins
+	
+## 前端自动化
+## vue/的生命周期
+## vue/props 是怎么实现的？跨域
+## 如何处理文件上传的进度条
+## 从零开始构建项目
+## webpack了解
+## node.js的stream 流?
+## 跨域
+## http/https/http2.0
+>用node.js  启动https 服务
+```js
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};
+
+https.createServer(options, (req, res) => {
+  res.writeHead(200);
+  res.end('hello world\n');
+}).listen(8000);
+```
+>用node.js启动http2服务
+```js
+const http2 = require('http2');
+const fs = require('fs');
+const server = http2.createSecureServer({
+    key: fs.readFileSync('./localhost-privkey.pem'),
+    cert: fs.readFileSync('./localhost-cert.pem')
+});
+server.on('error', (err) => console.error(err));
+
+server.on('stream', (stream, headers) => {
+  // stream is a Duplex
+  stream.respond({
+    'content-type': 'text/html',
+    ':status': 200
+  });
+  stream.end('<h1>Hello world</h1>')
+});
+
+server.listen(8443);
+```
+## 普通函数和构造函数的区别
+## web前端安全和常见的web安全问题

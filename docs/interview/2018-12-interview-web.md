@@ -1,0 +1,25 @@
+# 2018年12月份面试题
+
+1.阅读代码，立即执行函数
+> 运算符的优先级 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+```js
+/**1*/
+var name1 ='World!';
+(function(){
+	console.log(this);
+	if(typeof name1 === 'undefined'){
+		var name1 ='JACK';
+		console.log('hello,'+name1)
+	}else{
+		console.log('Goodbye' + name1)
+	}
+})();
+
+/**2 运算符的优先级*/
+var val = 'smtg';
+console.log('Value is ' +(val==='smtg')?'Something':'Nothing');
+
+```
+
+## 为什么其他语言不能使用set?
+## transform 和display none 回流问题
