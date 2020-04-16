@@ -3,10 +3,12 @@
 > xxx.prototype  在 constructor里面就看到了,
 ### 数据类型构造属性及方法(静态)
 - 疑问：比较MediaSource.prototype 与Array.isArray()
+
 > Array.isArray() `静态方法?`，可在chrome打印出来并不是灰色
-![Array.isArray()](./static/images/isArray.jpg)
+![Array.isArray()](/images/isArray.jpg)
+
 > MediaSource.isTypeSupported() `静态方法` ,在chrome打印出来是亮色
-![MediaSource.isTypeSupported](./static/images/isTypeSupported.jpg)
+![MediaSource.isTypeSupported](/images/isTypeSupported.jpg)
 
 > 共性
 
@@ -295,7 +297,7 @@ fib(8)
 第八步 | 1     +     1 +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +     1 +    1  +     1  +     1 +    1  +    1  +     1 +    1  +     1 +    1  +     1 +     1 +    1  +     1  +     1  +     1  
 第九步 | 去掉空格之后 我们得到一个结果  1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34
 
-![斐波那契数列](./static/images/fib.jpg "斐波那契数列")
+![斐波那契数列](/images/fib.jpg "斐波那契数列")
 
 #### 立即执行
 > 因为立即执行函数和外部的全局作用域的命名空间不同，于是name1 和 this.name1 属于不同的空间,私有命名空间

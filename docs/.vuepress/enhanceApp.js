@@ -12,9 +12,9 @@ export default (
 		siteData,
 	}
 ) => {
-	console.info(router);
-	console.info(siteData);
-	console.info(router.currentRoute);
-	console.info(options);
-	console.info(Vue.prototype);
+	// console.info(router);
+	// console.info(siteData);
+	// console.info(router.currentRoute);
+	// console.info(options);
+	// console.info(Vue.prototype);
 }

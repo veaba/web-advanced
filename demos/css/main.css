@@ -7,7 +7,7 @@
   .src {
     width: 32px;
     height: 32px;
-    background: url("../images/src.jpg") no-repeat;
+    background: url("../../docs/.vuepress/public/images/src.jpg") no-repeat;
   }
 }
 
@@ -20,7 +20,7 @@
   .src {
     width: 32px;
     height: 32px;
-    background: url("../images/src-2.jpg") no-repeat;
+    background: url("../../docs/.vuepress/public/images/src-2.jpg") no-repeat;
   }
 }
 

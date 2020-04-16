@@ -1,5 +1,4 @@
 name: web-advanced-frond-end CI
-# master才触发部署
 on:
   push:
     branches:

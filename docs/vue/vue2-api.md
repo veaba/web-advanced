@@ -12,7 +12,8 @@ ____________________________________________________________________
 ## 从prototype角度 去看`vue函数`的结构
 > 在用vue开发的网站上，在console 里输入 Vue.prototype 去看 这个vue 构造函数，vue.version 2.6.6
 
-![vue-prototype](/static/images/vue-prototype.png)
+![vue-prototype](/images/vue-prototype.png)
+
 - `$delete`: function del(target,key)
 - `$destroy`: funcion()
 - `$emit`: function(event)
@@ -225,4 +226,4 @@ ____________________________________________________________________
 ## VNode-Interface
 ## Server-Side Rendering
 
-## 根据vue的打印数据，其他应该是这样的 见 /static/js/aVue.js
+## 根据vue的打印数据，其他应该是这样的 见 https://github.com/veaba/web-advanced-frond-end/blob/master/demos/js/aVue.js

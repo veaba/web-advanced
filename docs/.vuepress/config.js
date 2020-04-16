@@ -59,7 +59,6 @@ module.exports = {
 				after: "</div>"
 			}
 		]
-		// require('./vuepress-plugin-tensoflow')
 	],
-	extraWatchFiles: [".vuepress/nav/en.js", ".vuepress/nav/zh.js"]
+	extraWatchFiles: [".vuepress/nav/zh.js"]
 };

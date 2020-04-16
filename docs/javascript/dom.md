@@ -14,7 +14,7 @@
 |document.anchors||`a标签中需要含有name才能获取！`|
 |document.baseURI||返回绝对基础URI|
 |document.body||返回文档body元素|
-||document.close()|关闭document.open的输出流 [document.close](/static/js/document.js#L1)|
+||document.close()|关闭document.open的输出流 [document.close](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/document.js#L1)|
 |document.cookie||返回所有的cookie字符串|
 ||document.createAttribute()|创建属性节点|
 ||document.createComment()|竟然能创建一段注释的节点，亮瞎狗眼|
@@ -40,7 +40,7 @@
 |document.links||返回所有a标签|
 ||document.normalize()|删除空文本节点，并连接相邻及节点，createTextNode 创建的节点。|
 ||document.normalizeDocument()||
-||document.open()|打开一个流，以收集任何document.write | writenlen()方法的输出 [document.close](/static/js/document.js#L1)|
+||document.open()|打开一个流，以收集任何document.write | writenlen()方法的输出 [document.close](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/document.js#L1)|
 ||`document.querySelector()`|匹配css 选择器的第一个元素|
 ||`document.querySelectorAll()`|返回匹配css选择的所有元素节点的列表|
 |document.readyState||返回文档状态 `uninitialized ` `loading ` `interactive ` `complete `|
@@ -126,7 +126,7 @@
 ||element.hasAttributes()||
 ||element.hasChildNodes()||
 ||element.hasFocus()||
-||element.`insertBefore()`|插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore]("/static/js/document.js/#L26)|
+||element.`insertBefore()`|插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/document.js/#L26)|
 ||element.isDefaultNamespace()||
 ||element.isEquaNode()||
 ||element.isSameNode()||

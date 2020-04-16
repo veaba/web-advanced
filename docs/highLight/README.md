@@ -4,7 +4,7 @@
 
 楼主通过瞎折腾发现的一些特性，仅供参考，
 
-[测试文件](/static/js/test_function_name_anonymous_arrow.js)
+[测试文件](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/test_function_name_anonymous_arrow.js)
 
 具名函数：
 ```js

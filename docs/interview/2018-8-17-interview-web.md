@@ -1,5 +1,4 @@
 # 2018年8月17日的面试题
-
 > 地址是在杭州，两个妹纸面试，问的问题都是些基础题，我比较差。
 她们说这次的要求是，招一尊大神，当顾问，解决疑难杂症，会android+ios开发。
 我尴尬的笑了笑，这个就算了吧。
@@ -39,36 +38,38 @@
     - 沿着目标资源的路径执行一个消息环回测试  
   - options
     - 返回服务器支持的http方法
+    
 4. get和post的区别
-
-	|操作|get|post|
-	|---|---|---|
-	|后退/刷新|无害|重复提交|
-	|编码类型|application/x-www-form-urlencoded|application/x-www-form-urlencoded/multipart/form-data/二进制|
-	|历史|参数保留在浏览器history里|参数不会保留|
-	|数据类型限制|ASCII字符|没有限制|
-	|安全性|与post相比，比较差，敏感信息不要用get|post比get安全，参数不保留的缘故，在客户端和服务端|
-	|可见性|所有人在url可见|在url中不可见
+|操作|get|post|
+|---|---|---|
+|后退/刷新|无害|重复提交|
+|编码类型|application/x-www-form-urlencoded|application/x-www-form-urlencoded/multipart/form-data/二进制|
+|历史|参数保留在浏览器history里|参数不会保留|
+|数据类型限制|ASCII字符|没有限制|
+|安全性|与post相比，比较差，敏感信息不要用get|post比get安全，参数不保留的缘故，在客户端和服务端|
+|可见性|所有人在url可见|在url中不可见
 
 5. put 和post 的区别 
 	
-	|操作|put|post|
-	|---|---|---|
-	|特性|幂等|非幂等|
-	|场景|更新资源，修改密码（因为提交参数不同，但结果一样，重复结果，多次不同请求的场景）|注册账号|
+|操作|put|post|
+|---|---|---|
+|特性|幂等|非幂等|
+|场景|更新资源，修改密码（因为提交参数不同，但结果一样，重复结果，多次不同请求的场景）|注册账号|
+	
 6. 讲一下IE下碰到的那些内存泄露问题<sub>#IE内存泄漏问题总结</sub>
 
-	`参考@3`
-	
-	|泄露描述|解决方案|
-	|---|---|
-	|动态刷新||
-	|页面f5反复刷新，内存biubiu||
-	|退出变量占用内存的页面,内存依然无法回收||
-	|退出变量占用内存iframe,内存依然无法回收||
-	|span/td/js 变量||
-	|同作用域内，js对象引用dom对象，dom又引用同作用域内的js对象，将发生泄露||
-	|同作用域内，dom对象应用一个在函数内的闭包函数，如事件绑定，且闭包又引用上层对象||
+`参考@3`
+
+|泄露描述|解决方案|
+|---|---|
+|动态刷新||
+|页面f5反复刷新，内存biubiu||
+|退出变量占用内存的页面,内存依然无法回收||
+|退出变量占用内存iframe,内存依然无法回收||
+|span/td/js 变量||
+|同作用域内，js对象引用dom对象，dom又引用同作用域内的js对象，将发生泄露||
+|同作用域内，dom对象应用一个在函数内的闭包函数，如事件绑定，且闭包又引用上层对象||
+
 7. 讲一下 碰到的兼容性问题
 8. 讲下闭包
   - 原理
@@ -95,6 +96,7 @@
 
 ```     
 14. 原型链
+
 15. 前端缓存问题(这是那个脸红的妹纸问题的，其实她想问的是localstorage、和sessionstorage 和cookie的知识，但其实有多种)
 比较，彼此之间的异同。
 - Storage 存储
@@ -128,6 +130,7 @@
 
 
 17. setTimeout 会引起内存泄露吗？
+
 ```js
 /*1 反复点击的代码~~*/
 function leap(){
@@ -168,6 +171,9 @@ var test = function(){
   - static，默认值，没有定位 忽略top left right bottom z-index
   - inherit 继承 
 
+
+
+
 ## js 部分
 
 - js 基础类型与引用类型
@@ -177,10 +183,10 @@ var test = function(){
 > instanceof 操作符区分 引用类型
 
 
-  - 基本类型
-> 什么叫堆内存？自己买菜做饭，就是堆，主动的
-    - 有undefined、boolean、number、string、null。按值访问的意思。
-    - 任何方法都无法给边基本类型的值，比如一个字符串
+- 基本类型
+什么叫堆内存？自己买菜做饭，就是堆，主动的
+ - 有undefined、boolean、number、string、null。按值访问的意思。
+ - 任何方法都无法给边基本类型的值，比如一个字符串
 
 ```js
 var name ='Veaba';
@@ -193,7 +199,7 @@ console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */
 - 基本类型的变量是存放在栈区，内存里面的栈内存（那堆呢？）
 - 赋值不影响
 
-  - 引用类型
+- 引用类型
 > 去菜馆吃饭，叫栈，被动
 
 - 对象。属性和方法的集合
@@ -278,6 +284,7 @@ JavaScript单线程和其异步机制就如上所述。所谓的单线程并不�
 
 - 得出的结论是，base占用内存，速度快。
   - css 响应式，src 按需加载。base64
+
 
 ## css 有间隙
 
@@ -374,6 +381,8 @@ console.info(true+function(){}); //'truefunction(){}'
 
 ```
 
+
+
 ## replace 理解
 
 ```js
@@ -455,6 +464,8 @@ typeof ''|"string"
 "object"
 ```
 
+
+
 ## let domList = document.querySelectorAll('div')，一句话将domlist转为数组
 
 ```js
@@ -492,6 +503,8 @@ a.cache-control   b.etag   c.age     d.last-modified
 
 ## 挑选自己或者公司项目，遇到的问题、解决的思路简单阐述下
 
+
+
 ## 全面解析一个任意url的所有参数为object，注意边界条件
 
 ```js
@@ -522,16 +535,24 @@ ob={
 }
 ```
 
-## 实现一个最简单的模板渲染引擎(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对replace的理解和正则，)
 
-- 要点一 replace 的用法 第一个替换的，第二回调函数，回调函数有三个参数，第一个要找到的，第二个找到的索引，第三个原先的字符
+## 实现一个最简单的模板渲染引擎
+
+这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对`replace`的理解和正则
+
+- 要点一 replace 的用法 
+
+第一个替换的，第二回调函数，回调函数有三个参数，第一个要找到的，第二个找到的索引，第三个原先的字符
+
 - 对象key 转数组
-- 正则 从什么到任意的什么 \{{(.+?)\}}
-- 正则 这个或者那个 \{{|\}}
+
+- 正则 从什么到任意的什么 `{{(.` `+?)}}` （左边这两个字符是连起来的，由于vuepress无法识别这个字符，导致build错误了，这里才暂时隔离开）
+
+- 正则 这个或者那个 `{{|}}`
 
 结果：我是姓名，年龄18，性别 undefined
 
-```js
+```js 
 let template='我是{{name}} ,年龄{{age}},性别{{sex}}'
 let data ={
   name:'姓名',
@@ -551,6 +572,7 @@ function cover(template,data){
 cover(template,data)
 ```
 
+
 ## 字符串查找
 
 使用最基本遍历实现查找字符串，并返回第一次出现的问题，找不到返回-1
@@ -558,12 +580,12 @@ cover(template,data)
  a='35'  b='1234567'  返回-1
  a='355' b=''12354355 返回5
 
- ```js
+```js
  function compare(a,b){
   return b.indexof(a)
  }
  compare(a,b)
- ```
+```
 
 ## 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
 
@@ -572,7 +594,7 @@ cover(template,data)
 - 问题一  Object.defineProperty(obj,key,options)的使用
 - 其中 option 里面的选项以及主要的get 和set方法
 
- ```js
+```js
  {
 	get:function name(){
       return '你要改变的值'
@@ -584,11 +606,11 @@ cover(template,data)
     }
  }
 
- ```
+```
 
 - bind()。【与此同类似的需要懂 call bind apply】其次是使用函数时候，怎么给另外一个对象绑定this，因为此题目用到一个返回并返回这个this，的key值，这时候需要处理
 
- ```js
+```js
 func.bind(obj)('你的参数'); // func 是函数，里面有this， obj 就是要操作的函数的那个
 let obj={
   key_1:1,
@@ -632,7 +654,7 @@ obj.key_2=1 //此时自动输出变化为1
 
 输出有多个儿子的人的名字
 
- ```js
+```js
 let data={
   name:'jack',
   child:[
@@ -644,20 +666,20 @@ let data={
     {name:'jack3',child:{name:'jack3-1'}}
   ]
 }
- ```
+```
 
 ## 程序题1
 
- ```js
+```js
 for(var i=0;i<5;i++){
-setTimeout(function(){
-  console.info(new Date,i)
-},1000)
+    setTimeout(function(){
+      console.info(new Date,i)
+    },1000)
 };
 console.info(new Date,i)
- ```
+```
 
- ```js
+```js
 function Person(name){
   this.name=name
 }
@@ -667,6 +689,4 @@ var c = Person;
 console.info(a.name);
 console.info(b.name);
 console.info(c.name)
- ```
-
-——————————————————————-
+```
