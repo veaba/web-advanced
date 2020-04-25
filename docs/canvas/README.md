@@ -3,4 +3,5 @@ sidebar: auto
 ---
 
 # Canvas 
+
 ## RequestAnimationFrame

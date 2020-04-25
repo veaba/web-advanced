@@ -54,3 +54,4 @@
     - [vue2-api](vue/vue2-api/)
 - [引用](/reference/)
 - [关于](/about/)
+- [自我驱动](/self/)

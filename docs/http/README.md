@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# Http协议
+# HTTP协议
 ## http
 
 - http 请求与响应

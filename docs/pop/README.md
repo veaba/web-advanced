@@ -6,14 +6,17 @@ sidebar: auto
 
 ## 所有类型，string|number|NaN|boolean|array|object|function|，共用的属性是什么？除了，null、undefined。(自己出的)
 > toString()、valueOf()
->
+
 ## 哪些数据类型有length 这个属性？(自己出的)
+
 |string|number|NaN|null|undefined|boolean|array|object|function|
 |------|------|---|----|---------|-------|-----|------|--------|
 |`success`|error|undefined|error|error|undefined|`success`|undefined|0,始终是0|
 
 ## 双等于号比较
+
 >结论：
+
 1. 字符串和布尔值 是一组，空字符串 和false
 2. null 和undefined 是一组，以上两组互不相等，同组的组员或者自己相等
 3. NaN属于Number，自称一派 
@@ -48,8 +51,8 @@ sidebar: auto
 |三等于比较a===a|`''`|`false`|`null`|`undefined`|
 |`''`|`true`|false|false|false|
 |`false`|false|`true`|false|false|
-|`null`|false|false|false|`true`|false|
-|`undefined`|false|false|false|false|`true`|
+|`null`|false|false|`true`|false|
+|`undefined`|false|false|false|`true`|
 ||||||
 
 - ["1", "2", "3"].map(parseInt) 答案是多少？
@@ -83,13 +86,13 @@ parseInt('3',2); // NaNredix 为2，小于2不成立，但2进制不满足3
 /*********************************************************/
 parseInt(string,radix); ////string 必填,radix(2~36)如果 radix 为0，则以10为基础解析，如果0x， 0X开头，以16位基数，如果小于2,、大于36 则返回 `NaN`
 parseInt("1", 0); // 十进制 1
-parseInt("2", 1); // 第二个参数不在 2-36 直接
+parseInt("2", 1); // 第二个参数不在 2-36 内，
 parseInt("3", 2); // 二进制 NaN，因为二进制中，不存在3，所以报错
-parseInt("4", 3); // 三进制，4的3禁止，11，不含4
-parseInt("5", 4); // 四进制，5的4禁止，11，不含5
-parseInt("6", 5); // 五进制，6的5禁止，11，不含6
-parseInt("7", 6); // 六进制，7的6禁止，11，不含7
-parseInt("8", 7); // 七进制，8的7禁止，11，不含8
+parseInt("4", 3); // 三进制，4的3进制，11，不含4。3进制[0,1,2] ‘4’=>4，4不在3进制里面
+parseInt("5", 4); // 四进制，5的4进制，11，不含5
+parseInt("6", 5); // 五进制，6的5进制，11，不含6
+parseInt("7", 6); // 六进制，7的6进制，11，不含7
+parseInt("8", 7); // 七进制，8的7进制，11，不含8
 parseInt("9", 8); // 9的八进制=11 因为八进制中，不存在9，所以报错
 parseInt("10", 9);  // 九进制 （1*9+0 = 9） 10的九进制=11
 parseInt("11", 10); // 十进制 （1*10+1 = 11）
@@ -132,10 +135,11 @@ JSON.stringify(b) === '{}'
     getSome({say:'hello'})
   
   ```
-  iframe
-  window.name
-  window.postMessage
-  服务商设置代码页面
+
+- iframe
+- window.name
+- window.postMessage
+- 服务商设置代码页面
   
 ##  模块化开发
   立即执行函数，不暴露私有成员
@@ -155,7 +159,7 @@ JSON.stringify(b) === '{}'
 
 ##  document.innerHTML
 
-##  ECMAScript 与 Javascript
-- Javascript 是  ECMAScript 所实现的一个标准
-- Javascript 是  ECMAScript的一种实现
+##  ECMAScript 与 JavaScript
+- JavaScript 是  ECMAScript 所实现的一个标准
+- JavaScript 是  ECMAScript的一种实现
 - 一般讲js ：dom+bom+ECMAScript
