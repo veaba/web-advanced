@@ -13,6 +13,7 @@
 
 - [指南](https://web.datav.ai/guide/)
 - [Node](https://web.datav.ai/node/)
+- [V8](https://web.datav.ai/v8/)
 - [Canvas](/canvas/)
 - [Css](https://web.datav.ai/css/)
 - [Es6](https://web.datav.ai/es6/)
