@@ -46,7 +46,7 @@ footer: Copyright © 2020-present compile by
     <p>来自@veaba</p>
     <ul>
          <li>
-            <a target="_blank" href="https://godpu.com">@Veaba 个人网站</a>
+            <a target="_blank" href="">@Veaba 个人网站</a>
          </li>
          <li>
             <a target="_blank"  href="">建设中...</a>
