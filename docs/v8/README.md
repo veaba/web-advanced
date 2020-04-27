@@ -15,8 +15,8 @@ V8是Google的开源高性能JavaScript和WebAssembly引擎，用C++编写。它
 ## 目录
 
 - 从源码构建`V8`
-    - `V8`源码检出
-    - 通过GN构建
+    - [`V8`源码检出](/v8/source-code/)
+    - [通过GN构建](/v8/build-gn/)
     - `ARM/Android`的交叉编译与调试
     - `iOS`交叉编译
     - `GUI`和`IDE`安装
@@ -28,41 +28,41 @@ V8是Google的开源高性能JavaScript和WebAssembly引擎，用C++编写。它
     - 评估代码覆盖率
     - 发布进程
     - 设计评审指南
-    - 实现和发布JavaScript/WebAssembly语言特性
-    - WebAssembly特性的暂存和装运清单
+    - 实现和发布`JavaScript/WebAssembly`语言特性
+    - `WebAssembly`特性的暂存和装运清单
     - 二分查找算法
     - 端口处理
-    - Merging & patching
-    - Node.js integration build
-    - Reporting security bugs
-    - Running benchmarks locally
-    - Testing
-    - Triaging issues
+    - 合并&补丁
+    - Node.js 整合构建
+    - 报告安全性bug
+    - 在本地运行基准测试
+    - 测试
+    - 分流issues
 - 调试
-    - Arm debugging with the simulator
-    - Cross-compiling and debugging for ARM/Android
-    - Debugging builtins with GDB
-    - Debugging over the V8 Inspector Protocol
-    - GDB JIT Compilation Interface integration
-    - Investigating memory leaks
-    - Stack trace API
-    - Using D8
+    - 用模拟器进行Arm调试
+    - `ARM/Android`的交叉编译与调试
+    - 用`GDB`调试内置代码
+    - 通过`V8`检查器协议进行调试
+    - `GDB JIT`编译接口集成
+    - 调查内存泄漏
+    - 堆栈跟踪API
+    - 使用`D8`
 - 嵌入V8
-    - Guide to embedding V8
-    - Version numbers
-    - Built-in functions
-    - i18n support
-    - Untrusted code mitigations
+    - 嵌入V8指南
+    - 版本号
+    - 内置函数
+    - i18n 支持
+    - 不受信任的代码缓解 ？
 - 高级选项
-    - Ignition
-    - TurboFan
-    - Torque user manual
-    - Writing Torque built-ins
-    - Writing CSA built-ins
-    - Adding a new WebAssembly opcode
+    - 点火开关？
+    - 发动机？
+    - 扭矩用户手册？
+    - 内置写入扭矩
+    - 编写CSA内置
+    - 添加新的`WebAssembly`操作码
 - 编写可优化的JavaScript
-    - Using V8’s sample-based profiler
-    - Profiling Chromium with V8
-    - Using Linux perf with V8
-    - Tracing V8
-    - Using Runtime Call Stats
+    - 使用`V8`的基于样本的探查器
+    - 在`V8`中剖析 Chromium
+    - 在V8中使用Linux性能
+    - 跟踪 V8
+    - 使用运行时调用统计信息
