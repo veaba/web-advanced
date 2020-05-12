@@ -9,6 +9,16 @@
 
 部分内容尚未补充完成！！
 
+## todo翻译工具
+
+- [开发工具，同步官方数据-todo]()
+  - https://nodejs.org/dist/latest-v14.x/docs/api/documentation.json 一些api
+  - 自动生成node最新版文档目录
+  - copy一份后，自动翻译
+  - 参考以前的Tensorflow-docs项目
+  - 使用vuepress自带的在本页面生成目录在文章前面
+  - 扫描未翻译的段落、同步更新请求操作
+
 ## 目录指南
 
 - [指南](https://web.datav.ai/guide/)

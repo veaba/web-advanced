@@ -1,6 +1,7 @@
 # 目录指南
 - [指南](/guide/)
 - [Node](/node/)
+- [Deno](/deno/)
 - [V8](/v8/)
 - [Canvas](/canvas/)
 - [Css](/css/)
