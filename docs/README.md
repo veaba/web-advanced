@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 立即阅读 →
-actionLink: /guide/
+actionLink: /guide.html
 icpText: veaba/web-advanced-frond-end
 icpLink: https://github.com/veaba/web-advanced-frond-end
 footer: Copyright © 2020-present compile by 
