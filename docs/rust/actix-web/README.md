@@ -10,40 +10,39 @@ sidebar: auto
 
 <h3>欢迎使用Actix</h3>
 
-Actix是开发带有Rust的web服务的门户，本文档将为您提供指导。
+Actix 是开发带有 Rust 的 web 服务的门户，本文档将为您提供指导。
 
-本文档目前主要涉及`actix-web`部分，它是先前在`actix` actor框架和[`Tokio`](https://tokio.rs/) 异步IO系统之上构建的高级web框架。这是从API稳定性的角度来看最稳定的部分。
+本文档目前主要涉及`actix-web`部分，它是先前在`actix` actor 框架和[`Tokio`](https://tokio.rs/) 异步 IO 系统之上构建的高级 web 框架。这是从 API 稳定性的角度来看最稳定的部分。
 
-如果你还没有使用actix-web，最好从[入门指南](https://actix.rs/docs/getting-started)开始。
-如果你已经知道自己的方法，并且需要特定的信息，那么您可能需要阅读 [actix-web API文档](https://docs.rs/actix-web)（或较低级别的 [actix APO=I文档](https://docs.rs/actix)）。
+如果你还没有使用 actix-web，最好从[入门指南](https://actix.rs/docs/getting-started)开始。
+如果你已经知道自己的方法，并且需要特定的信息，那么您可能需要阅读 [actix-web API 文档](https://docs.rs/actix-web)（或较低级别的 [actix APO=I 文档](https://docs.rs/actix)）。
 
-### 什么是Actix
+### 什么是 Actix
 
 <h3>Acitx 是多态的</h3>
 
-Actix是一些东西。它的基础是一个强大的角色系统，用于Rust，而`actix-web`系统最初就是在这个系统之上构建的。这是你最有可能使用的。`actix-web`给你的是一个有趣且快速的web开发框架。
+Actix 是一些东西。它的基础是一个强大的角色系统，用于 Rust，而`actix-web`系统最初就是在这个系统之上构建的。这是你最有可能使用的。`actix-web`给你的是一个有趣且快速的 web 开发框架。
 
 我们称`actix-web`为一个小型实用的框架。不管是出于什么目的，它都是一个有着一些曲折的微结构。
-如果你已经是一个Rust程序员，你可能会发现自己在家很快，但即使你是来自另一种编程语言，你应该发现`actix-web`很容易拿起。
+如果你已经是一个 Rust 程序员，你可能会发现自己在家很快，但即使你是来自另一种编程语言，你应该发现`actix-web`很容易拿起。
 
-使用`actix-web`开发的应用程序将公开包含在本机可执行文件中的HTTP服务器。
-您可以将它放在另一个HTTP服务器（如nginx）后面，也可以按原样提供服务。
-即使在完全没有另一个HTTP服务器的情况下，`actix-web`也足够强大，能够提供HTTP 1和htp2支持以及SSL/TLS。这对于构建准备分发的小型服务非常有用。
+使用`actix-web`开发的应用程序将公开包含在本机可执行文件中的 HTTP 服务器。
+您可以将它放在另一个 HTTP 服务器（如 nginx）后面，也可以按原样提供服务。
+即使在完全没有另一个 HTTP 服务器的情况下，`actix-web`也足够强大，能够提供 HTTP 1 和 htp2 支持以及 SSL/TLS。这对于构建准备分发的小型服务非常有用。
 
-最重要的是：`actix-web`运行在Rust 1.39或更高版本上，它可以与稳定的版本一起工作。
-
+最重要的是：`actix-web`运行在 Rust 1.39 或更高版本上，它可以与稳定的版本一起工作。
 
 ### 安装
 
 <h3>安装Rust</h3>
 
-因为`actix-web`是一个Rust框架，所以您需要Rust来开始使用它。如果您还没有，我们建议您使用`rustup`来管理您的Rust安装。
+因为`actix-web`是一个 Rust 框架，所以您需要 Rust 来开始使用它。如果您还没有，我们建议您使用`rustup`来管理您的 Rust 安装。
 
-官方的Rust指南有一个很好的开始部分。我们目前至少需要Rust1.39，所以请确保您运行`rustup update`以获得最新和最新的Rust版本。特别是本指南将假设您实际运行Rust 1.39或更高版本。
+官方的 Rust 指南有一个很好的开始部分。我们目前至少需要 Rust1.39，所以请确保您运行`rustup update`以获得最新和最新的 Rust 版本。特别是本指南将假设您实际运行 Rust 1.39 或更高版本。
 
 <h3>安装actix-web</h3>
 
-多亏了Rust的`cargo`管理器，您不需要显式地安装`actix-web`。相信它，你就可以走了。对于不太可能使用actix-web开发版本的情况，可以直接依赖git存储库。
+多亏了 Rust 的`cargo`管理器，您不需要显式地安装`actix-web`。相信它，你就可以走了。对于不太可能使用 actix-web 开发版本的情况，可以直接依赖 git 存储库。
 
 发行版本：
 
@@ -59,7 +58,7 @@ actix-web = "2.0"
 actix-web = { git = "https://github.com/actix/actix-web" }
 ```
 
-<h3>潜入</h3>  
+<h3>潜入</h3>
 
 这里有两条路可以走。您可以按照指南进行操作，或者如果您非常不耐烦，您可能希望查看我们广泛的示例存储库并运行包含的示例。例如，下面是如何运行包含的基本示例：
 
@@ -68,18 +67,22 @@ git clone https://github.com/actix/examples
 cd examples/basics
 cargo run
 ```
+
 ## 基础
+
 ### 入门
+
 让我们编写我们的第一个`actix-web`应用程序！
 
 <h3>Hello,world!</h3>
 
-首先创建一个新的基于二进制的Cargo项目并切换到新目录：
+首先创建一个新的基于二进制的 Cargo 项目并切换到新目录：
 
 ```cmd
 cargo new hello-world
 cd hello-world
 ```
+
 现在，通过`Cargo.toml`将`actix-web`添加到你的依赖中，包含以下内容：
 
 ```toml
@@ -88,13 +91,14 @@ actix-web = "2.0"
 ```
 
 如果要使用 `#[actix_rt：：main]`宏，必须将`actix-rt`添加到依赖项中。现在你的`cargo.toml`应该如下所示：
+
 ```toml
 [dependencies]
 actix-web = "2.0"
 actix-rt = "1.0"
 ```
 
-为了实现web服务器，我们首先需要创建一个请求处理程序。
+为了实现 web 服务器，我们首先需要创建一个请求处理程序。
 
 请求处理程序是一个异步函数，它接受从请求（即`impl FromRequest`）中提取的零个或多个参数，并返回可转换为`HttpResponse`（即`impl Responder`）的类型：
 
@@ -108,19 +112,19 @@ async fn index()->impl Responder {
 async fn index2() -> impl Responder{
  HttpResponse::OK().body("Hello world again!")
 }
-    
+
 ```
 
-接下来，创建一个应用程序实例，并使用路径上的应用程序`route`和特定的HTTP方法注册请求处理程序。
+接下来，创建一个应用程序实例，并使用路径上的应用程序`route`和特定的 HTTP 方法注册请求处理程序。
 之后，应用程序实例可以与`HttpServer`一起用于侦听传入连接。服务器接受一个应该返回应用程序工厂的函数。
 
 ```rust
 #[actix_rt::main]
-async fn main() ->std::io::Result<()>{ 
+async fn main() ->std::io::Result<()>{
    HttpServer::new (||{
     App:new()
         .route("/",web::get().to(index))
-        .route("/again",web::get().to(index2))   
+        .route("/again",web::get().to(index2))
    })
     .bind("127.0.0.1:8088")?
     .run()
@@ -131,7 +135,7 @@ async fn main() ->std::io::Result<()>{
 就这样！现在，用`cargo run`编译并运行程序。前往`http://localhost:8088/`查看结果。
 
 ::: tip Note:
-您可以注意到`#[actix_rt：：main]`属性宏。此宏在actix运行时执行标记的异步函数。此宏可以标记和执行任何异步函数。
+您可以注意到`#[actix_rt：：main]`属性宏。此宏在 actix 运行时执行标记的异步函数。此宏可以标记和执行任何异步函数。
 :::
 
 <h3>使用属性宏定义路由</h3>
@@ -143,7 +147,7 @@ use actix_web::get;
 
 #[get("/hello")]
 
-async fn index3()->impl Responder{ 
+async fn index3()->impl Responder{
   HttpResponse::Ok().body("Hey there!")
 }
 
@@ -164,20 +168,20 @@ App::new()
 <h3>自动重载</h3>
 
 如果需要，可以在开发期间自动重新加载服务器，该服务器根据需要重新编译。
-这是不必要的，但它使快速原型更方便，因为您可以看到变化立即保存。要了解如何实现这一点，请查看[autoreload模式](https://actix.rs/docs/autoreload/)。
-
+这是不必要的，但它使快速原型更方便，因为您可以看到变化立即保存。要了解如何实现这一点，请查看[autoreload 模式](https://actix.rs/docs/autoreload/)。
 
 ### Application
+
 <h3>写一个应用程序</h3>
 
-`actix-web`提供各种原语来构建带有Rust的web服务器和应用程序。它提供路由、中间件、请求的预处理、响应的后处理等功能。
+`actix-web`提供各种原语来构建带有 Rust 的 web 服务器和应用程序。它提供路由、中间件、请求的预处理、响应的后处理等功能。
 
 所有`actix-web`服务器都是围绕`App`实例构建的。它用于注册资源和中间产品的路由。它还存储同一范围内所有处理程序共享的应用程序状态。
 
-应用程序的`scope`充当所有路由的命名空间，即特定应用程序作用域的所有路由都具有相同的url路径前缀。
+应用程序的`scope`充当所有路由的命名空间，即特定应用程序作用域的所有路由都具有相同的 url 路径前缀。
 应用程序前缀始终包含前导`“/”`斜线。如果提供的前缀不包含前导斜杠，则会自动插入。前缀应该由值路径段组成。
 
-对于具有scope`/app`的应用程序，具有`/app`、`/app/`或`/app/test`路径的任何请求都将匹配；但是，路径`/application`将不匹配
+对于具有 scope`/app`的应用程序，具有`/app`、`/app/`或`/app/test`路径的任何请求都将匹配；但是，路径`/application`将不匹配
 
 ```rust
 use actix_web::{web, App, Responder, HttpServer};
@@ -216,10 +220,10 @@ use std::sync::Mutex;
 
 // 此结构表示状态
 
-struct AppState { 
+struct AppState {
   app_name: String
 }
-async fn index(data:Data<AppState>) ->String { 
+async fn index(data:Data<AppState>) ->String {
     let app_name = &data.app_name; // 获取app_name
     format!("Hello {}!",app_name)  // 响应app_name
 }
@@ -247,12 +251,11 @@ async fn main()->std::io::Result<()>{
 
 可以在应用程序中注册任意数量的状态类型。
 
-
 <h3>Shared Mutable State(状态)</h3>
 
-`HttpServer` 接受应用程序工厂，而不是应用程序实例。Http服务器为每个线程构造一个应用程序实例，因此必须多次构造应用程序数据。如果要在不同线程之间共享数据，则应使用可共享对象，例如Send+Sync。
+`HttpServer` 接受应用程序工厂，而不是应用程序实例。Http 服务器为每个线程构造一个应用程序实例，因此必须多次构造应用程序数据。如果要在不同线程之间共享数据，则应使用可共享对象，例如 Send+Sync。
 
-在内部，`web::Data`使用Arc。因此，为了避免双圆弧，我们应该在使用`App::App_Data()`注册数据之前创建数据。
+在内部，`web::Data`使用 Arc。因此，为了避免双圆弧，我们应该在使用`App::App_Data()`注册数据之前创建数据。
 
 在下面的示例中，我们将编写一个具有可变共享状态的应用程序。首先，我们定义状态并创建处理程序：
 
@@ -290,6 +293,7 @@ async fn main() ->std::io:Result<()>{
     .await
 }
 ```
+
 <h3>使用应用程序范围组合应用程序</h3>
 
 `web::scope()`方法允许设置特定的应用程序前缀。此作用域表示资源前缀，该前缀将作为资源配置添加的所有资源模式的前缀。
@@ -310,11 +314,12 @@ async fn main(){
 }
 
 ```
-在上面的示例中，show_users路由将具有`/users/show`而不是/show的有效路由模式，因为应用程序的scope参数将位于该模式的前面。只有当URL路径是/users/show，并且当`HttpRequest.url_for`函数是用路由名show_users调用的，它将生成具有相同路径的URL。
+
+在上面的示例中，show_users 路由将具有`/users/show`而不是/show 的有效路由模式，因为应用程序的 scope 参数将位于该模式的前面。只有当 URL 路径是/users/show，并且当`HttpRequest.url_for`函数是用路由名 show_users 调用的，它将生成具有相同路径的 URL。
 
 <h3>应用程序保护和虚拟主机</h3>
 
-你可以将保护程序看作一个简单的函数，它接受请求对象引用并返回true或false。在形式上，守卫是实现守卫特性的任何对象。`actix-web`提供了几个防护，可以查看api文档的[函数部分](https://docs.rs/actix-web/2/actix_web/guard/index.html#functions)。
+你可以将保护程序看作一个简单的函数，它接受请求对象引用并返回 true 或 false。在形式上，守卫是实现守卫特性的任何对象。`actix-web`提供了几个防护，可以查看 api 文档的[函数部分](https://docs.rs/actix-web/2/actix_web/guard/index.html#functions)。
 
 提供的保护之一是`Header`，它可以用作基于请求头信息的应用程序筛选器。
 
@@ -366,7 +371,7 @@ fn config(cfg:&mut web::ServiceConfig){
         web::resource("/app")
             .route(web::get().to(||HttpResponse::Ok().body("app")))
             .route(web::head().to(||HttpResponse::MethodNotAllowed()))
-            
+
     )
 }
 
@@ -386,7 +391,6 @@ async fn main()->std::io::Result<()>{
 
 上述示例的结果是：
 
-
 ```txt
 /         -> "/"
 /app      -> "app"
@@ -398,12 +402,11 @@ async fn main()->std::io::Result<()>{
 
 ### Server
 
-[HttpServer](https://docs.rs/actix-web/2/actix_web/struct.HttpServer.html)类型负责为http请求提供服务
+[HttpServer](https://docs.rs/actix-web/2/actix_web/struct.HttpServer.html)类型负责为 http 请求提供服务
 
-`HttpServe`r接受应用程序工厂作为参数，应用程序工厂必须具有`Send`+`Sync`边界。在 *“多线程”* 部分中详细介绍。
+`HttpServe`r 接受应用程序工厂作为参数，应用程序工厂必须具有`Send`+`Sync`边界。在 _“多线程”_ 部分中详细介绍。
 
-若要绑定到特定的套接字地址，必须使用bind()，并且可以多次调用它。若要绑定ssl套接字，应使用`bind_openssl()`或`bind_rustls()`。要运行http服务器，请使用`httpServer::run()`方法。
-
+若要绑定到特定的套接字地址，必须使用 bind()，并且可以多次调用它。若要绑定 ssl 套接字，应使用`bind_openssl()`或`bind_rustls()`。要运行 http 服务器，请使用`httpServer::run()`方法。
 
 ```rust
 
@@ -420,14 +423,13 @@ async fn main() -> std::io::Result<()> {
 }
 ```
 
-`run()`方法返回[`Server`](https://docs.rs/actix-web/2/actix_web/dev/struct.Server.html)类型的实例。服务器类型的方法可用于管理http服务器
+`run()`方法返回[`Server`](https://docs.rs/actix-web/2/actix_web/dev/struct.Server.html)类型的实例。服务器类型的方法可用于管理 http 服务器
 
-
-- `pause()`  - 暂停接受传入连接
+- `pause()` - 暂停接受传入连接
 - `resume()` - 继续接受传入连接
-- `stop()`   - 停止传入连接处理，停止所有worker并退出
+- `stop()` - 停止传入连接处理，停止所有 worker 并退出
 
-下面的示例演示如何在单独的线程中启动http服务器。
+下面的示例演示如何在单独的线程中启动 http 服务器。
 
 ```rust
 use actix_rt::System;
@@ -491,7 +493,6 @@ async fn main() {
 
 由于每个工作线程按顺序处理其请求，因此阻止当前线程的处理程序将导致当前工作线程停止处理新请求：
 
-
 ```rust
 fn my_handler() -> impl Responder {
     std::thread::sleep(Duration::from_secs(5)); // <-- 坏习惯！将导致当前工作线程挂起！
@@ -500,7 +501,7 @@ fn my_handler() -> impl Responder {
 
 ```
 
-因此，任何长的、非cpu限制的操作（如I/O、数据库操作等）都应表示为未来函数或异步函数。异步处理程序由工作线程并发执行，因此不会阻止执行：
+因此，任何长的、非 cpu 限制的操作（如 I/O、数据库操作等）都应表示为未来函数或异步函数。异步处理程序由工作线程并发执行，因此不会阻止执行：
 
 ```rust
 async fn my_handler() -> impl Responder {
@@ -511,10 +512,9 @@ async fn my_handler() -> impl Responder {
 
 同样的限制也适用于提取器。当处理程序函数接收到实现`FromRequest`的参数，并且该实现阻塞当前线程时，工作线程将在运行处理程序时阻塞。出于这个原因，在实现提取器时必须特别注意，而且在需要时也应该异步实现提取器。
 
-
 #### SSL
 
-ssl服务器有两个特性：`rustls`和`openssl`。`rustls`特性用于`rustls`集成，`openssl`用于`openssl`。
+ssl 服务器有两个特性：`rustls`和`openssl`。`rustls`特性用于`rustls`集成，`openssl`用于`openssl`。
 
 ```toml
 [dependencies]
@@ -556,7 +556,6 @@ the HTTP/2.0 protocol requires tls alpn. At the moment, only openssl has alpn su
 
 创建`key.pem`以及`cert.pem`使用命令。填写你自己的主题
 
-
 ```shell
 
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem \
@@ -572,12 +571,12 @@ openssl rsa -in key.pem -out nopass.pem
 
 #### Keep-Alive
 
-Actix可以在保持活动连接上等待请求。
+Actix 可以在保持活动连接上等待请求。
 
-*`keep-alive`* 连接行为由服务器设置定义。
+_`keep-alive`_ 连接行为由服务器设置定义。
 
-- `75`, `Some(75)`, `KeepAlive::Timeout(75)` - 启用75秒*keep alive*计时器
-- `None` or `KeepAlive::Disabled` - 禁用 *keep alive*
+- `75`, `Some(75)`, `KeepAlive::Timeout(75)` - 启用 75 秒*keep alive*计时器
+- `None` or `KeepAlive::Disabled` - 禁用 _keep alive_
 - `KeepAlive::Tcp(75)` - 使用`SO_KEEPALIVE` socket 选项
 
 ```rust
@@ -599,12 +598,11 @@ async fn main() -> std::io::Result<()>{
 }
 ```
 
-如果选择了上面的第一个选项，那么将根据响应的连接类型计算保持活动状态。默认情况下，未定义`HttpResponse::connection_type`。在这种情况下，keep alive由请求的http版本定义。
+如果选择了上面的第一个选项，那么将根据响应的连接类型计算保持活动状态。默认情况下，未定义`HttpResponse::connection_type`。在这种情况下，keep alive 由请求的 http 版本定义。
 
-对于HTTP/1.0，*keep alive*处于关闭状态；对于HTTP/1.1和HTTP/2.0，*keep alive*处于打开状态。
+对于 HTTP/1.0，*keep alive*处于关闭状态；对于 HTTP/1.1 和 HTTP/2.0，*keep alive*处于打开状态。
 
 可以使用`HttpResponseBuilder::Connection_type()`方法更改连接类型。
-
 
 ```rust
 
@@ -622,30 +620,29 @@ async fn index(req:HttpRequest)->HttpResponse {
 #### 平滑关闭
 
 `HttpServer`支持正常关机。在收到停止信号后，工作人员有一定的时间来完成服务请求。
-超时后仍活着的工人将被强制放弃。默认情况下，关闭超时设置为30秒。可以使用`HttpServer::shutdown_timeout()`方法更改此参数。
+超时后仍活着的工人将被强制放弃。默认情况下，关闭超时设置为 30 秒。可以使用`HttpServer::shutdown_timeout()`方法更改此参数。
 
 您可以使用服务器地址向服务器发送停止消息，并指定是否要正常关机, `start()`方法返回服务器的地址。
 
-`HttpServer`处理多个操作系统信号。*CTRL-C*可用于所有操作系统，其他信号可用于unix系统。
+`HttpServer`处理多个操作系统信号。*CTRL-C*可用于所有操作系统，其他信号可用于 unix 系统。
 
-- *SIGINT*      - 强制关闭workers
-- *SIGTERM*     - 平滑关闭workers
-- *SIGQUIT*     - 强制关闭workers
+- _SIGINT_ - 强制关闭 workers
+- _SIGTERM_ - 平滑关闭 workers
+- _SIGQUIT_ - 强制关闭 workers
 
 可以使用`HttpServer：：disable_signals()`方法禁用信号处理
 
 ### Handler(处理器)
 
-请求处理程序是一个异步函数，它接受可以从请求（即[*impl FromRequest*](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html)）提取的零个或多个参数，并返回可以转换为HttpResponse（即 [*impl Responder*](https://docs.rs/actix-web/2/actix_web/trait.Responder.html)）的类型。
+请求处理程序是一个异步函数，它接受可以从请求（即[_impl FromRequest_](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html)）提取的零个或多个参数，并返回可以转换为 HttpResponse（即 [_impl Responder_](https://docs.rs/actix-web/2/actix_web/trait.Responder.html)）的类型。
 
 请求处理分两个阶段进行。首先调用处理程序对象，返回实现[`*Responder*`](https://docs.rs/actix-web/2/actix_web/trait.Responder.html)特性的任何对象。然后，对返回的对象调用`respond_to()`，将其自身转换为`HttpResponse`或`Error`。
 
-默认情况下，actix-web为某些标准类型（如&'static str、String等）提供响应程序实现。
+默认情况下，actix-web 为某些标准类型（如&'static str、String 等）提供响应程序实现。
 
-有关实现的完整列表，请查看[*Responder*](https://docs.rs/actix-web/2/actix_web/trait.Responder.html#foreign-impls) 文档。
+有关实现的完整列表，请查看[_Responder_](https://docs.rs/actix-web/2/actix_web/trait.Responder.html#foreign-impls) 文档。
 
 有效处理程序示例：
-
 
 ```rust
 async fn index(req:HttpRequest) -> &'static str{
@@ -714,11 +711,9 @@ async fn index() ->impl Responder{
 
 ```
 
-
-
 #### 流式响应体
 
-响应体可以异步生成。在这种情况下，body必须实现流特征 `Stream<Item=Bytes，Error=Error>`，即：
+响应体可以异步生成。在这种情况下，body 必须实现流特征 `Stream<Item=Bytes，Error=Error>`，即：
 
 ```rust
 use actix_web::{web, App, HttpServer, Error, HttpResponse};
@@ -765,32 +760,367 @@ fn index() -> RegisterResult {
     }
 }
 ```
-### 提取器
+
+### Extractors(提取器)
+
+`Actix-web`为类型安全的请求信息访问提供了一个称为提取器的工具（即 impl FromRequest）。默认情况下，`actix-web`提供了几个提取器实现。
+
+提取器可以作为处理程序函数的参数访问。`Actix-web`支持每个处理函数最多 10 个提取器，参数的位置无关紧要。
+
+```rust
+async fn index(){
+    path :web::Path<(String,String)>,
+    json:web::Json(MyInfo),
+} -> impl Responder {
+    format!("{} {} {} {}",path.0,path.1,path.id,json.username)
+}
+```
+
+#### Path
+
+[`*Path*`](https://docs.rs/actix-web/2/actix_web/dev/struct.Path.html)提供可以从请求路径提取的信息。可以反序列化路径中的任何变量段。
+
+例如，对于为`/users/{userid}/{friend}`路径注册的资源，可以反序列化两个段：`userid`和`friend`。这些段可以被提取到`tuple`中，即`Path<（u32，String）>`或任何实现*serde* crate`反序列化`特性的结构中。
+
+```rust
+use actix_web::{web, Result};
+
+/// extract path info from "/users/{userid}/{friend}" url
+/// {userid} -  - deserializes to a u32
+/// {friend} - deserializes to a String
+async fn index(info: web::Path<(u32, String)>) -> Result<String> {
+    Ok(format!("Welcome {}, userid {}!", info.1, info.0))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().route(
+            "/users/{userid}/{friend}", // <- define path parameters
+            web::get().to(index),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+还可以将路径信息提取到实现*serde*`反序列化`特性的特定类型。下面是一个使用*serde*而不是*tuple*类型的等效示例。
+
+```rust
+use actix_web::{web, Result};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    userid: u32,
+    friend: String,
+}
+
+/// extract path info using serde
+async fn index(info: web::Path<Info>) -> Result<String> {
+    Ok(format!("Welcome {}, userid {}!", info.friend, info.userid))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().route(
+            "/users/{userid}/{friend}", // <- define path parameters
+            web::get().to(index),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+还可以按名称`get`或`query`路径参数请求:
+
+```rust
+async fn index(req: HttpRequest) -> Result<String> {
+    let name: String =
+        req.match_info().get("friend").unwrap().parse().unwrap();
+    let userid: i32 = req.match_info().query("userid").parse().unwrap();
+
+    Ok(format!("Welcome {}, userid {}!", name, userid))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().route(
+            "/users/{userid}/{friend}", // <- define path parameters
+            web::get().to(index),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+#### Query
+
+[*`查询`*](https://docs.rs/actix-web/2/actix_web/web/struct.Query.html) 类型为请求的查询参数提供提取功能。下面使用的是*serde_urlencoded*`crate`
+
+```rust
+
+use actix_web::web;
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    username: String,
+}
+
+// this handler get called only if the request's query contains `username` field
+async fn index(info: web::Query<Info>) -> String {
+    format!("Welcome {}!", info.username)
+}
+
+```
+#### Json
+
+[*Json*](https://docs.rs/actix-web/2/actix_web/web/struct.Json.html) 允许将请求体反序列化为结构。要从请求体中提取类型化信息，类型`T`必须实现*serde*的`反序列化`特性。
+
+```rust
+use actix_web::{web, Result};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    username: String,
+}
+
+/// deserialize `Info` from request's body
+async fn index(info: web::Json<Info>) -> Result<String> {
+    Ok(format!("Welcome {}!", info.username))
+}
+
+```
+
+一些提取器提供了配置提取过程的方法。用于配置的Json提取器[*JsonConfig*](https://docs.rs/actix-web/2/actix_web/web/struct.JsonConfig.html)类型。要配置提取器，请将其配置对象传递给资源的`.data()`方法。如果是Json提取器，则返回*JsonConfig*。您可以配置json负载的最大大小以及自定义错误处理程序函数。
+
+下面的示例将负载大小限制为4kb，并使用自定义错误处理程序。
+
+```rust
+use actix_web::{error, web, FromRequest, HttpResponse, Responder};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    username: String,
+}
+
+/// deserialize `Info` from request's body, max payload size is 4kb
+async fn index(info: web::Json<Info>) -> impl Responder {
+    format!("Welcome {}!", info.username)
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().service(
+            web::resource("/")
+                // change json extractor configuration
+                .app_data(web::Json::<Info>::configure(|cfg| {
+                    cfg.limit(4096).error_handler(|err, _req| {
+                        // create custom error response
+                        error::InternalError::from_response(
+                            err,
+                            HttpResponse::Conflict().finish(),
+                        )
+                        .into()
+                    })
+                }))
+                .route(web::post().to(index)),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+
+#### Form
+
+目前，只支持url编码的表单。url编码的正文可以提取到特定类型。此类型必须实现*serde* crate 的`反序列化`特性。
+
+
+[*FormConfig*](https://docs.rs/actix-web/2/actix_web/web/struct.FormConfig.html) 允许配置提取过程。
+
+```rust
+use actix_web::{web, Result};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct FormData {
+    username: String,
+}
+
+/// extract form data using serde
+/// this handler gets called only if the content type is *x-www-form-urlencoded*
+/// and the content of the request could be deserialized to a `FormData` struct
+async fn index(form: web::Form<FormData>) -> Result<String> {
+    Ok(format!("Welcome {}!", form.username))
+}
+```
+
+#### Other
+
+`Actix-web`还提供了其他几个提取器：
+
+- [*Data*](https://docs.rs/actix-web/2/actix_web/web/struct.Data.html) - 如果需要访问应用程序状态。
+- `HttpRequest` - 本身是一个提取器，它返回self，以防需要访问请求。
+- `String` - 您可以将请求的负载转换为`String`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-2) 在文档字符串中可用。
+- `bytes::Bytes` -您可以将请求的负载转换为`Bytes`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-4)在文档字符串中可用。
+- `Payload` -您可以访问请求的有效负载,[示例](https://docs.rs/actix-web/2/actix_web/web/struct.Payload.html)
+
+
+#### 应用程序状态提取器
+
+使用`web::Data`提取器可以从处理程序访问应用程序状态；但是，可以将状态作为只读引用访问。如果需要对状态的可变访问，则必须实现它。
+
+
+::: waring 小心
+actix会创建应用程序状态和处理程序的多个副本。它为每个线程创建一个副本。
+:::
+
+以下是存储已处理请求数的处理程序示例:
+
+```rust
+use actix_web::{web, Responder};
+use std::cell::Cell;
+
+#[derive(Clone)]
+struct AppState {
+    count: Cell<i32>,
+}
+
+async fn show_count(data: web::Data<AppState>) -> impl Responder {
+    format!("count: {}", data.count.get())
+}
+
+async fn add_one(data: web::Data<AppState>) -> impl Responder {
+    let count = data.count.get();
+    data.count.set(count + 1);
+
+    format!("count: {}", data.count.get())
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    let data = AppState {
+        count: Cell::new(0),
+    };
+
+    HttpServer::new(move || {
+        App::new()
+            .data(data.clone())
+            .route("/", web::to(show_count))
+            .route("/add", web::to(add_one))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+
+```
+
+尽管此处理程序可以工作，但`self.0`将根据线程数和每个线程处理的请求数而有所不同。正确的实现将使用`Arc`和`AtomicUsize`
+
+```rust
+use actix_web::{web, Responder};
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::Arc;
+
+#[derive(Clone)]
+struct AppState {
+    count: Arc<AtomicUsize>,
+}
+
+async fn show_count(data: web::Data<AppState>) -> impl Responder {
+    format!("count: {}", data.count.load(Ordering::Relaxed))
+}
+
+async fn add_one(data: web::Data<AppState>) -> impl Responder {
+    data.count.fetch_add(1, Ordering::Relaxed);
+
+    format!("count: {}", data.count.load(Ordering::Relaxed))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    let data = AppState {
+        count: Arc::new(AtomicUsize::new(0)),
+    };
+
+    HttpServer::new(move || {
+        App::new()
+            .data(data.clone())
+            .route("/", web::to(show_count))
+            .route("/add", web::to(add_one))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+注意同步原语，如`Mutex`或`RwLock`,`actix-web`框架异步处理请求。通过阻塞线程执行，所有并发请求处理进程都将阻塞。如果需要从多个线程共享或更新某些状态，请考虑使用tokio同步原语。
 
 ## 高级
 
 ### Error 错误
+
 ### URL Dispatch
+
 ### Requests 请求
+
 ### Responses 响应
+
 ### Testing 测试
+
 ### Middleware 中间器件
+
 ### Static Files 静态文件
 
 ## 协议
+
 ### Websocket
+
 ### HTTP/2.0
 
 ## Patterns 模式
 
 ### Autoreloading 自动重载
+
 ### Databases 数据库
 
 ## 图表
+
 ### HTTP 服务初始化
+
 ### 连接生命周期
 
-## API文档
+## API 文档
 
 ### [actix](https://docs.rs/actix)
+
 ### [actix-web](https://docs.rs/actix-web/)
