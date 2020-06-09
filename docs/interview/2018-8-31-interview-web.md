@@ -96,12 +96,16 @@ a1.prototype={
 1. 对象A直接调用对象B的某个方法，实现交互逻辑。但导致的问题是A和B紧密耦合，修改B可能造成A调用B的方法失效。
 2. 为了解决耦合问题，设计为：
 	对象A生成消息->将消息通知给一个消息处理器(Observable)->消息处理器将消息传递给B具体的调用过程变成：
+
 		A.emit('message',data);
 		B.on('message',function(data){})
+		 
 	请实现，消息代理功能。补充完成function EventEmitter(){}
 
 ## js写一个ajax get 请求
-> emm，无数次都会放假的面试题。（再我又重新去补充该部分的时候）
+
+> emm，无数次都会被问到的面试题。
+
 ```js
   const xhr = new XMLHttpRequest();
   xhr.open('GET','http://baidu.com',false);
