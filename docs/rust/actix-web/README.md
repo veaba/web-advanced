@@ -1424,8 +1424,8 @@ App::new().service(
 
 `ResourceHandler::route()`返回路由对象。可以使用类似于生成器的模式配置路由。以下配置方法可用：
 
-- `Route::guard()`      - 注册一个新的guard。每条路线可登记任何数量的警卫。
-- `Route::method()`     - 注册方法保护程序。每条路线可登记任何数量的警卫。
+- `Route::guard()`      - 注册一个新的guard。每条路线可登记任何数量的守卫。
+- `Route::method()`     - 注册方法保护程序。每条路线可登记任何数量的守卫。
 - `Route::to()`         - 为此路由注册处理程序函数。只能注册一个处理程序。通常，处理程序注册是最后一个配置操作。
 - `Route::to_async()`   - 为此路由注册一个异步处理程序函数。只能注册一个处理程序。处理程序注册是最后一个配置操作。
 
@@ -1597,7 +1597,7 @@ async fn main() -> std::io::Result<()> {
 
 #### 匹配信息
 
-所有表示匹配路径段的值都可以在`HttpRequest：：match_info`中找到。可以使用`Path::get()`检索特定值。
+所有表示匹配路径段的值都可以在`HttpRequest::match_info`中找到。可以使用`Path::get()`检索特定值。
 
 ```rust
 use actix_web::{HttpRequest, HttpResponse, Result};
@@ -1660,24 +1660,670 @@ async fn main() -> std::io::Result<()> {
 
 #### 路径信息抽取器
 
+Actix提供类型安全路径信息提取功能。[`路径`](https://docs.rs/actix-web/2/actix_web/dev/struct.Path.html) 提取信息，目的地类型可以定义为几种不同的形式。最简单的方法是使用`tuple`类型。
+元组中的每个元素必须对应于路径模式中的一个元素。比如：可以将路径模式`/{id}/{username}/`与`Path<(u32，String)>`类型匹配，但`路径<(String,String,String)>`类型将始终失败。
+
+```rust
+use actix_web::{web,Result};
+
+async fn index(info::web::Path<(String,u32)>) ->Result<String>{
+    Ok(format!("Welcome {} ！ id:{}",info.0,info.1))
+}
+
+#[actix_rt::main]
+async fn main() ->std::io::Result<()>{
+    use actix_web::{App,HttpServer};
+
+    HttpServer::new(||{
+        App::new()
+            .route("/{username}/{id}/index.html",
+                web::get().to(index)
+            )
+    })
+    .bind("127.0.0.1:8085")?
+    .run()
+    .await
+}
+```
+
+还可以将路径模式信息提取到结构,在这种情况下，此结构必须实现*serde的*`反序列化`特性。
+
+```rust
+use actix_web::{web, Result};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    username: String,
+}
+
+// extract path info using serde
+async fn index(info: web::Path<Info>) -> Result<String> {
+    Ok(format!("Welcome {}!", info.username))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().route(
+            "/{username}/index.html", // <- define path parameters
+            web::get().to(index),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+[查询](https://docs.rs/actix-web/2/actix_web/web/struct.Query.html)为请求查询参数提供类似的功能。
+
 #### 生成资源URL
+
+使用的[*HttpRequest.url()*](https://docs.rs/actix-web/2/actix_web/struct.HttpRequest.html#method.url_for) 根据资源模式生成URL的方法。例如，如果您配置了名为“`foo`”且模式为“`{a}/{b}/{c}`”的资源，则可以执行以下操作：
+
+```rust
+use actix_web::{guard, http::header, HttpRequest, HttpResponse, Result};
+
+async fn index(req: HttpRequest) -> Result<HttpResponse> {
+    let url = req.url_for("foo", &["1", "2", "3"])?; // <- 为"foo"资源生成url
+
+    Ok(HttpResponse::Found()
+        .header(header::LOCATION, url.as_str())
+        .finish())
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .service(
+                web::resource("/test/{a}/{b}/{c}")
+                    .name("foo") // <- set resource name, then it could be used in `url_for`
+                    .guard(guard::Get())
+                    .to(|| HttpResponse::Ok()),
+            )
+            .route("/test/", web::get().to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+这将返回类似字符串的内容`http://example.com/test/1/2/3`（至少在当前协议和主机名暗示`http://example.com`网站). 方法返回url对象，以便您可以修改此url（添加查询参数、锚等）。只能为命名资源调用`url_for()`，否则返回错误。
+
 
 #### 外部资源
 
+资源是有效的url，可以注册为外部资源。它们只用于URL生成，从不考虑在请求时进行匹配。
+
+```rust
+use actix_web::{HttpRequest, Responder};
+
+async fn index(req: HttpRequest) -> impl Responder {
+    let url = req.url_for("youtube", &["oHg5SJYRHA0"]).unwrap();
+    assert_eq!(url.as_str(), "https://youtube.com/watch/oHg5SJYRHA0");
+
+    url.into_string()
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(index))
+            .external_resource("youtube", "https://youtube.com/watch/{video_id}")
+            .route("/", actix_web::web::get().to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+
+
 #### 路径规范化和重定向到斜线附加路由
 
+规范化意味着：
+
+- 在路径中添加尾随斜杠。
+- 将多个斜线替换为一个斜线。
+
+处理程序在找到正确解析的路径后立即返回。如果启用了所有规范化条件，则规范化条件的顺序为`1)merge`、`2)merge`和append以及`3)append`。如果路径至少使用其中一个条件解析，它将重定向到新路径。
+
+```rust
+use actix_web::{middleware, HttpResponse};
+
+async fn index() -> HttpResponse {
+    HttpResponse::Ok().body("Hello")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::NormalizePath)
+            .route("/resource/", web::to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+在本例中，`//resource///`将被重定向到`/resource/`。
+
+在本例中，为所有方法注册了路径规范化处理程序，但不应依赖此机制来重定向`POST`请求。`NOT FOUND`斜杠追加的重定向会将`POST`请求转换为`GET`，从而丢失原始请求中的任何`POST`数据。
+
+只能为`GET`请求注册路径规范化：
+
+```rust
+use actix_web::{http::Method, middleware, web, App, HttpServer};
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::NormalizePath)
+            .route("/resource/", web::get().to(index))
+            .default_service(web::route().method(Method::GET))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
 #### 使用应用程序前缀组合应用程序
+
+`web::scope()`方法允许设置特定的应用程序范围。此作用域表示一个资源前缀，该前缀将作为资源配置添加的所有资源模式的前缀。这可用于帮助在不同的位置装入一组路由，而不是包含的可调用文件的作者想要的位置，同时仍然保持相同的资源名称。
+
+例如：
+
+```rust
+async fn show_users() -> HttpResponse {
+    HttpResponse::Ok().body("Show users")
+}
+
+async fn user_detail(path: web::Path<(u32,)>) -> HttpResponse {
+    HttpResponse::Ok().body(format!("User detail: {}", path.0))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new().service(
+            web::scope("/users")
+                .route("/show", web::get().to(show_users))
+                .route("/show/{id}", web::get().to(user_detail)),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+在上面的示例中，`show_users`路由将有一个有效的路由模式`/users/show`而不是`/show`，因为应用程序的作用域将在该模式之前。只有当URL路径是`/users/show`，并且`HttpRequest.url_for()`函数是用路由名`show_users`调用的，它将生成具有相同路径的URL。
+
 
 #### 自定义线路守卫
 
+您可以将保护程序看作一个简单的函数，它接受请求对象引用并返回`true`或`false`。在形式上，[守卫](https://docs.rs/actix-web/2/actix_web/guard/trait.Guard.html) 是实现守卫特性的任何对象。Actix提供了几个谓词，可以检查api文档的函数部分。
+
+下面是一个简单的保护程序，用于检查请求是否包含特定的头：
+
+
+```rust
+use actix_web::{dev::RequestHead, guard::Guard, http, HttpResponse};
+
+struct ContentTypeHeader;
+
+impl Guard for ContentTypeHeader {
+    fn check(&self, req: &RequestHead) -> bool {
+        req.headers().contains_key(http::header::CONTENT_TYPE)
+    }
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new().route(
+            "/",
+            web::route()
+                .guard(ContentTypeHeader)
+                .to(|| HttpResponse::Ok()),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+
+在本例中，只有当请求包含`Content-Type`头时，才会调用索引处理程序。
+
+守卫无法访问或修改请求对象，但可以在[请求扩展](https://docs.rs/actix-web/2/actix_web/struct.HttpRequest.html#method.extensions)中存储额外信息。
+
+
 #### 修改守卫值
 
+通过将任何谓词值包装在Not谓词中，可以反转其含义。例如，如果要为除“GET”之外的所有方法返回“METHOD NOT ALLOWED”响应：
+
+```rust
+
+use actix_web::{guard, web, App, HttpResponse, HttpServer};
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new().route(
+            "/",
+            web::route()
+                .guard(guard::Not(guard::Get()))
+                .to(|| HttpResponse::MethodNotAllowed()),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+
+```
+
+`任何`守卫接受守卫和匹配的列表，如果任何提供的守卫匹配。即：
+
+```text
+guard::Any(guard::Get()).or(guard::Post())
+```
+
+如果所有提供的守卫都匹配，则全守卫接受守卫和火柴的列表。即：
+
+```text
+guard::All(guard::Get()).and(guard::Header("content-type", "plain/text"))
+```
 #### 更改默认未找到响应
 
+如果在路由表中找不到路径模式或资源找不到匹配的路由，则使用默认资源。找不到默认响应。可以使用`App::default_service()`覆盖`NOT FOUND`的响应。此方法接受与`App::service()`方法的正常资源配置相同的配置函数。
+
+```rust
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(web::resource("/").route(web::get().to(index)))
+            .default_service(
+                web::route()
+                    .guard(guard::Not(guard::Get()))
+                    .to(|| HttpResponse::MethodNotAllowed()),
+            )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
 
 ### Requests 请求
+#### 内容编码
 
-### Responses 响应
+Actix web自动解`压缩`有效负载，支持以下编解码器：
+
+- Brotli
+- Chunked
+- Compress
+- Gzip
+- Deflate
+- Identity
+- Trailers
+- EncodingExt
+
+如果请求头包含`Content-Encoding`头，则根据头值对请求负载进行解压缩。不支持多个编解码器，即：`Content-Encoding`：`br`，`gzip`。
+
+#### JSON Request
+
+json主体反序列化有几个选项。
+
+第一个选项是使用Json提取器。首先，定义一个接受`Json<T>`作为参数的处理函数，然后使用`.to()`方法注册这个处理程序。还可以通过使用`serde_json::Value`作为类型`T`来接受任意有效的json对象。
+
+```rust
+use actix_web::{web, App, HttpServer, Result};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Info {
+    username: String,
+}
+
+/// extract `Info` using serde
+async fn index(info: web::Json<Info>) -> Result<String> {
+    Ok(format!("Welcome {}!", info.username))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().route("/", web::post().to(index)))
+        .bind("127.0.0.1:8088")?
+        .run()
+        .await
+}
+```
+
+您还可以手动将负载加载到内存中，然后对其进行反序列化。
+
+在下面的示例中，我们将反序列化`MyObj`结构。我们需要先加载请求体，然后将json反序列化为一个对象。
+
+```rust
+use actix_web::{error, web, App, Error, HttpResponse};
+use bytes::BytesMut;
+use futures::StreamExt;
+use serde::{Deserialize, Serialize};
+use serde_json;
+
+#[derive(Serialize, Deserialize)]
+struct MyObj {
+    name: String,
+    number: i32,
+}
+
+const MAX_SIZE: usize = 262_144; // max payload size is 256k
+
+async fn index_manual(mut payload: web::Payload) -> Result<HttpResponse, Error> {
+    // payload is a stream of Bytes objects
+    let mut body = BytesMut::new();
+    while let Some(chunk) = payload.next().await {
+        let chunk = chunk?;
+        // limit max size of in-memory payload
+        if (body.len() + chunk.len()) > MAX_SIZE {
+            return Err(error::ErrorBadRequest("overflow"));
+        }
+        body.extend_from_slice(&chunk);
+    }
+
+    // body is loaded, now we can deserialize serde-json
+    let obj = serde_json::from_slice::<MyObj>(&body)?;
+    Ok(HttpResponse::Ok().json(obj)) // <- send response
+}
+```
+
+示例目录中提供了这两个选项的[完整示例](https://github.com/actix/examples/tree/master/json/)。
+
+#### 分块传输编码
+
+Actix自动解码分块编码。`web::Payload`提取程序已包含解码字节流。如果使用支持的压缩编解码器（`br`、`gzip`、`deflate`）之一压缩请求负载，则解压缩字节流。
+
+#### 多部分body
+
+Actix-web通过一个外部机箱[Actix multipart](https://crates.io/crates/actix-multipart)提供多部分流支持。
+
+示例目录中提供了[完整的示例](https://github.com/actix/examples/tree/master/multipart/)。
+
+#### Urlencoded body
+
+Actix web使用`web::form`提取器为`application/x-www-form-urlencoded`编码的实体提供支持，该提取器解析为反序列化实例。实例的类型必须实现serde的反序列化特性。
+
+`UrlEncoded` future可以在以下几种情况下解决错误：
+
+- content-type 不是 application/x-www-form-urlencoded
+- 传输编码是`chunked`
+- 内容长度大于256k
+- 有效负载因错误而终止。
+
+```rust
+use actix_web::{web, HttpResponse};
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct FormData {
+    username: String,
+}
+
+async fn index(form: web::Form<FormData>) -> HttpResponse {
+    HttpResponse::Ok().body(format!("username: {}", form.username))
+}
+```
+
+#### Streaming 请求
+
+`HttpRequest`是`Bytes`对象流。它可用于读取请求正文负载。
+
+在下面的示例中，我们逐块读取和打印请求负载：
+
+```rust
+use actix_web::{web, Error, HttpResponse};
+use futures::StreamExt;
+
+async fn index(mut body: web::Payload) -> Result<HttpResponse, Error> {
+    let mut bytes = web::BytesMut::new();
+    while let Some(item) = body.next().await {
+        let item = item?;
+        println!("Chunk: {:?}", &item);
+        bytes.extend_from_slice(&item);
+    }
+
+    Ok(HttpResponse::Ok().finish())
+}
+```
+### Responses(响应)
+
+类生成器模式用于构造`HttpResponse`的实例, `HttpResponse`提供了几个返回`HttpResponseBuilder`实例的方法，这些方法实现了各种方便的方法来生成响应。
+
+检查[文档](https://docs.rs/actix-web/2/actix_web/dev/struct.HttpResponseBuilder.html)中的类型说明。
+
+方法`.body`、`.finish`和`.json`完成响应创建并返回构造的`HttpResponse`实例，如果在同一个生成器实例上多次调用此方法，则生成器将死机。
+
+```rust
+use actix_web::HttpResponse;
+
+async fn index() ->HttpResponse{
+    HttpResponse::Ok()
+        .content_type("text/plain")
+        .header("X-Hdr","sample")
+        .body("data")
+}
+```
+
+#### 内容编码
+
+`Actix-web`可以使用[压缩中间件](https://docs.rs/actix-web/2/actix_web/middleware/struct.Compress.html)自动压缩有效负载,支持以下编解码器：
+
+- Brotli
+- Gzip
+- Deflate
+- Identity
+
+```rust
+use actix_web::{middleware, HttpResponse};
+
+async fn index_br() -> HttpResponse {
+    HttpResponse::Ok().body("data")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::default())
+            .route("/", web::get().to(index_br))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+响应负载根据`middleware::BodyEncoding` trait中的编码参数进行压缩。默认情况下，使用`ContentEncoding::Auto`。如果选择`ContentEncoding::Auto`，则压缩取决于请求的`Accept-Encoding`头。
+
+`ContentEncoding::Identity`可用于禁用压缩。如果选择了另一个内容编码，则对该编解码器强制执行压缩。
+
+例如，要为单个处理程序启用`brotli`，请使用`ContentEncoding::Br`：
+
+```rust
+use actix_web::{http::ContentEncoding, dev::BodyEncoding, HttpResponse};
+
+async fn index_br() -> HttpResponse {
+    HttpResponse::Ok()
+        .encoding(ContentEncoding::Br)
+        .body("data")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{middleware, web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::default())
+            .route("/", web::get().to(index_br))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+或者对于整个应用程序：
+
+```rust
+use actix_web::{http::ContentEncoding, dev::BodyEncoding, HttpResponse};
+
+async fn index_br() -> HttpResponse {
+    HttpResponse::Ok().body("data")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{middleware, web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::new(ContentEncoding::Br))
+            .route("/", web::get().to(index_br))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+在这种情况下，我们通过将内容编码设置为`Identity`值显式禁用内容压缩：
+
+```rust
+use actix_web::{
+    http::ContentEncoding, middleware, dev::BodyEncoding, HttpResponse,
+};
+
+async fn index() -> HttpResponse {
+    HttpResponse::Ok()
+        // v- disable compression
+        .encoding(ContentEncoding::Identity)
+        .body("data")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::default())
+            .route("/", web::get().to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+处理已压缩的正文时（例如，在为资产提供服务时），请将`Content-Type`设置为`Identity`以避免压缩已压缩的数据，并手动设置内容编码头：
+
+```rust
+use actix_web::{
+    http::ContentEncoding, middleware, dev::BodyEncoding, HttpResponse,
+};
+
+static HELLO_WORLD: &[u8] = &[
+    0x1f, 0x8b, 0x08, 0x00, 0xa2, 0x30, 0x10, 0x5c, 0x00, 0x03, 0xcb, 0x48, 0xcd, 0xc9,
+    0xc9, 0x57, 0x28, 0xcf, 0x2f, 0xca, 0x49, 0xe1, 0x02, 0x00, 0x2d, 0x3b, 0x08, 0xaf,
+    0x0c, 0x00, 0x00, 0x00,
+];
+
+async fn index() -> HttpResponse {
+    HttpResponse::Ok()
+        .encoding(ContentEncoding::Identity)
+        .header("content-encoding", "gzip")
+        .body(HELLO_WORLD)
+}
+```
+
+此外，还可以在应用程序级别设置默认内容编码，默认情况下使用`ContentEncoding::Auto`，这意味着自动内容压缩协商。
+
+```rust
+use actix_web::{http::ContentEncoding, middleware, HttpResponse};
+
+async fn index() -> HttpResponse {
+    HttpResponse::Ok().body("data")
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::new(ContentEncoding::Br))
+            .route("/", web::get().to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+#### JSON Response
+
+Json类型允许使用格式良好的Json数据进行响应：只需返回`Json<T>`类型的值，其中T是要序列化为`JSON`的结构类型。类型`T`必须实现serde的`序列化`特性。
+
+```rust
+
+use actix_web::{web, HttpResponse, Result};
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct MyObj {
+    name: String,
+}
+
+async fn index(obj: web::Path<MyObj>) -> Result<HttpResponse> {
+    Ok(HttpResponse::Ok().json(MyObj {
+        name: obj.name.to_string(),
+    }))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
+    HttpServer::new(|| App::new().route(r"/a/{name}", web::get().to(index)))
+        .bind("127.0.0.1:8088")?
+        .run()
+        .await
+}
+```
 
 ### Testing 测试
 

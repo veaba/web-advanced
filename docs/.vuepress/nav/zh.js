@@ -5,7 +5,7 @@ module.exports = [
 	},
 	{
 		text: 'actix-web',
-		link: '/rust/actix.html'
+		link: '/rust/actix-web.html'
 	},
 	{
 		text: 'JavaScript',
