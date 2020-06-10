@@ -1,18 +1,22 @@
 module.exports = [
 	{
 		text: '指南',
-		link: '/guide/'
+		link: '/guide.html'
+	},
+	{
+		text: 'actix-web',
+		link: '/rust/actix.html'
 	},
 	{
 		text: 'JavaScript',
-		link: '/javascript/'
+		link: '/javascript.html'
 	},
 	{
 		text: 'Node',
-		link: '/node/'
+		link: '/node.html'
 	},
 	{
 		text: '面试题',
-		link: '/interview/'
+		link: '/interview.html'
 	},
 ];
