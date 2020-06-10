@@ -4,6 +4,8 @@ sidebar: auto
 
 # Actix-web
 
+- [Actix-web官方](https://actix.rs/)
+
 ## 介绍
 
 ### Welcome
@@ -90,7 +92,7 @@ cd hello-world
 actix-web = "2.0"
 ```
 
-如果要使用 `#[actix_rt：：main]`宏，必须将`actix-rt`添加到依赖项中。现在你的`cargo.toml`应该如下所示：
+如果要使用 `#[actix_rt::main]`宏，必须将`actix-rt`添加到依赖项中。现在你的`cargo.toml`应该如下所示：
 
 ```toml
 [dependencies]
@@ -135,7 +137,7 @@ async fn main() ->std::io::Result<()>{
 就这样！现在，用`cargo run`编译并运行程序。前往`http://localhost:8088/`查看结果。
 
 ::: tip Note:
-您可以注意到`#[actix_rt：：main]`属性宏。此宏在 actix 运行时执行标记的异步函数。此宏可以标记和执行任何异步函数。
+您可以注意到`#[actix_rt::main]`属性宏。此宏在 actix 运行时执行标记的异步函数。此宏可以标记和执行任何异步函数。
 :::
 
 <h3>使用属性宏定义路由</h3>
@@ -630,7 +632,7 @@ async fn index(req:HttpRequest)->HttpResponse {
 - _SIGTERM_ - 平滑关闭 workers
 - _SIGQUIT_ - 强制关闭 workers
 
-可以使用`HttpServer：：disable_signals()`方法禁用信号处理
+可以使用`HttpServer::disable_signals()`方法禁用信号处理
 
 ### Handler(处理器)
 
@@ -1089,7 +1091,589 @@ async fn main() -> std::io::Result<()> {
 
 ### Error 错误
 
+`Actix-web`使用自己的`Actix-web::error::error` type和`Actix-web::error::ResponseError`特性从web处理程序处理错误。
+
+如果处理程序在还实现`ResponseError`特征的结果中返回`Error`（指一般的[Rust trait std::Error::Error](https://doc.rust-lang.org/std/error/trait.Error.html)），`actix-web`将该错误呈现为HTTP响应，其对应的`actix_web::HTTP::StatusCode`，默认情况下生成内部服务器错误：
+
+```rust
+pub train ResponseError {
+    fn error_response(&self) ->HttpResponse;
+    fn status_code(&self) ->StatusCode;
+}
+
+```
+
+`Responder`程序将兼容`结果`强制为HTTP响应：
+
+```rust
+impl<T:Responder,E:Into<Error>> Responder for Result <T,E>
+```
+
+上面代码中的`Error`是`actix-web`的错误定义，任何实现`ResponseError`的错误都可以自动转换为一个错误。
+
+`Actix-web`为一些常见的非Actix错误提供`ResponseError`实现。例如，如果处理程序以`io::Error`响应，则该错误将转换为`HttpInternalServerError`：
+
+```rust
+
+use std::io;
+fn index(req:HttpRequest) ->io::Result<fs::NameFile>{
+    Ok(fs::NameFile::open("static/index.html")?)
+}
+```
+请参阅[actix-web API文档](https://docs.rs/actix-web/2/actix_web/error/trait.ResponseError.html#foreign-impls)，以获取`ResponseError`的外部实现的完整列表。
+
+#### 自定义错误响应的示例
+
+下面是`ResponseError`的一个实现示例：
+
+```rust
+use actix_web::{error,Result};
+use failure::Fail;
+
+#[derive](Fail,Debug)
+#[fail(display="my error")]
+
+struct MyError{
+    name:&'static str,
+}
+
+// 对`error_response()` 方法使用默认实现
+
+async fn index()->Result<&'static str,MyError>{
+    Err(MyError {name:"test"})
+}
+```
+
+`ResponseError`有一个`error_response()`的默认实现，它将呈现一个500（内部服务器错误），当上面的`index`处理程序执行时，就会发生这种情况。
+
+重写`error_response()`以生成更有用的结果：
+
+```rust
+use actix_http::ResonderBuilder;
+use actix_web::{error,http::header,http::StatusCode,HttpResponse};
+use failure::Fail;
+
+#[derive(Fail,Debug)]
+
+enum MyError{
+    #[fail(display="internal error")]
+    InternalError,
+    #[fail(display="bad request")]
+    BadClientData,
+    #[fail(display="timeout")]
+    Timeout,
+}
+
+impl error::ResponseError for MyError{
+    fn error_response(&self) -> HttpResponse {
+        ResponseBuilder::new(self.status_code())
+            .set_header(header::CONTENT_TYPE,"text/html;charset=utf-8")
+            .body(self.to_string())
+    }
+    fn status_code(&self)->StatusCode{
+        match *self{
+            MyError::InternalError => StatusCode::INTERNAL_SERVER_ERROR,
+            MyError::BadClientData => StatusCode::BAD_REQUEST,
+            MyError::Timeout => StatusCode::GATEWAY_TIMEOUT,
+        }
+    }
+}
+
+async fn index()->Result<&'static str,MyError>{
+    Err(MyError::BadClientData)
+}
+```
+
+#### Error帮助器
+
+`Actix-web`提供了一组错误助手函数，这些函数对于从其他错误生成特定的HTTP错误代码非常有用。在这里，我们使用`map_err`将未实现`ResponseError`特性的`MyError`转换为 *400* （错误请求）：
+
+```rust
+use actix_web::{error,Result};
+
+#[derive(Debug)]
+
+struct MyError {
+    name:&'static str,
+}
+
+async fn index()->Result<&'static str> {
+    let result:Result<&'static str,MyError>=Err(MyError{name:"test Error!"});
+    Ok(result.map_errz(|e|error::ErrorBadRequest(e.name))?)
+}
+
+```
+
+有关可用错误帮助程序的完整列表，请参阅[actix-web错误模块的API文档](https://docs.rs/actix-web/2/actix_web/error/struct.Error.html)。
+
+
+
+#### 故障兼容
+
+`Actix-web`提供了与故障库的自动兼容性，因此派生失败的`错误`将自动转换为Actix错误。请记住，除非你还为这些错误提供了自己的`error_response()`实现，否则这些错误将以默认的*500*状态代码呈现。
+
+#### 错误日志
+
+Actix在`WARN`日志级别记录所有错误。如果应用程序的日志级别设置为“`调试`”，并且启用了`RUST_BACKTRACE`，则也会记录该回溯。这些是可配置的环境变量：
+
+```shell
+>> RUST_BACKTRACE=1 RUST_LOG=actix_web=debug cargo run
+```
+
+`Error`类型使用原因的错误回溯（如果可用）。如果基础故障不提供回溯，则会构造一个新的回溯，指向发生转换的点（而不是错误的来源）。
+
+
+#### 错误处理的推荐实践
+
+考虑将应用程序产生的错误分成两大类可能是有用的：一类是面向用户的错误，另一类不是面向用户的错误。
+
+
+前者的一个例子是，我可能使用failure指定一个`UserError`枚举，该枚举封装了`ValidationError`，以便在用户发送错误输入时返回：
+
+```rust
+use actix_http::ResponseBuilder;
+use actix_web::{error,http::header,http::StatusCode,HttpResponse};
+use failure::Fail;
+
+#[derive(Fail,Debug)]
+
+enum UserError {
+    #[fail(display ="Validation error on field:{}",field)]
+    ValidationError(field:String)
+}   
+
+impl error::ResponseError for UserError {
+     fn error_response(&self) -> HttpResponse {
+        ResponseBuilder::new(self.status_code())
+            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .body(self.to_string())
+    }
+    fn status_code(&self) -> StatusCode {
+        match *self {
+            UserError::ValidationError { .. } => StatusCode::BAD_REQUEST,
+        }
+    }
+}
+
+
+```
+
+这将完全按照预期操作，因为使用`display`定义的错误消息是以用户要读取的明确意图编写的。
+
+然而，对于所有的错误来说，回发错误消息并不可取——在服务器环境中，可能会发生许多错误，我们可能希望在其中向用户隐藏细节。
+例如，如果数据库关闭，客户端库开始产生连接超时错误，或者HTML模板的格式不正确，并且在呈现时出错。在这些情况下，最好将错误映射到适合用户使用的通用错误。
+
+下面是一个将内部错误映射到带有自定义消息的面向用户的`InternalError`的示例：
+
+```rust
+use actix_http::ResponseBuilder;
+use actix_web::{error, http::header, http::StatusCode, HttpResponse};
+use failure::Fail;
+
+#[derive(Fail, Debug)]
+enum UserError {
+    #[fail(display = "An internal error occurred. Please try again later.")]
+    InternalError,
+}
+
+impl error::ResponseError for UserError {
+    fn error_response(&self) -> HttpResponse {
+        ResponseBuilder::new(self.status_code())
+            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .body(self.to_string())
+    }
+    fn status_code(&self) -> StatusCode {
+        match *self {
+            UserError::InternalError => StatusCode::INTERNAL_SERVER_ERROR,
+        }
+    }
+}
+
+async fn index() -> Result<&'static str, UserError> {
+    do_thing_that_failes().map_err(|_e| UserError::InternalError)?;
+    Ok("success!")
+}
+```
+
+通过将错误分为面向用户的错误和不面向用户的错误，我们可以确保不会意外地将用户暴露在应用程序内部抛出的错误中，而这些错误是他们不想看到的。
+
+#### 错误日志
+
+这是一个使用`middleware::Logger`的基本示例：
+
+```rust
+use actix_web::{error, Result};
+use failure::Fail;
+use log::debug;
+
+#[derive(Fail, Debug)]
+#[fail(display = "my error")]
+pub struct MyError {
+    name: &'static str,
+}
+
+// Use default implementation for `error_response()` method
+impl error::ResponseError for MyError {}
+
+async fn index() -> Result<&'static str, MyError> {
+    let err = MyError { name: "test error" };
+    debug!("{}", err);
+    Err(err)
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{middleware::Logger, web, App, HttpServer};
+
+    std::env::set_var("RUST_LOG", "my_errors=debug,actix_web=info");
+    std::env::set_var("RUST_BACKTRACE", "1");
+    env_logger::init();
+
+    HttpServer::new(|| {
+        App::new()
+            .wrap(Logger::default())
+            .route("/", web::get().to(index))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
 ### URL Dispatch
+
+URL分派提供了一种简单的方法，可以使用简单的模式匹配语言将URL映射到处理程序代码。如果其中一个模式匹配与请求关联的路径信息，则调用特定的处理程序对象。
+
+请求处理程序是一个函数，它接受可以从请求（即[*impl FromRequest*](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html)）提取的零个或多个参数，并返回可以转换为HttpResponse（即[*impl Responder*](https://docs.rs/actix-web/2/actix_web/trait.Responder.html)）的类型。[处理程序](https://actix.rs/docs/handlers/)部分提供了更多信息。
+
+#### 资源配置
+
+资源配置是向应用程序添加新资源的行为。资源有一个名称，它充当用于生成URL的标识符。该名称还允许开发人员向现有资源添加路由。
+资源也有一个模式，用于与URL的`path`部分（scheme和port后面的部分，例如`URL`中的`/foo/bar`）匹配`http://localhost:8080/foo/bar?q=value`）。
+它与查询部分不匹配（后面的部分？，例如，`q=value`在 `http://localhost:8080/foo/bar?q=value`）。
+
+`App::route()`方法提供了注册路由的简单方法。此方法将单个路由添加到应用程序路由表。此方法接受路径模式、http方法和处理程序函数。对于同一个路径，可以多次调用route()方法，在这种情况下，多个路由为同一个资源路径注册。
+
+```rust
+use actix_web::{web,App,HttpResponse,HttpServer};
+
+async fn index()->HttpResponse {
+    HttpResponse::Ok().body("Hello")
+}
+
+#[actix_rt::main]
+async fn main() ->std::io::Result<()>{
+    HttpServer::new(||{
+        App::new()
+            .route("/",web::get().to(index))
+            .route("/user",web::post().to(index))
+    })
+    .bind("127.0.0.1:8084")?
+    .await
+}
+
+```
+
+虽然*App::route()*提供了注册路由的简单方法，但要访问完整的资源配置，必须使用不同的方法。`App::service()`方法将单个[resource](https://docs.rs/actix-web/2/actix_web/struct.Resource.html)添加到应用程序路由表中。此方法接受路径模式、保护和一个或多个路径
+
+```rust
+use actix_web::{guard,web,App,HttpResponse};
+
+fn index()->HttpResponse{
+    HttpResponse::Ok().body("Hello!")
+}
+
+pub fn main(){
+    App::new()
+    .service(web::resource("/prefix").to(index))
+    .service(
+        .name("user_detail")
+        .guard(guard::Header("content-type","application/json"))
+        .route(web::get().to(||HttpResponse::Ok()))
+        .route(web::put().to(||HttpResponse::Ok()))
+    )
+}
+
+```
+
+如果资源不包含任何路由或没有任何匹配的路由，则返回`NOT FOUND`的http响应。
+
+
+#### 配置一个路由
+
+资源包含一组路由。每条路线依次有一组`guards`和一个处理器。可以使用`Resource::route()`方法创建新路由，该方法返回对新路由实例的引用。默认情况下，路由不包含任何保护，因此匹配所有请求，默认处理程序为：`HttpNotFound`。
+
+应用程序根据在资源注册和路由注册期间定义的路由条件路由传入请求。资源匹配它包含的所有路由，其顺序为通过`Resource::route()`注册路由的顺序。
+
+一个路由可以包含任意数量的守卫，但只能包含一个处理程序。
+
+```rust
+App::new().service(
+    web::resource("/path").route(
+        web::route()
+            .guard(guard::Get())
+            .guard(gurad::Header("content-type","text/plain"))
+            .to(||HttpResponse::Ok()),
+    )
+)
+```
+
+在本例中，如果GET请求包含`Content-Type`头，则返回`HttpResponse::Ok()`，该头的值为text/plain，路径等于`/path`。
+
+如果资源无法匹配任何路由，则返回“`NOT FOUND`”响应。
+
+`ResourceHandler::route()`返回路由对象。可以使用类似于生成器的模式配置路由。以下配置方法可用：
+
+- `Route::guard()`      - 注册一个新的guard。每条路线可登记任何数量的警卫。
+- `Route::method()`     - 注册方法保护程序。每条路线可登记任何数量的警卫。
+- `Route::to()`         - 为此路由注册处理程序函数。只能注册一个处理程序。通常，处理程序注册是最后一个配置操作。
+- `Route::to_async()`   - 为此路由注册一个异步处理程序函数。只能注册一个处理程序。处理程序注册是最后一个配置操作。
+
+
+#### 路由匹配
+
+路由配置的主要目的是根据URL路径模式匹配（或不匹配）请求的`path`,`path`表示请求的URL的路径部分。
+
+actix web做这件事的方式非常简单。当请求进入系统时，对于系统中存在的每个资源配置声明，actix会根据声明的模式检查请求的路径。
+此检查按通过`App::service()`方法声明路由的顺序进行。如果找不到资源，则使用默认资源作为匹配的资源。
+
+声明路由配置时，它可能包含路由保护参数。与路由声明关联的所有路由保护必须为`true`，才能在检查期间将路由配置用于给定请求。
+如果提供给路由配置的路由保护参数集中的任何保护在检查期间返回`false`，则跳过该路由，并继续通过有序的路由集进行路由匹配。
+
+如果任何路由匹配，则停止路由匹配进程并调用与该路由关联的处理程序。如果在用尽所有路由模式后没有匹配的路由，则返回一个`NOT FOUND`的响应。
+
+#### 资源模式语法
+
+actix在pattern参数中使用的模式匹配语言的语法很简单。
+
+路由配置中使用的模式可以以斜线字符开头。如果模式不是以斜杠字符开头，则在匹配时会在其前面加上一个隐式斜杠。例如，以下模式是等效的：
+
+```text
+{foo}/bar/baz
+```
+
+和
+
+```text
+/{foo}/bar/baz
+```
+
+变量部分（替换标记）以`{identifier}`的形式指定，这里的意思是“接受下一个斜杠字符之前的任何字符，并将其用作`HttpRequest.match_info()`对象”。
+
+模式中的替换标记与正则表达式`[^{}/]`+匹配。
+
+`match_info`是`Params`对象，表示根据路由模式从URL提取的动态部分。它可用作请求匹配信息. 例如，以下模式定义了一个文本段（`foo`）和两个替换标记（`baz`和`bar`）：
+
+```text
+foo/{baz}/{bar}
+```
+
+上述模式将匹配这些url，并生成以下匹配信息：
+
+```text
+foo/1/2        -> Params {'baz':'1', 'bar':'2'}
+foo/abc/def    -> Params {'baz':'abc', 'bar':'def'}
+```
+
+但是，它与以下模式不匹配：
+
+```text
+foo/1/2/        -> No match (trailing slash)
+bar/abc/def     -> First segment literal mismatch
+```
+
+段中段替换标记的匹配将只完成到模式中段中的第一个非字母数字字符。因此，例如，如果使用此路由模式：
+
+```text
+foo/{name}.html
+```
+
+字面路径`/foo/biz.html`将匹配上述路由模式，匹配结果将是`Params{'name'：'biz'}`。但是，字面路径 `/foo/biz`将不匹配，因为它在由`{name}.html`表示的段末尾不包含字面 `.html`（它只包含`biz`，而不包含`biz.html`).
+
+要捕获这两个片段，可以使用两个替换标记：
+
+```text
+foo/{name}.html
+```
+字面路径`/foo/biz.html`将匹配上述路由模式，匹配结果将是`Params{'name'：'biz'，'ext'：'html'}`。发生这种情况是因为有一个文字部分。（句点）在两个替换标记`{name}`和`{ext}`之间。
+
+替换标记可以选择指定一个正则表达式，该正则表达式将用于确定路径段是否应与标记匹配。若要指定替换标记应仅匹配由正则表达式定义的特定字符集，必须使用稍微扩展的替换标记语法形式。
+在大括号中，替换标记名后面必须跟一个冒号，然后紧接着是正则表达式。与替换标记`[^/]+`关联的默认正则表达式匹配一个或多个不是斜线的字符。例如，在hood下，替换标记`{foo}`可以更详细地拼写为`{foo:[^/]+}`。
+您可以将其更改为任意正则表达式以匹配任意字符序列，例如`{foo:\d+}`以仅匹配数字。
+
+段必须至少包含一个字符才能匹配段替换标记。例如，对于URL`/abc/`：
+
+- `/abc/{foo}` 不匹配。
+- `/{foo}` 匹配。
+
+:::tip Note:
+在匹配模式之前，路径将不带引号并解码为有效的unicode字符串，表示匹配路径段的值也将不带引号。
+:::
+
+例如，以下模式：
+
+```text
+foo/{bar}
+```
+
+当匹配以下URL时：
+
+
+```text
+http://example.com/foo/La%20Pe%C3%B1a
+```
+匹配字典将如下所示（值是URL-decoded）：
+
+```text
+Params{'bar': 'La Pe\xf1a'}
+```
+
+路径段中的文本字符串应表示提供给actix的路径的解码值。您不想在模式中使用`URL-encoded`的值。例如，而不是这样：
+
+```text
+/Foo%20Bar/{baz}
+```
+
+你会想用这样的东西：
+
+```text
+/Foo Bar/{baz}
+```
+
+有可能得到“`尾匹配`”。为此，必须使用自定义正则。
+
+```text
+foo/{bar}/{tail:.*}
+```
+
+上述模式将匹配这些url，并生成以下匹配信息：
+
+```text
+foo/1/2/           -> Params{'bar':'1', 'tail': '2/'}
+foo/abc/def/a/b/c  -> Params{'bar':u'abc', 'tail': 'def/a/b/c'}
+```
+
+
+#### Routes范围
+
+作用域帮助您组织共享公用根路径的路由。可以在作用域内嵌套作用域。
+
+假设您想要组织指向用于查看“用户”的端点的路径。这些路径可以包括：
+
+- `/users`
+- `/users/show`
+- `/users/show/{id}`
+
+这些路径的作用域布局如下所示
+
+```rust
+async fn show_users() -> HttpResponse {
+    HttpResponse::Ok().body("Show users")
+}
+
+async fn user_detail(path: web::Path<(u32,)>) -> HttpResponse {
+    HttpResponse::Ok().body(format!("User detail: {}", path.0))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new().service(
+            web::scope("/users")
+                .route("/show", web::get().to(show_users))
+                .route("/show/{id}", web::get().to(user_detail)),
+        )
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+局部路径可以包含变量路径段作为资源。与非工作路径一致。
+
+您可以从`HttpRequest::match_info()`获取变量路径段。路径提取器还可以提取范围级别的变量段。
+
+
+#### 匹配信息
+
+所有表示匹配路径段的值都可以在`HttpRequest：：match_info`中找到。可以使用`Path::get()`检索特定值。
+
+```rust
+use actix_web::{HttpRequest, HttpResponse, Result};
+
+async fn index(req: HttpRequest) -> Result<String> {
+    let v1: u8 = req.match_info().get("v1").unwrap().parse().unwrap();
+    let v2: u8 = req.match_info().query("v2").parse().unwrap();
+    let (v3, v4): (u8, u8) = req.match_info().load().unwrap();
+    Ok(format!("Values {} {} {} {}", v1, v2, v3, v4))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| {
+        App::new()
+            .route("/a/{v1}/{v2}/", web::get().to(index))
+            .route("", web::get().to(|| HttpResponse::Ok()))
+    })
+    .bind("127.0.0.1:8088")?
+    .run()
+    .await
+}
+```
+
+对于路径“`/a/1/2/`”的本例，值v1和v2将解析为“`1`”和“`2`”。
+
+可以从尾部路径参数创建`PathBuf`。返回的`PathBuf`已解码百分比。如果段等于“..”，则跳过上一段（如果有）
+
+为安全起见，如果某个段满足以下任何条件，则返回一个`Err`，指示满足的条件：
+
+- 解码以下任一项开头：`. `(除了 `..`),` *`
+- 解码以下任一项结尾：`:`,`>`,`<`
+- 解码包含以下一项：`/`
+- 在Windows上，解码段包含:‘'
+- 百分比编码导致无效的UTF8。
+
+由于这些条件，从请求路径参数解析的`PathBuf`可以安全地插入或用作路径的后缀，而无需额外检查。
+
+```rust
+use actix_web::{HttpRequest, Result};
+use std::path::PathBuf;
+
+async fn index(req: HttpRequest) -> Result<String> {
+    let path: PathBuf = req.match_info().query("tail").parse().unwrap();
+    Ok(format!("Path {:?}", path))
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    use actix_web::{web, App, HttpServer};
+
+    HttpServer::new(|| App::new().route(r"/a/{tail:.*}", web::get().to(index)))
+        .bind("127.0.0.1:8088")?
+        .run()
+        .await
+}
+```
+
+#### 路径信息抽取器
+
+#### 生成资源URL
+
+#### 外部资源
+
+#### 路径规范化和重定向到斜线附加路由
+
+#### 使用应用程序前缀组合应用程序
+
+#### 自定义线路守卫
+
+#### 修改守卫值
+
+#### 更改默认未找到响应
+
 
 ### Requests 请求
 
