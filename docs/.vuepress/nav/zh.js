@@ -1,7 +1,7 @@
 module.exports = [
 	{
 		text: '指南',
-		link: '/guide.html'
+		link: '/guide/'
 	},
 	{
 		text: 'actix-web',
@@ -9,14 +9,14 @@ module.exports = [
 	},
 	{
 		text: 'JavaScript',
-		link: '/javascript.html'
+		link: '/javascript/'
 	},
 	{
 		text: 'Node',
-		link: '/node.html'
+		link: '/node/'
 	},
 	{
 		text: '面试题',
-		link: '/interview.html'
+		link: '/interview/'
 	},
 ];
