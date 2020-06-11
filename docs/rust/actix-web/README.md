@@ -12,25 +12,25 @@ sidebar: auto
 
 <h3>欢迎使用Actix</h3>
 
-Actix 是开发带有 Rust 的 web 服务的门户，本文档将为您提供指导。
+Actix 是开发带有 Rust 的 web 服务的门户，本文档将为你提供指导。
 
 本文档目前主要涉及`actix-web`部分，它是先前在`actix` actor 框架和[`Tokio`](https://tokio.rs/) 异步 IO 系统之上构建的高级 web 框架。这是从 API 稳定性的角度来看最稳定的部分。
 
 如果你还没有使用 actix-web，最好从[入门指南](https://actix.rs/docs/getting-started)开始。
-如果你已经知道自己的方法，并且需要特定的信息，那么您可能需要阅读 [actix-web API 文档](https://docs.rs/actix-web)（或较低级别的 [actix APO=I 文档](https://docs.rs/actix)）。
+如果你已经知道自己的方法，并且需要特定的信息，那么你可能需要阅读 [actix-web API 文档](https://docs.rs/actix-web)（或较低级别的 [actix APO=I 文档](https://docs.rs/actix)）。
 
 ### 什么是 Actix
 
-<h3>Acitx 是多态的</h3>
+<h3>Acitx 是多种集合</h3>
 
-Actix 是一些东西。它的基础是一个强大的角色系统，用于 Rust，而`actix-web`系统最初就是在这个系统之上构建的。这是你最有可能使用的。`actix-web`给你的是一个有趣且快速的 web 开发框架。
+Actix 一个集合体，它的基础是一个强大的`actor`系统，用于 Rust，而`actix-web`系统最初就是在这个系统之上构建的，这是你最有可能使用的。`actix-web`给你的是一个有趣且快速的 web 开发框架。
 
 我们称`actix-web`为一个小型实用的框架。不管是出于什么目的，它都是一个有着一些曲折的微结构。
-如果你已经是一个 Rust 程序员，你可能会发现自己在家很快，但即使你是来自另一种编程语言，你应该发现`actix-web`很容易拿起。
+如果你已经是一个 `Rust` 程序员，你可能会发现自己在家很快，但即使你是来自另一种编程语言，你应该发现`actix-web`也很容易使用。
 
 使用`actix-web`开发的应用程序将公开包含在本机可执行文件中的 HTTP 服务器。
-您可以将它放在另一个 HTTP 服务器（如 nginx）后面，也可以按原样提供服务。
-即使在完全没有另一个 HTTP 服务器的情况下，`actix-web`也足够强大，能够提供 HTTP 1 和 htp2 支持以及 SSL/TLS。这对于构建准备分发的小型服务非常有用。
+你可以将它放在另一个 HTTP 服务器（如 nginx）后面，也可以按原样提供服务。
+即使在完全没有另一个 HTTP 服务器的情况下，`actix-web`也足够强大，能够提供 `HTTP 1 `和 `http2` 支持以及 `SSL/TLS`，这对于构建准备分发的小型服务非常有用。
 
 最重要的是：`actix-web`运行在 Rust 1.39 或更高版本上，它可以与稳定的版本一起工作。
 
@@ -38,13 +38,14 @@ Actix 是一些东西。它的基础是一个强大的角色系统，用于 Rust
 
 <h3>安装Rust</h3>
 
-因为`actix-web`是一个 Rust 框架，所以您需要 Rust 来开始使用它。如果您还没有，我们建议您使用`rustup`来管理您的 Rust 安装。
+因为`actix-web`是一个 Rust 框架，所以你需要 Rust 来开始使用它。如果你还没有，我们建议你使用`rustup`来管理你的 Rust 安装。
 
-官方的 Rust 指南有一个很好的开始部分。我们目前至少需要 Rust1.39，所以请确保您运行`rustup update`以获得最新和最新的 Rust 版本。特别是本指南将假设您实际运行 Rust 1.39 或更高版本。
+官方的 Rust 指南有一个很好的开始部分。我们目前至少需要 Rust1.39，所以请确保你运行`rustup update`以获得最新和最新的 Rust 版本。
+特别是本指南将假设你实际运行 Rust 1.39 或更高版本。
 
 <h3>安装actix-web</h3>
 
-多亏了 Rust 的`cargo`管理器，您不需要显式地安装`actix-web`。相信它，你就可以走了。对于不太可能使用 actix-web 开发版本的情况，可以直接依赖 git 存储库。
+多亏了 Rust 的`cargo`管理器，你不需要显式地安装`actix-web`。相信它，就解放你自己了。对于不太可能使用 `actix-web` 开发版本的情况，可以直接依赖 git 存储库。
 
 发行版本：
 
@@ -60,9 +61,9 @@ actix-web = "2.0"
 actix-web = { git = "https://github.com/actix/actix-web" }
 ```
 
-<h3>潜入</h3>
+#### 潜入
 
-这里有两条路可以走。您可以按照指南进行操作，或者如果您非常不耐烦，您可能希望查看我们广泛的示例存储库并运行包含的示例。例如，下面是如何运行包含的基本示例：
+这里有两条路可以走，你可以按照指南进行操作，或者如果你非常不耐烦，你可能希望查看我们广泛的示例存储库并运行包含的示例。例如，下面是如何运行的基本示例：
 
 ```cmd
 git clone https://github.com/actix/examples
@@ -78,7 +79,7 @@ cargo run
 
 <h3>Hello,world!</h3>
 
-首先创建一个新的基于二进制的 Cargo 项目并切换到新目录：
+首先创建一个新的基于二进制的 Cargo 项目并切到新目录：
 
 ```cmd
 cargo new hello-world
@@ -137,12 +138,12 @@ async fn main() ->std::io::Result<()>{
 就这样！现在，用`cargo run`编译并运行程序。前往`http://localhost:8088/`查看结果。
 
 ::: tip Note:
-您可以注意到`#[actix_rt::main]`属性宏。此宏在 actix 运行时执行标记的异步函数。此宏可以标记和执行任何异步函数。
+你可以注意到`#[actix_rt::main]`属性宏。此宏在 actix 运行时执行标记的异步函数，此宏可以标记和执行任何异步函数。
 :::
 
 <h3>使用属性宏定义路由</h3>
 
-或者，您可以使用宏属性定义路由，这些属性允许您在函数上方指定路由，如下所示：
+或者，你可以使用宏属性定义路由，这些属性允许你在函数上方指定路由，如下所示：
 
 ```rust
 use actix_web::get;
@@ -163,14 +164,14 @@ App::new()
 ```
 
 出于一致性原因，本文档仅使用本页开头显示的显式语法。
-但是，如果您更喜欢这种语法，那么您应该在任何时候声明路由时都可以随意使用它，因为它只是语法糖。
+但是，如果你更喜欢这种语法，那么你应该在任何时候声明路由时都可以随意使用它，因为它只是语法糖。
 
 要了解更多信息，请参阅[actix-web-codegen](https://docs.rs/actix-web-codegen/)。
 
 <h3>自动重载</h3>
 
 如果需要，可以在开发期间自动重新加载服务器，该服务器根据需要重新编译。
-这是不必要的，但它使快速原型更方便，因为您可以看到变化立即保存。要了解如何实现这一点，请查看[autoreload 模式](https://actix.rs/docs/autoreload/)。
+这是不必要的，但它使快速原型更方便，因为你可以看到变化立即保存。要了解如何实现这一点，请查看[autoreload 模式](https://actix.rs/docs/autoreload/)。
 
 ### Application
 
@@ -624,7 +625,7 @@ async fn index(req:HttpRequest)->HttpResponse {
 `HttpServer`支持正常关机。在收到停止信号后，工作人员有一定的时间来完成服务请求。
 超时后仍活着的工人将被强制放弃。默认情况下，关闭超时设置为 30 秒。可以使用`HttpServer::shutdown_timeout()`方法更改此参数。
 
-您可以使用服务器地址向服务器发送停止消息，并指定是否要正常关机, `start()`方法返回服务器的地址。
+你可以使用服务器地址向服务器发送停止消息，并指定是否要正常关机, `start()`方法返回服务器的地址。
 
 `HttpServer`处理多个操作系统信号。*CTRL-C*可用于所有操作系统，其他信号可用于 unix 系统。
 
@@ -660,7 +661,7 @@ async fn index(req:HttpRequest) -> String{
 
 ```
 
-您还可以更改签名以返回`impl Responder`，如果涉及到更复杂的类型，则该签名可以正常工作。
+你还可以更改签名以返回`impl Responder`，如果涉及到更复杂的类型，则该签名可以正常工作。
 
 ```rust
 
@@ -910,7 +911,7 @@ async fn index(info: web::Json<Info>) -> Result<String> {
 
 ```
 
-一些提取器提供了配置提取过程的方法。用于配置的Json提取器[*JsonConfig*](https://docs.rs/actix-web/2/actix_web/web/struct.JsonConfig.html)类型。要配置提取器，请将其配置对象传递给资源的`.data()`方法。如果是Json提取器，则返回*JsonConfig*。您可以配置json负载的最大大小以及自定义错误处理程序函数。
+一些提取器提供了配置提取过程的方法。用于配置的Json提取器[*JsonConfig*](https://docs.rs/actix-web/2/actix_web/web/struct.JsonConfig.html)类型。要配置提取器，请将其配置对象传递给资源的`.data()`方法。如果是Json提取器，则返回*JsonConfig*。你可以配置json负载的最大大小以及自定义错误处理程序函数。
 
 下面的示例将负载大小限制为4kb，并使用自定义错误处理程序。
 
@@ -986,9 +987,9 @@ async fn index(form: web::Form<FormData>) -> Result<String> {
 
 - [*Data*](https://docs.rs/actix-web/2/actix_web/web/struct.Data.html) - 如果需要访问应用程序状态。
 - `HttpRequest` - 本身是一个提取器，它返回self，以防需要访问请求。
-- `String` - 您可以将请求的负载转换为`String`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-2) 在文档字符串中可用。
-- `bytes::Bytes` -您可以将请求的负载转换为`Bytes`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-4)在文档字符串中可用。
-- `Payload` -您可以访问请求的有效负载,[示例](https://docs.rs/actix-web/2/actix_web/web/struct.Payload.html)
+- `String` - 你可以将请求的负载转换为`String`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-2) 在文档字符串中可用。
+- `bytes::Bytes` -你可以将请求的负载转换为`Bytes`,[示例](https://docs.rs/actix-web/2/actix_web/trait.FromRequest.html#example-4)在文档字符串中可用。
+- `Payload` -你可以访问请求的有效负载,[示例](https://docs.rs/actix-web/2/actix_web/web/struct.Payload.html)
 
 
 #### 应用程序状态提取器
@@ -1499,7 +1500,7 @@ foo/{name}.html
 
 替换标记可以选择指定一个正则表达式，该正则表达式将用于确定路径段是否应与标记匹配。若要指定替换标记应仅匹配由正则表达式定义的特定字符集，必须使用稍微扩展的替换标记语法形式。
 在大括号中，替换标记名后面必须跟一个冒号，然后紧接着是正则表达式。与替换标记`[^/]+`关联的默认正则表达式匹配一个或多个不是斜线的字符。例如，在hood下，替换标记`{foo}`可以更详细地拼写为`{foo:[^/]+}`。
-您可以将其更改为任意正则表达式以匹配任意字符序列，例如`{foo:\d+}`以仅匹配数字。
+你可以将其更改为任意正则表达式以匹配任意字符序列，例如`{foo:\d+}`以仅匹配数字。
 
 段必须至少包含一个字符才能匹配段替换标记。例如，对于URL`/abc/`：
 
@@ -1528,7 +1529,7 @@ http://example.com/foo/La%20Pe%C3%B1a
 Params{'bar': 'La Pe\xf1a'}
 ```
 
-路径段中的文本字符串应表示提供给actix的路径的解码值。您不想在模式中使用`URL-encoded`的值。例如，而不是这样：
+路径段中的文本字符串应表示提供给actix的路径的解码值。你不想在模式中使用`URL-encoded`的值。例如，而不是这样：
 
 ```text
 /Foo%20Bar/{baz}
@@ -1556,9 +1557,9 @@ foo/abc/def/a/b/c  -> Params{'bar':u'abc', 'tail': 'def/a/b/c'}
 
 #### Routes范围
 
-作用域帮助您组织共享公用根路径的路由。可以在作用域内嵌套作用域。
+作用域帮助你组织共享公用根路径的路由。可以在作用域内嵌套作用域。
 
-假设您想要组织指向用于查看“用户”的端点的路径。这些路径可以包括：
+假设你想要组织指向用于查看“用户”的端点的路径。这些路径可以包括：
 
 - `/users`
 - `/users/show`
@@ -1592,7 +1593,7 @@ async fn main() -> std::io::Result<()> {
 
 局部路径可以包含变量路径段作为资源。与非工作路径一致。
 
-您可以从`HttpRequest::match_info()`获取变量路径段。路径提取器还可以提取范围级别的变量段。
+你可以从`HttpRequest::match_info()`获取变量路径段。路径提取器还可以提取范围级别的变量段。
 
 
 #### 匹配信息
@@ -1722,7 +1723,7 @@ async fn main() -> std::io::Result<()> {
 
 #### 生成资源URL
 
-使用的[*HttpRequest.url()*](https://docs.rs/actix-web/2/actix_web/struct.HttpRequest.html#method.url_for) 根据资源模式生成URL的方法。例如，如果您配置了名为“`foo`”且模式为“`{a}/{b}/{c}`”的资源，则可以执行以下操作：
+使用的[*HttpRequest.url()*](https://docs.rs/actix-web/2/actix_web/struct.HttpRequest.html#method.url_for) 根据资源模式生成URL的方法。例如，如果你配置了名为“`foo`”且模式为“`{a}/{b}/{c}`”的资源，则可以执行以下操作：
 
 ```rust
 use actix_web::{guard, http::header, HttpRequest, HttpResponse, Result};
@@ -1755,7 +1756,7 @@ async fn main() -> std::io::Result<()> {
 }
 ```
 
-这将返回类似字符串的内容`http://example.com/test/1/2/3`（至少在当前协议和主机名暗示`http://example.com`网站). 方法返回url对象，以便您可以修改此url（添加查询参数、锚等）。只能为命名资源调用`url_for()`，否则返回错误。
+这将返回类似字符串的内容`http://example.com/test/1/2/3`（至少在当前协议和主机名暗示`http://example.com`网站). 方法返回url对象，以便你可以修改此url（添加查询参数、锚等）。只能为命名资源调用`url_for()`，否则返回错误。
 
 
 #### 外部资源
@@ -1878,7 +1879,7 @@ async fn main() -> std::io::Result<()> {
 
 #### 自定义线路守卫
 
-您可以将保护程序看作一个简单的函数，它接受请求对象引用并返回`true`或`false`。在形式上，[守卫](https://docs.rs/actix-web/2/actix_web/guard/trait.Guard.html) 是实现守卫特性的任何对象。Actix提供了几个谓词，可以检查api文档的函数部分。
+你可以将保护程序看作一个简单的函数，它接受请求对象引用并返回`true`或`false`。在形式上，[守卫](https://docs.rs/actix-web/2/actix_web/guard/trait.Guard.html) 是实现守卫特性的任何对象。Actix提供了几个谓词，可以检查api文档的函数部分。
 
 下面是一个简单的保护程序，用于检查请求是否包含特定的头：
 
@@ -2021,7 +2022,7 @@ async fn main() -> std::io::Result<()> {
 }
 ```
 
-您还可以手动将负载加载到内存中，然后对其进行反序列化。
+你还可以手动将负载加载到内存中，然后对其进行反序列化。
 
 在下面的示例中，我们将反序列化`MyObj`结构。我们需要先加载请求体，然后将json反序列化为一个对象。
 
@@ -2329,7 +2330,7 @@ async fn main() -> std::io::Result<()> {
 
 每个应用程序都应该经过良好的测试。`Actix-web`提供了执行单元和集成测试的工具。
 
-对于单元测试，`actix-web`提供了一个请求生成器类型。`TestRequest`实现了一个类似于builder的模式。您可以使用`to_http_request()`生成一个`HttpRequest`实例，并用它调用处理程序。
+对于单元测试，`actix-web`提供了一个请求生成器类型。`TestRequest`实现了一个类似于builder的模式。你可以使用`to_http_request()`生成一个`HttpRequest`实例，并用它调用处理程序。
 
 ```rust
 #[cfg(test)]
@@ -2387,7 +2388,7 @@ mod tests {
 }
 ```
 
-如果您需要更复杂的应用程序，那么测试应该与创建普通应用程序非常相似。例如，您可能需要初始化应用程序状态。使用`data`方法创建`App`并附加状态，就像从普通应用程序中一样。
+如果你需要更复杂的应用程序，那么测试应该与创建普通应用程序非常相似。例如，你可能需要初始化应用程序状态。使用`data`方法创建`App`并附加状态，就像从普通应用程序中一样。
 
 ```rust
 #[cfg(test)]
@@ -2412,7 +2413,7 @@ mod tests {
 
 #### 流响应测试
 
-如果您需要测试流，那么只需调用`take_body()`并将结果`ResponseBody`转换为future并执行它就足够了，例如测试`Server Send Events`。
+如果你需要测试流，那么只需调用`take_body()`并将结果`ResponseBody`转换为future并执行它就足够了，例如测试`Server Send Events`。
 
 ```rust
 use std::task::Poll;
@@ -2600,7 +2601,7 @@ async fn main() {
 
 日志记录是作为一个中间件实现的。通常将日志中间件注册为应用程序的第一个中间件。必须为每个应用程序注册日志中间件。
 
-`Logger`中间件使用标准的日志箱记录信息。您应该为actix_web包启用logger以查看访问日志（`env_logger`或类似）。
+`Logger`中间件使用标准的日志箱记录信息。你应该为actix_web包启用logger以查看访问日志（`env_logger`或类似）。
 
 #### 用法
 
@@ -2696,7 +2697,7 @@ cookie的安全策略可以是签名的或私有的。每个都有各自的`Cook
 
 构造函数以键作为参数。这是cookie会话的私钥-更改此值时，所有会话数据都将丢失。
 
-通常，您创建一个`SessionStorage`中间件，并使用特定的后端实现（例如`CookieSession`）对其进行初始化。要访问会话数据，必须使用`Session`提取器。此方法返回一个`session`对象，该对象允许我们获取或设置会话数据。
+通常，你创建一个`SessionStorage`中间件，并使用特定的后端实现（例如`CookieSession`）对其进行初始化。要访问会话数据，必须使用`Session`提取器。此方法返回一个`session`对象，该对象允许我们获取或设置会话数据。
 
 ```rust
 use actix_session::{CookieSession, Session};
@@ -2736,7 +2737,7 @@ async fn main() -> std::io::Result<()> {
 
 `ErrorHandlers`中间件允许我们为响应提供自定义处理程序。
 
-可以使用`ErrorHandlers::handler()`方法为特定状态代码注册自定义错误处理程序。您可以修改现有的响应或创建完全新的响应。错误处理程序可以立即返回响应，也可以返回解析为响应的未来。
+可以使用`ErrorHandlers::handler()`方法为特定状态代码注册自定义错误处理程序。你可以修改现有的响应或创建完全新的响应。错误处理程序可以立即返回响应，也可以返回解析为响应的未来。
 
 ```rust
 use actix_web::middleware::errhandlers::{ErrorHandlerResponse, ErrorHandlers};
@@ -2986,7 +2987,7 @@ async fn main() -> std::io::Result<()> {
 
 #### 必需的二进制文件
 
-要获得自动重新装载体验，您需要安装`cargo-watch`和`systemfd`。两者都是用铁锈写的，可与`cargo-install`一起安装：
+要获得自动重新装载体验，你需要安装`cargo-watch`和`systemfd`。两者都是用铁锈写的，可与`cargo-install`一起安装：
 
 ```shell
 cargo install systemfd cargo-watch
@@ -2994,7 +2995,7 @@ cargo install systemfd cargo-watch
 
 #### 代码变更
 
-此外，您需要稍微修改actix应用程序，以便它可以拿起`systemfd`打开的外部套接字。将listenfd依赖项添加到应用程序：
+此外，你需要稍微修改actix应用程序，以便它可以拿起`systemfd`打开的外部套接字。将listenfd依赖项添加到应用程序：
 
 ```toml
 [dependencies]
