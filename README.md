@@ -30,7 +30,7 @@
     - [Proxy](https://web.datav.ai/es6/proxy/)
 - [Highlight](https://web.datav.ai/highlight/)
 - [HTML](https://web.datav.ai/html/)
-    - [Element](https://web.datav.ai/html/element/)
+
     - [HTML5](https://web.datav.ai/html/html5/)
 - [HTTP](https://web.datav.ai/http/)
     - [http](https://web.datav.ai/http/)

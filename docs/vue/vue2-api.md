@@ -1,9 +1,7 @@
-
 ---
 sidebar: auto
 ---
-
-____________________________________________________________________
+# Vue.js 2 API
 
 - @vue API 文档 en https://vuejs.org/v2/api
 - @vue API 文档 cn https://cn.vuejs.org/v2/api
