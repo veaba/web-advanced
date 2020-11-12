@@ -10,4 +10,121 @@ sidebar: auto
 - CSS BFC block formatting context
   > 块级格式上下文。里面子元素不会影响到外面的元素
 
-## CSS实现水平垂直居中的1010种方式（史上最全）https://segmentfault.com/a/1190000016389031
+## CSS实现水平垂直居中的1010种方式（史上最全）
+- [CSS实现水平垂直居中](https://segmentfault.com/a/1190000016389031)
+
+## css 兼容问题
+- 外边距坍塌问题。块级之间共享垂直外边距，margin取最大值
+  - 解决办法，给第二个兄弟加个父级，且给原兄弟使用margin
+- BFC(Block formatting context)，块级格式化上下文
+  - 满足以下都可以触发 BFC
+    - body 根元素
+    - 浮动元素：float，除以 none 意外的值
+    - display: `inline-block`、`table-cells`、`flex`
+    - overflow: 非 visible 的值( `hidden`、`auto`、`scroll` )
+- 当 `margin-top`、`padding-top` 值是百分比时，将以*父级块级元素的 width*、*相对父级块级元素的 width* 分别计算
+
+
+
+## 可被继承的 css 属性
+
+### 字体
+- `font-family`
+- `font-size`
+- `font-style`
+- `font-weight`
+- `font-stretch`
+- `font-size-adjust`
+
+### 列表相关
+- `list-style`
+- `list-style-image`
+- `list-style-position`
+- `list-style-type`
+- `list-style-color`
+
+### 文本继承 
+- `text-indent`
+- `text-align`
+- `lint-height`
+- `word-spaceing`
+- `letter-spacing`
+- `text-transfomr`
+- `direction`
+- `color`
+
+### 元素可见性
+- `visibility`
+
+### 表格布局
+- `caption-side`
+- `border-collapse`
+- `border-spacing`
+- `empty-cells`
+- `table-layout`
+
+### 生成内容
+- `quotes`
+
+### 光标属性
+- `cursor`
+
+### 页面样式
+- `page`
+- `page-break-inside`
+- `windows`
+- `orphans`
+
+### 声音样式
+- `speak`
+- `speak-puncatuation`
+- `speak-numreal`
+- `speack-header`
+- `volume`
+- `voice-family`
+- `pitch`
+- `pitch-range`
+- `stress`
+- `richness`
+- `azimuth`
+- `elevation`
+
+## 不可被继承的 css 属性
+- `display`
+- `margin`
+- `border`
+- `padding`
+- `background`
+- `height`
+- `min-height`
+- `max-height`
+- `width`
+- `min-height`
+- `max-height`
+- `overflow`
+- `position`
+- `left`
+- `right`
+- `top`
+- `bottom`
+- `z-index`
+- `float`
+- `clear`
+- `table-layout`
+- `vertical-align`
+- `page-break-after`
+- `page-break-before`
+- `unicode-bidi`
+
+## css 选择符优先级
+
+- `! important`: infinite
+- `inline` 1000
+- `id`: 100
+- `class`、`attr`、`伪类`: 10
+- `标签`: 1
+- `*`: 0
+
+:::
+本页内容为网络收集整理所得
+:::

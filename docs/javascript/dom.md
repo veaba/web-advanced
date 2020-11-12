@@ -3,9 +3,9 @@ sidebar: auto
 ---
 
 # DOM对象
-
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
+- document是文档（整个DOM树）的根节点
 
 ## Document对象 属性+方法
 > http://www.runoob.com/jsref/dom-obj-document.html
@@ -13,7 +13,7 @@ sidebar: auto
 |属性|方法|描述
 |---|---|---|
 |document.activeElement||返回当前获取焦点元素|
-||documeent.addEventListener()|向文档添加句柄|
+||document.addEventListener()|向文档添加句柄|
 ||document.adoptNode(node)||
 |document.anchors||`a标签中需要含有name才能获取！`|
 |document.baseURI||返回绝对基础URI|
@@ -22,7 +22,8 @@ sidebar: auto
 |document.cookie||返回所有的cookie字符串|
 ||document.createAttribute()|创建属性节点|
 ||document.createComment()|竟然能创建一段注释的节点，亮瞎狗眼|
-||document.createDocumentFragment()|创建空DocumentFragment并返回|
+||document.`createDocumentFragment()`|创建空DocumentFragment并返回，对多节点循环创建性能更优，[用法](https://blog.csdn.net/qiao13633426513/article/details/80243058
+)|
 ||document.createElement()|创建元素节点|
 ||document.createTextNode()|创建文档节点,不太实际|
 |document.doctype|||
@@ -78,22 +79,22 @@ sidebar: auto
 |element.accessKey||*设置或者返回accessKey一个元素|
 |element.attributes||返回一个元素的属性数组|
 |element.childNodes||返回一个元素的子元素数组|
-|element.childrent||返回一个子元素的集合|
+|element.children||返回一个子元素的集合|
 |element.classList||*返回元素的类型，作为DOM Token对象|
 |element.className||设置或者返回class名称|
 |element.clientHeight||返回整数，浏览器当前视窗的文档高度|
-|element.clienWidth||返回整数，浏览器当前视窗的文档宽度|
+|element.clientWidth||返回整数，浏览器当前视窗的文档宽度|
 |element.contentEditable||如果设置为true 则可编辑。false 不可编辑|
 |element.dir|||
 |element.firstChild|||
 |element.id|||
 |element.innerHTML|||
-|element.isContentEdiable|||
+|element.isContentEditable|||
 |element.lang|||
 |element.lastChild|||
 |element.namespaceURL|||
-|element.nextSibing|||
-|element.nextElementSibing|||
+|element.nextSibling|||
+|element.nextElementSibling|||
 |element.nodeName|||
 |element.nodeType|||
 |element.nodeValue|||
@@ -104,14 +105,14 @@ sidebar: auto
 |element.offsetTop|||
 |element.ownerDocument|||
 |element.parentNode|||
-|element.previousSibing|||
-|element.previousElementSibing|||
+|element.previousSibling|||
+|element.previousElementSibling|||
 |element.scrollHeight|||
 |element.scrollLeft|||
 |element.scrollTop|||
 |element.scrollWidth|||
 |element.style|||
-|element.tabInde|||
+|element.tabIndex|||
 |element.tagName|||
 |element.textContent|||
 |nodeList.length|||
@@ -141,7 +142,7 @@ sidebar: auto
 ||element.removeAttribute()||
 ||element.removeAttributeNode()||
 ||element.removeChild()||
-||element.removeEventLisenter()||
+||element.removeEventListener()||
 ||element.`replaceChild()`|替换|
 ||element.setAttribute()||
 ||element.setAttributeNode()||
@@ -151,6 +152,7 @@ sidebar: auto
 ||element.toString()||
 ||nodeList.item()||
 ||||
+
 ### HTML DOM事件，见 `## DOM事件`
 > 单独拎出来
 

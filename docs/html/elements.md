@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# 标签
+# Elements
 
 关于更多的标签可以到 [HTML tag 参考](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element) 访问。
 
@@ -45,6 +45,7 @@ sidebar: auto
 - `<main>`
 - `<ol>`
 - `<p>`
+  - 不能包括任何块级元素以及自身
 - `<pre>`
 - `<ul>`
 
@@ -52,6 +53,7 @@ sidebar: auto
 内联文本语义(inline text semantics )，定义一个单词、一行内容、或任意文字的语义，结构或样式。
 
 - `<a>`
+  - 可以包括任何元素以及自身
 - `<abbr>`
 - `<b>`
 - `<bdi>`
@@ -86,7 +88,7 @@ sidebar: auto
 ## 图片与多媒体
 - `<area>`
 - `<audio>`
-- `<img>`
+- `<img>`-
 - `<map>`
 - `<track>`
 - `<video>`
@@ -211,3 +213,14 @@ sidebar: auto
 - `<source>`
 - `<track>`
 - `<wbr>`
+
+## 块级元素 TODO
+
+## 内联元素 TODO
+
+
+## 表单元素 TODO
+
+:::
+@copyright 本页内容为基于网络整理所得
+:::
