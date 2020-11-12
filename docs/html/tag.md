@@ -78,7 +78,7 @@ sidebar: auto
 - `<sub>`
 - `<sup>`
 - `<time>`
-- `<tt>`
+- ~~`<tt>`~~
 - `<u>`
 - `<var>`
 - `<wbr>`
@@ -92,10 +92,10 @@ sidebar: auto
 - `<video>`
 
 ## 内嵌内容
-- `<applet>` Java applet
+- ~~`<applet>`~~ Java applet
 - `<embed>` 外部内容嵌入
 - `<iframe>`
-- `<noembed>`
+- ~~`<noembed>`~~
 - `<object>`
 - `<param>`
 - `<picture>`
@@ -146,9 +146,9 @@ sidebar: auto
 - `<summary>`
 
 ## Web 组件
-- `<content>`
-- `<element>`
-- `<shadow>`
+- ~~`<content>`~~
+- ~~`<element>`~~
+- ~~`<shadow>`~~
 - `<slot>`
 - `<template>`
 
@@ -199,7 +199,7 @@ sidebar: auto
 - `<br>`
 - `<col>`
 - `<colgroup>` <sub> 当 `span` 存在时</sub> 
-- `<command>`
+- ~~`<command>`~~
 - `<embed>`
 - `<hr>`
 - `<img>`
