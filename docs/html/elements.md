@@ -6,6 +6,14 @@ sidebar: auto
 
 关于更多的标签可以到 [HTML tag 参考](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element) 访问。
 
+## 知识点
+- `param` 定义了 `<object>` 元素的参数；
+- `video` 标签中的 `controls` 属性决定是否用户显示控件；
+- `audio` 与 `</audio>` 之间插入的内容是为了供不支持 `audio` 元素的浏览器显示的；
+- `<progress>` 标签不填写 `max` 和  `value` 会自动滑动。
+- `<body>` 允许 `background="background.jpg"` 设置背景图片
+- 
+
 ## 主根元素
 - `<html>`
 
@@ -88,10 +96,18 @@ sidebar: auto
 ## 图片与多媒体
 - `<area>`
 - `<audio>`
+  - 事件
+    - `play`
+    - `seeked`
+    - `abort`
 - `<img>`-
 - `<map>`
 - `<track>`
 - `<video>`
+  - 事件
+    - `play`
+    - `seeked`
+    - `abort`
 
 ## 内嵌内容
 - ~~`<applet>`~~ Java applet
@@ -129,7 +145,12 @@ sidebar: auto
 - `<datalist>`
 - `<fieldset>`
 - `<from>`
-- `<input>`
+  - `<input>`
+  ```html
+    <!-- 时间选择器 -->
+    <input type="date" name="bday">
+    <input type="datetime-local" name="bdaytime">
+  ```
 - `<label>`
 - `<legend>`
 - `<meter>`
@@ -219,7 +240,9 @@ sidebar: auto
 ## 内联元素 TODO
 
 
-## 表单元素 TODO
+## 表单相关特性 TODO
+
+- form 表单 disabled = true，无法修改和无法提交
 
 :::
 @copyright 本页内容为基于网络整理所得

@@ -12,3 +12,6 @@ sidebar: auto
   - 创建同名的全局变量
 - `clientWidth`：`height` + `padding`
 - `offsetHeight`: `height` + `paddiing` + `border`
+- w3c 标准盒模型中，默认情况下，块元素的总宽度 = content
+- HTML5 事件可以触发多次
+- 

@@ -22,6 +22,7 @@ sidebar: auto
     - 浮动元素：float，除以 none 意外的值
     - display: `inline-block`、`table-cells`、`flex`
     - overflow: 非 visible 的值( `hidden`、`auto`、`scroll` )
+    - position: `absolute`
 - 当 `margin-top`、`padding-top` 值是百分比时，将以*父级块级元素的 width*、*相对父级块级元素的 width* 分别计算
 
 

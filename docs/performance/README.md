@@ -2,9 +2,12 @@
 sidebar: auto
 ---
 # 性能提升
+
 网页性能管理详解 ——阮一峰 http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html 
 
-## 前端常见的性能优化请求手段/加快资源的加载速度/减少白屏事件
+## 前端常见的性能优化请求手段
+
+加快资源的加载速度，减少白屏事件
   - CDN 内容分发
   - css Sprite  图片合并
   - Compress/Gzip 资源文件压缩
@@ -14,6 +17,20 @@ sidebar: auto
 ## html/css 重绘回流(Repaint、Reflow)
 
 - display:none 不会发生回流和重绘
+- 回流一定触发重绘，重绘不一定会触发回流
+- 复杂动画，使用 `position: abosution` 使其脱离文档流
+- css3 硬件加速（GPU加速）
+- css3 硬件加速下以下属性不会发生重绘回流：
+  - transform
+  - opacity
+  - filters
+- 使用 fixed 和 absolute，如果修改 css 不会发生回流
+
+
+### 重绘(repaint) 
+
+
+### 回流(reflow)
 
 回流(reflow)：布局引擎为frame(框架)计算图形的过程,一个frame回流会导致所有父节点以及后续元素都会回流。
   - 理论上发生回流的原因
@@ -44,11 +61,11 @@ sidebar: auto
 // 一次bad 的demo
 
 var dom = document.body.style;
-dom.padding="2px";// 回流+重绘
-dom.border="1px solid";//回流+重绘
-dom.border="blue";//重绘
-dom.backgroundColor="#ccc";//重绘
-dom.fontSize="14px";//重绘+回流
+dom.padding="2px";          // 回流+重绘
+dom.border="1px solid";     // 回流+重绘
+dom.border="blue";          // 重绘
+dom.backgroundColor="#ccc"; // 重绘
+dom.fontSize="14px";        // 重绘+回流
 document.body(document.createTextNode('abcdev!'));
 ```
 解决办法
@@ -79,7 +96,7 @@ dom="padding:2px;border:1px solid;background-color:#ccc;font-size:14px";
   - color
 
 
-## 常见的内存泄露问题的
+## 常见的内存泄露的问题
 ### 闭包在IE9之前的版本会导致一些特殊的问题。
 
 ```js

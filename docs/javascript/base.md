@@ -12,6 +12,11 @@ sidebar: auto
   - DOM         文档模型对象
   - BOM         浏览器模型对象
 
+
+## 知识点
+- 箭头函数不能调用 `Function` 的 `bind`、`call`、`apply`，没有继承 `Function`
+
+
 ## 关键字
   - 如果使用关键字name 声明一个值，只能是string 类型！！！
 
