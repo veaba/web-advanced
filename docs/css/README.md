@@ -13,9 +13,22 @@ sidebar: auto
 ## CSS实现水平垂直居中的1010种方式（史上最全）
 - [CSS实现水平垂直居中](https://segmentfault.com/a/1190000016389031)
 
-## css 兼容问题
+## 知识点
 - 外边距坍塌问题。块级之间共享垂直外边距，margin取最大值
   - 解决办法，给第二个兄弟加个父级，且给原兄弟使用margin
+- 当 `margin-top`、`padding-top` 值是百分比时，将以*父级块级元素的 width*、*相对父级块级元素的 width* 分别计算
+- `background-position`:
+  - 该属性可有两个取值，第一个取值为背景图像与其容器在水平方向上的距离，第二个取值为背景图像与其容器在垂直方向上的距离
+  - 若只有一个取值，则其第二个取值默认为50%；
+  - 如果第一个值取关键词，则第二个默认值为：center
+  - 若属性取值用left、center、right、top、bottom表示，则该属性取值的顺序可以颠倒，否则其取值顺序不能颠倒
+- 关于`link` 和 `@import`：
+  - 页面被加载时，`link` 会同时被加载
+  - `@import` 引用的css 会等到页面被加载完再加载
+  - `@import` 只能加载 css，`link` 标签还可以定义 RSS 等
+  - `@import` 是 css2.1提出，IE5 以上可识别，link 无兼容性问题
+
+### BFC 问题
 - BFC(Block formatting context)，块级格式化上下文
   - 满足以下都可以触发 BFC
     - body 根元素
@@ -23,14 +36,14 @@ sidebar: auto
     - display: `inline-block`、`table-cells`、`flex`
     - overflow: 非 visible 的值( `hidden`、`auto`、`scroll` )
     - position: `absolute`
-- 当 `margin-top`、`padding-top` 值是百分比时，将以*父级块级元素的 width*、*相对父级块级元素的 width* 分别计算
-
+- BFC 浮动子元素也参与计算
+- BFC 页面隔离独立容器，容器的子元素不会影响到外部
 
 
 ## 可被继承的 css 属性
 
 ### 字体
-- `font-family`
+- `font-family` 
 - `font-size`
 - `font-style`
 - `font-weight`

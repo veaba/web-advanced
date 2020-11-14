@@ -14,4 +14,12 @@ sidebar: auto
 - `offsetHeight`: `height` + `paddiing` + `border`
 - w3c 标准盒模型中，默认情况下，块元素的总宽度 = content
 - HTML5 事件可以触发多次
-- 
+- `link` 与 `@import` 区别
+
+## 盒子模型
+
+### 标准盒子模型
+标准盒子模型宽度: content
+
+### IE盒子模型
+IE盒子模型: (margin+padding+border)*2+width
