@@ -17,9 +17,11 @@ sidebar: auto
 - `link` 与 `@import` 区别
 
 ## 盒子模型
-
+- 
 ### 标准盒子模型
 标准盒子模型宽度: content
+- 默认使用 bordeer-box
 
 ### IE盒子模型
-IE盒子模型: (margin+padding+border)*2+width
+- IE盒子模型: (margin+padding+border)*2+width
+- 默认使用 content-box

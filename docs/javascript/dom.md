@@ -6,6 +6,12 @@ sidebar: auto
 - document对象，文档，window的属性
 - xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
 - document是文档（整个DOM树）的根节点
+- 对于 DOM元素，children 是指 DOM Object类型的子对象，不包括tag之间隐形存在的TextNode，而childNodes包括tag之间隐形存在的TextNode对象
+- domContentLoaded 事件早于 onload
+
+## dom 继承顺序
+
+`HTMLDivElement` > `HTMLElement` > `Element` > `Node` > `EventTarget`
 
 ## Document对象 属性+方法
 > http://www.runoob.com/jsref/dom-obj-document.html

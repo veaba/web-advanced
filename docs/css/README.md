@@ -32,7 +32,7 @@ sidebar: auto
 - BFC(Block formatting context)，块级格式化上下文
   - 满足以下都可以触发 BFC
     - body 根元素
-    - 浮动元素：float，除以 none 意外的值
+    - float元素：除以 none 意外的值
     - display: `inline-block`、`table-cells`、`flex`
     - overflow: 非 visible 的值( `hidden`、`auto`、`scroll` )
     - position: `absolute`
