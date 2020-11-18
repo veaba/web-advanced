@@ -12,7 +12,25 @@ sidebar: auto
 - `audio` 与 `</audio>` 之间插入的内容是为了供不支持 `audio` 元素的浏览器显示的；
 - `<progress>` 标签不填写 `max` 和  `value` 会自动滑动。
 - `<body>` 允许 `background="background.jpg"` 设置背景图片
-- 
+- Readonly规定输入的字段为只读，即用户不可修改，但是用户可以通过tab切换到该字段，还可以选中复制该字段。可以配合js设置条件控制用户是否可以更改或输入内容
+- input Step规定输入字段的合法数字间隔(如step=”2”,则合法数字可为-2，0，2，4等)
+  - Step属性的值为负数或0时默认为1，该属性可以配合max，min属性来创建合法值得范围。
+  - Step，max，min属性适用于<input>类型有:number,range,date,datetime,month,time,week
+- form标签的enctype属性
+  - 规定在发送表单数据之前如何对其编码，可取值有：
+  - application/x-www-form-urlencoded
+  - multipart/form-data
+  - text/plain
+- form标签的method属性
+  - 规定用于发送表单数据的http方法，可取值有：post和get
+- video标签，H5新标签
+  - 用来定义视频，电影片段或其他视频流
+  - 常用属性：
+    - autoplay(视频就绪后马上播放)
+    - controls(向用户显示播放控件，如按钮)
+    - loop(循环播放)
+
+- 可以为没有controls控件属性的video嵌套按钮控件
 
 ## 主根元素
 - `<html>`

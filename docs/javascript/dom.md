@@ -9,6 +9,12 @@ sidebar: auto
 - 对于 DOM元素，children 是指 DOM Object类型的子对象，不包括tag之间隐形存在的TextNode，而childNodes包括tag之间隐形存在的TextNode对象
 - domContentLoaded 事件早于 onload
 
+## 知识点
+- docment 是一个 document node
+- elements 都是 element node
+- comments 不都是 document node
+- element 内的text 内容也是 text node
+
 ## dom 继承顺序
 
 `HTMLDivElement` > `HTMLElement` > `Element` > `Node` > `EventTarget`

@@ -27,6 +27,12 @@ sidebar: auto
   - `@import` 引用的css 会等到页面被加载完再加载
   - `@import` 只能加载 css，`link` 标签还可以定义 RSS 等
   - `@import` 是 css2.1提出，IE5 以上可识别，link 无兼容性问题
+- css 伪元素 
+  - active 必须位于 hover 之后
+  - 顺序：
+
+- inline-block 可以设置高度
+- inline 不可以设置高度
 
 ### BFC 问题
 - BFC(Block formatting context)，块级格式化上下文
@@ -138,6 +144,12 @@ sidebar: auto
 - `class`、`attr`、`伪类`: 10
 - `标签`: 1
 - `*`: 0
+
+## 伪类元素
+
+- first-of-type
+- nth-child(2)
+- disabled
 
 :::
 本页内容为网络收集整理所得
