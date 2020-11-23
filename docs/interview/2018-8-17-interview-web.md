@@ -3,10 +3,6 @@ sidebar: auto
 ---
 
 # 2018年8月17日的面试题
-> 地址是在杭州，两个妹纸面试，问的问题都是些基础题，我比较差。
-她们说这次的要求是，招一尊大神，当顾问，解决疑难杂症，会android+ios开发。
-我尴尬的笑了笑，这个就算了吧。
-以下是面试问到的问题，有些还没来得及写答案，有些不知道，有些重新梳理了知识：
 
 1. 你了解http吗？讲一些http吧
 2. http 和 https 的区别
@@ -44,6 +40,7 @@ sidebar: auto
     - 返回服务器支持的http方法
     
 4. get和post的区别
+
 |操作|get|post|
 |---|---|---|
 |后退/刷新|无害|重复提交|
@@ -147,7 +144,7 @@ function leap(){
   }
 }
 
-/*2 避免卵用，以下代码可以保证不重复引用或者死循环*/
+/*2 避免乱用，以下代码可以保证不重复引用或者死循环*/
 var test = function(){
 		setTimeout(function(){
 			test();
@@ -156,11 +153,15 @@ var test = function(){
 	test();
 ```
 ## css 部分
-
+<!-- todo -->
 - 什么是标准盒子模型？
-  - 即对doctype 定义时，默认是标准盒子模型，块的总宽度=width+margin(左右)+padding(左右)+border(左右)怪异模式下的，IE模型：总宽度=width+margin(左右)  =》(左右width包含padding+border)
+  - 即对doctype 定义时，默认是标准盒子模型，content不包含 padding + border
+  - 总宽度：
+  - 总高度：content
 - 什么是IE盒子模型？
   - 即不对doctype定义时，是
+  - 总高度：width = content
+  - 总宽度：content + padding + border
 - 如何将标准模型改为IE盒子模型？
   - box-sizing:content-box 采。用标准模型解析计算，默认的
   - box-sizing:border-box，采用怪异模型
@@ -171,7 +172,7 @@ var test = function(){
 - absolute 和relative（仔细一看，突然了解了relative 的用法！！）
   - absolute 绝对定位，相对于static定位以外的第一个父元素定定位，如果没有，那会是html？有left top right bottom 值。会超越overflow
   - fixed 相对于窗口定位 类似absolute
-  - relative 相对定位，相对于自身的基础位置进行定位，left、top、right、bottom相对于其正常位置定位，lefy 20  则向元素left 位置添加20。【尽量避免用relative】
+  - relative 相对定位，相对于自身的基础位置进行定位，left、top、right、bottom相对于其正常位置定位，left: 20  则向元素left 位置添加20。【尽量避免用relative】
   - static，默认值，没有定位 忽略top left right bottom z-index
   - inherit 继承 
 
@@ -190,12 +191,12 @@ var test = function(){
 - 基本类型
 什么叫堆内存？自己买菜做饭，就是堆，主动的
  - 有undefined、boolean、number、string、null。按值访问的意思。
- - 任何方法都无法给边基本类型的值，比如一个字符串
+ - 任何方法都无法改变基本类型的值，比如一个字符串
 
 ```js
 var name ='Veaba';
 name.toUpperCase();
-console.log(name)/*Veaba ，说明无法给边原始变量里面的值 */ 
+console.log(name)/*Veaba ，说明无法改变原始变量里面的值 */ 
 ```
 
 - 不能给基本类型添加属性和方法
@@ -516,16 +517,18 @@ var url = 'https://www.baidu.com/?user=admin&id=23&id=555&city=%E9%A2%9C%E8%89%B
 var newUrl  = url.replace(/^.+(\?)/,'');
 var url1 = newUrl.split('&');
 var ob={}
+var keys =[]
+var values =[]
 url1.map((item,index)=>{
-var temp=[];
-temp = item.split('=');
-keys.push(temp[0]);
-values.push(temp[1])
-if(ob[temp[0]]){
-  ob[temp[0]]=[ob[temp[0]]].concat(temp[1]) //如果存在 则合并成为数组
-}else{
-  ob[temp[0]]=temp[1];
-}
+  var temp=[];
+  temp = item.split('=');
+  keys.push(temp[0]);
+  values.push(temp[1])
+  if(ob[temp[0]]){
+    ob[temp[0]]=[ob[temp[0]]].concat(temp[1]) //如果存在 则合并成为数组
+  }else{
+    ob[temp[0]]=decodeURIComponent(temp[1]);
+  }
 });
 console.info(ob)
 ```
@@ -541,8 +544,6 @@ ob={
 
 
 ## 实现一个最简单的模板渲染引擎
-
-这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了对`replace`的理解和正则
 
 - 要点一 replace 的用法 
 
@@ -591,7 +592,7 @@ cover(template,data)
  compare(a,b)
 ```
 
-## 数据绑定基本实现(这是一道在杭州2018年4月16面试一家的笔试题，遗憾没写出来，今天用机器写了记下才写出来，加深了Vue 使用Object.defineProperty()这个方法，对对象修改并返回)
+## 数据绑定基本实现
 
  [详见 MDN的 对象Object.defineProperty()方法的使用](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
