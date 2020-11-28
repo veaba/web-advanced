@@ -262,6 +262,6 @@ sidebar: auto
 
 - form 表单 disabled = true，无法修改和无法提交
 
-:::
+:::tip
 @copyright 本页内容为基于网络整理所得
 :::
