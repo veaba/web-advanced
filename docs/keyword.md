@@ -17,7 +17,7 @@ sidebar: auto
 - Generator
 - webgl
 - canvas
-- proxy
+- [proxy](/es6/proxy.html)
 
 
 

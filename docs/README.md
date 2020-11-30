@@ -57,11 +57,7 @@ footer: Copyright © 2020-present compile by
     </ul>
   </div>
   <div class="feature">
-    <a href="/interview/"><h3>作者面试经历</h3></a>
-    <p>来自亲身经历</p>
-     <ul>
-         <li><a href="https://github.com/veaba/">@veaba</a></li>
-         <li><a>个人技术面试总结</a></li>
-     </ul>
+    <a href="/keyword/"><h3>关键词</h3></a>
+    <p>必须知道的概念</p>
   </div>
 </div>

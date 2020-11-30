@@ -1,3 +1,5 @@
+# 2020年11月面试题以及常见面试题
+
 ## 使用 Vue 3
 
 ## Vue 2 生命周期 （11）
@@ -180,3 +182,61 @@
 - 它的三种状态？
 
 ## webpack 了解吗？是用做什么？
+
+## 写一个函数实现 ”12345678“ => "12,345,678"
+
+```js
+const str = '12345678'
+str.replaceAll(/{3}+$/,'$1,')
+
+// 问题1: 如果左边不含数字
+
+// 问题2: (?=) 先断言，(\d)(?=)数字后面必须是数字，会作为匹配bai校验，但不会出现在匹配结du果zhi字符串里面
+
+// 问题3: 会作为匹配校验bai，并出现在匹配结果du字符里面，它跟(...)不同的zhi地方在于，不作为子匹配返。
+```
+
+## Chrome 支持 module
+
+- Chrome 从 61 版本开始支持 es6 module
+- 最开始的版本，需要打开flag JavaScript 的实验性功能
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="./ab.js" ></script>
+  </head>
+  <body></body>
+</html>
+
+```
+
+```js
+
+// a.js
+const aa = "aaa";
+
+export { aa };
+
+// b.js
+const bb = 'bbb'
+
+export {bb} 
+// ab.js
+
+import { aa } from "./a.js";
+import { bb } from "./b.js";
+
+console.log(11111111111)
+console.log(aa + bb);
+
+```
+
+```
+ab.js:4 11111111111
+ab.js:5 aaabbb
+```

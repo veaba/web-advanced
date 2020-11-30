@@ -710,3 +710,18 @@ function set(target,key,value,receiver){
 ```
 先定义一个Set集合，所有观察者函数都放进这个集合，observable函数返回对象的代理，拦截赋值操作，拦截函数set中，启动执行所有观察者
 
+
+## 字符串
+
+### 模板字符串无法的打印 symbol
+
+
+```js
+
+const sy1 = Symbol(11);
+
+console.log(sy1);
+
+console.log(`${sy1}`); // `Cannot convert a Symbol value to a string`
+
+```
