@@ -1,10 +1,10 @@
----
+<!-- ---
 sidebar: auto
----
+--- -->
 # 关键词
 
 ## 未来需要了解的内容 
->一个不错的web前端知识体系梳理   https://www.jikexueyuan.com/zhiye/web
+
 - this
 - 冒泡算法
 - 继承
@@ -15,9 +15,14 @@ sidebar: auto
 - 浅拷贝
 - class
 - Generator
-- webgl
+- webGl
 - canvas
 - [proxy](/es6/proxy.html)
+- 词法作用域
+- 执行上下文
+- 全局执行上下文
+- 函数执行上下文
+- `eval` 执行上下文
 
 
 

@@ -4,22 +4,21 @@ sidebar: auto
 
 # JavaScript 学习指南/目录
 
-> 基于本人学习经历，尝试写一篇零基础的JavaScript 新手指南
+> 基于本人学习经历，尝试写一篇零基础的 JavaScript 新手指南
 
+## 网页中的 JavaScript
 
-## 网页中的JavaScript
+## 浏览器控制台中的 JavaScript
 
-## 浏览器控制台中的JavaScript
+## [Node.js 中的 JavaScript ](/node/)
 
-## [Node.js中的JavaScript ](/node/)
-
-## [有类型注释的JavaScript 超集TypeScript](/typescript/)
+## [有类型注释的 JavaScript 超集 TypeScript](/typescript/)
 
 ## [BOM（Browser Object Mode）与浏览器交互的接口](/javascript/bom)
 
 ## [DOM（Document Object Mode）与文档交互的接口](/javascript/dom)
 
-## 标准化的核心ECMAScript  
+## 标准化的核心 ECMAScript
 
 ## 基础
 
@@ -34,7 +33,6 @@ sidebar: auto
 ### 第五版非严格模式下缩减为
 
 ### 严格模式下，保留字限制
-
 
 ## 作用域
 
@@ -51,7 +49,7 @@ sidebar: auto
 
 ## 原型
 
-## 公开常用的API
+## 公开常用的 API
 
 ### Blob 对象
 
@@ -63,7 +61,7 @@ sidebar: auto
 
 ## 设计模式
 
-## 数组 
+## 数组
 
 ## 函数
 
@@ -71,7 +69,7 @@ sidebar: auto
 
 ## 字符串
 
-## 数字 
+## 数字
 
 ## 正则
 
@@ -86,3 +84,107 @@ sidebar: auto
 ## 内置对象
 
 ## 常用技巧
+
+## 深浅拷贝
+
+由于 JS 存在值引用的数据类型，如 Object 、Array，存在了赋值过程，被一同改变值的引用
+
+```js
+const a = { name: "Li" };
+
+const b = a;
+
+b.name = "Sa";
+
+console.log(a, b); // 两者都是 Sa
+```
+
+### 浅拷贝
+
+仅处理第一个层级
+
+**通过 `Object.assign` 解决**：
+
+```js
+const a = { name: "Li" };
+const b = Object.assign({}, a);
+b.name = "Sa";
+console.log(a, b);
+```
+
+**通过对象展开符 `...`**：
+
+```js
+const a = { name: "Li" };
+const b = { ...a };
+b.name = "Sa";
+console.log(a, b);
+```
+
+### 深拷贝
+
+**通过`JSON.parse(JSON.stringify(obj))`**：
+
+```js
+const a = {
+  name: "Li",
+  location: {
+    country: "China",
+  },
+};
+
+const b = JSON.parse(JSON.stringify(a));
+
+b.location.country = "Thailand";
+
+console.log(a, b);
+```
+
+弊端：
+
+- 忽略 `undefined`
+- 忽略 `symbol`
+- 无法序列化函数
+- 不能解决循环应用的对象
+
+```js
+let obj = {
+  a: 1,
+  b: {
+    c: 2,
+    d: 3,
+  },
+};
+obj.c = obj.b;
+obj.e = obj.a;
+obj.b.c = obj.c;
+obj.b.d = obj.b;
+obj.b.e = obj.b.c;
+let newObj = JSON.parse(JSON.stringify(obj));
+console.log(newObj);
+```
+
+
+**[lodash deepClone](https://lodash.com/docs##cloneDeep)**：
+
+```js
+function structuralClone(obj) {
+  return new Promise(resolve => {
+    const {port1, port2} = new MessageChannel();
+    port2.onmessage = ev => resolve(ev.data);
+    port1.postMessage(obj);
+  });
+}
+
+var obj = {a: 1, b: {
+    c: b
+}}
+// 注意该方法是异步的
+// 可以处理 undefined 和循环引用对象
+(async () => {
+  const clone = await structuralClone(obj)
+})()
+
+```
+
+### TODO 手写深拷贝函数 

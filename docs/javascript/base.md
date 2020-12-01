@@ -1381,3 +1381,4 @@ a.apply(null,[ob],cc)
   - 所有非本地对象都是宿主对象
   - 嵌入网页的js 来讲，宿主就是浏览器提供的对象，包括`window` 和`Document`
   - 所有DOM 和 BOM 对象都属于宿主对象
+
