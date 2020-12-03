@@ -2,10 +2,10 @@
 sidebar: auto
 ---
 
-# 2018年8月31日面试题
+# 2018年8月 31 日面试题
 
-## 以下代码运行结果符合预期？（还是没看懂这道题目！）
-- 目前测试的结果是，入参大于100+300的时候，time span 的打印时间会在0.0x毫秒以下，否则100ms左右
+## 以下代码运行结果符合预期？(还是没看懂这道题目！)
+- 目前测试的结果是，入参大于 100 + 300 的时候，time span 的打印时间会在 0.0x 毫秒以下，否则 100ms 左右
 ```js
 /*demo1*/
 function f1() {
@@ -42,26 +42,26 @@ waitForMs2(500)
     当时选的打印是约500.077ms！回来一跑代码还是没看懂。
     可以理解为？？
 ` 
-2. 
-3. 
-4. 
+2。 
+3。 
+4。 
 ## 以下哪个结果为真？
 	- A. null instanceof Object
 	- B. null == undefined
 	- C. NaN ==NaN
 	- D. false == undefined
-1. `instanceof`用法 
-	- 用于测试其原型链上是否存在一个构造函数的prototype属性。
-	- 检测constructor.prototype 是否存在参数object的原型链
-	- 语法`object instanceof constructor`
-	- 最好分辨的是，使用关键字`new`出来
+1. `instanceof` 用法 
+	- 用于测试其原型链上是否存在一个构造函数的 prototype 属性。
+	- 检测 constructor.prototype 是否存在参数 object 的原型链
+	- 语法 `object instanceof constructor`
+	- 最好分辨的是，使用关键字 `new` 出来
 	
 	```js
 		console.info(({}) instanceof Object);/*true*/
 		console.info(3 instanceof Number); /*false*/
 	```
  
-## 关于dom事件流的表述哪些不正确?
+## 关于 dom 事件流的表述哪些不正确？
 	- A. 事件流包含两个阶段：事件捕获阶段，事件冒泡阶段
 	- B. IE跟标准浏览器对于DOM事件流实现不一样
 	- C. 假设parentEle是childEle的父节点，绑定事件：parentEl.addEventListener('click',fn1.false),
@@ -93,16 +93,16 @@ a1.prototype={
 ## 写程序
 参考 http://www.cnblogs.com/TomXu/archive/2012/03/02/2355128.html
 基本相同的题目来源 https://www.cnblogs.com/LoveOrHate/p/4457010.html
-1. 对象A直接调用对象B的某个方法，实现交互逻辑。但导致的问题是A和B紧密耦合，修改B可能造成A调用B的方法失效。
-2. 为了解决耦合问题，设计为：
-	对象A生成消息->将消息通知给一个消息处理器(Observable)->消息处理器将消息传递给B具体的调用过程变成：
+1。对象 A 直接调用对象 B 的某个方法，实现交互逻辑。但导致的问题是 A 和 B 紧密耦合，修改 B 可能造成 A 调用 B 的方法失效。
+2。为了解决耦合问题，设计为：
+	对象 A 生成消息->将消息通知给一个消息处理器 (Observable)->消息处理器将消息传递给 B 具体的调用过程变成：
 
 		A.emit('message',data);
 		B.on('message',function(data){})
 		 
 	请实现，消息代理功能。补充完成function EventEmitter(){}
 
-## js写一个ajax get 请求
+## js 写一个 ajax get 请求
 
 > emm，无数次都会被问到的面试题。
 
