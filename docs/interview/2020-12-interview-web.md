@@ -1,4 +1,19 @@
-# 2020年12月 面试题
+# 2020年12月面试题
 
 
 ## 原型与原型链的关系
+
+
+## APP Hybrid 中原生应用与 JS bridge 通信原理是什么？
+
+> 实际上，我不太懂这个题目的出题人是什么居心。
+
+于是回答：通过共享浏览器 window 作用域，H5 给 window 放数据，原生调用浏览器 window 来获取。
+
+搜了下大致的描述：
+
+1. H5 中的 JS 发起请求，在 android 的 WebViewClient.shouldOverrideUrlLoading 方法中拦截 URL 请求，判断是否为接口调用
+
+2. android 通过 webView.addJavascriptInterface 方法向 windows 对象中注入原生代码，然后 H5 在 JS 中调用相应的方法
+
+3. 选择 prompt,console.log,alert 等方法作为通信的接口

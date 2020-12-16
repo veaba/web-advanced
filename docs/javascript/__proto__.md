@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# `**proto**`
+# `__proto__`
 
 ```js
 const obj = {

@@ -20,7 +20,7 @@ sidebar: auto
 
 ## 标准化的核心 ECMAScript
 
-## 基础
+## [基础](base)
 
 ## 关键字与保留字
 
@@ -164,27 +164,35 @@ let newObj = JSON.parse(JSON.stringify(obj));
 console.log(newObj);
 ```
 
-
 **[lodash deepClone](https://lodash.com/docs##cloneDeep)**：
 
 ```js
 function structuralClone(obj) {
-  return new Promise(resolve => {
-    const {port1, port2} = new MessageChannel();
-    port2.onmessage = ev => resolve(ev.data);
+  return new Promise((resolve) => {
+    const { port1, port2 } = new MessageChannel();
+    port2.onmessage = (ev) => resolve(ev.data);
     port1.postMessage(obj);
   });
 }
 
-var obj = {a: 1, b: {
-    c: b
-}}
-// 注意该方法是异步的
-// 可以处理 undefined 和循环引用对象
-(async () => {
-  const clone = await structuralClone(obj)
-})()
-
+var obj = {
+  a: 1,
+  b: {
+    c: b,
+  },
+}(
+  // 注意该方法是异步的
+  // 可以处理 undefined 和循环引用对象
+  async () => {
+    const clone = await structuralClone(obj);
+  }
+)();
 ```
 
-### TODO 手写深拷贝函数 
+### TODO 手写深拷贝函数
+
+## 柯里化
+
+把接受多个参数的函数变换成为接受一个单一的参数的函数
+
+`foo(a,b,c)` => `foo(abc)`

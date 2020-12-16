@@ -24,6 +24,9 @@ sidebar: auto
 
 ## http
 
+- HTTP1.1 有个问题叫线端阻塞(head-of-line blocking)
+	- 一个连接一次只提交一个请求的效率比较高，多了就慢
+
 - http 请求与响应
   - request，请求
   > key的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
@@ -182,4 +185,33 @@ const httpCode= {
 
 ## https 
 
-## http和https 的比较
+
+
+## http 和 https 的比较
+
+
+## HTTP2.0
+
+- 多路传输能够解决线端阻塞问题
+## HTTP1.1 和 HTTP2.0 比较
+
+1. HTTP2.0 采用二进制格式，而非文本格式
+
+	- 二进制解析更高效
+
+2. HTTP2.0 `完全多路复用`，而非有序并阻塞，仅需一个连接即可并行
+
+	- `多路复用是什么意思？`
+
+3. 使用报头压缩，HTTP2.0 降低了开销
+
+4. HTTP2.0 让服务器可以将响应主动 “推送” 到客户端缓存中
+
+
+
+
+## SPDY
+
+https://blog.csdn.net/qq_41635167/article/details/89484445
+
+https://zhuanlan.zhihu.com/p/50479555
