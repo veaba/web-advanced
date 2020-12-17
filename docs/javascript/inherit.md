@@ -29,9 +29,11 @@ sidebar: auto
 
 - TODO：构造函数
 
+- TODO: 实例继承
+
 - TODO：class 继承
 
-### JS 实现继承的方式之一：原型链
+### JS 实现继承的方式一：原型链
 
 - 原理：利用原型链让一个引用类型继承另一个引用类型的属性和方法
 
@@ -55,7 +57,11 @@ sidebar: auto
 
 ```js
 // Animal 类
-function Animal(name) {}
+function Animal(name) {
+  this.sleep = function() {
+    console.log("sleep");
+  };
+}
 
 Animal.prototype.eat = function(food) {
   console.log(this.name + " eat:" + food);
@@ -70,7 +76,9 @@ const blackDog = new Dog();
 
 console.log(blackDog.name); // 'Big Dog'
 
-console.log(blackDog.eat("beef"));
+console.log(blackDog.eat("beef")); // undefined，实例，无法继承父类 Animal prototype 上的方法
+
+console.log(blackDog.sleep());
 
 console.log(blackDog instanceof Dog); // true
 
@@ -136,7 +144,7 @@ function extend(a, b, thisArg) {
 }
 ```
 
-### JS 实现继承的方式之一：Object.assign () (OWN)
+### JS 实现继承的方式二：Object.assign () (OWN)
 
 - 最简单的继承方法
 
@@ -195,366 +203,251 @@ var obj2 = { name1: "obj2", age: 32 };
 console.log(Object.assign(Object.create(null), obj1, obj2));
 ```
 
-## `[x]继承的方式-借用构造函数/伪造对象/经典继承` (很少用)
+### JS 实现继承的方式三：构造继承
 
-> 原理：子类型构造函数内部调用超类型构造函数，通过 apply/call 方法执行新创建对象上执行构造函数
+- 使用父类的构造函数来增强子类实例，等于复制父类的实例属性给子类，没有用到原型。
 
-> 缺点：
-
-1. 方法都在构造函数中定义，函数无法复用
-2. 超类对子类方法不可见
+- 通过改变上下文 `this` 来实现
 
 ```js
-function SuperType() {
-  this.colors = ["r", "g", "b"];
-}
-function SubType() {
-  //继承了SuperType,意思是这里执行了构造函数
-  SuperType.call(this)`[3]`; //此处应该怎么样去深刻的理解呢？
-  // 1 SuperType.apply(this)`[3]`
-  // 2 SuperType.bind(this)()`[3]`//再次执行
-}
-var instance1 = new SubType();
-instance1.colors.push("o");
-console.log(instance1.colors); //'r,g,b,o'
-var instance2 = new SubType();
-instance2.colors.push("v");
-console.log(instance2.colors);
-```
-
-## `[√]继承的方式-组合继承/伪经典继承`
-
-> 原理：将原型链和借用构造函数的技术组合到一起
-
-```js
-function SuperType(name) {
-  this.name = name;
-  this.colors = ["r", "g", "b"];
-}
-SuperType.prototype.sayName = function() {
-  console.log(this.name);
-};
-function SubType(name, age) {
-  //继承属性
-  SuperType.call(this, name);
-  this.age = age;
-}
-// 继承方法
-SubType.prototype = new SuperType();
-SubType.prototype.constructor = SubType;
-SubType.prototype.sayAge = function() {
-  console.log(this.age);
-  return this.age;
-};
-var instance1 = new SubType("张三", 30);
-instance1.colors.push("o");
-console.log(instance1.colors);
-instance1.sayName();
-instance1.sayAge();
-
-var instance2 = new SubType("李四", 40);
-instance2.colors.push("v");
-console.log(instance2.colors);
-instance2.sayName();
-instance2.sayAge();
-```
-
-## `继承的方式-原型式继承`
-
-> 所给出的 demo
-
-```js
-function object(obj) {
-  function F() {}
-  F.prototype = obj;
-  return new F();
-}
-```
-
-> 实质上，浅拷贝：
-
-- 这种方式，导致其中一个实例变更，其他实例也会跟着变更，被共享
-
-```js
-function object(obj) {
-  function F() {}
-  F.prototype = obj;
-  return new F();
-}
-var p1 = {
-  name: "张三",
-  colors: ["red", "green", "blue"],
-};
-var anthor = object(p1);
-anthor.name = "贾克斯";
-anthor.colors.push("voilet");
-
-var other = object(p1);
-other.name = "伊泽瑞尔";
-other.colors.push("orange");
-console.log(p1.colors);
-```
-
-> es5 中的 Object.create () 规范原型继承，
-
-```js
-//demo1 传入一个参数此时，和object方法行为相同
-var p1 = {
-  name: "张三",
-  colors: ["red", "green", "blue"],
-};
-var anthor = Object.create(p1);
-anthor.name = "贾克斯";
-anthor.colors.push("voilet");
-
-var other = Object.create(p1);
-other.name = "伊泽瑞尔";
-other.colors.push("orange");
-console.log(p1.colors); //还是全出来
-
-// demo2 使用第二个参数，与defineProperties方法第二个参数相同，通过自己的描述符定义，会覆盖原型对上上的同名属性
-var p2 = {
-  name: "李四",
-  colors: ["red", "green", "blue"],
-};
-var anthor = Object.create(p2, {
-  name: {
-    value: "Orange",
-  },
-});
-console.log(anthor.name); //Orange
-```
-
-### `继承的方式-寄生式继承`
-
-> 一个函数返回 prototype，另外一个函数添加方法，并返回该函数。层层合并，最后工厂函数的模式被新函数继承。
-
-> 缺点：
-
-1. 由于不能复用函数，从而效率比较低，与构造函数模式类似
-
-```js
-function object(obj) {
-  function F() {}
-  F.prototype = obj;
-  return new F();
-}
-function create(obj) {
-  var clone = object(obj);
-  clone.sayHi = function() {
-    console.log("hi");
+// 父类
+function Animal() {
+  this.eat = function(food) {
+    console.log("===>", this.DogName, food);
   };
-  return clone;
 }
-var p1 = {
-  name: "李四",
-  colors: ["red", "green", "blue"],
-};
-var anthor = create(p1);
-anthor.sayHi();
+
+// 子类
+function Dog(name) {
+  Animal.call(this);
+  this.DogName = name || "I am Dog";
+}
+
+const dog = new Dog();
+
+console.log(dog.DogName);
 ```
 
-## `[√]继承的方式-寄生组合式继承`
+### [x]JS 实现继承的方式四：实例继承
 
-> 特点：
+原理：
 
-1. 两次超类型构造函数的调用，一次创建子类型原型式，另外次在子类型构造函数内部
-2. 被认为是应用类型最理想的继承范式
+- 为父类实例添加新特性，做为子类实例范围
+
+- 子类返回父类的实例
+
+特点：
+
+- 不限制调用方式，不管是 `new 子类` 还是直接调用`子类`
+
+缺点：
+
+- 实例是父类的实例，不是子类的实例
+
+- 不支持多继承
 
 ```js
-function object(obj) {
-  function F() {}
-  F.prototype = obj;
-  return new F();
+function Animal(name) {
+  this.name = name || "I am animal";
+  this.sleep = function() {
+    console.log("animal sleep");
+
+    return "this.sleep";
+  };
 }
-function inhertPrototype(subType, superType) {
-  var prototype = object(superType.prototype);
-  prototype.constructor = subType;
-  subType.prototype = prototype;
-}
-function SuperType(name) {
-  this.name = name;
-  this.colors = ["red", "green"];
-}
-SuperType.prototype.sayName = function() {
-  console.log(this.name);
+
+Animal.prototype.eat = function(food) {
+  console.log("Animal eat ===>");
+  return "eat:" + food;
 };
-function SubType(name, age) {
-  SuperType.call(this, name); //第一次调用 SuperType
-  this.age = age;
+function Pig(name) {
+  const instance = new Animal();
+
+  instance.name = name || "instance";
+  return instance;
 }
-inhertPrototype(SubType, SuperType);
-SubType.prototype.sayAge = function() {
-  console.log(this.age);
-};
+
+const pig = new Pig();
+
+console.log(pig.name); // instance
+
+console.log(pig.sleep()); // this.sleep
+
+console.log(pig.eat("cao")); //eat:cao
 ```
 
----
+### [x]JS 实现继承的方式五：拷贝继承
 
-## 对象之间“非构造函数方法”。 [非构造函数方法实现]
+**原理**：
 
-啥是非构造函数继承？因为两个都是普通对象，无法使用构造函数的方式继承
+- 增加了时间复杂度来循环将父类子例的属性和值都给了子类 `prototype`
 
-```js
-// 中国人对象
-var Chinese = {
-  nation: "中国",
-};
-// 一个医生对象
-var Doctor = {
-  career: "医生",
-};
-```
+**特点**：
 
-## object () 方法
+- 支持多继承
 
-将子对象的 prototype 属性，指向父对象，从而子对象和父对象一起！！
-！！！这 ™ 不是用函数的方式 new 一个构造函数嘛？？？
+**缺点**：
+
+- 效率低，内存高，多余的时间复杂度
+
+- 无法获取不可枚举的属性和方法，因为 `for in` 的关系
 
 ```js
-function object(o) {
-  function F() {}
-  F.prototype = o;
-  return new F();
+function Animal(name) {
+  this.name = name || "I am animal";
+  this.sleep = function() {
+    console.log("animal sleep");
+
+    return "this.sleep";
+  };
 }
 
-var Doctor = object(Chinese);
-Doctor.career = "医生"; // 加子对象本身的属性？？
-console.info(Doctor.nation); //中国
-```
+Animal.prototype.eat = function(food) {
+  console.log("Animal eat ===>");
+  return "eat:" + food;
+};
 
-### 浅拷贝
+function Pig(name) {
+  const animal = new Animal();
 
-将父对象属性，全部拷贝给子对象，实现继承。有问题的是，父对象有被篡改。
-
-```js
-function extendCopy(p) {
-  var c = {};
-  for (var i in p) {
-    c[i] = p[i];
+  // 将父类 Animal 可枚举的属性都给子类的 prototype
+  for (let p in animal) {
+    Pig.prototype[p] = animal[p];
   }
-  c.uber = p;
-  return c;
+
+  this.name = name || "佩奇";
 }
 
-//usage
-const Doctor = extendCopy(chinese);
-Doctor.carret = "医生";
-console.info(Doctor.nation); // 中国
+const pig = new Pig();
+
+console.log(pig.name);
+
+console.log(pig.sleep()); // this.sleep
+
+console.log(pig.eat("cao")); //eat:cao
+
+console.log(pig instanceof Animal); // false
+
+console.log(pig instanceof Pig); // true
 ```
 
-### 深拷贝 (JQuery 当前使用的继承方式)
+### [√]JS 实现继承的方式六：组合继承
 
-真正意义上的，对象和数组的拷贝。原理是递归调用“浅拷贝”
+**原理**：
+
+- 通过调用父类构造，继承父类属性并保持传参的优点
+
+- 通过父类实例作为子类的原型，实现函数复用
+
+**特点**：
+
+- 弥补构造继承的缺陷，继承实例属性和方法，继承原型属性和方法
+
+- 子类的实例，也是父类的实例
+
+- 不存在属性共享的问题
+
+- 可传参
+
+- 函数可复用
+
+**缺点**：
+
+- 调用两次父类的构造函数，生成两份实例，增加了部分内存
 
 ```js
-function extendDeep(p, c) {
-  var c = c || {};
-  for (var i in p) {
-    if (typeof p[i] === "object") {
-      c[i] = p[i].constructor === Array ? [] : {};
-      extenDeep(p[i], c[i]);
-    } else {
-      c[i] = p[i];
-    }
-  }
-  return c;
-}
-//usage
-var Doctor = extenDeep(Chinese);
+function Animal(name) {
+  this.name = name || "I am animal";
+  this.sleep = function() {
+    console.log("animal sleep");
 
-// chinese.city=['北京']
-// Doctor.city.push('天津')
-console.info(Doctor.city); // 北京、天津
-console.info(Chinese.city); // 北京
+    return "this.sleep";
+  };
+}
+
+Animal.prototype.eat = function(food) {
+  console.log("Animal eat ===>");
+  return "eat:" + food;
+};
+
+function Pig(name) {
+  Animal.call(this);
+  this.name = name || "Pig name";
+}
+
+Pig.prototype = new Animal();
+
+Pig.prototype.constructor = Pig; // 修复构造函数指向
+
+const pig = new Pig();
+
+console.log(pig.name);
+
+console.log(pig.sleep()); // this.sleep
+
+console.log(pig.eat("cao")); //eat:cao
+
+console.log(pig instanceof Animal); // true
+
+console.log(pig instanceof Pig); // true
 ```
 
-## 对象之间“继承的五种方法”。[构造函数实现]
+### [√]JS 实现继承的方式七：寄生组合
 
-- 构造函数绑定
-- prototype 模式
-- 直接继承 prototype
-- 利用空对象作为中介
-- 拷贝继承
+**原理**：
 
-#### 构造函数绑定
+- 通过寄生方式，砍掉父类的实例属性，减少两次调用父类的构造函数多余的两次实例和属性，避免组合继承的缺陷
 
-```js
-// 定义一个动画的函数对象
-function Animal() {
-  this.type = "动物";
-}
-// 定义一个Dog的函数对象
-function Dog(name, color) {
-  this.name = name;
-  this.color = color;
-}
+- 借用立即执行函数
 
-// ？ 如何让猫继承动物？？？？
-function Dog(name, color) {
-  Animal.apply(this, arguments); //此处的用意是什么? 将父对象的构造函数绑定在子对象上。
-  this.name = name;
-  this.color = color;
-}
-var dog1 = new Dog("二哈", "白色");
-console.info(dog1);
-```
+**特点**：
 
-### prototype 模式。
+- 调用执行函数，比较完善
 
-- 每一个 prototype 都有一个构造函数的属性 constructor，并指向它的构造函数
-- 每一个实例也有一个 constructor
-- 如果替换 prototype 之后，必须为 prototype 的构造函数 constructor 指向它本身，否则会导致紊乱
+**缺点**：
+
+- 需要借助第三个类来做中间转换，实现复杂
 
 ```js
-function Animal() {
-  this.type = "动物";
+function Animal(name) {
+  this.name = name || "I am animal";
+  this.sleep = function() {
+    console.log("animal sleep");
+
+    return "this.sleep";
+  };
 }
-function Dog(name, color) {
-  this.name = name;
-  this.color = color;
+
+Animal.prototype.eat = function(food) {
+  console.log("Animal eat ===>");
+  return "eat:" + food;
+};
+
+function Pig(name) {
+  Animal.call(this);
+  this.name = name || "Pig name";
 }
-Dog.prototype = new Animal(); // 将Dog 的原型对象【prototype】对象指向Animal 的实例，完全删除原先的值，并赋予新值。
-Dog.prototype.constructor = Dog; // 使得Dog 的原型对象的构造函数指向父级的animal
-var dog2 = new Dog("三哈", "绿色");
-```
+(function() {
+  // 创造一个没有实例的类
 
-### 直接继承 prototype
+  const Super = function() {};
 
-确定，Animal.prototype.constructor 等于 Dog
+  Super.prototype = Animal.prototype;
 
-```js
-function Animal() {}
-Animal.prototype.type = "动物";
-function Dog(name, color) {
-  this.name = name;
-  this.color = color;
-}
-Dog.prototype = Animal.prototype; //直接继承 Animal的原型对象
-Dog.prototype.constructor = Dog;
-var cat3 = new Dog("四哈", "黒色");
-console.info(cat3.type); // 动物
-```
+  // 实例作为子类的原型
 
-### 利用空对象作为中介[略]
+  Pig.prototype = new Super();
+})();
 
-### 拷贝继承
+const pig = new Pig();
 
-```js
-function Animal() {}
-Animal.prototyoe.type = "动物";
+console.log(pig.name);
 
-// 实现拷贝的函数。
-function extend(Child, Parent) {
-  var p = Parent.prototype;
-  var c = Child.prototype;
-  for (var i in p) {
-    c[i] = p[i];
-  }
-  c.uber.p;
-}
-//将函数作用，就是将父对象的prototype对象中属性，拷贝给child对象的prototype对象
-extend(Dog, Animal);
-var dog4 = new Dog("五哈", "棕色");
-console.info(dog4.type); // 动物
+console.log(pig.sleep()); // this.sleep
+
+console.log(pig.eat("cao")); //eat:cao
+
+console.log(pig instanceof Animal); // true
+
+console.log(pig instanceof Pig); // true
 ```

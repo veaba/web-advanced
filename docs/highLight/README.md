@@ -6,7 +6,7 @@ sidebar: auto
 
 ## 匿名函数、具名函数、箭头函数比较
 
-楼主通过瞎折腾发现的一些特性，仅供参考，
+通过瞎折腾发现的一些特性，仅供参考，
 
 [测试文件](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/test_function_name_anonymous_arrow.js)
 
@@ -57,7 +57,7 @@ console.timeEnd("箭头函数");
 | 10       |          |
 
 测试结果：
-函数执行时间所需时间：箭头函数<匿名函数<具名函数
+函数执行时间所需时间：箭头函数 `>` 匿名函数 `>` 具名函数
 
 ## 一段 axios 上传文件的支持
 
