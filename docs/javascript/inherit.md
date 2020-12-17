@@ -15,23 +15,21 @@ sidebar: auto
 
 ## JavaScript 继承的几种方式？
 
-- 组合继承
+- [方式一：原型式继承](/javascript/inherit.html#javascript-实现继承的方式之一-原型链)
 
-- 原型式继承
+- [方式二：构造函数](/javascript/inherit.html#)
 
-- 寄生式继承
+- [方式三：实例继承](/javascript/inherit.html#x-js-实现继承的方式四-实例继承)
 
-- 寄生组合式继承
+- [方式四：拷贝函数](/javascript/inherit.html#x-js-实现继承的方式五-拷贝继承)
 
-- [原型链](/javascript/inherit.html#javascript-实现继承的方式之一-原型链)
+- [方式五：组合继承](/javascript/inherit.html#√-js-实现继承的方式六-组合继承)
 
-- [Object.assign](/javascript/inherit.html#js-实现继承的方式之一-object-assign-own)
+- [方式六：寄生组合式继承](/javascript/inherit.html#√-js-实现继承的方式七-寄生组合)
 
-- TODO：构造函数
+- [方式七：Object.assign](/javascript/inherit.html#js-实现继承的方式之一-object-assign-own)
 
-- TODO: 实例继承
-
-- TODO：class 继承
+- [方式八：class 继承](/javascript/inherit.html#)
 
 ### JS 实现继承的方式一：原型链
 
@@ -142,65 +140,6 @@ function extend(a, b, thisArg) {
   });
   return a;
 }
-```
-
-### JS 实现继承的方式二：Object.assign () (OWN)
-
-- 最简单的继承方法
-
-- `Object.assign`，尽可混入可枚举的属性，不可追溯原型链，可以用 `Object.getOwnPropertyName()` 方法来获取
-
-- `Object.assign` 可以这样处理 `Object.assign(A.prototype,B.prototype)`
-
-以下为关于这个部分的个人理解：
-
-```js
-// 父类
-function A() {}
-
-A.prototype.hi = () => {
-  console.log("hi");
-};
-
-// 子类
-function B() {}
-
-B.prototype.b1 = () => {
-  console.log("b1");
-};
-B.prototype.b2 = () => {
-  console.log("b2");
-};
-
-B.getName = function() {
-  console.log("getName b"); // 除非这样才就可以
-};
-var c = Object.assign(A, B);
-console.log(c);
-
-// 1. 上面。此时没有合并 prototype 上面的方法。此时 c 指向 a
-
-// 2. 下面。此时d将同时 继承 a和b的prototype的方法
-var d = Object.assign(A.prototype, B.prototype);
-
-console.log(d);
-
-d.constructor.prototype.d1 = () => {
-  console.log("di");
-};
-console.log("d:", d);
-console.log("a:", A.prototype);
-
-// 3. 为了干净点
-var e = Object.assign(Object.create(null), A.prototype, B.prototype); //这样就不会有乱七八糟的东西了
-// var e= Object.assign({},A.prototype,B.prototype)// 有乱七八糟的继承
-console.log("e:", e);
-
-// 4. 一个干净的对象
-var obj1 = { name: "obj1" };
-var obj2 = { name1: "obj2", age: 32 };
-
-console.log(Object.assign(Object.create(null), obj1, obj2));
 ```
 
 ### JS 实现继承的方式三：构造继承
@@ -450,4 +389,99 @@ console.log(pig.eat("cao")); //eat:cao
 console.log(pig instanceof Animal); // true
 
 console.log(pig instanceof Pig); // true
+```
+
+### [x]JS 实现继承的方式二：Object.assign
+
+这也是自己将之归属到继承里的方式之一
+
+- 最简单的继承方法
+
+- `Object.assign`，尽可混入可枚举的属性，不可追溯原型链，可以用 `Object.getOwnPropertyName()` 方法来获取
+
+- `Object.assign` 可以这样处理 `Object.assign(A.prototype,B.prototype)`
+
+以下为关于这个部分的个人理解：
+
+```js
+// 父类
+function A() {}
+
+A.prototype.hi = () => {
+  console.log("hi");
+};
+
+// 子类
+function B() {}
+
+B.prototype.b1 = () => {
+  console.log("b1");
+};
+B.prototype.b2 = () => {
+  console.log("b2");
+};
+
+B.getName = function() {
+  console.log("getName b"); // 除非这样才就可以
+};
+var c = Object.assign(A, B);
+console.log(c);
+
+// 1. 上面。此时没有合并 prototype 上面的方法。此时 c 指向 a
+
+// 2. 下面。此时d将同时 继承 a和b的prototype的方法
+var d = Object.assign(A.prototype, B.prototype);
+
+console.log(d);
+
+d.constructor.prototype.d1 = () => {
+  console.log("di");
+};
+console.log("d:", d);
+console.log("a:", A.prototype);
+
+// 3. 为了干净点
+var e = Object.assign(Object.create(null), A.prototype, B.prototype); //这样就不会有乱七八糟的东西了
+// var e= Object.assign({},A.prototype,B.prototype)// 有乱七八糟的继承
+console.log("e:", e);
+
+// 4. 一个干净的对象
+var obj1 = { name: "obj1" };
+var obj2 = { name1: "obj2", age: 32 };
+
+console.log(Object.assign(Object.create(null), obj1, obj2));
+```
+
+### JS 实现继承的方式八：class 继承
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+    this.type = "animal";
+  }
+
+  sayHi(str) {
+    console.log("str: ", str);
+  }
+
+  getThis() {
+    return this.name;
+  }
+}
+
+class Pig extends Animal {
+  constructor(name) {
+    super(name);
+    this.name = this.name;
+  }
+  getPig() {
+    console.log("get Pig");
+  }
+  getThis() {
+    return this.name;
+  }
+}
+
+const pig = new Pig("hello");
 ```

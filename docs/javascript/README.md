@@ -43,7 +43,7 @@ sidebar: auto
 
 ### 类型转换
 
-## 继承
+## [继承](inherit)
 
 ## 事件
 
