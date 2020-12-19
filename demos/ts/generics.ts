@@ -156,7 +156,7 @@ class BeeKeeper {
 }
 
 class ZooKeeper {
-  nametag: string;
+  nameTag: string;
 }
 
 class Animal {
@@ -175,5 +175,5 @@ function createInstance<A extends Animal>(c: new () => A): A {
   return new c();
 }
 
-createInstance(Lion).keeper.nametag; // typechecks!
-createInstance(Bee).keeper.hasMask; // typechecks!
+createInstance(Lion).keeper.nameTag; // type checks!
+createInstance(Bee).keeper.hasMask; // type checks!

@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # TypeScript 泛型
 
 原因：
@@ -6,19 +10,19 @@
 
 ## 概念：
 
-**泛型是什么**: TODO
+**泛型是什么**：TODO
 
-**泛型变量**: 常用 `T` 表示，当然，你也可以使用 `U` 或任意
+**泛型变量**：常用 `T` 表示，当然，你也可以使用 `U` 或任意
 
-**泛型类型**: 泛型 `T` 作为元素，整理作为其他类型的情况
+**泛型类型**：泛型 `T` 作为元素，整体作为其他类型子元素类型的情况
 
-**泛型类**: `class GenericNumberClass <T>`，叫 `泛型类`，（2020年12月20日02:59:53 发现 `deno` 无法运行 `泛型类` demo）
+**泛型类**：`class GenericNumberClass <T>`，叫 `泛型类`，(2020年12月20日 02:59:53 发现 `deno` 无法运行 `泛型类` demo)
 
 **泛型约束**：存在非法访问属性的情况，比如 `.length`
 
 ## 泛型的提出
 
-在 `TypeScript`中，为了解决函数的`输入类型`等同于 `返回类型`而提出的一种新的声明方法
+在 `TypeScript` 中，为了解决函数的 `输入类型` 等同于 `返回类型` 而提出的一种新的声明方法
 
 如果想要实现，输入的类型等于输出的类型，可能这么写，实例 1：
 
@@ -39,7 +43,7 @@ function useAnyType(args: any): any {
 console.log("any type:", useAnyType("any type"));
 ```
 
-为了重用类型声明，以及表述 输入和输出类似是一致的情况，TypeScript 提出的一种新的类型声明的方式 —— 泛型。
+为了重用类型声明，以及表述输入和输出类似是一致的情况，TypeScript 提出的一种新的类型声明的方式——泛型。
 
 常用 `<T>` 替代，现在改写实例 1：
 
@@ -77,10 +81,9 @@ console.log("7. object:", inputTypeEqualOutputType<object>({year:2020}));
 console.log("8. function:", inputTypeEqualOutputType<Function>(()=>{}));
 console.log("9. array:", inputTypeEqualOutputType<number[]>([2020]));
 ```
-
 ## 泛型变量
 
-但是，此时的泛型，其实等同于入参类型是 `any`,返回类型也是 `any`，这意味着，输入类型是数字，打印 `.length` 是错误的：
+但是，此时的泛型，其实等同于入参类型是 `any`，返回类型也是 `any`，这意味着，输入类型是数字，打印 `.length` 是错误的：
 
 ```typescript
 function inputTypeEqualOutputType(args: any): any {
@@ -127,7 +130,7 @@ let myDefineTypeObject: {<T>(arg:T):T}=defineTypeObject
 
 ### 泛型接口
 
-与此同时，也可以将对象字面量单独拎出来作为一个接口使用，于是就有了 **泛型接口**：
+与此同时，也可以将对象字面量单独拎出来作为一个接口使用，于是就有了**泛型接口**：
 
 ```typescript
 interface DefineType{
@@ -141,7 +144,7 @@ function defineType<T>(arg:T):T{
 let myDefineType:DefineType=defineType
 ```
 
-把泛型参数作为整个接口的参数，让用户知道具体是哪个泛型类型（比如：`DefineType<string>` 而非 `DefineType`），使得接口里的其他成员也能知道参数的类型：
+把泛型参数作为整个接口的参数，让用户知道具体是哪个泛型类型 (比如：`DefineType<string>` 而非 `DefineType`)，使得接口里的其他成员也能知道参数的类型：
 
 ```typescript
 interface DefineType<T>{
@@ -155,7 +158,7 @@ let myDefineType:DefineType<number>:defineType
 
 ```
 
-此时，不再描述泛型函数，而是把非泛型函数前面作为泛型类型的一部分，当使用 `define` 函数时候，还得需要传入类型参数来指定泛型类型（这里是：`number`），锁定了之后代码里使用的类型。
+此时，不再描述泛型函数，而是把非泛型函数前面作为泛型类型的一部分，当使用 `define` 函数时候，还得需要传入类型参数来指定泛型类型 (这里是：`number`)，锁定了之后代码里使用的类型。
 
 这对于描述 `哪部分类型` 属于 `泛型部分`，理解 `何时把参数` 放在 `调用签名里` 和 `何时放在接口上` 是很有帮助的。
 
@@ -165,9 +168,9 @@ let myDefineType:DefineType<number>:defineType
 
 - 无法创建 `泛型命名空间`
 
-`泛型类` 与 `泛型接口` 差不多，泛型类 使用 `<>` 括起泛型类型，跟在类名后面：
+`泛型类` 与 `泛型接口` 差不多，泛型类使用 `<>` 括起泛型类型，跟在类名后面：
 
-（注意：此处使用 `Deno` 运行，发现错误是 `Property 'zeroValue' has no initializer and is not definitely assigned in the constructor.`）
+(注意：此处使用 `Deno` 运行，发现错误是 `Property 'zeroValue' has no initializer and is not definitely assigned in the constructor.`)
 
 ```typescript
 class GenericNumberClass <T>{
@@ -185,7 +188,7 @@ myGenericNumberClass.add = function(x,y) {
 
 ```
 
-此时， `GenericNumberClass` 并非只限制使用 `number` 类型，也可以使用 `string`:
+此时，`GenericNumberClass` 并非只限制使用 `number` 类型，也可以使用 `string`：
 
 ```typescript
 
@@ -223,7 +226,7 @@ loggingIdentity(2020)
 
 所以，这需要我们限制函数，不要任意去访问带 `.length` 属性的所有类型。
 
-仅当存在这个 `.length`属性时，在允许，于是出现了 `泛型约束`，下面是使用 `extends` 关键词实现约束：
+仅当存在这个 `.length` 属性时，在允许，于是出现了 `泛型约束`，下面是使用 `extends` 关键词实现约束：
 
 ```typescript
 interface LengthWise{
