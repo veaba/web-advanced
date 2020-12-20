@@ -33,7 +33,7 @@ sidebar: auto
 
 ### JS 实现继承的方式一：原型链
 
-- 原理：利用原型链让一个引用类型继承另一个引用类型的属性和方法
+- 原理：利用原型链让一个引用类型继承另一个引用类型的属性和方法。或者说 `父类的实例等于子类的原型`
 
 - 特点：
 
@@ -45,7 +45,7 @@ sidebar: auto
 
 - 缺点：
 
-  - 要为子类新增新增属性和方法，必须要在 `new Animal()` (实例化) 再添加
+  - 要为子类新增属性和方法，必须要在 `new Animal()` (实例化) 再添加
 
   - 无法实现多继承？
 
@@ -142,7 +142,11 @@ function extend(a, b, thisArg) {
 }
 ```
 
-### JS 实现继承的方式三：构造继承
+### JS 实现继承的方式二：构造继承
+
+原理：
+
+- 通过改变子类 `this` 指向来调用父级属性和方法
 
 - 使用父类的构造函数来增强子类实例，等于复制父类的实例属性给子类，没有用到原型。
 
@@ -167,7 +171,7 @@ const dog = new Dog();
 console.log(dog.DogName);
 ```
 
-### [x]JS 实现继承的方式四：实例继承
+### [x]JS 实现继承的方式三：实例继承
 
 原理：
 
@@ -215,7 +219,7 @@ console.log(pig.sleep()); // this.sleep
 console.log(pig.eat("cao")); //eat:cao
 ```
 
-### [x]JS 实现继承的方式五：拷贝继承
+### [x]JS 实现继承的方式四：拷贝继承
 
 **原理**：
 
@@ -270,7 +274,7 @@ console.log(pig instanceof Animal); // false
 console.log(pig instanceof Pig); // true
 ```
 
-### [√]JS 实现继承的方式六：组合继承
+### [√]JS 实现继承的方式五：组合继承
 
 **原理**：
 
@@ -331,13 +335,13 @@ console.log(pig instanceof Animal); // true
 console.log(pig instanceof Pig); // true
 ```
 
-### [√]JS 实现继承的方式七：寄生组合
+### [√]JS 实现继承的方式六：寄生组合
 
 **原理**：
 
 - 通过寄生方式，砍掉父类的实例属性，减少两次调用父类的构造函数多余的两次实例和属性，避免组合继承的缺陷
 
-- 借用立即执行函数
+- 借用立即执行函数，调用中间辅助类
 
 **特点**：
 
@@ -391,15 +395,26 @@ console.log(pig instanceof Animal); // true
 console.log(pig instanceof Pig); // true
 ```
 
-### [x]JS 实现继承的方式二：Object.assign
+### [x]JS 实现继承的方式七：Object.assign
 
 这也是自己将之归属到继承里的方式之一
+
+**原理**：使用 `Object.assign` 汇合原型上的方法
 
 - 最简单的继承方法
 
 - `Object.assign`，尽可混入可枚举的属性，不可追溯原型链，可以用 `Object.getOwnPropertyName()` 方法来获取
 
 - `Object.assign` 可以这样处理 `Object.assign(A.prototype,B.prototype)`
+
+**缺点**：
+
+- 仅可实现原型上的方法合并，除非，手动再声明它的属性值
+
+```js
+function A(){}
+A.theName = "A name property"
+```
 
 以下为关于这个部分的个人理解：
 
