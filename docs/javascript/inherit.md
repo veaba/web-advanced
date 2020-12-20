@@ -181,7 +181,7 @@ console.log(dog.DogName);
 
 特点：
 
-- 不限制调用方式，不管是 `new 子类` 还是直接调用`子类`
+- 不限制调用方式，不管是 `new 子类` 还是直接调用 `子类`
 
 缺点：
 
@@ -276,7 +276,18 @@ console.log(pig instanceof Pig); // true
 
 ### [√]JS 实现继承的方式五：组合继承
 
+```js
+function A() {}
+function B() {
+  A.call(this);
+}
+B.prototype = new A();
+B.prototype.constructor = B;
+```
+
 **原理**：
+
+- 借用 `this` 改变指向，子类原型等于父类实例，子类原型的构造函数指向它自己
 
 - 通过调用父类构造，继承父类属性并保持传参的优点
 
@@ -412,8 +423,8 @@ console.log(pig instanceof Pig); // true
 - 仅可实现原型上的方法合并，除非，手动再声明它的属性值
 
 ```js
-function A(){}
-A.theName = "A name property"
+function A() {}
+A.theName = "A name property";
 ```
 
 以下为关于这个部分的个人理解：
