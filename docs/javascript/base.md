@@ -387,6 +387,18 @@ MediaSources||||||||
 >特点：
 - 函数声明提升
 
+```js
+
+a()
+const a= function(){
+  console.log('aaa')
+}
+function a(){
+  console.log('bbb')
+}
+a()
+```
+
 ### 声明函数的几种函数，目前三种
 - 函数声明
 - 函数表达式
