@@ -51,7 +51,7 @@ sidebar: auto
 
   - 来自原型对象的所有属性都被共享，`Animal` 所有都被 `Dog` 共享
 
-  - 创建子类实例时，无法向父类构造函数传参，即 Dog 无法通过 `new Animal(args)`，尽可给自己的实例，此处是 `blackDog`
+  - 创建子类实例时，无法向父类构造函数传参，即 Dog 无法通过 `new Animal(args)`，仅可给自己的实例传参，此处是 `blackDog`
 
 ```js
 // Animal 类
@@ -275,15 +275,6 @@ console.log(pig instanceof Pig); // true
 ```
 
 ### [√]JS 实现继承的方式五：组合继承
-
-```js
-function A() {}
-function B() {
-  A.call(this);
-}
-B.prototype = new A();
-B.prototype.constructor = B;
-```
 
 **原理**：
 
