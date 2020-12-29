@@ -43,11 +43,11 @@ sidebar: auto
   - `catch`
   - `finally`
   - `return`
-  - `countinue`
+  - `continue`
   - `for`
   - `switch`
   - `while`
-  - `debbugger *`
+  - `debugger *`
   - `this`
   - `with` 设置特定对象中的作用域
   - `in`
@@ -194,7 +194,7 @@ console.log("40" / 7); // 等于多少? 取模
 
 ### 实例方法-不改变原始数组的方法
 
-- `Array.prototype.concat(arr1, arr2,...,arrn)`
+- `Array.prototype.concat(arr1, arr2,...,arr)`
 
   - 入参必填，可以是数组对象
   - 返回新数组
@@ -213,7 +213,7 @@ console.log("40" / 7); // 等于多少? 取模
     console.log(fruits);/*不改變*/
     ```
 
-- <sup>es6</sup>`Array.prototype.every(function(crrrueValue,index,arr){},thisArr)`
+- <sup>es6</sup>`Array.prototype.every(function(currentValue,index,arr){},thisArr)`
   - 检测数组所有元素都符合指定条件，通过函数条件
   - 如果有一个不满足条件，则会返回 false，且剩余不再检测
   - 如果全部都满足条件则返回 true
@@ -257,7 +257,7 @@ console.log("40" / 7); // 等于多少? 取模
   var arr = [543153, 1231, 3215, 12, 12, 42, 45, 4555, 5];
   var arrT = arr.map(function(value, index, arr) {
     console.log(value);
-    /*/ retrun value *2*/
+    /*/ return value *2*/
   });
   console.log(
     arrT
@@ -275,7 +275,7 @@ console.log("40" / 7); // 等于多少? 取模
   console.log(filterTemp); /*[32,33,40] 返回如何条件原数组的元素*/
   ```
 
-- `Arrary.prototype.forEach(function(currentValue,index,arr){},thisValue)`
+- `Array.prototype.forEach(function(currentValue,index,arr){},thisValue)`
 
   - 常用语，逐个做事情，打印，写入数据库
   - forEach()方法对数组每个元素执行一次提供的函数
@@ -355,7 +355,7 @@ console.log(arr, temp);
   - isNaN()
   - isSafeInteger()
   - parseFloat()
-  - parsetInt()
+  - parseInt()
 - Object
   - assign()
   - create()
@@ -404,7 +404,7 @@ console.log(arr, temp);
   - `OPEN:1`
   - `CONNECTING:0`
 - MediaSources
-  - `isTypeSuported()` 静态方法
+  - `isTypeSupported()` 静态方法
 
 ## 函数
 
@@ -479,9 +479,9 @@ function factorial(num) {
   }
 }
 // ①如果设置中途转了一层
-var anthorFactorial = factorial;
+var authorFactorial = factorial;
 factorial = null;
-console.log(anthorFactorial(4)); //error
+console.log(authorFactorial(4)); //error
 // ② 上面可以变为
 function factorial1(num) {
   if (num <= 1) {
@@ -628,7 +628,7 @@ var name1 = "World!";
 
 ### 焦点事件
 
-> 判断浏览器是否支持：`document.implementation.hasFeature("FcousEvent"),"3.0"`
+> 判断浏览器是否支持：`document.implementation.hasFeature("FocusEvent"),"3.0"`
 
 | 触发次序 | 冒泡事件    | 非冒泡事件 | 描述                       | 用例 |
 | -------- | ----------- | ---------- | -------------------------- | ---- |
@@ -681,33 +681,33 @@ var name1 = "World!";
 </script>
 ```
 
-- 事件委托/事件代理
+### 事件委托/事件代理
 
-  - 什么时候用到？for 循环里面 多个点击事件，一次操作就可以完成，减少 DOM 操作次数
-  - 原理：利用事件的`冒泡原理`来实现，
+- 什么时候用到？for 循环里面 多个点击事件，一次操作就可以完成，减少 DOM 操作次数
+- 原理：利用事件的`冒泡原理`来实现，
 
-  ```html
-  <ul>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-  </ul>
-  ```
+```html
+<ul>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+</ul>
+```
 
-  ```js
-  // 很蠢的对每个li 标签都循环做点击事件
-  window.onload = function() {
-    var ul = document.querySelector("ul");
-    var li = document.querySeletcor("li");
-    for (var i = 0; i < li.length; i++) {
-      li[i].onclick = function() {
-        alert(123);
-      };
-    }
-  };
-  ```
+```js
+// 很蠢的对每个li 标签都循环做点击事件
+window.onload = function() {
+  var ul = document.querySelector("ul");
+  var li = document.querySelector("li");
+  for (var i = 0; i < li.length; i++) {
+    li[i].onclick = function() {
+      alert(123);
+    };
+  }
+};
+```
 
 - 事件冒泡
 
@@ -726,15 +726,15 @@ var name1 = "World!";
     - 冒泡阶段 `子级->父级，向外`
       - 检查实际点击元素是否在冒泡阶段注册`onclick`事件，如果是则运行
       - 然后移动到直接祖先，然后同上，直至`html`元素
-      - 时间处理程序都在冒泡阶段注册 `(但可以使用addEventLisenter(,,true) 在捕获阶段注册`
+      - 时间处理程序都在冒泡阶段注册 `(但可以使用addEventListener(,,true) 在捕获阶段注册`
       ```js
       video.onclick = function(e) {
-        e.stopProgation(); //阻止冒泡链扩大
+        e.stopPropagation(); //阻止冒泡链扩大
         video.play(); //播放视频
       };
       ```
     - 事件委托`由于冒泡而被允许的概念`
-      - 通过委托父级，addEventLisenter 设置在父节点上，将事件监听器气泡的影响每个子节点，而不是每个子节点都设置事件监听器
+      - 通过委托父级，`addEventListener` 设置在父节点上，将事件监听器气泡的影响每个子节点，而不是每个子节点都设置事件监听器
 
 ## 前端路由实现
 
@@ -813,8 +813,8 @@ Math.max.apply(Math, arr);
 |         | exp(num)       | `Math.E的num次幂`                      |
 |         | log(num)       |                                        |
 |         | pow(num,power) |                                        |
-|         | aqrt(num)      | `num的平方根`                          |
-|         | acros(x)       | `x的反余弦值`                          |
+|         | sqrt(num)      | `num的平方根`                          |
+|         | acos(x)        | `x的反余弦值`                          |
 |         | asin(x)        | `x的反正弦值`                          |
 |         | atan()         | `x的反正切值`                          |
 |         | atan2(y,x)     | `y/x的反正切值`                        |
@@ -884,7 +884,7 @@ const p = factory("张三", "28", "前端狗");
 6. 它的实例都有一个`constructor`（构造函数）属性，指向他的构造函数
 
 ```js
-function ConstractorFn(name, age, job) {
+function ConstructorFn(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
@@ -893,9 +893,9 @@ function ConstractorFn(name, age, job) {
   };
 }
 // use
-const p1 = new ConstractorFn("李四6i7", "29", "后端喵");
+const p1 = new ConstructorFn("李四6i7", "29", "后端喵");
 // 监测类型
-console.log(p1 instanceof ConstractorFn); //true,同样都是Object的实例
+console.log(p1 instanceof ConstructorFn); //true,同样都是Object的实例
 ```
 
 > 当做构造函数，见上面
@@ -903,7 +903,7 @@ console.log(p1 instanceof ConstractorFn); //true,同样都是Object的实例
 > 当普通函数
 
 ```js
-ConstractorFn("李四6i7", "29", "后端喵");
+ConstructorFn("李四6i7", "29", "后端喵");
 window.sayName();
 ```
 
@@ -911,8 +911,8 @@ window.sayName();
 
 ```js
 const ob = {};
-ConstractorFn.call(ob, "王五", "30", "python");
-// ConstractorFn.apply(ob,["王五",'30','python']) 或者这样
+ConstructorFn.call(ob, "王五", "30", "python");
+// ConstructorFn.apply(ob,["王五",'30','python']) 或者这样
 
 on.sayName();
 ```
@@ -924,7 +924,7 @@ on.sayName();
 3. 如何对构造函数进行优化呢？属性和函数定义区分开,
 
 ```js
-function ConstractorFn(name, age, job) {
+function ConstructorFn(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
@@ -967,7 +967,7 @@ p1.sayName === p2.sayName; //true
 1. 默认情况，原型对象自动取得 constructor 属性，其他方法和属性都是从 Object 继承
 2. 使用`Person.isPrototypeOf()`测试实例是否有一个纸箱构造函数`prototype`的指针
 3. `hasOwnProperty()` 访问的值是不是实例的属性,该方法会忽略从原型链继承到的属性
-4. `Objecet.getOwnPrototypeDescriptor()` 用于实例属性
+4. `Object.getOwnPrototypeDescriptor()` 用于实例属性
    > 原型与 in 操作符
 5. `"name" in p1`查找该实例上的属性，不管是`实例上还是原型上`
 6. IE 早期版本出现 bug，导致无法被`in` 出来，所以替代的方案是 `Object.keys()`，可列出可枚举的字符串数组
@@ -1136,7 +1136,7 @@ const p = new factory("张三", "28", "前端狗");
 
 ### 创建对象-稳妥构造函数模式
 
-> 由道格拉斯·克罗克福斯 发明了该模式——稳妥对象（durable obajects）
+> 由道格拉斯·克罗克福斯 发明了该模式——稳妥对象
 
 > 特点：
 
@@ -1308,7 +1308,7 @@ var object = {
 
 - call 方法。调用一个函数，具有一个指定 this 值和分别地提供参数 [MDN 查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 
-  - 语法 `function.call(thisObj,args...)`,如果 thisObj 是 null，则是全局对象,args 作为参数传递给 funciton
+  - 语法 `function.call(thisObj,args...)`,如果 thisObj 是 null，则是全局对象,args 作为参数传递给 `function`
 
 - apply 方法。调用一个函数，具有指定 this 的值，以及作为一个数组提供的参数。 [MDN 查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
@@ -1444,7 +1444,7 @@ a.apply(null, [ob], cc);
 
 ## js 三大对象
 
-[SegmentFault 查看更多，作者 Adrain](https://segmentfault.com/a/1190000011467723)
+[SegmentFault 查看更多，作者 Adrain`](https://segmentfault.com/a/1190000011467723)
 
 ## 本地对象
 
@@ -1456,7 +1456,7 @@ a.apply(null, [ob], cc);
 ## 内置对象
 
 - 与宿主无关，独立于宿主环境的 ECMAScript 实现提供的对象
-- EMCAScript 程序开始执行前就存在，本身就是实例化内置对象，无需实例化
+- ECMAScript 程序开始执行前就存在，本身就是实例化内置对象，无需实例化
 - 内置对象是本地对象的子集
 - 包含`Global` 和`Math`
 - ECMAScript 5 中新增了`JSON`这个存在于全局的内置对象

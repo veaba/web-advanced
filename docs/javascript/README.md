@@ -134,15 +134,15 @@ console.log(undefine.constructor undefined); // error
 - 较为安全判断 `js` 数据类型
 
 ```js
-console.log(Object.prototype.toString.call(nul));      // [object Null]
+console.log(Object.prototype.toString.call(nul)); // [object Null]
 console.log(Object.prototype.toString.call(undefine)); // [object Undefined]
-console.log(Object.prototype.toString.call(bool));     // [object Boolean]
-console.log(Object.prototype.toString.call(num));      // [object Number]
-console.log(Object.prototype.toString.call(str));      // [object String]
-console.log(Object.prototype.toString.call(sys));      // [object Symbol]
-console.log(Object.prototype.toString.call(obj));      // [object Object]
-console.log(Object.prototype.toString.call(fn));       // [object Function]
-console.log(Object.prototype.toString.call(arr));      // [object Array]
+console.log(Object.prototype.toString.call(bool)); // [object Boolean]
+console.log(Object.prototype.toString.call(num)); // [object Number]
+console.log(Object.prototype.toString.call(str)); // [object String]
+console.log(Object.prototype.toString.call(sys)); // [object Symbol]
+console.log(Object.prototype.toString.call(obj)); // [object Object]
+console.log(Object.prototype.toString.call(fn)); // [object Function]
+console.log(Object.prototype.toString.call(arr)); // [object Array]
 ```
 
 ## [继承](inherit)
@@ -299,13 +299,12 @@ var obj = {
 
 `foo(a,b,c)` => `foo(abc)`
 
-
 ## 内存指向
 
 ```js
 const obj={}
 function A(){
-  return obj  
+  return obj
 }
 
 const a = new A()
@@ -317,9 +316,10 @@ console.log(a===b) ? // true
 ```
 
 函数每次都返回新的空对象，而不是 `return` 指向的全局变量
+
 ```js
 function A(){
-  return {}  
+  return {}
 }
 
 const a = new A()
@@ -329,3 +329,9 @@ const b = new A()
 console.log(a===b) ? // false
 
 ```
+
+## 纯函数是什么？
+
+- 不改变全局
+- 返回结果只依赖参数
+- 不引起副作用
