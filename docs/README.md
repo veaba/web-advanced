@@ -57,7 +57,7 @@ footer: Copyright © 2020-present compile by
     </ul>
   </div>
   <div class="feature">
-    <a href="/keyword/"><h3>关键词</h3></a>
+    <a href="/keyword"><h3>关键词</h3></a>
     <p>必须知道的概念</p>
   </div>
 </div>
