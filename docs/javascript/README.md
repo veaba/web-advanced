@@ -335,3 +335,18 @@ console.log(a===b) ? // false
 - 不改变全局
 - 返回结果只依赖参数
 - 不引起副作用
+
+## 实例构造函数
+
+- 相同构造函数出来的两个视力不相等，但其子属性、方法相同
+
+```js
+class A {
+  getName() {}
+}
+const a = new A();
+const b = new A();
+
+a === b; // false
+a.getName === b.getName; // true
+```
