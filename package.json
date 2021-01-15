@@ -1,15 +1,16 @@
 {
-    "scripts": {
-      "dev": "vuepress dev docs",
-      "build": "vuepress build docs"
-    },
-    "dependencies": {
-      "vuepress-plugin-container": "^2.0.2"
-    },
-    "devDependencies": {
-      "node-sass": "^4.12.0",
-      "sass-loader": "^7.1.0",
-      "vuepress": "^1.1.0"
-    }
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "test": "jest"
+  },
+  "dependencies": {
+    "vuepress-plugin-container": "^2.0.2"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "vuepress": "^1.1.0"
   }
-  
+}
