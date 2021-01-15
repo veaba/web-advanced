@@ -138,4 +138,4 @@ p.then((one) => {
 //   console.log("four catch=>", four);
 // });
 
-exports.module = PromiseClass;
+module.exports = PromiseClass;

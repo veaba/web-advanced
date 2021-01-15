@@ -6,10 +6,9 @@ describe("Promise/then", () => {
         resolve("success!", "这个是忽略的参数");
         // resolve("failed!", "这个是忽略的参数");
       }, 2000);
-
-      p.then((one) => {
-        expect(one).to("success!");
-      });
+    });
+    p.then((one) => {
+      expect(one).to("success!");
     });
   });
 });
