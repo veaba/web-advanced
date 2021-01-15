@@ -116,26 +116,5 @@ class PromiseClass {
  * @Test 如果then里不return res 为undefined
  *
  */
-const p = new PromiseClass(function(resolve, reject) {
-  setTimeout(function() {
-    resolve("success!", "这个是忽略的参数");
-    resolve("failed!", "这个是忽略的参数");
-  }, 2000);
-});
-
-p.then((one) => {
-  console.log("one then=>", one);
-  return 11;
-})
-  .then((second) => {
-    console.log("second then=>", second);
-  })
-  .then((third) => {
-    // todo 如果不 return 这里是 undefined
-    console.log("third then==>", third);
-  });
-// .catch((four) => {
-//   console.log("four catch=>", four);
-// });
 
 module.exports = PromiseClass;
