@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function insertSort(els) {
+      // 从第二个元素开始，即i=1
+      for (let i = 1; i < els.length; i++) {
+        // 后一个小于前一个，当前的值小于前面的
+        if (els[i] < els[i - 1]) {
+          const currentItem = els[i];
+          let j = i - 1;
+          els[i] = els[j]; // 把前面的值给当前的
+          // 比大小，找到被插入元素所在的位置
+          while (j >= 0 && currentItem < els[j]) {
+            els[j + 1] = els[j];
+            j--;
+          }
+          els[j + 1] = currentItem;
+        }
+      }
+      return els;
+    }
+
+    const arr = [12, 12, 15, 445, 451, 12, 123456, 61, 20, 136, 4856, 1, 0];
+
+    console.log(insertSort(arr));
+  </script>
+</html>
