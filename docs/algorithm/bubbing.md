@@ -49,6 +49,46 @@ console.log("arr==>", arr);
 
 ## 选择排序
 
+```js
+/**
+ * 选择排序
+ *
+ * 1. 在未排序的序列中找到最小（大）的元素，
+ * 2. 存放到排序序列的起始位置
+ * 3. 再从剩余的未排序元素中继续寻找最小（大）
+ * 4. 排到已排序序列的末尾
+ *
+ * selectionSort: 15.938ms
+ *
+ */
+
+function selectionSort(data) {
+  console.time("selectionSort");
+  const len = data.length;
+  let minIndex = null;
+  let temp = null;
+  for (let i = 0; i < len; i++) {
+    minIndex = i;
+    // 这个技巧让 当前向后，减少搜索范围
+    for (let j = i + 1; j < len; j++) {
+      if (arr[j] < arr[minIndex]) {
+        // 寻找最小值
+        minIndex = j; // 将最小的索引保存
+      }
+    }
+    temp = arr[i];
+    arr[i] = arr[minIndex];
+    arr[minIndex] = temp;
+  }
+  console.timeEnd("selectionSort");
+  return arr;
+}
+
+var arr = [12, 12, 15, 445, 451, 12, 123456, 61, 20, 136, 4856, 1, 0];
+
+console.log("===>", selectionSort(arr));
+```
+
 ## 插入排序
 
 ```js
@@ -91,6 +131,51 @@ console.log(insertSort(arr));
 
 ## 归并排序
 
+```js
+/**
+ * 归并排序，一种稳定的排序方法
+ * 1. 已有序的子序列合并
+ * 2. 得到完全有序的序列
+ * 3. 先让每个子序列有序
+ * 4. 在让子序列段间有序
+ *
+ */
+
+function mergeSort(data) {
+  let len = data.length;
+  if (len < 2) {
+    return data;
+  }
+  var middle = Math.floor(len / 2);
+  var left = data.slice(0, middle);
+  var right = data.slice(middle);
+  return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+  var result = [];
+  console.time("mergeSort=>");
+  while (left.length && right.length) {
+    if (left[0] <= right[0]) {
+      result.push(left.shift());
+    } else {
+      result.push(right.shift());
+    }
+  }
+  while (left.length) {
+    result.push(left.shift());
+  }
+  while (right.length) {
+    result.push(right.shift());
+  }
+  console.timeEnd("mergeSort=>");
+  return result;
+}
+var arr = [9, 8, 6, 4, 5, 3, 2];
+
+console.log("===>", mergeSort(arr));
+```
+
 ## 快速排序
 
 ```js
@@ -129,11 +214,56 @@ console.log(fastSort(arr));
 
 ## 堆排序
 
+@todo 未实现
+
 ## 计数排序
+
+```js
+/**
+ * 计数排序
+ * 1. 该方法使用了一个额外的数组C，这意味着增加了内存空间，
+ * 2. 第 i 个元素是待排序数组A中值，等于 i 的元素的个数
+ * 3. 然后根据C数组 来将 A中的元素排到正确的位置
+ * 4. 只能对整数进行排序
+ */
+function countingSort(data) {
+  console.time("counting=>");
+  var len = data.length;
+  var B = [];
+  var C = [];
+  var min = (max = data[0]);
+
+  for (let i = 0; i < len; i++) {
+    min = min <= data[i] ? min : data[i];
+    max = max >= data[i] ? max : data[i];
+
+    C[data[i]] = C[data[i]] ? C[data[i]] + 1 : 1;
+  }
+
+  for (let j = min; j < max; j++) {
+    C[j + 1] = (C[j + 1] || 0) + (C[j] || 0);
+  }
+
+  for (let k = len - 1; k >= 0; k--) {
+    debugger;
+    B[C[data[k]] - 1] = data[k];
+    C[data[k]]--;
+  }
+  console.timeEnd("counting=>");
+  return B;
+}
+
+var arr = [9, 8, 6, 4, 5, 3, 2];
+
+console.log("===>", countingSort(arr));
+```
 
 ## 桶排序
 
+略
 ## 基数排序
+
+略
 
 ## 二分查找：其他
 
@@ -168,6 +298,14 @@ const arr = [1, 3, 5, 7, 9, 10];
 
 console.log(binarySearchTwo(arr, 5)); // 返回在的索引值
 ```
+
+## 总结
+
+**基数排序 vs 计数排序 vs 桶排序**：
+
+这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：
+
+基数排序：根据键值的每位数字来分配桶 计数排序：每个桶只存储单一键值 桶排序：每个桶存储一定范围的数值
 
 ## 参考
 
