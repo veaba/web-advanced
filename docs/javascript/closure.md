@@ -1,6 +1,43 @@
 # 闭包
 
-- TODO：如何调试闭包函数中返回的变量值，假设已上线，不可更改原始代码
+- 如何调试闭包函数中返回的变量值，假设已上线，不可更改原始代码
+
+```js
+const fn = (function() {
+  const closeData = {
+    age: 28,
+    job: "web",
+  };
+  return {
+    run: function(key) {
+      return closeData[key];
+    },
+  };
+})();
+
+// 如果获取完整的 closeData呢？
+fn.run("web");
+
+// 劫持原始对象的get
+Object.defineProperty(Object.prototype, "all", {
+  get: function() {
+    return this;
+  },
+});
+
+// 获取所有
+fn.run("all");
+```
+
+或：
+
+```js
+Object.prototype.__defineGetter__("get", function() {
+  return this;
+});
+
+console.log(o.run("get"));
+```
 
 - JavaScript 语言中，只有函数内部的子函数才能读取局部变量。
 
