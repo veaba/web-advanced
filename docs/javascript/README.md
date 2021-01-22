@@ -346,8 +346,6 @@ const newOne = deepCopy(a);
 console.log("newOne=>", newOne);
 ```
 
-### TODO 手写深拷贝函数
-
 ## 柯里化
 
 把接受多个参数的函数变换成为接受一个单一的参数的函数
