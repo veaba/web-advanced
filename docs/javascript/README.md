@@ -53,7 +53,9 @@ sidebar: auto
 
 - `boolean`
 
-- `symbol`
+- `symbol` 新的
+
+- `bigint` 新的
 
 **引用类型**：
 
