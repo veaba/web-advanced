@@ -138,3 +138,28 @@ function onSize(size) {
 const size16 = onSize(16);
 document.body.onclick = size16;
 ```
+
+## 如何消除闭包？
+
+- TODO 接触变量的引用？
+
+```js
+const arrayDeepLevel = (function() {
+  let level = -1;
+  return function(array) {
+    if (Array.isArray(array)) {
+      for (let item of array) {
+        if (Array.isArray(item)) {
+          arrayDeepLevel(item);
+        }
+      }
+      level++;
+      return level;
+    }
+  };
+})();
+```
+
+## 引用
+
+- [阮一峰 - 学习 Javascript 闭包（Closure）](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
