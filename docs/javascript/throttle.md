@@ -18,7 +18,7 @@
 
 3. 上传进度
 
-4. input 查询
+4. input 实时查询，每隔 x s 发送一次请求，服务端是限流(Rate limit)
 
 ## 实现
 
@@ -41,4 +41,22 @@ const betterFn = throttle(() => {
 
 // 每 10 毫秒执行一次 betterFn 函数，但是只有时间差大于 1000 时才会执行 fn
 setInterval(betterFn, 10);
+```
+
+或者方案 2：
+
+```js
+// 
+function throttle(f, wait) {
+  let timer;
+  return (...args) => {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      f(...args);
+      timer = null;
+    }, wait);
+  };
+}
 ```
