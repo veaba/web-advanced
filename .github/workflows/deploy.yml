@@ -31,7 +31,7 @@ jobs:
           ACCESS_TOKEN_DEPLOY: ${{secrets.ACTIONS_ACCESS_TOKEN_WEB_CI }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./docs/.vuepress/dist
-          CNAME: web.datav.ai
+          CNAME: web.veaba.me
         run: |
           chmod +x ./scripts/deploy.sh
           bash ./scripts/deploy.sh
