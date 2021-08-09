@@ -5,7 +5,7 @@
 ![web-advanced-frond-end CI](https://github.com/veaba/web-advanced-frond-end/workflows/web-advanced-frond-end%20CI/badge.svg)
 
 
-使用Vuepress 重新构建静态网站，舒爽体验阅读，请访问：https://web.datav.ai
+使用Vuepress 重新构建静态网站，舒爽体验阅读，请访问：https://web.veaba.me
 
 部分内容尚未补充完成！！
 
