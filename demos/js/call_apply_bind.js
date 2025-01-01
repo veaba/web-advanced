@@ -14,35 +14,35 @@
 
 // 这是一个普通的函数
 const call_apply_bind = function () {
-	console.info('Hello world:call_apply_bind ');
-	console.info(this);
+  console.info('Hello world:call_apply_bind ');
+  console.info(this);
 };
 
 // 这是一个箭头函数
 const call_apply_bind_arrow = () => {
-	console.info('Hello world:call_apply_bind_arrow ');
-	console.info(this);
+  console.info('Hello world:call_apply_bind_arrow ');
+  console.info(this);
 };
 
 // arg 测试
 
 const call_apply_bind_arg = function () {
-	console.info("call_apply_bind_arg:", arguments);
+  console.info('call_apply_bind_arg:', arguments);
 };
 const call_apply_bind_arg_arrow = () => {
-	console.info("call_apply_bind_arg_arrow:", arguments);
+  console.info('call_apply_bind_arg_arrow:', arguments);
 };
 
 const catObj = {
-	name: "小叮当",
-	age: 2,
-	sex: 'female'
+  name: '小叮当',
+  age: 2,
+  sex: 'female',
 };
 
 const dogObj = {
-	name: "二哈",
-	age: 1.5,
-	sex: "male"
+  name: '二哈',
+  age: 1.5,
+  sex: 'male',
 };
 
 // 直接指向函数
@@ -140,7 +140,6 @@ const dogObj = {
 
 // 结论1，call可以改变入参的那个对象的内部结构
 
-
 // apply的应用
 
 // apply - 对数组进行取最大值
@@ -168,7 +167,6 @@ const dogObj = {
 // console.info('list1:', list1);//[1,2,3,4]
 // console.info('list2:', list2);//[3,4]
 // console.info('list3:', list3);//2
-
 
 // 使用apply 链接构造器
 
@@ -199,7 +197,6 @@ const dogObj = {
 //
 // const res1 = add.call(null, 5, 3);
 // console.info(res1);
-
 
 // 实现类似bind的方法
 // 要点1、返回一个返回
@@ -247,19 +244,19 @@ const dogObj = {
 // 手写call
 
 Function.prototype.theCall = function (ctx, ...arr) {
-	if (ctx === null || ctx === undefined) {
-		ctx = this;//自动指向
-	} else ctx = Object(ctx);//原始值的this 指向该原始值的实例对象
-	
-	const tempPrototype = Symbol('hahh');
-	ctx[tempPrototype] = this;
-	let result = ctx[tempPrototype](...arr);
-	delete ctx[tempPrototype];
-	return result;
+  if (ctx === null || ctx === undefined) {
+    ctx = this; // 自动指向
+  } else ctx = Object(ctx); // 原始值的this 指向该原始值的实例对象
+
+  const tempPrototype = Symbol('hahh');
+  ctx[tempPrototype] = this;
+  let result = ctx[tempPrototype](...arr);
+  delete ctx[tempPrototype];
+  return result;
 };
 
 const x = function (a, b) {
-	console.info(a, b);
+  console.info(a, b);
 };
 
 x.theCall(null, 999, 666);
