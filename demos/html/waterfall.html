@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh - CN">
+<head>
+    <meta charset="UTF - 8">
+    <meta name="viewport" content="width=device - width, initial - scale = 1.0">
+    <title>图片瀑布流</title>
+    <style>
+        /* 容器样式 */
+        #waterfall {
+            display: flex;
+            flex - wrap: wrap;
+            justify - content: space - between;
+        }
+
+        /* 图片样式 */
+        #waterfall img {
+            margin - bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="waterfall"></div>
+
+    <script>
+        const imageUrls = [
+            "https://picsum.photos/id/100/300/200",
+            "https://picsum.photos/id/101/250/350",
+            "https://picsum.photos/id/102/400/250",
+            "https://picsum.photos/id/103/220/400",
+            "https://picsum.photos/id/104/350/300",
+            "https://picsum.photos/id/105/280/320",
+            "https://picsum.photos/id/106/380/240",
+            "https://picsum.photos/id/107/260/360",
+            "https://picsum.photos/id/108/420/280"
+        ];
+
+        const waterfallContainer = document.getElementById('waterfall');
+
+        function renderImages() {
+            const windowWidth = window.innerWidth;
+            let columnCount = 3;
+            if (windowWidth < 600) {
+                columnCount = 2;
+            } else if (windowWidth < 400) {
+                columnCount = 1;
+            }
+
+            const imgWidth = Math.floor((windowWidth - (columnCount - 1) * 10) / columnCount);
+
+            imageUrls.forEach((url) => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.width = imgWidth + 'px';
+                img.style.marginRight = '10px';
+                waterfallContainer.appendChild(img);
+            });
+        }
+
+        window.onload = renderImages;
+        window.onresize = renderImages;
+    </script>
+</body>
+</html>
