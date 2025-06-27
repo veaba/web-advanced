@@ -1,8 +1,11 @@
 {
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "test": "jest"
+    "test": "jest",
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "postinstall": "patch-package",
+    "patch": "patch-package"
   },
   "dependencies": {
     "sass": "^1.89.2",

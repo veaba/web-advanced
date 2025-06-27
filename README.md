@@ -1,3 +1,5 @@
+# web advanced
+
 > 进阶 web 高级前端知识体系：来自个人的面试经历、学习笔记、参考大神们的 blog，以及常见面试题！不代表内容的正确性！！！！有一部分还在带着问号！以下内容是随手记下的笔记，还在学习..。 by@veaba
 
 ---
@@ -81,3 +83,17 @@
 - [引用](https://web.veaba.me/reference/)
 - [关于](https://web.veaba.me/about/)
 - [自我驱动](https://web.veaba.me/self/)
+
+## 魔改
+
+- 如何修改支持 `README.md => index.md`
+
+### 使用 patch-package 生成补丁文件
+
+- 以支持 `README.md => index.md`
+
+```shell
+npm install --package-lock-only # 如果没有则需要生成 lock 文件
+pnpx patch-package vitepress # 不然这一步会失败
+
+```
