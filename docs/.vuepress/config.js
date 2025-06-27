@@ -23,7 +23,7 @@ module.exports = {
 				selectText: "选择语言",
 				editLinkText: "在Github上编辑此页",
 				nav: require("./nav/zh"),
-				// sidebar: 'auto'
+				sidebar: 'auto'
 			},
 		}
 	},

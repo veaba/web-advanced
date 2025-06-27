@@ -4,6 +4,10 @@ module.exports = [
 		link: '/guide/'
 	},
 	{
+		text: 'leetcode',
+		link: '/leetcode/'
+	},
+	{
 		text: 'actix-web',
 		link: '/rust/actix-web/'
 	},
