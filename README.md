@@ -2,7 +2,7 @@
 > 进阶web高级前端知识体系：来自个人的面试经历、学习笔记、参考大神们的blog，以及常见面试题！不代表内容的正确性！！！！有一部分还在带着问号！以下内容是随手记下的笔记，还在学习..。 by@veaba
 -----------------------------------------------------------------
 
-![web-advanced-frond-end CI](https://github.com/veaba/web-advanced-frond-end/workflows/web-advanced-frond-end%20CI/badge.svg)
+![deploy](https://github.com/veaba/web-advanced/actions/workflows/deploy.yml/badge.svg)
 
 
 使用Vuepress 重新构建静态网站，舒爽体验阅读，请访问：https://web.veaba.me
