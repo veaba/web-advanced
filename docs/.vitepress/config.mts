@@ -37,7 +37,7 @@ export default defineConfig({
             { text: 'Node', link: '/node' },
             { text: 'BOM', link: '/javascript/bom' },
             { text: 'DOM', link: '/javascript/dom' },
-            { text: 'ECMAScript', link: '/es6' },
+            { text: 'ECMAScript', link: '/es6/' },
             { text: '基础', link: '/javascript/base' },
             { text: '原型与原型链', link: '/javascript/prototype' },
             { text: 'Blob', link: '/javascript/blob' },

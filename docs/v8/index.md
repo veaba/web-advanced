@@ -15,8 +15,8 @@ V8 是 Google 的开源高性能 JavaScript 和 WebAssembly 引擎，用 C++编�
 ## 目录
 
 - 从源码构建 `V8`
-  - [`V8` 源码检出](/v8/source-code/)
-  - [通过 GN 构建](/v8/build-gn/)
+  - [`V8` 源码检出](/v8/source-code)
+  - [通过 GN 构建](/v8/build-gn)
   - `ARM/Android` 的交叉编译与调试
   - `iOS` 交叉编译
   - `GUI` 和 `IDE` 安装

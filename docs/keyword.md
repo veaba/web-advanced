@@ -12,14 +12,14 @@ sidebar: auto
 - react
 - 小程序/微信/百度/快应用/支付宝
 - [闭包](javascript/closure.md)
-- [js 垃圾回收机制]()
+- js 垃圾回收机制
 - [深拷贝](/javascript/#深拷贝)
 - [浅拷贝](/javascript/#浅拷贝)
 - class
 - Generator
 - webGl
-- [防抖](/javascript/debounce)
-- [节流](/javascript/throttle)
+- [防抖](/javascript/useful/debounce)
+- [节流](/javascript/useful/throttle)
 - canvas
 - [proxy](/es6/proxy)
 - node 中 commonJs 与 ES6 module

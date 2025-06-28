@@ -4,7 +4,7 @@ sidebar: auto
 
 # Vue
 
-- [更多关于 VUE API 人工整理手记，见 /docs/vue-api.md @veaba](/vue/vue2-api/)
+- [更多关于 VUE API 人工整理手记，见 /docs/vue-api.md @veaba](/vue/vue2-api)
 
 ```vue
 <div id="app" @click="send">
@@ -32,31 +32,29 @@ var app = new Vue({
 - vue 如何处理定时器或者销毁定时器的？
   > 在 `beforeDestroy` 里面处理
 
-```ecmascript 6
+```js
 export default {
-
-  data(){
+  data() {
     return {
-      second:5,
-      timer:null
-    }
+      second: 5,
+      timer: null,
+    };
   },
-  mounted:function(){
-    this.timer=setInterval(()=>{
-      if(this.second===0) this.backPre();
-      else this.second--
-    },1000)
+  mounted: function () {
+    this.timer = setInterval(() => {
+      if (this.second === 0) this.backPre();
+      else this.second--;
+    }, 1000);
   },
-  beforeDestroy(){
-    clearInterval(this.timer)
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
-  methods:{
-    backPre(){
-      return 'Do you want what me to do,ha?'
-    }
-  }
-}
-
+  methods: {
+    backPre() {
+      return 'Do you want what me to do,ha?';
+    },
+  },
+};
 ```
 
 ## vue 基础知识
@@ -198,12 +196,13 @@ export default {
     - this.desIds —— this.deps id Set 结构
     - this.newDepIds —— this.newDeps id Set 结构
     - 至于为什么有两个实例数组？
-    ```js
-    this.deps = [];
-    this.newDeps = [];
-    this.depIds = new Set();
-    this.newDepIds = new Set();
-    ```
+
+```js
+this.deps = [];
+this.newDeps = [];
+this.depIds = new Set();
+this.newDepIds = new Set();
+```
 
 - 生命周期，选项？？？这个在 Vue 构造器的传参中何种方式？
 
@@ -212,27 +211,27 @@ export default {
   - beforeMount 挂载之前被调用，render 函数首次被调用，该钩子在服务端渲染器件不被调用
   - mounted `el` 被新创建的 `vm.$el` 替换，并挂载到实例上调用，无法确保所有子组件都一起挂载。ssr 不被调用。希望等到整个视图都渲染完毕，可以：
 
-  ```ecmascript 6
-    export default {
-   mounted(){
-          this.$nextTick=function(){
-            //拉拉
-          }
-        }
-  }
+  ```js
+  export default {
+    mounted() {
+      this.$nextTick = function () {
+        //拉拉
+      };
+    },
+  };
   ```
 
   - beforeUpdate 数据更新时，发生在爱 DOM `打补丁` 之前，适合更新之前访问现有的 DOM，如手动移除已添加的事件监听器。SSR 渲染期间不可用
   - updated 数据更新导致虚拟 DOM 重新渲染和 `打补丁`，DOM 已更新，无法确保所有子组件全都一起被重绘。SSR 渲染器件不可用。可以这样做：
 
-  ```ecmascript 6
+  ```js
   export default {
-    updated(){
-          this.$nextTick=function(){
-        	  // do something
-  		}
-        }
-      }
+    updated() {
+      this.$nextTick = function () {
+        // do something
+      };
+    },
+  };
   ```
 
   - activated keep-alive 组件激活时被调用，SSR 渲染期间不可用
@@ -421,7 +420,7 @@ const Vue = {
 
 ### 启动
 
-```mpm
+```shell
 cnpm install -g karma (运行时test 是基于 Karma 的)
 cnpm install --save mime-db
 cnpm install (安装依赖)
