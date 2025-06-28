@@ -1,4 +1,4 @@
-name: web-advanced-frond-end CI
+name: deploy status
 on:
   push:
     branches:
