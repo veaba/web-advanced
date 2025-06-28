@@ -3,7 +3,7 @@
 @author veaba
 -->
 <script setup lang="ts">
-import { onMounted, computed, ref, toRef, defineProps } from 'vue';
+import { onMounted, computed, ref, toRef } from 'vue';
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import { data as apiIndex } from './catalog.data';
@@ -25,14 +25,13 @@ const pages = computed(() => {
 
   return apiIndex.filter((i) => {
     if (props.base) {
-      return i.path === props.base.replace(/\//, '');
+      return i.path.replace(/\//g, '') === props.base.replace(/\//g, '');
     } else return i;
     i.path === props.base;
   }) as APIGroup[];
 });
 
-onMounted(async () => {
-});
+onMounted(async () => {});
 </script>
 
 <template>

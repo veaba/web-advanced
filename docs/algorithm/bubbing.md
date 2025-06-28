@@ -35,7 +35,7 @@ sidebar: auto
 var arr = [12, 12, 15, 445, 451, 12, 123456, 61, 20, 136, 4856, 1, 0];
 for (let i = 0; i < arr.length; i++) {
   for (let j = 0; j < arr.length - i - 1; j++) {
-    console.log("j=>", i, j);
+    console.log('j=>', i, j);
     if (arr[i] > arr[j]) {
       const temp = arr[i];
       arr[i] = arr[j];
@@ -44,7 +44,7 @@ for (let i = 0; i < arr.length; i++) {
   }
 }
 
-console.log("arr==>", arr);
+console.log('arr==>', arr);
 ```
 
 ## 选择排序
@@ -63,7 +63,7 @@ console.log("arr==>", arr);
  */
 
 function selectionSort(data) {
-  console.time("selectionSort");
+  console.time('selectionSort');
   const len = data.length;
   let minIndex = null;
   let temp = null;
@@ -80,13 +80,13 @@ function selectionSort(data) {
     arr[i] = arr[minIndex];
     arr[minIndex] = temp;
   }
-  console.timeEnd("selectionSort");
+  console.timeEnd('selectionSort');
   return arr;
 }
 
 var arr = [12, 12, 15, 445, 451, 12, 123456, 61, 20, 136, 4856, 1, 0];
 
-console.log("===>", selectionSort(arr));
+console.log('===>', selectionSort(arr));
 ```
 
 ## 插入排序
@@ -154,7 +154,7 @@ function mergeSort(data) {
 
 function merge(left, right) {
   var result = [];
-  console.time("mergeSort=>");
+  console.time('mergeSort=>');
   while (left.length && right.length) {
     if (left[0] <= right[0]) {
       result.push(left.shift());
@@ -168,12 +168,12 @@ function merge(left, right) {
   while (right.length) {
     result.push(right.shift());
   }
-  console.timeEnd("mergeSort=>");
+  console.timeEnd('mergeSort=>');
   return result;
 }
 var arr = [9, 8, 6, 4, 5, 3, 2];
 
-console.log("===>", mergeSort(arr));
+console.log('===>', mergeSort(arr));
 ```
 
 ## 快速排序
@@ -203,7 +203,7 @@ function fastSort(el) {
       right.push(el[i]);
     }
   }
-  console.log("===>", { halfIndex, pivot, left, right });
+  console.log('===>', { halfIndex, pivot, left, right });
   return fastSort(left).concat([pivot], fastSort(right));
 }
 
@@ -227,7 +227,7 @@ console.log(fastSort(arr));
  * 4. 只能对整数进行排序
  */
 function countingSort(data) {
-  console.time("counting=>");
+  console.time('counting=>');
   var len = data.length;
   var B = [];
   var C = [];
@@ -249,18 +249,19 @@ function countingSort(data) {
     B[C[data[k]] - 1] = data[k];
     C[data[k]]--;
   }
-  console.timeEnd("counting=>");
+  console.timeEnd('counting=>');
   return B;
 }
 
 var arr = [9, 8, 6, 4, 5, 3, 2];
 
-console.log("===>", countingSort(arr));
+console.log('===>', countingSort(arr));
 ```
 
 ## 桶排序
 
 略
+
 ## 基数排序
 
 略
@@ -305,8 +306,8 @@ console.log(binarySearchTwo(arr, 5)); // 返回在的索引值
 
 这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：
 
-基数排序：根据键值的每位数字来分配桶 计数排序：每个桶只存储单一键值 桶排序：每个桶存储一定范围的数值
+基数排序：根据键值的每位数字来分配桶计数排序：每个桶只存储单一键值桶排序：每个桶存储一定范围的数值
 
 ## 参考
 
-- [js 十大排序算法：冒泡排序]https://www.cnblogs.com/ybygb-geng/p/9355425.html
+- [js 十大排序算法：冒泡排序] https://www.cnblogs.com/ybygb-geng/p/9355425.html

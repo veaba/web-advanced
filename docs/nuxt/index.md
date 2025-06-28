@@ -1,11 +1,12 @@
 ---
 sidebar: auto
 ---
+
 # Nuxt
 
 ## AsyncData()
 
-- 导致session id不一直
+- 导致 session id 不一直
 - 刷新都没有了
 
 ## Nuxt.conf.js

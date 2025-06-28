@@ -3,45 +3,45 @@
 - 如何调试闭包函数中返回的变量值，假设已上线，不可更改原始代码
 
 ```js
-const fn = (function() {
+const fn = (function () {
   const closeData = {
     age: 28,
-    job: "web",
+    job: 'web',
   };
   return {
-    run: function(key) {
+    run: function (key) {
       return closeData[key];
     },
   };
 })();
 
 // 如果获取完整的 closeData呢？
-fn.run("web");
+fn.run('web');
 
 // 劫持原始对象的get
-Object.defineProperty(Object.prototype, "all", {
-  get: function() {
+Object.defineProperty(Object.prototype, 'all', {
+  get: function () {
     return this;
   },
 });
 
 // 获取所有
-fn.run("all");
+fn.run('all');
 ```
 
 或：
 
 ```js
-Object.prototype.__defineGetter__("get", function() {
+Object.prototype.__defineGetter__('get', function () {
   return this;
 });
 
-console.log(o.run("get"));
+console.log(o.run('get'));
 ```
 
 - JavaScript 语言中，只有函数内部的子函数才能读取局部变量。
 
-  - JS 特有链式作用域(chain scope )有关系，子对象会父级以上查找作用域变量。
+  - JS 特有链式作用域 (chain scope) 有关系，子对象会父级以上查找作用域变量。
   - 父作用域对子对象可见，反之不行
 
 - 闭包能够读取其他函数内部变量的函数
@@ -73,7 +73,7 @@ for (var i = 1; i <= 5; i++) {
 
 setTimeout 是异步函数，会先把循环全部执行完毕。
 
-**1. 使用闭包解决：**
+**1。使用闭包解决：**
 
 ```js
 for (var i = 1; i <= 5; i++) {
@@ -85,7 +85,7 @@ for (var i = 1; i <= 5; i++) {
 }
 ```
 
-**2. setTimeout 第三个参数：**
+**2。setTimeout 第三个参数：**
 
 ```js
 for (var i = 1; i <= 5; i++) {
@@ -99,7 +99,7 @@ for (var i = 1; i <= 5; i++) {
 }
 ```
 
-**3. 使用 let 声明，形成块级作用域：**
+**3。使用 let 声明，形成块级作用域：**
 
 ```js
 for (let i = 1; i <= 5; i++) {
@@ -130,8 +130,8 @@ setTimeout(fn, 2000);
 
 ```js
 function onSize(size) {
-  return function() {
-    document.border.style.fontSize = size + "px";
+  return function () {
+    document.border.style.fontSize = size + 'px';
   };
 }
 
@@ -144,9 +144,9 @@ document.body.onclick = size16;
 - TODO 接触变量的引用？
 
 ```js
-const arrayDeepLevel = (function() {
+const arrayDeepLevel = (function () {
   let level = -1;
-  return function(array) {
+  return function (array) {
     if (Array.isArray(array)) {
       for (let item of array) {
         if (Array.isArray(item)) {
@@ -162,4 +162,4 @@ const arrayDeepLevel = (function() {
 
 ## 引用
 
-- [阮一峰 - 学习 Javascript 闭包（Closure）](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
+- [阮一峰 - 学习 Javascript 闭包 (Closure)](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)

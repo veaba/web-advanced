@@ -4,7 +4,7 @@ sidebar: auto
 
 # 原型与原型链
 
-> 继承是为了方便代码的复用（数值、函数方法、属性），JS 采用了原型方案来实现继承，原型就是继承的实现方式之一！
+> 继承是为了方便代码的复用 (数值、函数方法、属性)，JS 采用了原型方案来实现继承，原型就是继承的实现方式之一！
 
 > 原型与原型链对于一个将走进高级 web 前端来讲，是一个门槛。由于概念性比较多。
 
@@ -42,7 +42,7 @@ console.log(a.constructor === A); // true
 /*例子demo*/
 function Animal(name) {
   this.name = name;
-  this.getName = function() {
+  this.getName = function () {
     return this.name;
   };
 }
@@ -50,11 +50,11 @@ function Animal(name) {
 function Cat(name, age) {
   Animal.call(this, name);
   this.age = age || 1;
-  this.meow = function() {
-    return "name:" + this.getName() + "\n" + "age:" + this.age;
+  this.meow = function () {
+    return 'name:' + this.getName() + '\n' + 'age:' + this.age;
   };
 }
-const cat = new Cat("Lily", 2);
+const cat = new Cat('Lily', 2);
 console.log(cat.meow());
 /**
  *@desc 注释解析 demo
@@ -62,7 +62,7 @@ console.log(cat.meow());
 // 声明一个函数Animal，这里一定要入参name 值，否则函数里面的this 是一个undefined
 function Animal(name) {
   this.name = name; // 实例会有一个name 属性和 一个getName的方法，会返回name的值
-  this.getName = function() {
+  this.getName = function () {
     return this.name;
   };
   //此时的this > Cat={name:Lily,age:2,getName:function(){},meow:function(){}}
@@ -74,11 +74,11 @@ function Cat(name, age) {
   // name 这里传递给函数Animal，而使用function 声明的函数，都是函数对象，它就是一个object
   Animal.call(this, name);
   this.age = age || 1;
-  this.meow = function() {
-    return "name:" + this.getName() + "\n" + "age:" + this.age;
+  this.meow = function () {
+    return 'name:' + this.getName() + '\n' + 'age:' + this.age;
   };
 }
-const cat = new Cat("Lily", 2);
+const cat = new Cat('Lily', 2);
 console.log(cat.meow());
 ```
 
@@ -89,9 +89,9 @@ console.log(cat.meow());
 /*定义一个函数test*/
 
 function test() {
-  console.log("I am test");
+  console.log('I am test');
 }
-test.children = "Leo";
+test.children = 'Leo';
 
 /* 这时候如何取出Leo 的值？*/
 test.children;
@@ -104,9 +104,9 @@ test.prototype.constructor.children;
 
 ## JS 原型继承的几种方法
 
-## 闭包(closure)`函数`
+## 闭包 (closure) `函数`
 
-> 定义：指 有权访问另外一个函数作用域中变量的函数！
+> 定义：指有权访问另外一个函数作用域中变量的函数！
 
 - 闭包只能取到包含函数中任何变量的最后一个的值
 
@@ -115,7 +115,7 @@ test.prototype.constructor.children;
 function test() {
   var arr = [];
   for (var i = 0; i < 10; i++) {
-    arr[i] = function() {
+    arr[i] = function () {
       console.log(i);
     };
   }
@@ -132,8 +132,8 @@ for (var j = 0; j < 10; j++) {
 function test() {
   var arr = [];
   for (var i = 0; i < 10; i++) {
-    (function(j) {
-      arr[j] = function() {
+    (function (j) {
+      arr[j] = function () {
         console.log(j);
       };
     })(i);
@@ -164,9 +164,10 @@ for (var j = 0; j < 10; j++) {
 - 为节点循环绑定 click 事件，在事件函数中使用档次循环的值或节点，而不是最后一次循环的值或节点
 
 ```js
+
 ```
 
-- 暂停执行（怎么理解）
+- 暂停执行 (怎么理解)
 - 包装相关功能
 
 ```js
@@ -187,7 +188,7 @@ a(); // 1 //2
 //2、demo2
 function f() {
   var n = 0;
-  this.inc = function() {
+  this.inc = function () {
     n++;
     console.info(n);
   };
@@ -211,11 +212,11 @@ c(); //1
 c(); //2
 ```
 
-1. 如何避免闭包?
-2. 闭包的应用场景?
+1. 如何避免闭包？
+2. 闭包的应用场景？
 
 ---
 
-> Hello world ！以下为技术题目：
+> Hello world！以下为技术题目：
 
 ---

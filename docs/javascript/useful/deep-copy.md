@@ -1,6 +1,6 @@
 # 深浅拷贝
 
-由于 JS 存在值引用的数据类型，如 Object 、Array，存在了赋值过程，被一同改变值的引用
+由于 JS 存在值引用的数据类型，如 Object、Array，存在了赋值过程，被一同改变值的引用
 
 ```js
 const a = { name: 'Li' };
@@ -36,7 +36,7 @@ console.log(a, b);
 
 ## 深拷贝
 
-**通过`JSON.parse(JSON.stringify(obj))`**：
+**通过 `JSON.parse(JSON.stringify(obj))`**：
 
 ```js
 const a = {

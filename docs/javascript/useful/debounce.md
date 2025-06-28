@@ -22,12 +22,12 @@
 
 重点是在 clearTimeout`
 
-**方案 1**:
+**方案 1**：
 
 ```js
 function debounce(fn, wait = 50) {
   let timer = null;
-  return function(...args) {
+  return function (...args) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       fn.apply(this, args);
@@ -36,20 +36,20 @@ function debounce(fn, wait = 50) {
 }
 
 const betterFn = debounce(() => {
-  console.log("go to ==>");
+  console.log('go to ==>');
 }, 200);
 
-document.addEventListener("scroll", betterFn);
+document.addEventListener('scroll', betterFn);
 ```
 
-**方案 2**:
+**方案 2**：
 
 - 具备立即执行的特性
 
 ```js
 function debounce(fn, wait = 50, im) {
   let timer = null;
-  return function(...args) {
+  return function (...args) {
     if (timer) clearTimeout(timer);
     if (!timer && im) {
       fn.apply(this, args);
@@ -62,11 +62,11 @@ function debounce(fn, wait = 50, im) {
 
 const betterFn = debounce(
   () => {
-    console.log("go to ==>");
+    console.log('go to ==>');
   },
   200,
   true
 );
 
-document.addEventListener("scroll", betterFn);
+document.addEventListener('scroll', betterFn);
 ```

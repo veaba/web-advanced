@@ -80,9 +80,9 @@ function total4(n, m) {
 }
 ```
 
-**线性阶 O(n)**:
+**线性阶 O(n)**：
 
-**对数阶 O(logN)**:
+**对数阶 O(logN)**：
 
 ```js
 function total() {

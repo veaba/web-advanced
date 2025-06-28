@@ -1,12 +1,13 @@
 # Node.js
-- [如何正确的学习Node.js](https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7)
+
+- [如何正确的学习 Node.js](https://cnodejs.org/topic/5ab3166be7b166bb7b9eccf7)
 - [v14.2.0](https://nodejs.org/dist/latest-v14.x/docs/api/)
 
 ::: tip
-使用python脚本，或者js脚本来完成这项爬取+翻译工作
+使用 python 脚本，或者 js 脚本来完成这项爬取+翻译工作
 :::
-  
-## 目录(v14.2.0)
+
+## 目录 (v14.2.0)
 
 - Assertion Testing
 - Async Hooks

@@ -20,7 +20,7 @@ sidebar: auto
   - 原因：
 - postMessage 跨文档通信 API，跨窗口通信
 - window.name 进行跨域
-- 跨资源共享（CORS）
+- 跨资源共享 (CORS)
   - > IE10
   - 依赖服务端改造 header
 - nginx 代理跨域

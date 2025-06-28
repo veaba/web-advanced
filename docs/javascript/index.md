@@ -6,4 +6,6 @@ sidebar: auto
 
 > 基于本人学习经历，尝试写一篇零基础的 JavaScript 新手指南
 
+2
 <Catalog base="/javascript" />
+3

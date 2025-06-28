@@ -8,7 +8,7 @@
 
 - 同时，它也不能被添加属性。
 
-**可通过`Object.prototype.toString.call()`** 来判断其类型：`[object Symbol]`
+**可通过 `Object.prototype.toString.call()`** 来判断其类型：`[object Symbol]`
 
 ## 用途
 

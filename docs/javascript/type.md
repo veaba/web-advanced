@@ -20,11 +20,11 @@
 
 - `object`
 
-  - `function` （都是属于 `object`）
+  - `function` (都是属于 `object`)
 
-  - `array` （都是属于 `object`）
+  - `array` (都是属于 `object`)
 
-### 类型转换
+## 类型转换
 
 ### 类型判断
 
@@ -75,7 +75,7 @@ console.log(arr instanceof Array); // true
 
 **constructor**：
 
-- 由于`constructor` 是可被改变的，所以在这种方式并不安全
+- 由于 `constructor` 是可被改变的，所以在这种方式并不安全
 
 ```js
 console.log(bool.constructor === Boolean); // true

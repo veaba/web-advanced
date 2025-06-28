@@ -1,8 +1,8 @@
 # CSRF
 
-Cross site request forgery （跨站请求伪造）。
+Cross site request forgery (跨站请求伪造)。
 
-例如，登录微博账号后，copy 某个 xhr 请求的 `curl`，丢到控制台或是复制所有 cookie 之类的数据丢到 `Postman` 中，这就是跨站请求伪造(`CSRF`)。
+例如，登录微博账号后，copy 某个 xhr 请求的 `curl`，丢到控制台或是复制所有 cookie 之类的数据丢到 `Postman` 中，这就是跨站请求伪造 (`CSRF`)。
 
 第三方引导发出的 `cookie`，称为第三方 `cookie`，可用于 `CSRF` 攻击，还可以用于用户追踪等营销行为
 
@@ -24,7 +24,7 @@ Cross site request forgery （跨站请求伪造）。
 
 ### 敏感信息都是用 `POST`
 
-- 就算是 copy 参数也很多，步骤 比 get 还多
+- 就算是 copy 参数也很多，步骤比 get 还多
 - 如果网站存在 `xss` 漏洞，都很费劲
 
 比如构造一个 `from` 表单
@@ -34,17 +34,17 @@ Cross site request forgery （跨站请求伪造）。
   <input type="text" value="name" />
 </from>
 <script>
-  document.forms("foo")[0].submit();
+  document.forms('foo')[0].submit();
 </script>
 ```
 
-在 console 执行 script 部分代码，如果有 from， 会直接跳到百度（或许与 Chrome ）设置默认引擎有关系。
+在 console 执行 script 部分代码，如果有 from，会直接跳到百度 (或许与 Chrome) 设置默认引擎有关系。
 
-尝试在 firefox 中打开阮老师 blog，会网页提示： `留言提交失败。原因：Invalid request`
+尝试在 firefox 中打开阮老师 blog，会网页提示：`留言提交失败。原因：Invalid request`
 
 ### 将 Cookie 设置为 `HttpOnly`
 
-对应 header 是： `Set-Cookie: hello=world;httponly`
+对应 header 是：`Set-Cookie: hello=world;httponly`
 
 - JS 脚本将无法读取 `cookie` 信息
 

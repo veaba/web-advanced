@@ -10,7 +10,7 @@ sidebar: auto
 - CSS BFC block formatting context
   > 块级格式上下文。里面子元素不会影响到外面的元素
 
-## CSS 实现水平垂直居中的 1010 种方式（史上最全）
+## CSS 实现水平垂直居中的 1010 种方式 (史上最全)
 
 - [CSS 实现水平垂直居中](https://segmentfault.com/a/1190000016389031)
 
@@ -24,7 +24,7 @@ sidebar: auto
   - 若只有一个取值，则其第二个取值默认为 50%；
   - 如果第一个值取关键词，则第二个默认值为：center
   - 若属性取值用 left、center、right、top、bottom 表示，则该属性取值的顺序可以颠倒，否则其取值顺序不能颠倒
-- 关于`link` 和 `@import`：
+- 关于 `link` 和 `@import`：
   - 页面被加载时，`link` 会同时被加载
   - `@import` 引用的 css 会等到页面被加载完再加载
   - `@import` 只能加载 css，`link` 标签还可以定义 RSS 等
@@ -43,8 +43,8 @@ sidebar: auto
   - 满足以下都可以触发 BFC
     - body 根元素
     - float 元素：除以 none 意外的值
-    - display: `inline-block`、`table-cells`、`flex`
-    - overflow: 非 visible 的值( `hidden`、`auto`、`scroll` )
+    - display：`inline-block`、`table-cells`、`flex`
+    - overflow：非 visible 的值 (`hidden`、`auto`、`scroll`)
     - position: `absolute`
 - BFC 浮动子元素也参与计算
 - BFC 页面隔离独立容器，容器的子元素不会影响到外部
@@ -154,7 +154,7 @@ sidebar: auto
 - `! important`: infinite
 - `inline` 1000
 - `id`: 100
-- `class`、`attr`、`伪类`: 10
+- `class`、`attr`、`伪类`：10
 - `标签`: 1
 - `*`: 0
 

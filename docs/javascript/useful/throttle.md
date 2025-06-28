@@ -6,7 +6,7 @@
 
 - 跟水龙头一个概念，开一次，流水，关一次，停水，不管后面来了多少
 
-- 某个函数一定时间间隔内（如 3s ）执行一次，在 3s 内无视后来产生的**函数调用请求**
+- 某个函数一定时间间隔内 (如 3s) 执行一次，在 3s 内无视后来产生的**函数调用请求**
 
 - 马老师被叫去打闪电五连鞭，3s 内打一次，不管叫多少次，他只能 3s 内打一次
 
@@ -18,7 +18,7 @@
 
 3. 上传进度
 
-4. input 实时查询，每隔 x s 发送一次请求，服务端是限流(Rate limit)
+4. input 实时查询，每隔 x s 发送一次请求，服务端是限流 (Rate limit)
 
 ## 实现
 
@@ -26,7 +26,7 @@
 const throttle = (fn, wait = 50) => {
   let pre = 0;
 
-  return function(...args) {
+  return function (...args) {
     let now = new Date();
     if (now - pre > wait) {
       pre = now;
@@ -36,7 +36,7 @@ const throttle = (fn, wait = 50) => {
 };
 
 const betterFn = throttle(() => {
-  console.log("log");
+  console.log('log');
 }, 1000);
 
 // 每 10 毫秒执行一次 betterFn 函数，但是只有时间差大于 1000 时才会执行 fn
@@ -46,7 +46,7 @@ setInterval(betterFn, 10);
 或者方案 2：
 
 ```js
-// 
+//
 function throttle(f, wait) {
   let timer;
   return (...args) => {

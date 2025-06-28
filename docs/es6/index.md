@@ -17,7 +17,7 @@ sidebar: auto
   - 必须先赋值
   - 不可重复声明变量
   - 对于纯数字、字符、等基本结构的话，不可更改，但可以更改数组里面的元素、对象里面的 key
-  - 只能去改变引用类型(object array)，无法取改变基本类型(`boolean`、`number`、`string`、`null`、`undefined`、`symbol`、`bigint`（Chrome 67+开始）)
+  - 只能去改变引用类型 (object array)，无法取改变基本类型 (`boolean`、`number`、`string`、`null`、`undefined`、`symbol`、`bigint` (Chrome 67+开始))
 
 - var
 
@@ -89,12 +89,12 @@ a.sayName === b.sayName; //false
 
 ## 函数
 
-- 剩余参数(rest 参数)的表示法，同样，items 是最后一个参数
+- 剩余参数 (rest 参数) 的表示法，同样，items 是最后一个参数
 
 ```js
 // 此时的items 是一个数组
 function push(array, ...items) {
-  items.forEach(function(item) {
+  items.forEach(function (item) {
     array.push(item);
   });
 }
@@ -108,9 +108,9 @@ console.log(a); //[1,2,3]
 
 > `特殊的函数`=> `类表达式`、`类声明`
 
-- 只能有且只有一个`constructor`方法
-- 一个构造函数可以使用`super` 关键字来调用一个父类的构造函数
-- `static` 关键字定义一个类的静态方法。可以不需要实例化该类，但不能通过一个`类实例调用静态方法`
+- 只能有且只有一个 `constructor` 方法
+- 一个构造函数可以使用 `super` 关键字来调用一个父类的构造函数
+- `static` 关键字定义一个类的静态方法。可以不需要实例化该类，但不能通过一个 `类实例调用静态方法`
 
 ```js
 //demo1
@@ -183,11 +183,11 @@ speak.bind(obj)(); //这样就可以了~~
 // demo2 ，知道结果可能如下，但不太理解这样的方式
 function Animal() {}
 
-Animal.prototype.speak = function() {
+Animal.prototype.speak = function () {
   return this;
 };
 
-Animal.eat = function() {
+Animal.eat = function () {
   return this;
 };
 
@@ -209,24 +209,24 @@ class Animal {
     this.name = name;
   }
   speak() {
-    console.log(this.name + "Noise");
+    console.log(this.name + 'Noise');
   }
 }
 // 子类
 class Dog extends Animal {
   speak() {
     //此处基础父类的this 属性name 值
-    console.log(this.name + "by dog");
+    console.log(this.name + 'by dog');
   }
 }
 
 //实例化
-const d = new Dog("Lilei");
+const d = new Dog('Lilei');
 d.speak();
 ```
 
 - species
-  > 派生数组类。返回 Array 对象，允许覆盖默认的构造函数。类似`map()`返回默认构造函数的方法时，希望返回一个父 Array 对象，而不是 Arr，可以`Symbol.species`
+  > 派生数组类。返回 Array 对象，允许覆盖默认的构造函数。类似 `map()` 返回默认构造函数的方法时，希望返回一个父 Array 对象，而不是 Arr，可以 `Symbol.species`
 
 ```js
 class Arr extends Array {
@@ -250,23 +250,23 @@ class Cat {
     this.name = name;
   }
   speack() {
-    console.log(this.name + " makes a noise");
+    console.log(this.name + ' makes a noise');
     return 2;
   }
 }
 class Lio extends Cat {
   speak() {
     super.speak();
-    console.log(this.name + " for Lio");
+    console.log(this.name + ' for Lio');
     return 111;
   }
 }
-const animal = new Lio("litter red");
+const animal = new Lio('litter red');
 
 /** demo2 super 简单应用 */
 // 声明一个对象
 const Family = {
-  name: "Jo Home",
+  name: 'Jo Home',
 };
 // 再生一个对象，内含一个函数`getName`
 const main = {
@@ -297,9 +297,9 @@ Object.getPrototypeOf(this).name.call(this);
 const promise = new Promose((resolve, reject) => {
   const a = 1;
   if (a === 1) {
-    resolve("ddd");
+    resolve('ddd');
   } else {
-    reject("sss"); //最好是返回一个变量，不然某些环境下，会导致警告或者报错，可以是字符串、数组、对象，但只能是一个参数
+    reject('sss'); //最好是返回一个变量，不然某些环境下，会导致警告或者报错，可以是字符串、数组、对象，但只能是一个参数
   }
 });
 
@@ -314,11 +314,11 @@ promise()
 
 - resolve()
 
-  - 只能入参一个，但可以是`数组`、`对象`
+  - 只能入参一个，但可以是 `数组`、`对象`
 
 - reject()
 
-  - 只能入参一个，但可以是`数组`、`对象`
+  - 只能入参一个，但可以是 `数组`、`对象`
 
 - then()
 
@@ -340,8 +340,8 @@ promise()
   - 更好的语义
   - 更广的适用性
   - 返回值是 promise
-- async 函数的的返回值是 Promise 对象，aysnc 表示 该函数内部有异步操作
-- await 命令后可以是 Promise 对象和原始类型的值（数值，字符串，布尔值，此时等同于同步操作）
+- async 函数的的返回值是 Promise 对象，aysnc 表示该函数内部有异步操作
+- await 命令后可以是 Promise 对象和原始类型的值 (数值，字符串，布尔值，此时等同于同步操作)
 - 如果包装成为一个函数，then 里面表示当遇到 await 是执行 then 然后才执行后面
 - 如何使用 asyns/await
   - 函数声明
@@ -402,11 +402,11 @@ async function all2() {
 
 // 一个普通async 函数里面，执行两个异步函数会怎么样呢?
 async function all() {
-  console.log("a");
+  console.log('a');
   await all1();
-  console.log("b");
+  console.log('b');
   await all2();
-  console.log("c"); //这个不会执行，以为还在等待promise 的回来
+  console.log('c'); //这个不会执行，以为还在等待promise 的回来
 }
 all();
 ```
@@ -437,15 +437,15 @@ async function all2() {
 
 // 一个普通async 函数里面，执行两个异步函数会怎么样呢?
 async function all() {
-  console.log("a");
+  console.log('a');
   await all1().then((res1) => {
     console.log(res1);
   });
-  console.log("b");
+  console.log('b');
   await all2().then((res2) => {
     console.log(res2);
   });
-  console.log("c");
+  console.log('c');
 }
 all();
 
@@ -466,7 +466,7 @@ a
 第 0s——10s 计时后，打印 1 10
 10 异步一函数的 then
 打印 b
-第 10s——17s 计时后， 打印 2 8
+第 10s——17s 计时后，打印 2 8
 8 异步二函数的 then
 c
 第 18s……
@@ -499,20 +499,20 @@ async function all() {
   setInterval(() => {
     console.log(i++);
   }, 1000);
-  console.log("a");
+  console.log('a');
   await all1().then((res1) => {
     console.log(res1);
   });
-  console.log("b");
+  console.log('b');
   await all2().then((res2) => {
     console.log(res2);
   });
-  console.log("c");
+  console.log('c');
 }
 all();
 ```
 
-再看，把 async/await 里面有两个普通的定时任务会怎么样?
+再看，把 async/await 里面有两个普通的定时任务会怎么样？
 
 结论，此时 all1 与 all2 是异步任务了，
 a
@@ -546,11 +546,11 @@ async function all() {
   setInterval(() => {
     console.log(i++);
   }, 1000);
-  console.log("a");
+  console.log('a');
   await all1();
-  console.log("b");
+  console.log('b');
   await all2();
-  console.log("c");
+  console.log('c');
 }
 all();
 ```
@@ -568,30 +568,30 @@ a3();
 a4();
 
 function* hello() {
-  yield "hello"; //yield 表达式
-  yield "world"; //yield 表达式
-  return "hellow and world";
+  yield 'hello'; //yield 表达式
+  yield 'world'; //yield 表达式
+  return 'hellow and world';
 }
 ```
 
 - 分段执行。`yiled` 表示暂停执行的标志，`next` 表示恢复执行
 - es6 提供的异步编程解决方案。[阮一峰 Generator 函数的语法](http://es6.ruanyifeng.com/#docs/generator)
 - 状态机，封装了多个内部状态
-- 有`*`星号 function \* a(){}
-- 函数体内部使用了 yield 表达式，定义不同的内部状态(yield 产出的意思) function \* a(){yield 'hello';};var func = a();
+- 有 `*` 星号 function \* a(){}
+- 函数体内部使用了 yield 表达式，定义不同的内部状态 (yield 产出的意思) function \* a(){yield ‘hello’；}；var func = a()；
 
 ## Symbol
 
 - 无法计算
 - 描述值相同，两个值也是不相同的
-- 无法使用`new` 命令，symbol 不是一个对象
-- 描述值是一个对象，则调用该对象的 toString()方法转为字符
+- 无法使用 `new` 命令，symbol 不是一个对象
+- 描述值是一个对象，则调用该对象的 toString() 方法转为字符
 - Symbol 无法与其他类型进行运算
 - 每个 Symbol 值都不相等，保证不会出现同名的属性
-- Symbol 作为属性名，不会出现在`for...in`、`for...of`循环中
-- 无法被`Object.keys()`、`Object.getOwnPropertyNames()`、`JSON.stringify()`返回
-- 可通过 `Object.getOwnPropertySymbols`方法,返回一个数组，成员是当前对象的所有用作属性名的 Symbol 值
-- Symbol.for()与 Symbol()前者调用返回存在的值，否则每次都新建
+- Symbol 作为属性名，不会出现在 `for...in`、`for...of` 循环中
+- 无法被 `Object.keys()`、`Object.getOwnPropertyNames()`、`JSON.stringify()` 返回
+- 可通过 `Object.getOwnPropertySymbols` 方法，返回一个数组，成员是当前对象的所有用作属性名的 Symbol 值
+- Symbol.for() 与 Symbol() 前者调用返回存在的值，否则每次都新建
 
 ### 消除魔术字符串
 
@@ -610,7 +610,7 @@ Object.getOwnPropertySymbols(obj);
 
 ## todo Reflect
 
-> 现阶段一些方法同时部署到 Object 、Reflect 对象上，未来某些方法只能从 Reflect 上获取，比如 Object.defineProperty
+> 现阶段一些方法同时部署到 Object、Reflect 对象上，未来某些方法只能从 Reflect 上获取，比如 Object.defineProperty
 
 - 合理化取值。比如 Object.defineProperty(obj,name,desc) 在无法定义属性时，报错，但 Reflect.defineProperty(obj,name,desc) 会返回 false
 
@@ -630,22 +630,22 @@ if (Reflect.defineProperty(target, property, attributes)) {
 }
 ```
 
-- `Object`操作都变成了函数行为，而不是一个操作符
+- `Object` 操作都变成了函数行为，而不是一个操作符
 
 ```js
 // 旧的写法
-"assign" in Object; //true
+'assign' in Object; //true
 // 新写法
-Reflect.has(Object, "assigne"); //true
+Reflect.has(Object, 'assigne'); //true
 
 // 旧的delete 操作符
 var obj = {
-  name: "Old",
+  name: 'Old',
 };
 delete obj.name;
 
 // 新的函数式操作方法
-Reflect.deleteProperty(obj, "name");
+Reflect.deleteProperty(obj, 'name');
 ```
 
 - Reflect 对象的方法和 Proxy 对象的方法一一对象，只要在 Proxy 有，Reflect 就会有。
@@ -654,15 +654,15 @@ Reflect.deleteProperty(obj, "name");
 ```js
 var obj = new Proxy(obj, {
   get(target, name) {
-    console.log("get", target, name);
+    console.log('get', target, name);
     return Reflect.get(target, name);
   },
   deleteProperty(target, name) {
-    console.log("delete ", name);
+    console.log('delete ', name);
     return Reflect.deleteProperty(target, name);
   },
   has(target, name) {
-    console.log("has", name);
+    console.log('has', name);
     return Reflect.has(target, name);
   },
 });
@@ -697,7 +697,7 @@ Reflect.apply(Math.floor, undefined, [1.6]); //1
 
 ### 使用 Proxy 实现观察者模式
 
-观察者模式（Observer mode）
+观察者模式 (Observer mode)
 
 ```js
 const queueObservers = new Set();

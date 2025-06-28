@@ -3,7 +3,8 @@
     "test": "jest",
     "dev": "vitepress dev docs --port 5174",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
+    "preview": "vitepress preview docs",
+    "lint": "zhlint --fix docs/**/*.md"
   },
   "dependencies": {
     "vitepress": "1.6.3",
@@ -12,7 +13,8 @@
   "devDependencies": {
     "@types/node": "^24.0.7",
     "jest": "^26.6.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "zhlint": "^0.8.2"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [

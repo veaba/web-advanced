@@ -1,11 +1,12 @@
 ---
 sidebar: auto
 ---
+
 # WebGL
 
-摘自MDN：https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
+摘自 MDN：https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
 
-> WebGL 是一种JavaScript API。用于任何兼容Web浏览器中呈现交互式3D和2D。WebGL通过一个与Open ES 2.0相符的API，可以在Canvas 元素中使用。
+> WebGL 是一种 JavaScript API。用于任何兼容 Web 浏览器中呈现交互式 3D 和 2D。WebGL 通过一个与 Open ES 2.0 相符的 API，可以在 Canvas 元素中使用。
 
 (意味着，做一些嵌入式支持的话，其他设备是可以支持)
 
@@ -24,6 +25,7 @@ sidebar: auto
 ## 事件
 
 ## 常量和类型
+
 - WebGL 常量
 - WebGL 类型
 

@@ -17,7 +17,7 @@
 
 强缓存下，命中规则
 
-```
+```shell
 +------------+                             +------------+
 |  客户端     |  ------request---------->   |  缓存数据库  |
 +------------+                             +------------+
@@ -32,7 +32,7 @@
 
 强缓存，为命中
 
-```
+```shell
 +------------+                       +------------+  +------------+
 |  客户端     | ------ request ---->  |  缓存数据库  |  |   服务器    |
 +------------+                       +------------+  +------------+
@@ -53,7 +53,7 @@
 
 客户端，从缓存数据库中获得到缓存数据的标识，得到标识后发起 request 到服务器，询问是否最新的？
 
-![](/images/http/cache-304.png)
+![cache-304](/images/http/cache-304.png)
 
 - 如果没有失效，服务器，返回 `304`，客户端直接从缓存中获得所请求的的数据？
   - (比如不加后缀的，即哈希值，容易返回 `304`)
@@ -62,7 +62,7 @@
 
 协商缓存下，命中规则
 
-```
+```shell
 +------------+                       +------------+  +------------+
 |  客户端     |                       |  缓存数据库  |  |   服务器    |
 +------------+                       +------------+  +------------+
@@ -80,7 +80,7 @@
 
 协商缓存下，未命中规则
 
-```
+```shell
 +------------+                       +------------+  +------------+
 |  客户端     |                       |  缓存数据库  |  |   服务器    |
 +------------+                       +------------+  +------------+
@@ -142,7 +142,7 @@
 
 在强缓存阶段：服务器响应的 header 中 `Expires(逾期)`、`Cache-Control` 表示。
 
-![](/images/http/baidu-cache.png)
+![baidu-cache](/images/http/baidu-cache.png)
 
 上图中，百度首页，有两个文件 (`cd37ed75a9387c5b.js`、`d`) 将 `Cache-control` 设置为极低：`max-age=3600` 甚至不设置。
 
@@ -161,23 +161,21 @@
 
 ## 总结
 
-- 强缓存：`Cache-control`、 `Expires`
-- 协商缓存：`last-modified`、 `eTag`
-- `Cache-Control:max-ege:600`: 在`600s`后，请求这个文件才重新请求服务器
-- `Expires`: `Expires`= max-age + 请求时间，需要与 `last-modified` 配合
+- 强缓存：`Cache-control`、`Expires`
+- 协商缓存：`last-modified`、`eTag`
+- `Cache-Control:max-ege:600`：在 `600s` 后，请求这个文件才重新请求服务器
+- `Expires`：`Expires`= max-age + 请求时间，需要与 `last-modified` 配合
   - 过期时间前，可以从浏览器缓存取数据，无需请求
 
-## TODO:问题
+## TODO：问题
 
 1. HTTP 的服务器是如何缓存数据的？
 2. `cache-control:max-age=10`，`10s` 后如何处理后续的缓存工作？
 3. `协商缓存是什么？`
-4. `强缓存是什么？`是怎么判断本地有缓存的？
+4. `强缓存是什么？` 是怎么判断本地有缓存的？
 5. Chrome 勾选了 `Disable Cache`，禁用缓存
-
-- 顺序： ~~强缓存(`Cache-Control`、`Expires`)~~ ——> 协商缓存(`last-modified` 、`ETag`)。 直接进入协商缓存
-
+   - 顺序：~~强缓存 (`Cache-Control`、`Expires`)~~ ——> 协商缓存 (`last-modified`、`ETag`)。直接进入协商缓存
 6. Chrome 取消勾选了 `Disable Cache`
 
-- 顺序： 强缓存(`Cache-Control`、`Expires`) ——> 协商缓存(`last-modified` 、`ETag`)
-- 此时直接从`memory` 或 `disk` 中读取存储的缓存
+- 顺序：强缓存 (`Cache-Control`、`Expires`) ——> 协商缓存 (`last-modified`、`ETag`)
+- 此时直接从 `memory` 或 `disk` 中读取存储的缓存
