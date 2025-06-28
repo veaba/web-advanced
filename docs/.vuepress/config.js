@@ -5,7 +5,6 @@ module.exports = {
 	description: "进阶web高级前端知识体系",
 	displayAllHeaders: true, // 默认值：false
 	// locales:{},//多语言支持 https://vuepress.vuejs.org/zh/guide/i18n.html
-	scss: {},
 	locales: {
 		"/": {
 			lang: "zh-CN",
