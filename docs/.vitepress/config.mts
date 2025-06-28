@@ -18,6 +18,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: '/favicon.png',
     nav: [
       { text: '指南', link: '/guide' },
       { text: 'JavaScript', link: '/javascript' },
