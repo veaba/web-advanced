@@ -1,14 +1,20 @@
-# 实例构造函数
+# 声明函数的几种函数，目前三种
 
-- 相同构造函数出来的两个视力不相等，但其子属性、方法相同
+- 函数声明
+- 函数表达式
+- 匿名函数/拉姆达函数，`name` 是空字符串
 
 ```js
-class A {
-  getName() {}
+/*1 函数声明*/
+function test() {
+  //todo
 }
-const a = new A();
-const b = new A();
-
-a === b; // false
-a.getName === b.getName; // true
+/*2 函数表达式*/
+const test1 = function () {
+  //todo
+};
+/*3 匿名函数/立即执行*/
+(function () {
+  //todo
+})();
 ```

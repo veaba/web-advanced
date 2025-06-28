@@ -42,7 +42,7 @@ export default defineConfig({
             { text: '原型与原型链', link: '/javascript/prototype' },
             { text: 'Blob', link: '/javascript/blob' },
             { text: 'HTTP', link: '/http' },
-            { text: '设计模式', link: '/javascript/design-pattern' },
+            { text: '设计模式', link: '/javascript/design-model' },
             { text: '正则', link: '/javascript/regex' },
             {
               text: '函数',
