@@ -1,4 +1,7 @@
-<!-- Catalog-->
+<!-- 
+@desc 本组件将允许用户展开所有需要的目录
+@author veaba
+-->
 <script setup lang="ts">
 import { onMounted, computed, ref, toRef } from 'vue';
 import { useData, useRoute, useRouter } from 'vitepress';

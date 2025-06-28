@@ -9,21 +9,21 @@ export default defineConfig({
     nav: [
       { text: '指南', link: '/guide' },
       { text: 'Leetcode', link: '/leetcode' },
-      { text: 'actix-web', link: '/rust/actix-web' },
+      { text: 'actix-web', link: '/rust/actix-web/' },
       { text: 'JavaScript', link: '/javascript' },
       { text: 'Node', link: '/node' },
       { text: '面试题', link: '/interview' },
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
-        ],
-      },
-    ],
+    // sidebar: [
+    //   {
+    //     text: 'Examples',
+    //     items: [
+    //       { text: 'Markdown Examples', link: '/markdown-examples' },
+    //       { text: 'Runtime API Examples', link: '/api-examples' },
+    //     ],
+    //   },
+    // ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/veaba/web-advanced' }],
     footer: {
