@@ -20,7 +20,6 @@ export default {
 interface CatalogItem {
   title: string;
   path: string;
-  // TODO
   children: CatalogItem[] | null;
   headers: APIHeader[];
 }
@@ -36,19 +35,21 @@ const readDirList = (srcDirAbsolute: string) => {
     const dirPath = path.join(srcDirAbsolute, dir);
     const isDirStat = fs.statSync(dirPath).isDirectory();
 
-    // TODO debug
     if (isDirStat && !IGNORE_PATH_LIST.includes(dir)) {
-    // if (isDirStat && !IGNORE_PATH_LIST.includes(dir) && dir === 'pop') {
       // 下钻二级结构
       const subFiles = fs.readdirSync(dirPath);
 
       const children: CatalogItem[] = [];
+
       subFiles.forEach((subFile) => {
         const subDirPath = path.join(dirPath, subFile);
         if (fs.statSync(subDirPath).isFile()) {
+          console.log('dir', dir);
+          console.log('subFile', subFile);
+          const subFileName = subFile.replace(/\.md$/, '');
           children.push({
-            title: subFile,
-            path: subDirPath,
+            title: subFileName,
+            path: `/${dir}/${subFileName}`,
             children: null,
             headers: parsePageHeaders(subDirPath),
           });
@@ -57,7 +58,7 @@ const readDirList = (srcDirAbsolute: string) => {
 
       targetDirs.push({
         title: dir,
-        path: dirPath,
+        path: dir.replace(/\.md$/, ''),
         children,
         headers: [{ anchor: dirPath, text: dirPath }],
       });
@@ -126,7 +127,6 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
         anchor: mdText,
       },
     ];
-    console.log('h2s==> ', mdText);
   }
 
   // 如果没有

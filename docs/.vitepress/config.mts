@@ -11,6 +11,7 @@ export default defineConfig({
       `
       :root {
         --vt-c-bg-soft: #f9f9f9;
+        --vt-c-green: #42b883;
       }
     `,
     ],
