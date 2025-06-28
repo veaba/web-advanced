@@ -4,6 +4,17 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'web advanced',
   description: '进阶的 web 前端知识体系',
+  head: [
+    [
+      'style',
+      {},
+      `
+      :root {
+        --vt-c-bg-soft: #f9f9f9;
+      }
+    `,
+    ],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -30,5 +41,8 @@ export default defineConfig({
       copyright: 'Copyright © 2018-present',
       message: "Powered by <a href='https://web.veaba.me' target='_blank'>veaba</a>",
     },
+  },
+  vite: {
+    plugins: [],
   },
 });
