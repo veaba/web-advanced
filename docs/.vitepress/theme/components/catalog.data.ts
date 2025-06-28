@@ -27,46 +27,49 @@ interface CatalogItem {
 /**
  * read dir list
  */
-const readDirList = (srcDirAbsolute: string) => {
-  const dirs = fs.readdirSync(srcDirAbsolute);
-  const targetDirs: CatalogItem[] = [];
+const readDirList = (srcDir: string) =>
+  fs
+    .readdirSync(srcDir)
+    .filter((dir) => !IGNORE_PATH_LIST.includes(dir))
+    .map((dir) => {
+      const dirPath = path.join(srcDir, dir);
+      if (!fs.statSync(dirPath).isDirectory()) return null;
 
-  dirs.forEach((dir) => {
-    const dirPath = path.join(srcDirAbsolute, dir);
-    const isDirStat = fs.statSync(dirPath).isDirectory();
+      const children = fs.readdirSync(dirPath).flatMap((item) => scanItems(dir, dirPath, item));
 
-    if (isDirStat && !IGNORE_PATH_LIST.includes(dir)) {
-      // 下钻二级结构
-      const subFiles = fs.readdirSync(dirPath);
-
-      const children: CatalogItem[] = [];
-
-      subFiles.forEach((subFile) => {
-        const subDirPath = path.join(dirPath, subFile);
-        if (fs.statSync(subDirPath).isFile()) {
-          console.log('dir', dir);
-          console.log('subFile', subFile);
-          const subFileName = subFile.replace(/\.md$/, '');
-          children.push({
-            title: subFileName,
-            path: `/${dir}/${subFileName}`,
-            children: null,
-            headers: parsePageHeaders(subDirPath),
-          });
-        }
-      });
-
-      targetDirs.push({
+      return {
         title: dir,
-        path: dir.replace(/\.md$/, ''),
-        children,
+        path: `/${dir}`,
+        children: children.length ? children : null,
         headers: [{ anchor: dirPath, text: dirPath }],
-      });
-    }
-  });
+      };
+    })
+    .filter(Boolean) as CatalogItem[]; // Add type assertion here to fix the error
 
-  return targetDirs;
+const scanItems = (parent: string, parentPath: string, item: string) => {
+  const itemPath = path.join(parentPath, item);
+  const stat = fs.statSync(itemPath);
+
+  if (stat.isFile()) {
+    return [createItem(parent, '', item, itemPath)];
+    // return item === 'index.md' ? [] : [createItem(parent, '', item, itemPath)];
+  }
+
+  return fs.readdirSync(itemPath).flatMap((subItem) => {
+    const subPath = path.join(itemPath, subItem);
+    // && subItem !== 'index.md'
+    return fs.statSync(subPath).isFile()
+      ? [createItem(parent, item, subItem, subPath)]
+      : scanItems(parent, itemPath, subItem);
+  });
 };
+
+const createItem = (parent: string, folder: string, file: string, path: string) => ({
+  title: [folder, file.replace(/\.md$/, '')].filter(Boolean).join('/'),
+  path: `/${[parent, folder, file.replace(/\.md$/, '')].filter(Boolean).join('/')}`,
+  children: null,
+  headers: parsePageHeaders(path),
+});
 
 // Interface defining the structure of a single header in the API
 interface APIHeader {

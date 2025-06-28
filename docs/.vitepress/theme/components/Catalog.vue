@@ -3,7 +3,7 @@
 @author veaba
 -->
 <script setup lang="ts">
-import { onMounted, computed, ref, toRef } from 'vue';
+import { onMounted, computed, ref, toRef, defineProps } from 'vue';
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import { data as apiIndex } from './catalog.data';
@@ -12,15 +12,26 @@ const query = ref('');
 
 const normalize = (s: string) => s.toLowerCase().replace(/-/g, ' ');
 
+const props = defineProps({
+  base: {
+    type: String,
+    default: '',
+  },
+});
+
 const pages = computed(() => {
   const q = normalize(query.value);
   const matches = (text: string) => normalize(text).includes(q);
 
-  return apiIndex.filter((i) => i) as APIGroup[];
+  return apiIndex.filter((i) => {
+    if (props.base) {
+      return i.path === props.base.replace(/\//, '');
+    } else return i;
+    i.path === props.base;
+  }) as APIGroup[];
 });
 
 onMounted(async () => {
-  console.log('pages', pages);
 });
 </script>
 
@@ -30,7 +41,7 @@ onMounted(async () => {
       <h2 :id="section.anchor">{{ section.title }}</h2>
       <div class="api-groups">
         <div v-for="item of section.children" :key="item.text" class="api-group">
-          <h3>{{ item.text || item.title}}</h3>
+          <h3>{{ item.text || item.title }}</h3>
           <ul>
             <li v-for="h of item.headers" :key="h.anchor" class="li-text">
               <a :href="item.path + '.html#' + h.anchor">{{ h.text }}</a>
@@ -54,7 +65,7 @@ li {
   /* list-style: none; */
 }
 
-.li-text{
+.li-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

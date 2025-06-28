@@ -30,11 +30,10 @@
 - ——> 同步任务完成后，从 event queue 读取事件放入主线程
 - ——> 回调函数可能包含不同的任务，因此循环执行上述
 
-## Node 
+## Node
+
 - 略
 
-## reference:
+## reference
 
-- [带你彻底弄懂Event Loop](https://segmentfault.com/a/1190000016278115)
-
- 
+- [带你彻底弄懂 Event Loop](https://segmentfault.com/a/1190000016278115)

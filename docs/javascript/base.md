@@ -54,7 +54,7 @@ sidebar: auto
   - `try`
 
   ```js
-  const s = "Hello";
+  const s = 'Hello';
   with (s) {
     console.log(length);
   }
@@ -136,33 +136,33 @@ sidebar: auto
 
 ```js
 // 以下产生一个bug，不管怎么样使用关键字name 声明一个值，只能是string 类型！！！
-var name = "22";
-var tt = "22";
+var name = '22';
+var tt = '22';
 var name1 = 22;
 var tt1 = 22;
 // demo1
 switch (name) {
   // 终止错误，合并两个条件
-  case "22":
-  case "AbortError":
+  case '22':
+  case 'AbortError':
   default:
-    console.info("NotFoundError:找不到满足错误的类型");
+    console.info('NotFoundError:找不到满足错误的类型');
 }
 //demo2
 switch (name) {
   // 终止错误，合并两个条件
   case tt:
-  case "AbortError":
+  case 'AbortError':
   default:
-    console.info("NotFoundError:找不到满足错误的类型");
+    console.info('NotFoundError:找不到满足错误的类型');
 }
 //demo3
 switch (name1) {
   // 终止错误，合并两个条件,数值为number 类型时候，无法进入此条件
   case tt1:
-  case "AbortError":
+  case 'AbortError':
   default:
-    console.info("NotFoundError:找不到满足错误的类型");
+    console.info('NotFoundError:找不到满足错误的类型');
 }
 ```
 
@@ -181,8 +181,8 @@ switch (name1) {
 - 除法。先转为数字再进行除法操作
 
 ```js
-console.log("40" % 7); // 等于多少? 取模
-console.log("40" / 7); // 等于多少? 取模
+console.log('40' % 7); // 等于多少? 取模
+console.log('40' / 7); // 等于多少? 取模
 ```
 
 ## 数组 Array
@@ -202,30 +202,29 @@ console.log("40" / 7); // 等于多少? 取模
 
 - <sup>es6</sup>`Array.prototype.entries()`
 
-
-    ```js
-    var fruits = ["Banana", "Orange", "Apple", "Mango"];
-    var temp=fruits.entries();
-    for(let item of temp) {
-      console.log(item); /*[key,value]*/
-    }
-    console.log(temp);/*/Array Iterator {}*/
-    console.log(fruits);/*不改變*/
-    ```
+  ```js
+  var fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+  var temp = fruits.entries();
+  for (let item of temp) {
+    console.log(item); /*[key,value]*/
+  }
+  console.log(temp); /*/Array Iterator {}*/
+  console.log(fruits); /*不改變*/
+  ```
 
 - <sup>es6</sup>`Array.prototype.every(function(currentValue,index,arr){},thisArr)`
+
   - 检测数组所有元素都符合指定条件，通过函数条件
   - 如果有一个不满足条件，则会返回 false，且剩余不再检测
   - 如果全部都满足条件则返回 true
 
-
     ```js
-      var ages = [32, 33, 16, 40];
-      function checkAdult(age) {
-        console.log(age)/*如果没有return 则返回第一个，然后打断*/
+    var ages = [32, 33, 16, 40];
+    function checkAdult(age) {
+      console.log(age); /*如果没有return 则返回第一个，然后打断*/
       /*     return age >= 18;*/
-      }
-      ages.every(checkAdult)
+    }
+    ages.every(checkAdult);
     ```
 
 - `Array.prototype.filter(function(){currentValue,index,arr},thisValue)`
@@ -255,7 +254,7 @@ console.log("40" / 7); // 等于多少? 取模
   ```js
   /*demo1*/
   var arr = [543153, 1231, 3215, 12, 12, 42, 45, 4555, 5];
-  var arrT = arr.map(function(value, index, arr) {
+  var arrT = arr.map(function (value, index, arr) {
     console.log(value);
     /*/ return value *2*/
   });
@@ -286,9 +285,9 @@ console.log("40" / 7); // 等于多少? 取模
 
   ```js
   var arr = [561531, 1231, 112, 12, 2];
-  arr.forEach(function(currentValue, index, arr2r) {
+  arr.forEach(function (currentValue, index, arr2r) {
     console.log(this); //String {"ttt"}
-  }, "ttt");
+  }, 'ttt');
   ```
 
 ### 实例方法-改变原始数组的方法(一般改变索引值的，都会改变原始数组)
@@ -298,7 +297,7 @@ console.log("40" / 7); // 等于多少? 取模
   - 从数组指定元素拷贝元素到数组的另外一个指定位置
 
   ```js
-  var arr = ["西瓜", "赵铁柱", "王尼玛"];
+  var arr = ['西瓜', '赵铁柱', '王尼玛'];
   var temp = arr.copyWithin(2, 1);
   console.log(arr, temp); //["西瓜", "赵铁柱", "赵铁柱"] ,["西瓜", 西瓜"赵铁柱", "赵铁柱"]
   ```
@@ -307,8 +306,8 @@ console.log("40" / 7); // 等于多少? 取模
   - 填充数组
 
 ```js
-var arr = ["西瓜", "赵铁柱", "王尼玛"];
-var temp = arr.fill("帅哥"); //不入参的话其他不变
+var arr = ['西瓜', '赵铁柱', '王尼玛'];
+var temp = arr.fill('帅哥'); //不入参的话其他不变
 console.log(arr, temp);
 ```
 
@@ -414,11 +413,11 @@ console.log(arr, temp);
 
 ```js
 a();
-const a = function() {
-  console.log("aaa");
+const a = function () {
+  console.log('aaa');
 };
 function a() {
-  console.log("bbb");
+  console.log('bbb');
 }
 a();
 ```
@@ -435,11 +434,11 @@ function test() {
   //todo
 }
 /*2 函数表达式*/
-const test1 = function() {
+const test1 = function () {
   //todo
 };
 /*3 匿名函数/立即执行*/
-(function() {
+(function () {
   //todo
 })();
 ```
@@ -453,11 +452,11 @@ const test1 = function() {
 ```js
 if (true) {
   function say() {
-    console.log("hi");
+    console.log('hi');
   }
 } else {
   function say2() {
-    console.log("no hi!");
+    console.log('no hi!');
   }
 }
 ```
@@ -551,7 +550,7 @@ console.log(func(5));
 /**
  * @desc for 循环实现 ，借用三个变量来存放
  * */
-var fibFor = function(n) {
+var fibFor = function (n) {
   let n1 = 1,
     n2 = 1,
     n3 = 0;
@@ -571,7 +570,7 @@ console.info(fibFor(9));
  * @desc 斐波那契数列 学习，递归函数解析
  *
  */
-var fib = function(n) {
+var fib = function (n) {
   if (n < 2) {
     return 1;
   }
@@ -594,7 +593,7 @@ fib(8);
 | 第八步 | 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1                                                                                                                                                 |
 | 第九步 | 去掉空格之后 我们得到一个结果 1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = 34                                                                                                                                                                                |
 
-![斐波那契数列](/images/fib.jpg "斐波那契数列")
+![斐波那契数列](/images/fib.jpg '斐波那契数列')
 
 ### 立即执行
 
@@ -602,24 +601,24 @@ fib(8);
 
 ```js
 /*立即函数的几种声明方式 1  匿名函数包括在一个括号运算符*/
-(function(test) {
+(function (test) {
   console.log(test);
 })(123)(
   /*立即函数的几种声明方式 2  匿名函数跟一个效果好。并包括一个原算法*/
-  (function(test) {
+  (function (test) {
     console.log(test);
   })(123)
 );
 
 /*demo*/
-var name1 = "World!";
-(function(window) {
+var name1 = 'World!';
+(function (window) {
   console.log(window.name1, this.name1, name1); //window,window,undefined
-  if (typeof name1 === "undefined") {
-    var name1 = "JACK";
-    console.log("hello," + name1);
+  if (typeof name1 === 'undefined') {
+    var name1 = 'JACK';
+    console.log('hello,' + name1);
   } else {
-    console.log("Goodbye" + name1);
+    console.log('Goodbye' + name1);
   }
 })(window);
 ```
@@ -698,11 +697,11 @@ var name1 = "World!";
 
 ```js
 // 很蠢的对每个li 标签都循环做点击事件
-window.onload = function() {
-  var ul = document.querySelector("ul");
-  var li = document.querySelector("li");
+window.onload = function () {
+  var ul = document.querySelector('ul');
+  var li = document.querySelector('li');
   for (var i = 0; i < li.length; i++) {
-    li[i].onclick = function() {
+    li[i].onclick = function () {
       alert(123);
     };
   }
@@ -728,7 +727,7 @@ window.onload = function() {
       - 然后移动到直接祖先，然后同上，直至`html`元素
       - 时间处理程序都在冒泡阶段注册 `(但可以使用addEventListener(,,true) 在捕获阶段注册`
       ```js
-      video.onclick = function(e) {
+      video.onclick = function (e) {
         e.stopPropagation(); //阻止冒泡链扩大
         video.play(); //播放视频
       };
@@ -834,9 +833,9 @@ Math.max.apply(Math, arr);
 > 一个标志，类的概念
 
 | 概念/方法                                   | 描述                         |
-| ------------------------------------------- | ---------------------------- |
+| ------------------------------------------- | ---------------------------- | --- |
 | 数据属性                                    |                              |
-| 访问器属性                                  |                              |  |
+| 访问器属性                                  |                              |     |
 | Object.defineProperty(obj,name,{})          | `定义单个`                   |
 | Object.defineProperties(obj,{xx:{value:1}}) | `同时编辑多个，定义多个属性` |
 | Object.getOwnPropertyDescriptor()           | `取得 给定属性的描述符`      |
@@ -861,13 +860,13 @@ function factory(name, age, job) {
   obj.age = age;
   obj.name = name;
   obj.job = job;
-  obj.sayName = function() {
+  obj.sayName = function () {
     return this.name;
   };
   return obj;
 }
 //use
-const p = factory("张三", "28", "前端狗");
+const p = factory('张三', '28', '前端狗');
 ```
 
 ### 创建对象-构造函数
@@ -888,12 +887,12 @@ function ConstructorFn(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  this.sayName = function() {
+  this.sayName = function () {
     return this.name;
   };
 }
 // use
-const p1 = new ConstructorFn("李四6i7", "29", "后端喵");
+const p1 = new ConstructorFn('李四6i7', '29', '后端喵');
 // 监测类型
 console.log(p1 instanceof ConstructorFn); //true,同样都是Object的实例
 ```
@@ -903,7 +902,7 @@ console.log(p1 instanceof ConstructorFn); //true,同样都是Object的实例
 > 当普通函数
 
 ```js
-ConstructorFn("李四6i7", "29", "后端喵");
+ConstructorFn('李四6i7', '29', '后端喵');
 window.sayName();
 ```
 
@@ -911,7 +910,7 @@ window.sayName();
 
 ```js
 const ob = {};
-ConstructorFn.call(ob, "王五", "30", "python");
+ConstructorFn.call(ob, '王五', '30', 'python');
 // ConstructorFn.apply(ob,["王五",'30','python']) 或者这样
 
 on.sayName();
@@ -933,7 +932,7 @@ function ConstructorFn(name, age, job) {
 function sayName() {
   return this.name;
 }
-const p1 = new ConstructorFn("孙六", "31", "产品汪");
+const p1 = new ConstructorFn('孙六', '31', '产品汪');
 ```
 
 #### 创建对象-原型模式
@@ -951,10 +950,10 @@ const p1 = new ConstructorFn("孙六", "31", "产品汪");
 
 ```js
 function Proto() {}
-Proto.prototype.name = "刘七";
-Proto.prototype.age = "32";
-Proto.prototype.job = "设计狮";
-Proto.prototype.sayName = function() {
+Proto.prototype.name = '刘七';
+Proto.prototype.age = '32';
+Proto.prototype.job = '设计狮';
+Proto.prototype.sayName = function () {
   return this.name;
 };
 var p1 = new Proto();
@@ -977,9 +976,9 @@ p1.sayName === p2.sayName; //true
 ```js
 function Proto() {}
 Proto.prototype = {
-  name: "xx",
-  age: "44",
-  job: "ceo",
+  name: 'xx',
+  age: '44',
+  job: 'ceo',
   sayName() {
     return this.name;
   },
@@ -992,9 +991,9 @@ Proto.prototype = {
 function Proto() {}
 Proto.prototype = {
   constructor: Proto, //重新指向
-  name: "xx",
-  age: "44",
-  job: "ceo",
+  name: 'xx',
+  age: '44',
+  job: 'ceo',
   sayName() {
     return this.name;
   },
@@ -1006,15 +1005,15 @@ Proto.prototype = {
 ```js
 function Proto() {}
 Proto.prototype = {
-  name: "xx",
-  age: "44",
-  job: "ceo",
+  name: 'xx',
+  age: '44',
+  job: 'ceo',
   sayName() {
     return this.name;
   },
 };
 /*只允许在支持es5 Object.defineProperty()方法的环境下使用这样的方式*/
-Object.defineProperty(Person.prototype, "constructor", {
+Object.defineProperty(Person.prototype, 'constructor', {
   enumerable: false,
   value: Person,
 });
@@ -1026,9 +1025,9 @@ Object.defineProperty(Person.prototype, "constructor", {
 function Proto() {}
 var p1 = new Proto();
 Proto.prototype = {
-  name: "xx",
-  age: "44",
-  job: "ceo",
+  name: 'xx',
+  age: '44',
+  job: 'ceo',
   sayName() {
     return this.name;
   },
@@ -1048,17 +1047,17 @@ p1;
 ```js
 function Proto() {}
 Proto.prototype = {
-  name: "xx",
-  age: "44",
-  job: "ceo",
-  test: ["men", "women"],
+  name: 'xx',
+  age: '44',
+  job: 'ceo',
+  test: ['men', 'women'],
   sayName() {
     return this.name;
   },
 };
 var p1 = new Proto();
 var p2 = new Proto();
-p1.test.push("son");
+p1.test.push('son');
 // 此时
 console.info(p1.test === p2.test); //true
 ```
@@ -1072,7 +1071,7 @@ function Fn(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  this.test = ["man", "woman"];
+  this.test = ['man', 'woman'];
 }
 Fn.prototype = {
   constructor: Fn,
@@ -1080,9 +1079,9 @@ Fn.prototype = {
     return this.name;
   },
 };
-var p1 = new Fn("xsa", "tt", "te");
-var p2 = new Fn("xsa2", "tt2", "te2");
-p1.test.push("son");
+var p1 = new Fn('xsa', 'tt', 'te');
+var p2 = new Fn('xsa2', 'tt2', 'te2');
+p1.test.push('son');
 console.info(p1.test === p2.test);
 ```
 
@@ -1098,8 +1097,8 @@ function Fn(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  if (typeof this.sayName !== "function") {
-    Fn.prototype.sayName = function() {
+  if (typeof this.sayName !== 'function') {
+    Fn.prototype.sayName = function () {
       return this.name;
     };
   }
@@ -1125,13 +1124,13 @@ function factory(name, age, job) {
   obj.age = age;
   obj.name = name;
   obj.job = job;
-  obj.sayName = function() {
+  obj.sayName = function () {
     return this.name;
   };
   return obj;
 }
 //use
-const p = new factory("张三", "28", "前端狗");
+const p = new factory('张三', '28', '前端狗');
 ```
 
 ### 创建对象-稳妥构造函数模式
@@ -1151,13 +1150,13 @@ const p = new factory("张三", "28", "前端狗");
 function durable(name, age, job) {
   var obj = {};
   // todo 定义私有变量和属性
-  obj.sayName = function() {
+  obj.sayName = function () {
     console.log(name);
   };
   return obj;
 }
 // use
-var p1 = durable("柳十", "41", "CFO管钱的");
+var p1 = durable('柳十', '41', 'CFO管钱的');
 p1.sayName();
 ```
 
@@ -1178,7 +1177,7 @@ p1.sayName();
 
 ```js
 if (1) {
-  var ha = "hello,world!";
+  var ha = 'hello,world!';
 }
 console.log(ha); //得到多少?
 ```
@@ -1187,7 +1186,7 @@ console.log(ha); //得到多少?
 
 ```js
 if (1) {
-  let ha = "hello world";
+  let ha = 'hello world';
 }
 console.log(ha);
 ```
@@ -1211,17 +1210,17 @@ i = null;
 
 ```js
 /*demo1*/
-const test = function() {
-  var t = "hello";
-  return t + ",world!";
+const test = function () {
+  var t = 'hello';
+  return t + ',world!';
 };
 test();
 console.log(t); //
 
 /*demo2*/
-const test2 = function() {
-  t2 = "hello";
-  return t2 + ",world!";
+const test2 = function () {
+  t2 = 'hello';
+  return t2 + ',world!';
 };
 test2();
 console.log(t2); //可以访问到
@@ -1235,16 +1234,16 @@ console.log(t2); //可以访问到
 
 ```js
 function Main(name) {
-  this.getName = function() {
+  this.getName = function () {
     return name;
   };
-  this.setName = function(value) {
+  this.setName = function (value) {
     name = value;
   };
 }
-var p1 = new Main("李四");
+var p1 = new Main('李四');
 console.log(p1.getName());
-p1.setName("王五");
+p1.setName('王五');
 console.log(p1.getName());
 ```
 
@@ -1263,11 +1262,11 @@ console.log(p1.getName());
 - 内部搜索到 this arguments 时，只会搜索到其活动对象为止，因此`永远不可能直接访问外部函数的中的两个变量`
 
 ```js
-var name = "I am window";
+var name = 'I am window';
 var object = {
-  name: "I am object",
-  getName: function() {
-    return function() {
+  name: 'I am object',
+  getName: function () {
+    return function () {
       console.log(this);
       return this.name;
     };
@@ -1279,12 +1278,12 @@ console.log(object.getName()()); //竟然是window！！！
 > `将外部作用域中的this 对象，保存在一个闭包能够访问到的变量力，就可以让闭包访问到该对象了`!!
 
 ```js
-var name = "I am window";
+var name = 'I am window';
 var object = {
-  name: "I am object",
-  getName: function() {
+  name: 'I am object',
+  getName: function () {
     var that = this;
-    return function() {
+    return function () {
       console.log(this);
       return that.name;
     };
@@ -1292,9 +1291,9 @@ var object = {
 };
 //demo1
 var object = {
-  name: "I am object",
-  getName: function() {
-    return function() {
+  name: 'I am object',
+  getName: function () {
+    return function () {
       console.log(this);
       return that.name;
     }.call(this); //bind 、call
@@ -1322,15 +1321,15 @@ var object = {
 
 ```js
 var obj = {};
-obj.hasOwnProperty("toString"); // false
+obj.hasOwnProperty('toString'); // false
 
 // 覆盖掉继承的 hasOwnProperty 方法
-obj.hasOwnProperty = function() {
+obj.hasOwnProperty = function () {
   return true;
 };
-obj.hasOwnProperty("toString"); // true
+obj.hasOwnProperty('toString'); // true
 
-Object.prototype.hasOwnProperty.call(obj, "toString"); // false
+Object.prototype.hasOwnProperty.call(obj, 'toString'); // false
 ```
 
 ## apply 会立即执行。
@@ -1347,8 +1346,8 @@ Object.prototype.hasOwnProperty.call(obj, "toString"); // false
 const list1 = [1, 2];
 const list2 = [3, 4];
 list1.push.apply(list1, list2);
-console.info("list1:", list1);
-console.info("list2:", list2);
+console.info('list1:', list1);
+console.info('list2:', list2);
 ```
 
 ### apply 和内置函数，允许 Math.max/Math.min 找出数组中最大值/最小值
@@ -1384,6 +1383,7 @@ Array.prototype.slice.apply({ 0: 1, length: 99 }); // (99) [1, empty × 98]
 ### 绑定回调函数的对象
 
 ```js
+
 ```
 
 ## bind 新函数，不会立即执行。
@@ -1393,8 +1393,8 @@ Array.prototype.slice.apply({ 0: 1, length: 99 }); // (99) [1, empty × 98]
 - 其余参数作为新函数的参数使用
 
 ```js
-const bind = function() {
-  return function() {
+const bind = function () {
+  return function () {
     // do something
   };
 };
@@ -1405,20 +1405,20 @@ const bind = function() {
 ```js
 const o = {
   m() {
-    console.info("hello");
+    console.info('hello');
   },
 };
-const ele = document.querySelector("xx");
-ele.addEventListener("click", o.m.bind(o));
+const ele = document.querySelector('xx');
+ele.addEventListener('click', o.m.bind(o));
 
 // 而是
 
 const listener = o.m.bind(o);
-ele.addEventListener("click", listener);
+ele.addEventListener('click', listener);
 
 // 否则无法remove事件监听
 
-ele.removeEventListener("click", listener);
+ele.removeEventListener('click', listener);
 ```
 
 ## call 与 apply 区别
@@ -1430,8 +1430,8 @@ ele.removeEventListener("click", listener);
 function a(ob) {
   console.info(ob);
 }
-var cc = { t: "222" };
-var ob = { name1: "lala" };
+var cc = { t: '222' };
+var ob = { name1: 'lala' };
 a.apply(null, [ob], cc);
 
 // undefined
