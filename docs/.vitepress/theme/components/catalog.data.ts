@@ -57,7 +57,6 @@ const scanItems = (parent: string, parentPath: string, item: string) => {
 
   return fs.readdirSync(itemPath).flatMap((subItem) => {
     const subPath = path.join(itemPath, subItem);
-    // && subItem !== 'index.md'
     return fs.statSync(subPath).isFile()
       ? [createItem(parent, item, subItem, subPath)]
       : scanItems(parent, itemPath, subItem);
@@ -123,19 +122,23 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
       return { text, anchor };
     });
   } else {
-    const unixPath = path.normalize(fullPath)
-    const unixPathReplace = unixPath.replace(/\\/g, '/')
-    const mdFileName = unixPathReplace.replace(/^.*docs[\\/](.*)$/, "$1").replace(/\.md$/, '')
+    const unixPath = path.normalize(fullPath);
+    const unixPathReplace = unixPath.replace(/\\/g, '/');
+    const mdFileName = unixPathReplace.replace(/^.*docs[\\/](.*)$/, '$1').replace(/\.md$/, '');
+
+    const h1s = mdText.match(/^# [^\n]+/gm);
+    const h1: string = h1s?.[0] || '';
+    const text = cleanHeaderText(h1, anchorRE);
+    const anchor = extractAnchor(h1, anchorRE, text);
 
     headers = [
       {
-        text: mdFileName,
-        anchor: mdText,
+        text: anchor || mdFileName,
+        anchor: anchor || mdText,
       },
     ];
   }
 
-  // 如果没有
   return headers;
 }
 

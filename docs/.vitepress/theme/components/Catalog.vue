@@ -19,19 +19,44 @@ const props = defineProps({
   },
 });
 
-const pages = computed(() => {
-  const q = normalize(query.value);
-  const matches = (text: string) => normalize(text).includes(q);
+const rmSlashPath = (path: string) => path.replace(/\//g, '');
 
-  return apiIndex.filter((i) => {
-    if (props.base) {
-      return i.path.replace(/\//g, '') === props.base.replace(/\//g, '');
-    } else return i;
-    i.path === props.base;
-  }) as APIGroup[];
+const pages = computed(() => {
+  if (!props.base) return apiIndex;
+
+  // 递归查找匹配路径的节点
+  function findNode(items) {
+    const subChildren = [];
+    for (const item of items) {
+      // 如果匹配一级，直接打断
+      if (item.path === props.base) {
+        return [item];
+      }
+      if (item.children && item.children.length) {
+        for (const child of item.children) {
+          if (child.path.indexOf(props.base) > -1) {
+            subChildren.push(child);
+          }
+        }
+      }
+    }
+
+    if (subChildren.length > 0) {
+      // 重新组织二级结构
+      const indexItem = subChildren.find((item) => item.path === props.base + '/index');
+      const indexChildren = subChildren.filter((item) => item.path !== props.base + '/index');
+      return [{ title: indexItem.title, path: indexItem.path, children: indexChildren }];
+      return subChildren;
+    }
+    return [];
+  }
+
+  const ret = findNode(apiIndex);
+  return ret as APIGroup[];
 });
 
 onMounted(async () => {
+  console.log('apiIndex', apiIndex);
   console.log('pages', pages);
 });
 </script>
@@ -46,7 +71,6 @@ onMounted(async () => {
           <ul>
             <li v-for="h of item.headers" :key="h.anchor" class="li-text">
               <a :href="item.path + '.html#' + h.anchor">{{ h.text }}</a>
-              <!-- <a :href="withBase(item.path) + '.html#' + h.anchor">{{ h.text }}</a> -->
             </li>
           </ul>
         </div>
