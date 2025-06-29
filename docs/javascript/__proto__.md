@@ -11,17 +11,17 @@ const obj = {
 };
 ```
 
-## 1。获取原型 [[getPropertyOf]]
+## 获取原型 [[getPropertyOf]]
 
 - console.log(obj.`__proto__`)
 - console.log(Object.getPropertyOf(obj))
 - console.log(Object.prototype)
 
-## 2。设置原型 [[setPropertyOf]]
+## 设置原型 [[setPropertyOf]]
 
 - console.log(Object.setPropertyOf(obj,{c:22}))
 
-## 3。获取对象的可拓展性 [[isExtensible]]
+## 获取对象的可拓展性 [[isExtensible]]
 
 ```js
 console.log(Object.isExtensible(obj)); // true
@@ -37,7 +37,7 @@ console.log(obj);
 // freeze 不可写 只读
 ```
 
-## 4。获取自有属性 [[getOwnProperty]]
+## 获取自有属性 [[getOwnProperty]]
 
 - 返回自有属性
 
@@ -50,7 +50,7 @@ Object.setPropertyOf(obj, { c: 22 });
 console.log(Object.getOwnPropertyNames(obj)); // ['a','b']
 ```
 
-## 5。禁止拓展对象 [[preventExtensions]]
+## 禁止拓展对象 [[preventExtensions]]
 
 ```js
 const obj = {
@@ -62,7 +62,7 @@ obj.d = 2;
 console.log(obj);
 ```
 
-## 6。拦截对象操作 [[defineProperty]]
+## 拦截对象操作 [[defineProperty]]
 
 ```js
 const obj = {
@@ -72,33 +72,33 @@ const obj = {
 Object.defineProperty(obj);
 ```
 
-## 7。判断是否是自身属性 [[hasOwnProperty]]
+## 判断是否是自身属性 [[hasOwnProperty]]
 
 ```js
 console.log(obj.hasOwnProperty('a')); // 返回布尔值，可用于深拷贝
 ```
 
-## 8. [[get]]
+## [[get]]
 
 ```js
 console.log('c' in obj); // 方法 1
 console.log(obj.c); // 方法 2
 ```
 
-## 9. [[set]]
+## [[set]]
 
 ```js
 obj.a = 2; // 方法 1
 obj['a'] = 2; // 方法 2
 ```
 
-## 10. delete
+## delete
 
 ```js
 delete obj.a;
 ```
 
-## 11. enum
+## enum
 
 ```js
 for (let k in obj) {
@@ -106,13 +106,13 @@ for (let k in obj) {
 }
 ```
 
-## 12。获取键集合 [[ownPropertyKeys]]
+## 获取键集合 [[ownPropertyKeys]]
 
 ```js
 Object.keys(obj);
 ```
 
-## 13。声明过程
+## 声明过程
 
 ```js
 function a() {}
@@ -120,7 +120,7 @@ function a() {}
 const a = function () {};
 ```
 
-## 14。new 过程
+## new 过程
 
 ```js
 function T {}
