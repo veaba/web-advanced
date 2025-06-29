@@ -1,0 +1,1 @@
+import{_ as i,c as e,o,ae as a}from"./chunks/framework.B8KKhRA6.js";const m=JSON.parse('{"title":"V8 引擎","description":"","frontmatter":{},"headers":[],"relativePath":"v8/index.md","filePath":"v8/index.md"}'),d={name:"v8/index.md"};function c(r,l,t,n,s,u){return o(),e("div",null,l[0]||(l[0]=[a("",8)]))}const V=i(d,[["render",c]]);export{m as __pageData,V as default};

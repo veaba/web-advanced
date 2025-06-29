@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as s}from"./chunks/framework.B8KKhRA6.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"security/xss.md","filePath":"security/xss.md"}'),r={name:"security/xss.md"};function a(c,o,n,i,p,_){return s(),t("div")}const f=e(r,[["render",a]]);export{m as __pageData,f as default};
