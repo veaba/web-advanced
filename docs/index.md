@@ -7,7 +7,6 @@ actionLink: /guide.html
 icpText: veaba/web-advanced-frond-end
 icpLink: https://github.com/veaba/web-advanced-frond-end
 
-
 hero:
   name: web advanced
   text: 前端工程师进阶指南
@@ -29,8 +28,8 @@ features:
     title: 开源(Open Source)
     details: Github开源文档
   - icon: 📥
-    title: 下载(Download)
-    details: 免费，任何人都可以免费获得本文档
+    title: 可视化 + 低门槛
+    details: 最终的目的，期望将概念性的东西可视化，方便记忆。
   - icon: 🚀
     title: 个人学习整理
     details: 有自己学习或参考别人的
