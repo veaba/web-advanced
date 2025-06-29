@@ -123,10 +123,13 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
       return { text, anchor };
     });
   } else {
-    const mdFileName = fullPath.match(/[^\\]+\.md$/)?.[0] as string;
+    const unixPath = path.normalize(fullPath)
+    const unixPathReplace = unixPath.replace(/\\/g, '/')
+    const mdFileName = unixPathReplace.replace(/^.*docs[\\/](.*)$/, "$1").replace(/\.md$/, '')
+
     headers = [
       {
-        text: mdFileName.replace(/\.md$/, ''),
+        text: mdFileName,
         anchor: mdText,
       },
     ];

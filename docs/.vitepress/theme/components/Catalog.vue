@@ -31,7 +31,9 @@ const pages = computed(() => {
   }) as APIGroup[];
 });
 
-onMounted(async () => {});
+onMounted(async () => {
+  console.log('pages', pages);
+});
 </script>
 
 <template>
