@@ -10,7 +10,9 @@ sidebar: auto
 
 ## location 对象
 
-> 是 window 对象也是 document 对象。其中 search 不实用，需要改造函数来实现
+::: tip
+是 window 对象也是 document 对象。其中 search 不实用，需要改造函数来实现
+:::
 
 > 可以去往这个对象增加新属性，但无法对原来的属性值作出随意变更赋值
 
@@ -57,7 +59,10 @@ sidebar: auto
 | length |           | 整数，0 就是第一个目标页面 | 表示历史记录有几条     |
 |        |           |                            |                        |
 
-## 存储对象 `sessionStorage` 回话存储 localStorage 本地存储
+## 存储对象
+
+- `sessionStorage` 会话存储
+- `localStorage` 本地存储
 
 | 属性   | 方法                   | 描述 | 实例 |
 | ------ | ---------------------- | ---- | ---- |
@@ -69,7 +74,7 @@ sidebar: auto
 |        | clear()                |      |      |
 |        |                        |      |      |
 
-## Cookie 与 Session +localStorage
+## Cookie、Session、localStorage 比较
 
 | 差异     | Cookie         | Session        | LocalStorage |
 | -------- | -------------- | -------------- | ------------ |

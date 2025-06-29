@@ -28,7 +28,7 @@ sidebar: auto
   - case 必须紧接着跟值/变量/简单表达式/&&/function，不确定能使用||
 
 ```js
-// 以下产生一个bug，不管怎么样使用关键字name 声明一个值，只能是string 类型！！！
+// 以下产生一个 bug，不管怎么样使用关键字 name 声明一个值，只能是 string 类型！！！
 var name = '22';
 var tt = '22';
 var name1 = 22;
@@ -39,7 +39,7 @@ switch (name) {
   case '22':
   case 'AbortError':
   default:
-    console.info('NotFoundError:找不到满足错误的类型');
+  console.info('NotFoundError:找不到满足错误的类型');
 }
 //demo2
 switch (name) {
@@ -47,15 +47,15 @@ switch (name) {
   case tt:
   case 'AbortError':
   default:
-    console.info('NotFoundError:找不到满足错误的类型');
+  console.info('NotFoundError:找不到满足错误的类型');
 }
 //demo3
-switch (name1) {
-  // 终止错误，合并两个条件,数值为number 类型时候，无法进入此条件
+  switch (name1) {
+  // 终止错误，合并两个条件,数值为 number 类型时候，无法进入此条件
   case tt1:
   case 'AbortError':
   default:
-    console.info('NotFoundError:找不到满足错误的类型');
+  console.info('NotFoundError:找不到满足错误的类型');
 }
 ```
 
@@ -792,126 +792,3 @@ var object = {
 
 - bind 方法。创建一个新的函数。被调用时，其 this 关键字设置为提供的值，在调用时新函数时，在任何提供之前一个给定的参数序列。[MDN 查看更多](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
-## call 会立即执行。
-
-- 入参是一个 (a,b,c) 的列表形式，记忆方式，“C” 类似括号 “(”。
-- call 的第一个参数就是 this 所要指向的那个对象，后面的参数则是函数调用时所需的参数。
-- 应用：调用对象的原生方法
-
-```js
-var obj = {};
-obj.hasOwnProperty('toString'); // false
-
-// 覆盖掉继承的 hasOwnProperty 方法
-obj.hasOwnProperty = function () {
-  return true;
-};
-obj.hasOwnProperty('toString'); // true
-
-Object.prototype.hasOwnProperty.call(obj, 'toString'); // false
-```
-
-## apply 会立即执行。
-
-- 最多入参 65536 个参数
-- 假如数组的长度很长。切块后循环传入目标方法
-
-### apply 讲数组添加到另一个数组
-
-- 数组 a，数组 b
-- a 里面含有 b 的元素
-
-```js
-const list1 = [1, 2];
-const list2 = [3, 4];
-list1.push.apply(list1, list2);
-console.info('list1:', list1);
-console.info('list2:', list2);
-```
-
-### apply 和内置函数，允许 Math.max/Math.min 找出数组中最大值/最小值
-
-```js
-// 最大值
-const list1 = [12, 1, 456, 6, 16];
-const max = Math.max.apply(null, list1);
-console.info(max);
-
-// 最小值
-const min = Math.min.apply(null, list1);
-console.info(min);
-```
-
-### 将数组空元素转为 `undefined`
-
-```js
-const arr = [54654, , 55];
-const result = Array.apply(null, arr);
-console.info(result); //[ 54654, undefined, 55 ]
-```
-
-### 使用 apply 来链接构造器
-
-### 转换类数组对象
-
-```js
-Array.prototype.slice.apply({ 0: 1, length: 1 }); // [1]
-Array.prototype.slice.apply({ 0: 1, length: 99 }); // (99) [1, empty × 98]
-```
-
-### 绑定回调函数的对象
-
-```js
-
-```
-
-## bind 新函数，不会立即执行。
-
-- 创建一个新的函数。
-- 新函数的 this 是 bind 的第一个参数指定的
-- 其余参数作为新函数的参数使用
-
-```js
-const bind = function () {
-  return function () {
-    // do something
-  };
-};
-```
-
-- 因为 bind 每次都生成一个函数。所以需要注意以下：
-
-```js
-const o = {
-  m() {
-    console.info('hello');
-  },
-};
-const ele = document.querySelector('xx');
-ele.addEventListener('click', o.m.bind(o));
-
-// 而是
-
-const listener = o.m.bind(o);
-ele.addEventListener('click', listener);
-
-// 否则无法remove事件监听
-
-ele.removeEventListener('click', listener);
-```
-
-## call 与 apply 区别
-
-- call 入参是列表。
-- apply 入参是数组
-
-```js
-function a(ob) {
-  console.info(ob);
-}
-var cc = { t: '222' };
-var ob = { name1: 'lala' };
-a.apply(null, [ob], cc);
-
-// undefined
-```

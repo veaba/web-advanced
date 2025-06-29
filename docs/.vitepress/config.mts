@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import { codePreviewPlugin } from 'vitepress-script-preview';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -23,9 +24,38 @@ export default defineConfig({
     nav: [
       { text: '指南', link: '/guide' },
       { text: 'JavaScript', link: '/javascript' },
+      { text: 'CSS', link: '/css' },
       { text: 'Leetcode', link: '/leetcode' },
-      { text: 'actix-web', link: '/rust/actix-web/' },
-      { text: 'Node', link: '/node' },
+      {
+        text: '前端',
+        items: [
+          { text: 'canvas', link: '/canvas' },
+          { text: 'svg', link: '/svg' },
+          { text: 'es6', link: '/es6' },
+          { text: 'pwa', link: '/pwa' },
+          { text: 'v8', link: '/v8' },
+          { text: 'webgl', link: '/webgl' },
+          { text: 'security', link: '/security' },
+        ],
+      },
+      {
+        text: '类库',
+        items: [
+          { text: 'nuxt', link: '/nuxt' },
+          { text: 'vite', link: '/vite' },
+          { text: 'vue', link: '/vue' },
+          { text: 'webpack', link: '/webpack' },
+        ],
+      },
+      {
+        text: '后端',
+        items: [
+          { text: 'node', link: '/node' },
+          { text: 'deno', link: '/deno' },
+          { text: 'nginx', link: '/nginx' },
+          { text: 'actix-web', link: '/rust/actix-web/' },
+        ],
+      },
       { text: '面试题', link: '/interview' },
     ],
 
@@ -83,6 +113,15 @@ export default defineConfig({
                 { text: '内存指向', link: '/javascript/useful/memory' },
               ],
             },
+            {
+              text: '上下文',
+              link: '/javascript/context',
+              items: [
+                { text: 'apply', link: '/javascript/context/apply' },
+                { text: 'bind', link: '/javascript/context/bind' },
+                { text: 'call', link: '/javascript/context/call' },
+              ],
+            },
           ],
         },
       ],
@@ -96,5 +135,10 @@ export default defineConfig({
   },
   vite: {
     plugins: [],
+  },
+  markdown: {
+    config: (md) => {
+      md.use(codePreviewPlugin);
+    },
   },
 });
