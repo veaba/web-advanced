@@ -24,16 +24,14 @@
   - 使用 vuepress 自带的在本页面生成目录在文章前面
   - 扫描未翻译的段落、同步更新请求操作
 
-## 魔改
+## 写作
 
-- 如何修改支持 `README.md => index.md`
-
-### 使用 patch-package 生成补丁文件
-
-- 以支持 `README.md => index.md`
+### 使用 vitepress-script-preview 插件
 
 ```shell
-npm install --package-lock-only # 如果没有则需要生成 lock 文件
-pnpx patch-package vitepress # 不然这一步会失败
+
+::: script-preview
+  console.log('hello world')
+:::
 
 ```

@@ -86,10 +86,6 @@ onMounted(async () => {
   padding: 64px 32px;
 }
 
-li {
-  /* list-style: none; */
-}
-
 .li-text {
   overflow: hidden;
   text-overflow: ellipsis;
