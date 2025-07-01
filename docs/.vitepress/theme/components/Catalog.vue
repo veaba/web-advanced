@@ -43,9 +43,11 @@ const pages = computed(() => {
 
     if (subChildren.length > 0) {
       // 重新组织二级结构
-      const indexItem = subChildren.find((item) => item.path === props.base + '/index');
-      const indexChildren = subChildren.filter((item) => item.path !== props.base + '/index');
-      return [{ title: indexItem.title, path: indexItem.path, children: indexChildren }];
+      const indexItem = subChildren.find((item) => [props.base + '/index', props.base].includes(item.path));
+      if (indexItem) {
+        const indexChildren = subChildren.filter((item) => item.path !== props.base + '/index');
+        return [{ title: indexItem.title, path: indexItem.path, children: indexChildren }];
+      }
       return subChildren;
     }
     return [];
@@ -216,13 +218,13 @@ h3 {
 
 @media (min-width: 768px) {
   .api-groups {
-    columns: 2;
+    columns: 1;
   }
 }
 
 @media (min-width: 1024px) {
   .api-groups {
-    columns: 3;
+    columns: 2;
   }
 }
 </style>

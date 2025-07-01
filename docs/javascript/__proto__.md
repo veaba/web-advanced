@@ -9,19 +9,38 @@ const obj = {
   a: 2,
   b: 3,
 };
+
+console.log(obj.__proto__);
 ```
 
-## 获取原型 [[getPropertyOf]]
+::: details 如下：
+
+![obj-__proto__](/images/javascript/__proto__/obj-__proto__.png)
+
+:::
+
+## 获取原型 `[[getPrototypeOf]]`
 
 - console.log(obj.`__proto__`)
-- console.log(Object.getPropertyOf(obj))
+- console.log(Object.getPrototypeOf(obj))
 - console.log(Object.prototype)
 
-## 设置原型 [[setPropertyOf]]
+## 设置原型 `[[setPrototypeOf]]`
 
-- console.log(Object.setPropertyOf(obj,{c:22}))
+```js
+Object.setPrototypeOf(obj, { c: 22 });
+```
 
-## 获取对象的可拓展性 [[isExtensible]]
+重新打印：
+
+```js
+console.log(obj); // { a: 2, b: 3 }
+
+// 在原型链上，则可以获得 c 属性
+console.log(obj.c); // 22
+```
+
+## 获取对象的可拓展性 `[[isExtensible]]`
 
 ```js
 console.log(Object.isExtensible(obj)); // true
@@ -31,13 +50,13 @@ console.log(Object.isExtensible(obj)); // false
 
 // seal 不可修改、不可删除，可复写，可枚举
 Object.seal(obj); //封闭对象
-obj.c = 22;
-console.log(obj);
+obj.c = 999;
+console.log(obj); // 此时不会被写入
 
 // freeze 不可写 只读
 ```
 
-## 获取自有属性 [[getOwnProperty]]
+## 获取自有属性 `[[getOwnProperty]]`
 
 - 返回自有属性
 
@@ -46,11 +65,11 @@ const obj = {
   a: 2,
   b: 3,
 };
-Object.setPropertyOf(obj, { c: 22 });
+Object.setPrototypeOf(obj, { c: 22 });
 console.log(Object.getOwnPropertyNames(obj)); // ['a','b']
 ```
 
-## 禁止拓展对象 [[preventExtensions]]
+## 禁止拓展对象 `[[preventExtensions]]`
 
 ```js
 const obj = {
@@ -62,7 +81,7 @@ obj.d = 2;
 console.log(obj);
 ```
 
-## 拦截对象操作 [[defineProperty]]
+## 拦截对象操作 `[[defineProperty]]`
 
 ```js
 const obj = {
@@ -72,7 +91,7 @@ const obj = {
 Object.defineProperty(obj);
 ```
 
-## 判断是否是自身属性 [[hasOwnProperty]]
+## 判断是否是自身属性 `[[hasOwnProperty]]`
 
 ```js
 console.log(obj.hasOwnProperty('a')); // 返回布尔值，可用于深拷贝
@@ -106,7 +125,7 @@ for (let k in obj) {
 }
 ```
 
-## 获取键集合 [[ownPropertyKeys]]
+## 获取键集合 `[[ownPropertyKeys]]`
 
 ```js
 Object.keys(obj);

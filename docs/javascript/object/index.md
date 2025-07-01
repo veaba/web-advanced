@@ -23,3 +23,17 @@
 - 内置对象是本地对象的子集
 - 包含 `Global` 和 `Math`
 - ECMAScript 5 中新增了 `JSON` 这个存在于全局的内置对象
+
+## 静态方法
+
+- [more detail](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+| 方法名                                  | 描述                                                 |
+| --------------------------------------- | ---------------------------------------------------- |
+| `Object.getPrototypeOf(obj)`            | 返回指定对象的原型                                   |
+| `Object.setPrototypeOf(obj, prototype)` | 设置指定对象的原型                                   |
+| `Object.seal(obj)`                      | 不能添加新属性，也不能删除现有属性，可以修改已有属性 |
+| `Object.freeze(obj)`                    | 冻结对象，比 seal 更严                               |
+| `Object.isSealed(obj)`                  | 检查对象是否被密封                                   |
+| `Object.isFrozen(obj)`                  | 检查对象是否被冻结                                   |
+|                                         |                                                      |
