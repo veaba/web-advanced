@@ -141,7 +141,7 @@ document.body.onclick = size16;
 
 ## 如何消除闭包？
 
-- TODO 接触变量的引用？
+- TODO 解除变量的引用？
 
 ```js
 const arrayDeepLevel = (function () {

@@ -1,8 +1,17 @@
----
-sidebar: auto
----
-
 # 继承
+
+## 继承概念
+
+> 一个标志，类的概念
+
+| 概念/方法                                     | 描述                         |     |
+| --------------------------------------------- | ---------------------------- | --- |
+| 数据属性                                      |                              |
+| 访问器属性                                    |                              |     |
+| Object.defineProperty(obj,name，{})           | `定义单个`                   |
+| Object.defineProperties(obj，{xx：{value:1}}) | `同时编辑多个，定义多个属性` |
+| Object.getOwnPropertyDescriptor()             | `取得 给定属性的描述符`      |
+|                                               |                              |
 
 - OO 语言概念，两种继承方式 (接口继承、实现继承)。es 只支持 `实现继承`
 - JavaScript 主要通过原型链实现继承，原型链的构建是通过将一个 `类型的实例` 赋值给另一个 `构造函数的原型` 实现的
@@ -13,7 +22,7 @@ sidebar: auto
 
 > 以下摘录来自《JavaScript 高级程序设计》
 
-## JavaScript 继承的几种方式？
+## 继承有几种？
 
 - [方式一：原型式继承](/javascript/inherit.html#javascript-实现继承的方式之一-原型链)
 
@@ -31,7 +40,7 @@ sidebar: auto
 
 - [方式八：class 继承](/javascript/inherit.html#)
 
-### JS 实现继承的方式一：原型链
+## 方式一：原型链
 
 - 原理：利用原型链让一个引用类型继承另一个引用类型的属性和方法。或者说 `父类的实例等于子类的原型`
 
@@ -56,25 +65,25 @@ sidebar: auto
 ```js
 // Animal 类
 function Animal(name) {
-  this.sleep = function() {
-    console.log("sleep");
+  this.sleep = function () {
+    console.log('sleep');
   };
 }
 
-Animal.prototype.eat = function(food) {
-  console.log(this.name + " eat:" + food);
+Animal.prototype.eat = function (food) {
+  console.log(this.name + ' eat:' + food);
 };
 function Dog() {}
 
 Dog.prototype = new Animal(); // Animal 实例给Dog 原型
 
-Dog.prototype.name = "Big dog";
+Dog.prototype.name = 'Big dog';
 
 const blackDog = new Dog();
 
 console.log(blackDog.name); // 'Big Dog'
 
-console.log(blackDog.eat("beef")); // undefined，实例，无法继承父类 Animal prototype 上的方法
+console.log(blackDog.eat('beef')); // undefined，实例，无法继承父类 Animal prototype 上的方法
 
 console.log(blackDog.sleep());
 
@@ -85,7 +94,7 @@ console.log(blackDog instanceof Animal); // true
 console.log(Dog instanceof Animal); //false, 因为Dog 并非是通过 Animal 实例化的
 ```
 
-```
+```shell
   Animal        Dog     blackDog
 
     new Animal
@@ -132,7 +141,7 @@ function createInstance(defaultConfig) {
  */
 function extend(a, b, thisArg) {
   forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === "function") {
+    if (thisArg && typeof val === 'function') {
       a[key] = bind(val, thisArg);
     } else {
       a[key] = val;
@@ -142,7 +151,7 @@ function extend(a, b, thisArg) {
 }
 ```
 
-### JS 实现继承的方式二：构造继承
+## 方式二：构造继承
 
 原理：
 
@@ -155,15 +164,15 @@ function extend(a, b, thisArg) {
 ```js
 // 父类
 function Animal() {
-  this.eat = function(food) {
-    console.log("===>", this.DogName, food);
+  this.eat = function (food) {
+    console.log('===>', this.DogName, food);
   };
 }
 
 // 子类
 function Dog(name) {
   Animal.call(this);
-  this.DogName = name || "I am Dog";
+  this.DogName = name || 'I am Dog';
 }
 
 const dog = new Dog();
@@ -171,7 +180,7 @@ const dog = new Dog();
 console.log(dog.DogName);
 ```
 
-### [x]JS 实现继承的方式三：实例继承
+## ❎ 方式三：实例继承
 
 原理：
 
@@ -191,22 +200,22 @@ console.log(dog.DogName);
 
 ```js
 function Animal(name) {
-  this.name = name || "I am animal";
-  this.sleep = function() {
-    console.log("animal sleep");
+  this.name = name || 'I am animal';
+  this.sleep = function () {
+    console.log('animal sleep');
 
-    return "this.sleep";
+    return 'this.sleep';
   };
 }
 
-Animal.prototype.eat = function(food) {
-  console.log("Animal eat ===>");
-  return "eat:" + food;
+Animal.prototype.eat = function (food) {
+  console.log('Animal eat ===>');
+  return 'eat:' + food;
 };
 function Pig(name) {
   const instance = new Animal();
 
-  instance.name = name || "instance";
+  instance.name = name || 'instance';
   return instance;
 }
 
@@ -216,10 +225,10 @@ console.log(pig.name); // instance
 
 console.log(pig.sleep()); // this.sleep
 
-console.log(pig.eat("cao")); //eat:cao
+console.log(pig.eat('cao')); //eat:cao
 ```
 
-### [x]JS 实现继承的方式四：拷贝继承
+## ❎ 方式四：拷贝继承
 
 **原理**：
 
@@ -237,17 +246,17 @@ console.log(pig.eat("cao")); //eat:cao
 
 ```js
 function Animal(name) {
-  this.name = name || "I am animal";
-  this.sleep = function() {
-    console.log("animal sleep");
+  this.name = name || 'I am animal';
+  this.sleep = function () {
+    console.log('animal sleep');
 
-    return "this.sleep";
+    return 'this.sleep';
   };
 }
 
-Animal.prototype.eat = function(food) {
-  console.log("Animal eat ===>");
-  return "eat:" + food;
+Animal.prototype.eat = function (food) {
+  console.log('Animal eat ===>');
+  return 'eat:' + food;
 };
 
 function Pig(name) {
@@ -258,7 +267,7 @@ function Pig(name) {
     Pig.prototype[p] = animal[p];
   }
 
-  this.name = name || "佩奇";
+  this.name = name || '佩奇';
 }
 
 const pig = new Pig();
@@ -267,14 +276,14 @@ console.log(pig.name);
 
 console.log(pig.sleep()); // this.sleep
 
-console.log(pig.eat("cao")); //eat:cao
+console.log(pig.eat('cao')); //eat:cao
 
 console.log(pig instanceof Animal); // false
 
 console.log(pig instanceof Pig); // true
 ```
 
-### [√]JS 实现继承的方式五：组合继承
+## ✅ 方式五：组合继承
 
 **原理**：
 
@@ -302,22 +311,22 @@ console.log(pig instanceof Pig); // true
 
 ```js
 function Animal(name) {
-  this.name = name || "I am animal";
-  this.sleep = function() {
-    console.log("animal sleep");
+  this.name = name || 'I am animal';
+  this.sleep = function () {
+    console.log('animal sleep');
 
-    return "this.sleep";
+    return 'this.sleep';
   };
 }
 
-Animal.prototype.eat = function(food) {
-  console.log("Animal eat ===>");
-  return "eat:" + food;
+Animal.prototype.eat = function (food) {
+  console.log('Animal eat ===>');
+  return 'eat:' + food;
 };
 
 function Pig(name) {
   Animal.call(this);
-  this.name = name || "Pig name";
+  this.name = name || 'Pig name';
 }
 
 Pig.prototype = new Animal();
@@ -330,14 +339,14 @@ console.log(pig.name);
 
 console.log(pig.sleep()); // this.sleep
 
-console.log(pig.eat("cao")); //eat:cao
+console.log(pig.eat('cao')); //eat:cao
 
 console.log(pig instanceof Animal); // true
 
 console.log(pig instanceof Pig); // true
 ```
 
-### [√]JS 实现继承的方式六：寄生组合
+## ✅ 方式六：寄生组合
 
 **原理**：
 
@@ -355,27 +364,27 @@ console.log(pig instanceof Pig); // true
 
 ```js
 function Animal(name) {
-  this.name = name || "I am animal";
-  this.sleep = function() {
-    console.log("animal sleep");
+  this.name = name || 'I am animal';
+  this.sleep = function () {
+    console.log('animal sleep');
 
-    return "this.sleep";
+    return 'this.sleep';
   };
 }
 
-Animal.prototype.eat = function(food) {
-  console.log("Animal eat ===>");
-  return "eat:" + food;
+Animal.prototype.eat = function (food) {
+  console.log('Animal eat ===>');
+  return 'eat:' + food;
 };
 
 function Pig(name) {
   Animal.call(this);
-  this.name = name || "Pig name";
+  this.name = name || 'Pig name';
 }
-(function() {
+(function () {
   // 创造一个没有实例的类
 
-  const Super = function() {};
+  const Super = function () {};
 
   Super.prototype = Animal.prototype;
 
@@ -390,14 +399,14 @@ console.log(pig.name);
 
 console.log(pig.sleep()); // this.sleep
 
-console.log(pig.eat("cao")); //eat:cao
+console.log(pig.eat('cao')); //eat:cao
 
 console.log(pig instanceof Animal); // true
 
 console.log(pig instanceof Pig); // true
 ```
 
-### [x]JS 实现继承的方式七：Object.assign
+## ❎ 方式七：Object.assign
 
 这也是自己将之归属到继承里的方式之一
 
@@ -415,7 +424,7 @@ console.log(pig instanceof Pig); // true
 
 ```js
 function A() {}
-A.theName = "A name property";
+A.theName = 'A name property';
 ```
 
 以下为关于这个部分的个人理解：
@@ -425,61 +434,61 @@ A.theName = "A name property";
 function A() {}
 
 A.prototype.hi = () => {
-  console.log("hi");
+  console.log('hi');
 };
 
 // 子类
 function B() {}
 
 B.prototype.b1 = () => {
-  console.log("b1");
+  console.log('b1');
 };
 B.prototype.b2 = () => {
-  console.log("b2");
+  console.log('b2');
 };
 
-B.getName = function() {
-  console.log("getName b"); // 除非这样才就可以
+B.getName = function () {
+  console.log('getName b'); // 除非这样才就可以
 };
 var c = Object.assign(A, B);
 console.log(c);
 
 // 1. 上面。此时没有合并 prototype 上面的方法。此时 c 指向 a
 
-// 2. 下面。此时d将同时 继承 a和b的prototype的方法
+// 2. 下面。此时 d 将同时 继承 a 和 b 的 prototype 的方法
 var d = Object.assign(A.prototype, B.prototype);
 
 console.log(d);
 
 d.constructor.prototype.d1 = () => {
-  console.log("di");
+  console.log('di');
 };
-console.log("d:", d);
-console.log("a:", A.prototype);
+console.log('d:', d);
+console.log('a:', A.prototype);
 
 // 3. 为了干净点
 var e = Object.assign(Object.create(null), A.prototype, B.prototype); //这样就不会有乱七八糟的东西了
 // var e= Object.assign({},A.prototype,B.prototype)// 有乱七八糟的继承
-console.log("e:", e);
+console.log('e:', e);
 
 // 4. 一个干净的对象
-var obj1 = { name: "obj1" };
-var obj2 = { name1: "obj2", age: 32 };
+var obj1 = { name: 'obj1' };
+var obj2 = { name1: 'obj2', age: 32 };
 
 console.log(Object.assign(Object.create(null), obj1, obj2));
 ```
 
-### JS 实现继承的方式八：class 继承
+## 方式八：class 继承
 
 ```js
 class Animal {
   constructor(name) {
     this.name = name;
-    this.type = "animal";
+    this.type = 'animal';
   }
 
   sayHi(str) {
-    console.log("str: ", str);
+    console.log('str: ', str);
   }
 
   getThis() {
@@ -493,12 +502,12 @@ class Pig extends Animal {
     this.name = this.name;
   }
   getPig() {
-    console.log("get Pig");
+    console.log('get Pig');
   }
   getThis() {
     return this.name;
   }
 }
 
-const pig = new Pig("hello");
+const pig = new Pig('hello');
 ```
