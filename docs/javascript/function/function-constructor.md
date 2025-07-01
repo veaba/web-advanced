@@ -1,14 +1,16 @@
-# 实例构造函数
+# 构造函数
 
-- 相同构造函数出来的两个视力不相等，但其子属性、方法相同
+- 相同构造函数出来的两个实例不相等，但其子属性、方法相同
 
 ```js
-class A {
-  getName() {}
+class Colors {
+  getColor() {
+  }
 }
-const a = new A();
-const b = new A();
 
-a === b; // false
-a.getName === b.getName; // true
+const a = new Colors();
+const b = new Colors();
+
+console.log("compare instance=>", a === b); // false
+console.log("compare  method=>", a.getColor === b.getColor); // true
 ```
