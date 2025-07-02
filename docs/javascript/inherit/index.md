@@ -24,21 +24,21 @@
 
 ## 继承有几种？
 
-- [方式一：原型式继承](/javascript/inherit.html#javascript-实现继承的方式之一-原型链)
+- [方式一：原型式继承](/javascript/inherit/index.html#javascript-实现继承的方式之一-原型链)
 
-- [方式二：构造函数](/javascript/inherit.html#)
+- [方式二：构造函数](/javascript/inherit/index.html#)
 
-- [方式三：实例继承](/javascript/inherit.html#x-js-实现继承的方式四-实例继承)
+- [方式三：实例继承](/javascript/inherit/index.html#x-js-实现继承的方式四-实例继承)
 
-- [方式四：拷贝函数](/javascript/inherit.html#x-js-实现继承的方式五-拷贝继承)
+- [方式四：拷贝函数](/javascript/inherit/index.html#x-js-实现继承的方式五-拷贝继承)
 
-- [方式五：组合继承](/javascript/inherit.html#√-js-实现继承的方式六-组合继承)
+- [方式五：组合继承](/javascript/inherit/index.html#√-js-实现继承的方式六-组合继承)
 
-- [方式六：寄生组合式继承](/javascript/inherit.html#√-js-实现继承的方式七-寄生组合)
+- [方式六：寄生组合式继承](/javascript/inherit/index.html#√-js-实现继承的方式七-寄生组合)
 
-- [方式七：Object.assign](/javascript/inherit.html#js-实现继承的方式之一-object-assign-own)
+- [方式七：Object.assign](/javascript/inherit/index.html#js-实现继承的方式之一-object-assign-own)
 
-- [方式八：class 继承](/javascript/inherit.html#)
+- [方式八：class 继承](/javascript/inherit/index.html#)
 
 ## 方式一：原型链
 

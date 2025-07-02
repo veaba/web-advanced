@@ -8,10 +8,10 @@ sidebar: auto
 
 - [this](/javascript/this)
 - [冒泡算法](/algorithm/bubbing)
-- [继承](/javascript/inherit)
+- [继承](/javascript/inherit/index)
 - react
 - 小程序/微信/百度/快应用/支付宝
-- [闭包](javascript/closure.md)
+- [闭包](javascript/scoped/closure.md)
 - js 垃圾回收机制
 - [深拷贝](/javascript/#深拷贝)
 - [浅拷贝](/javascript/#浅拷贝)
