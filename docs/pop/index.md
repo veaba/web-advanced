@@ -64,7 +64,7 @@ sidebar: auto
 ## map 用法考察
 
 ```js
-//map 一定会执行funtion，必须会执行这个currentValu,index,arr
+// map 一定会执行function，必须会执行这个currentValue,index,arr
 // thisValue 对象作为该执行回调时使用，传给函数,用作this 值，省略。this 为 undefined
 array.map(function (currentValue, index, arr) {});
 ```

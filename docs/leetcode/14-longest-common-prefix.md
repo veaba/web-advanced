@@ -20,7 +20,7 @@ navbar: auto
 示例 2：
 
 ```shell
-输入：strs = ["dog","racecar","car"]
+输入：strs = ["dog","panda","car"]
 输出：""
 ```
 
