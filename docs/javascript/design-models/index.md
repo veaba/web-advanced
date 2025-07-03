@@ -25,22 +25,22 @@
 
 - 事件触发时，调度中心统一调度订阅者注册到调度中心的处理代码
 
-### 问题
-
-1. 订阅者是如何订阅？
+### 订阅者是如何订阅？
 
 > 调用事件对象中的注册事件，将自己事件名和执行函数，注册到注册中心中。然后出发事件发布即可执行订阅上的事件代码块
 
 ### 创建对象-工厂模式
 
-> 普通方式，字面量方式，代码量比较多
+:::tip
+普通方式，字面量方式，代码量比较多
+:::
 
 > 优点：一个函数，即可创建对象
 
-1. 只要一个函数，可多次调用
-   > 缺点：
-1. 没有解决对象识别 (知道一个对象的类型？？)
-1. 返回默认的，如果不处理则会返回固定的
+1. 只要一个函数，可多次调用，缺点：
+
+- 没有解决对象识别 (知道一个对象的类型？？)
+- 返回默认的，如果不处理则会返回固定的
 
 ```js
 function factory(name, age, job) {
@@ -87,8 +87,6 @@ const p1 = new ConstructorFn('李四6i7', '29', '后端喵');
 console.log(p1 instanceof ConstructorFn); //true,同样都是Object的实例
 ```
 
-> 当做构造函数，见上面
-
 > 当普通函数
 
 ```js
@@ -127,16 +125,10 @@ const p1 = new ConstructorFn('孙六', '31', '产品汪');
 
 #### 创建对象-原型模式
 
-> 特点：
+特点：
 
-1. 所有实例都共享原型的属性和方法
-   > 优点：
-1. 修改单一个实例，不会影响到其他实例
-1.
-
-> 缺点：
-
-1.
+- 所有实例都共享原型的属性和方法
+- 优点：修改单一个实例，不会影响到其他实例
 
 ```js
 function Proto() {}
@@ -161,7 +153,7 @@ p1.sayName === p2.sayName; //true
 5. `"name" in p1` 查找该实例上的属性，不管是 `实例上还是原型上`
 6. IE 早期版本出现 bug，导致无法被 `in` 出来，所以替代的方案是 `Object.keys()`，可列出可枚举的字符串数组
    > 更简单的原型语法，
-7. [x] 字面量包装 `prototype`，但！`constructor` 没有指向构造函数了
+7. ❎ 字面量包装 `prototype`，但！`constructor` 没有指向构造函数了
 
 ```js
 function Proto() {}
@@ -175,7 +167,7 @@ Proto.prototype = {
 };
 ```
 
-2. [x] 字面量包装 `prototype`，初始化回来 `constructor`。！但是，此时，`constructor` 是可以被枚举的。
+8. ❎ 字面量包装 `prototype`，初始化回来 `constructor`。！但是，此时，`constructor` 是可以被枚举的。
 
 ```js
 function Proto() {}
@@ -190,7 +182,7 @@ Proto.prototype = {
 };
 ```
 
-3。[√] 所以只能用 es5 的，Object.defineProperty()
+9. ✅ 所以只能用 es5 的，Object.defineProperty()
 
 ```js
 function Proto() {}
