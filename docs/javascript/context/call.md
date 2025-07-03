@@ -24,3 +24,19 @@ obj.hasOwnProperty('toString'); // true
 
 Object.prototype.hasOwnProperty.call(obj, 'toString'); // false
 ```
+
+## call 与 apply 区别
+
+- call 入参是 `独立参数`，如 `fn("click","touch")`
+- apply 入参是 `数组`，如 `fn(["click","touch"])`，否则无法被读取到
+
+```js
+function github(param1, param2) {
+  console.info(param1, param2);
+}
+const repoObject = { repo: 'veaba/web-advanced' };
+const authorObject = { author: 'veaba' };
+fn.apply(null, [authorObject], repoObject); // {author: 'veaba'}, undefined
+
+fn.apply(null, repoObject, [authorObject]); // undefined undefined
+```

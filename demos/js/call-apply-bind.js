@@ -13,24 +13,24 @@
  ***********************/
 
 // 这是一个普通的函数
-const call_apply_bind = function () {
-  console.info('Hello world:call_apply_bind ');
+const callApplyBind = function () {
+  console.info('Hello world:callApplyBind ');
   console.info(this);
 };
 
 // 这是一个箭头函数
-const call_apply_bind_arrow = () => {
-  console.info('Hello world:call_apply_bind_arrow ');
+const callApplyBindArrow = () => {
+  console.info('Hello world:callApplyBindArrow ');
   console.info(this);
 };
 
 // arg 测试
 
-const call_apply_bind_arg = function () {
-  console.info('call_apply_bind_arg:', arguments);
+const callApplyBindArg = function () {
+  console.info('callApplyBindArg:', arguments);
 };
-const call_apply_bind_arg_arrow = () => {
-  console.info('call_apply_bind_arg_arrow:', arguments);
+const callApplyBindArgArrow = () => {
+  console.info('callApplyBindArgArrow:', arguments);
 };
 
 const catObj = {
@@ -46,32 +46,32 @@ const dogObj = {
 };
 
 // 直接指向函数
-// call_apply_bind_arrow();//Hello world:call_apply_bind_arrow  {}
-// call_apply_bind();//直接打印最外部的大对象
+// callApplyBindArrow();//Hello world:callApplyBindArrow  {}
+// callApplyBind();//直接打印最外部的大对象
 
 // bind 测试
-// call_apply_bind_arrow.bind(catObj); // 什么都没打印
-// call_apply_bind.bind(catObj); // 什么都没打印
+// callApplyBindArrow.bind(catObj); // 什么都没打印
+// callApplyBind.bind(catObj); // 什么都没打印
 
 // call测试
-// call_apply_bind_arrow.call(catObj);// Hello world:call_apply_bind_arrow    {}
-// call_apply_bind.call(catObj); //Hello world:call_apply_bind { name: '小叮当', age: 2, sex: 'female' }
+// callApplyBindArrow.call(catObj);// Hello world:callApplyBindArrow    {}
+// callApplyBind.call(catObj); //Hello world:callApplyBind { name: '小叮当', age: 2, sex: 'female' }
 
 // apply 测试
-// call_apply_bind_arrow.apply(dogObj); // Hello world:call_apply_bind_arrow  {}
-// call_apply_bind.apply(dogObj); // Hello world:call_apply_bind { name: '二哈', age: 1.5, sex: 'male' }
+// callApplyBindArrow.apply(dogObj); // Hello world:callApplyBindArrow  {}
+// callApplyBind.apply(dogObj); // Hello world:callApplyBind { name: '二哈', age: 1.5, sex: 'male' }
 
 // bind 测试 arg,todo，如何写一个bind函数
 
-// call_apply_bind_arg.bind(catObj,dogObj);//没有执行
-// call_apply_bind_arg_arrow.bind(catObj,dogObj);//没有执行
+// callApplyBindArg.bind(catObj,dogObj);//没有执行
+// callApplyBindArgArrow.bind(catObj,dogObj);//没有执行
 
 // call 测试 arg
-// call_apply_bind_arg.call(catObj, dogObj); // catObj没有打印到 call_apply_bind_arg: [Arguments] { '0': { name: '二哈', age: 1.5, sex: 'male' } }
-// call_apply_bind_arg.call(null, catObj, dogObj); // 打印到期望值
-// call_apply_bind_arg.call(this, catObj, dogObj); // 打印到期望值
+// callApplyBindArg.call(catObj, dogObj); // catObj没有打印到 callApplyBindArg: [Arguments] { '0': { name: '二哈', age: 1.5, sex: 'male' } }
+// callApplyBindArg.call(null, catObj, dogObj); // 打印到期望值
+// callApplyBindArg.call(this, catObj, dogObj); // 打印到期望值
 //
-// call_apply_bind_arg_arrow.call(catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
+// callApplyBindArgArrow.call(catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
 /*
 [Arguments] {
   '0': {},
@@ -84,21 +84,21 @@ const dogObj = {
         exports: {},
         parent: null,
         filename:
-         'F:\\Github\\web-advanced-frond-end\\demos\\js\\call_apply_bind.js',
+         'F:\\Github\\web-advanced-frond-end\\demos\\js\\callApplyBind.js',
         loaded: false,
         children: [],
         paths: [Array] },
      extensions:
       { '.js': [Function], '.json': [Function], '.node': [Function] },
      cache:
-      { 'F:\\Github\\web-advanced-frond-end\\demos\\js\\call_apply_bind.js': [Module] } },
+      { 'F:\\Github\\web-advanced-frond-end\\demos\\js\\callApplyBind.js': [Module] } },
   '2':
    Module {
      id: '.',
      exports: {},
      parent: null,
      filename:
-      'F:\\Github\\web-advanced-frond-end\\demos\\js\\call_apply_bind.js',
+      'F:\\Github\\web-advanced-frond-end\\demos\\js\\callApplyBind.js',
      loaded: false,
      children: [],
      paths:
@@ -108,22 +108,22 @@ const dogObj = {
         'F:\\Github\\node_modules',
         'F:\\node_modules' ] },
   '3':
-   'F:\\Github\\web-advanced-frond-end\\demos\\js\\call_apply_bind.js',
+   'F:\\Github\\web-advanced-frond-end\\demos\\js\\callApplyBind.js',
   '4': 'F:\\Github\\web-advanced-frond-end\\demos\\js' }
   
 * */
 
-// call_apply_bind_arg_arrow.call(this,catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
-// call_apply_bind_arg_arrow.call(null,catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
+// callApplyBindArgArrow.call(this,catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
+// callApplyBindArgArrow.call(null,catObj,dogObj); // 打印Arguments 大对象，没有打印到期望值
 
 // apply 测试 arg
 
-// call_apply_bind_arg.apply(catObj, dogObj);// {}空对象
-// call_apply_bind_arg.apply(null, catObj);// {}空对象
-// call_apply_bind_arg.apply(null, catObj, dogObj);// {}空对象
-// call_apply_bind_arg.apply(null, [catObj, dogObj]);// 得到期望值 √
-// call_apply_bind_arg.apply(this, [catObj, dogObj]);// 得到期望值 √
-// call_apply_bind_arg.apply([catObj, dogObj]);// {}空对象
+// callApplyBindArg.apply(catObj, dogObj);// {}空对象
+// callApplyBindArg.apply(null, catObj);// {}空对象
+// callApplyBindArg.apply(null, catObj, dogObj);// {}空对象
+// callApplyBindArg.apply(null, [catObj, dogObj]);// 得到期望值 √
+// callApplyBindArg.apply(this, [catObj, dogObj]);// 得到期望值 √
+// callApplyBindArg.apply([catObj, dogObj]);// {}空对象
 
 // => 通过对象应用去改变原入参对象的值
 // const homeObj = {

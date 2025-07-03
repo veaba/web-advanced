@@ -8,32 +8,32 @@ apply 会立即执行。
 
 ## 特性
 
-- 最多入参 65536 个参数
+- 最多入参 `65536` 个参数，即 `2^16`
 - 假如数组的长度很长。切块后循环传入目标方法
 
-## apply 将数组添加到另一个数组
+## 数组添加到另一个数组
 
-- 数组 a，数组 b
-- a 里面含有 b 的元素
+- 数组 `list1`，数组 `list2`
+- `list1` 里面含有 `list2` 的元素，`list2` 不变
 
 ```js
-const list1 = [1, 2];
-const list2 = [3, 4];
+const list1 = [1, 3];
+const list2 = [2, 4];
 list1.push.apply(list1, list2);
 console.info('list1:', list1);
 console.info('list2:', list2);
 ```
 
-## apply 和内置函数，允许 Math.max/Math.min 找出数组中最大值/最小值
+## 变更入参类型
 
 ```js
 // 最大值
-const list1 = [12, 1, 456, 6, 16];
-const max = Math.max.apply(null, list1);
+const waitSortedList = [12, 1, 456, 6, 16];
+const max = Math.max.apply(null, waitSortedList);
 console.info(max);
 
 // 最小值
-const min = Math.min.apply(null, list1);
+const min = Math.min.apply(null, waitSortedList);
 console.info(min);
 ```
 
@@ -45,7 +45,30 @@ const result = Array.apply(null, arr);
 console.info(result); //[ 54654, undefined, 55 ]
 ```
 
-## 使用 apply 来链接构造器
+等同于下面几种方式：
+
+`Array.from()` 实现
+
+```js
+const arr = [54654, , 55];
+const result = Array.from(arr);
+```
+
+`...` 拓展符实现：
+
+```js
+const arr = [54654, , 55];
+const result = [...arr];
+```
+
+`concat()` 实现：
+
+```js
+const arr = [54654, , 55];
+const result = [].concat(arr);
+```
+
+## 链接构造器
 
 ### 转换类数组对象
 
@@ -58,4 +81,20 @@ Array.prototype.slice.apply({ 0: 1, length: 99 }); // (99) [1, empty × 98]
 
 ```js
 // TODO
+```
+
+## call 与 apply 区别
+
+- call 入参是 `独立参数`，如 `fn("click","touch")`
+- apply 入参是 `数组`，如 `fn(["click","touch"])`，否则无法被读取到
+
+```js
+function github(param1, param2) {
+  console.info(param1, param2);
+}
+const repoObject = { repo: 'veaba/web-advanced' };
+const authorObject = { author: 'veaba' };
+fn.apply(null, [authorObject], repoObject); // {author: 'veaba'}, undefined
+
+fn.apply(null, repoObject, [authorObject]); // undefined undefined
 ```
