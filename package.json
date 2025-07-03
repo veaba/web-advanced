@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "vitepress": "1.6.3",
+    "vitepress-mermaid-renderer": "^1.0.14",
     "vitepress-script-preview": "^0.0.10",
     "vue": "^3.5.17"
   },

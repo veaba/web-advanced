@@ -30,7 +30,5 @@ sidebar: auto
 - 全局执行上下文
 - 函数执行上下文
 - `eval` 执行上下文
-
-`@1` AST：抽象语法树。(abstract syntax tree)
-
-`@2` CORS：跨域资源共享。(Cross-Origin Resource Sharing)
+- AST：抽象语法树。(abstract syntax tree)
+- CORS：跨域资源共享。(Cross-Origin Resource Sharing)
