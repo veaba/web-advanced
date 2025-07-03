@@ -82,7 +82,7 @@
 
   ```js
   /*demo1*/
-  const arr = [543153, 1231, 3215, 12, 12, 42, 45, 4555, 5];
+  const arr = [99, 103, 46, 12, 12, 42, 45, 23, 5];
   const arrT = arr.map(function (value, index, arr) {
     console.log(value);
     /*/ return value *2*/
