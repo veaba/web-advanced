@@ -46,7 +46,7 @@ sidebar: auto
 - js 垃圾回收机制
 - EventLoop
 - apply call bind
-- [‘JS 方法的源码实现’ 更新完毕](https://www.bilibili.com/read/cv7903371)
+- [源码实现更新完毕](https://www.bilibili.com/read/cv7903371)
 - 手写原生 call bind apply
 - defineProperty 和 Proxy 区别？ - defineProperty 劫持数据 -> 对象做拓展 - obj 是空对象 - 单个处理 property - proxy 返回代理对象数据劫持 -> 代理 - target 是已有的 property - 无属性名 - 全局性处理 property - 代理改，被代理也会被改 - 支持对数组的代理 - 支持对函数的代理
 

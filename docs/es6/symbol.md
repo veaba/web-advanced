@@ -2,7 +2,7 @@
 
 ## 概念
 
-- 属于 ES6 新的数据类型，与 `null`、`undefined`、`boolean`、`string`、`number` 这个五个一起被称为 JS 六大基本数据类型。
+- 属于 ES6 新的数据类型，与 `null`、`undefined`、`boolean`、`string`、`number` 这个五个一起被称为 `JavaScript` 六大基本数据类型。
 
 - `symbol` 是一种基本类型，不是对象，不用 `new` 产生。
 

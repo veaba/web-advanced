@@ -6,11 +6,11 @@ sidebar: auto
 
 - 只能是针对 Proxy 实例，如直接访问原对象不会有变化
 
-> 用于修改某些操作的默认行为，等同于在语言层作出修改，属于 “元编程”，meta programming by 阮一峰 <sub>[es6-proxy](##索引__关于本作知识引用来源sub标签)</sub>
+> 用于修改某些操作的默认行为，等同于在语言层作出修改，属于 “元编程”，meta programming by 阮一峰 <Badge type="info">[es6-proxy](##索引__关于本作知识引用来源sub标签)</Badge>
 
 理解：每当去 12306 去买票，都找一下黄牛哥，至于他干了啥，我们心里是没点数的。形成一个 “代理” 的机制。
 
-在 JS 语言世界中，如果我们想去访问一个对象 A (Object 类型、可能是一个 Function)，对象 A 前面搭建了一座桥，这座桥可以过滤访客和改写返回的结果
+在 `JavaScript` 语言世界中，如果我们想去访问一个对象 A (Object 类型、可能是一个 Function)，对象 A 前面搭建了一座桥，这座桥可以过滤访客和改写返回的结果
 
 ```js
 const obj = new Proxy(

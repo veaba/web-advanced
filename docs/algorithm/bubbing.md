@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# JS 冒泡算法
+# JavaScript 排序算法
 
 - 稳定性：a=b，a 前，b 后，a 依然在 b 前面
 - 不稳定性：a=b，a 前，b 后，a 可在前也可在后

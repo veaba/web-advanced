@@ -1,7 +1,7 @@
 /***********************
  * @desc 这是一个学习call、apply、bind的demo
  * @name JS
- * @author Jo.gel
+ * @author veaba
  * @date 2019/8/8 0008
  *
  * @reference

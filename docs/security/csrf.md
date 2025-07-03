@@ -18,7 +18,7 @@ Cross site request forgery (跨站请求伪造)。
 
 ## 原理
 
-大多数情况下，被第三方网站或者 JS 脚本获取到 `cookie`，所以防御的手段之一就是防止 `cookie` 被获取。
+大多数情况下，被第三方网站或者 `js` 脚本获取到 `cookie`，所以防御的手段之一就是防止 `cookie` 被获取。
 
 ## 防御
 
@@ -46,7 +46,7 @@ Cross site request forgery (跨站请求伪造)。
 
 对应 header 是：`Set-Cookie: hello=world;httponly`
 
-- JS 脚本将无法读取 `cookie` 信息
+- `JavaScript` 脚本将无法读取 `cookie` 信息
 
 ### 将 Cookie 设置为 `SameHttp`
 

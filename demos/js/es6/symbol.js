@@ -1,6 +1,6 @@
 /***********************
  * @name JS
- * @author Jo.gel
+ * @author veaba
  * @date 2019/8/9 0009
  * @desc  es6 symbol 联系验证文件
  ***********************/

@@ -1,6 +1,6 @@
 /***********************
  * @name JS
- * @author Jo.gel
+ * @author veaba
  * @date 2019/8/14 0014 下午 4:08
  ***********************/
 const Vue = function () {
