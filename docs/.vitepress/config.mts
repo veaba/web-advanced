@@ -5,6 +5,7 @@ import { codePreviewPlugin } from 'vitepress-script-preview';
 export default defineConfig({
   title: 'web advanced',
   description: '进阶的 web 前端知识体系',
+  base: '/',
   head: [
     [
       'style',
@@ -64,6 +65,11 @@ export default defineConfig({
     ],
 
     sidebar: {
+      '/css': [
+        { text: 'CSS', link: '/css/css3' },
+        { text: '动画', link: '/css/animation' },
+        { text: '左右布局', link: '/css/left-center-right' },
+      ],
       '/javascript/': [
         {
           text: 'JavaScript',
@@ -78,7 +84,7 @@ export default defineConfig({
             { text: '原型与原型链', link: '/javascript/prototype' },
             { text: 'Blob', link: '/javascript/blob' },
             { text: 'HTTP', link: '/http' },
-            { text: '设计模式', link: '/javascript/design-model' },
+            { text: '设计模式', link: '/javascript/design-models/index' },
             { text: '正则', link: '/javascript/regex' },
             {
               text: '函数',

@@ -62,16 +62,17 @@ sidebar: auto
   - 总 height：width + margin-left + margin-right
   - 实际 content：width - border*2- padding*2=160
 
-![](/html/border-box-parent.png)
+![border-box-parent](/images/html/border-box-parent.png)
 
 - children
   - 总 width：width - border*2- padding*2= 200-40=160
   - 总 height：height - border*2- padding*2= 200-40=160
 
-![](/html/border-box-children.png)
+![border-box-children](/images/html/border-box-children.png)
+
 ### IE 盒子模型
 
-- IE 盒子模型：(margin+padding+border)\*2+width
+- IE 盒子模型：`(margin+padding+border)\*2+width`
 - 默认使用 content-box
 
 ```html
@@ -111,10 +112,10 @@ sidebar: auto
   - 总 width：margin*2+border*2+padding*2+width=200+20*2+10*2+10*2=280
   - 总 height：margin*2+border*2+padding*2+height=200+20*2+10*2+10*2=280
 
-![](/html/content-box-parent.png)
+![content-box-parent](/images/html/content-box-parent.png)
 
 - children
   - 总 width：parent width = 200
   - 总 height：parent height = 200
 
-![](/html/content-box-children.png)
+![content-box-children](/images/html/content-box-children.png)

@@ -5,14 +5,14 @@ sidebar: auto
 # DOM 对象
 
 - document 对象，文档，window 的属性
-- xml DOM http://www.w3school.com.cn/xmldom/dom_htmlelement.asp
+- [xml DOM](http://www.w3school.com.cn/xmldom/dom_htmlelement.asp)
 - document 是文档 (整个 DOM 树) 的根节点
 - 对于 DOM 元素，children 是指 DOM Object 类型的子对象，不包括 tag 之间隐形存在的 TextNode，而 childNodes 包括 tag 之间隐形存在的 TextNode 对象
 - domContentLoaded 事件早于 onload
 
 ## 知识点
 
-- docment 是一个 document node
+- document 是一个 document node
 - elements 都是 element node
 - comments 不都是 document node
 - element 内的 text 内容也是 text node
@@ -23,7 +23,7 @@ sidebar: auto
 
 ## Document 对象属性+方法
 
-> http://www.runoob.com/jsref/dom-obj-document.html
+[document 对象属性一览表](http://www.runoob.com/jsref/dom-obj-document.html)
 
 | 属性或方法                          | 描述                                                               |
 | ----------------------------------- | ------------------------------------------------------------------ |
@@ -70,7 +70,7 @@ sidebar: auto
 | document.title                      | 返回 `title`                                                       |
 | document.URL                        | 返回完整的 `URL`                                                   |
 | `document.write()`                  | 写 `html` 表达式或者 `js` 代码，重写整个文档                       |
-| `document.writelen()`               | 等同 `write`，但带有换行符                                         |
+| `document.writeln()`               | 等同 `write`，但带有换行符                                         |
 |                                     |                                                                    |
 
 ## HTML DOM 属性对象
@@ -92,8 +92,8 @@ sidebar: auto
 
 > 详细 <http://www.runoob.com/jsref/dom-obj-all.html>
 
-| 属性                                | 方法                                                                                                                                                   | 描述 |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
+| 属性 或 方法                        | 描述                                                                                                                                                   |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | element.accessKey                   | 设置或者返回 accessKey 一个元素                                                                                                                        |
 | element.attributes                  | 返回一个元素的属性数组                                                                                                                                 |
 | element.childNodes                  | 返回一个元素的子元素数组                                                                                                                               |
@@ -151,7 +151,7 @@ sidebar: auto
 | `element.hasFocus()`                |                                                                                                                                                        |
 | `element.insertBefore()`            | 插入,已选择的.insertBefore(parentNode,ChildNode) [insertBefore](https://github.com/veaba/web-advanced-frond-end/tree/master/demos/js/document.js/#L26) |
 | `element.isDefaultNamespace()`      |                                                                                                                                                        |
-| `element.isEquaNode()`              |                                                                                                                                                        |
+| `element.isEqualNode()`              |                                                                                                                                                        |
 | `element.isSameNode()`              |                                                                                                                                                        |
 | `element.isSupported()`             |                                                                                                                                                        |
 | `element.normalize()`               |                                                                                                                                                        |
@@ -171,22 +171,18 @@ sidebar: auto
 | `nodeList.item()`                   |                                                                                                                                                        |
 |                                     |                                                                                                                                                        |
 
-### HTML DOM 事件，见 `## DOM事件`
-
-> 单独拎出来
-
 ### Console 对象
 
-### cssStyle 对象
+### CssStyle 对象
 
-| 属性                    | 方法                                        | 描述 |
-| ----------------------- | ------------------------------------------- | ---- |
+| 属性 或 方法            | 描述                                        |
+| ----------------------- | ------------------------------------------- |
 | cssText                 | style 属性,`document.body[0].style.cssText` |
 | length                  |                                             |
 | parentRule              |                                             |
 | `getPropertyPriority()` | 指定是否设置了 `!important` 属性            |
 | `getPropertyValue()`    | 返回指定的 css 属性值                       |
-| ` item()`               | 通过索引方式返回 css 声明的 css 属性名      |
+| `item()`               | 通过索引方式返回 css 声明的 css 属性名      |
 | `removeProperty()`      | 移除 css 声明中的 css 属性                  |
 | `setProperty()`         | 在 css 声明块中新建或者修改 css 属性        |
 |                         |                                             |
