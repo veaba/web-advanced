@@ -1,0 +1,1 @@
+import{_ as i,c as l,o as a,aa as t}from"./chunks/framework.qnqjiyko.js";const p=JSON.parse('{"title":"自我驱动","description":"","frontmatter":{},"headers":[],"relativePath":"self/index.md","filePath":"self/index.md"}'),r={name:"self/index.md"};function s(n,e,o,_,d,c){return a(),l("div",null,e[0]||(e[0]=[t("",2)]))}const m=i(r,[["render",s]]);export{p as __pageData,m as default};

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.demo {
+            color: black;
+        }
+
+        div.wrap .demo {
+            color: yellow;
+        }
+
+        div.wrap>.demo {
+            color: blue;
+        }
+
+        div.wrap+.demo {
+            color: green;
+        }
+
+        div.demo+.demo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        .list{color:black}
+        .list>li:nth-child(2n){color:red}
+        .list>li:nth-child(3n+1){color:green}
+        .list>li:nth-child(3n+2){color:blue}
+        </style>
+        <ul class="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        </ul>
+    <script>
+        var elements = document.getElementsByTagName("li");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].onclick = function () {
+                alert(i);
+            };
+        }
+    </script>
+</body>
+
+</html>
