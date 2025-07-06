@@ -21,7 +21,8 @@ console.log(a, b); // 两者都是 Sa
 ```js
 const a = { name: 'Li' };
 const b = Object.assign({}, a);
-b.name = 'Sa';
+// 此时将 a 的值赋给 b
+b.name = 'Sa'; // 再改变 b 的值，a 不会被改变
 console.log(a, b);
 ```
 
@@ -73,11 +74,15 @@ obj.e = obj.a;
 obj.b.c = obj.c;
 obj.b.d = obj.b;
 obj.b.e = obj.b.c;
-let newObj = JSON.parse(JSON.stringify(obj));
+const newObj = JSON.parse(JSON.stringify(obj));
 console.log(newObj);
 ```
 
-**[lodash deepClone](https://lodash.com/docs##cloneDeep)**：
+### lodash 深克隆
+
+[lodash deepClone](https://lodash.com/docs##cloneDeep)
+
+一种通过浏览器提供的深拷贝机制
 
 ```js
 function structuralClone(obj) {
@@ -91,7 +96,7 @@ function structuralClone(obj) {
 var obj = {
   a: 1,
   b: {
-    c: b,
+    c: obj,
   },
 }(
   // 注意该方法是异步的
@@ -142,12 +147,12 @@ function deepCopy(target) {
   return result;
 }
 
-var a = {
+const a = {
   a: 'a object',
   name: 'a',
 };
 
-var b = {
+const b = {
   b: 'b object',
   name: 'b',
 };

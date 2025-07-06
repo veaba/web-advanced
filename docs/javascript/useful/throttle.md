@@ -2,7 +2,7 @@
 
 ## 概念
 
-- 节省的意思
+- 节省的意思，均匀的执行，固定频率执行
 
 - 跟水龙头一个概念，开一次，流水，关一次，停水，不管后面来了多少
 
@@ -12,13 +12,19 @@
 
 ## 场景
 
-1. window.onresize()
+关心执行过程
 
-2. mousemove()
+1. window.onresize()，跟防抖一样也可以适用
+
+2. `scroll` 场景下，`mousemove()`，跟防抖一样也可以适用
 
 3. 上传进度
 
 4. input 实时查询，每隔 x s 发送一次请求，服务端是限流 (Rate limit)
+
+5. 游戏帧频率
+
+6. 高频点击，如抢购
 
 ## 实现
 
@@ -60,3 +66,47 @@ function throttle(f, wait) {
   };
 }
 ```
+
+
+## 同时使用
+
+### 滚动场景
+
+```js
+// 示例代码
+const handleScroll = () => {
+  // 节流：限制检查频率
+  throttle(() => {
+    // 防抖：当用户停止滚动一段时间后执行
+    debounce(checkIfReachBottom, 300)();
+  }, 200)();
+};
+
+window.addEventListener('scroll', handleScroll);
+```
+
+### 实时搜索
+
+```js
+const fetchSuggestions = () => {
+  // 节流：限制最小请求间隔为500ms
+  throttle(() => {
+    // 防抖：用户停止输入300ms后执行
+    debounce(actualFetch, 300)();
+  }, 500)();
+};
+
+searchInput.addEventListener('input', fetchSuggestions);
+```
+
+```js
+const handleResize = () => {
+  throttle(() => {
+    debounce(calculateLayout, 200)();
+  }, 100)();
+};
+
+window.addEventListener('resize', handleResize);
+```
+
+### 窗口大小调整
