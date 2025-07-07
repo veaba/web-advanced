@@ -52,7 +52,6 @@ const scanItems = (parent: string, parentPath: string, item: string) => {
 
   if (stat.isFile()) {
     return [createItem(parent, '', item, itemPath)];
-    // return item === 'index.md' ? [] : [createItem(parent, '', item, itemPath)];
   }
 
   return fs.readdirSync(itemPath).flatMap((subItem) => {
@@ -63,12 +62,19 @@ const scanItems = (parent: string, parentPath: string, item: string) => {
   });
 };
 
-const createItem = (parent: string, folder: string, file: string, path: string) => ({
-  title: [folder, file.replace(/\.md$/, '')].filter(Boolean).join('/'),
-  path: `/${[parent, folder, file.replace(/\.md$/, '')].filter(Boolean).join('/')}`,
-  children: null,
-  headers: parsePageHeaders(path),
-});
+const createItem = (parent: string, folder: string, file: string, path: string) => {
+  console.log('path=>', path);
+
+  const pathStr = `/${[parent, folder, file.replace(/\.md$/, '')].filter(Boolean).join('/')}`;
+  console.log('pathStr1=>', pathStr);
+
+  return {
+    title: [folder, file.replace(/\.md$/, '')].filter(Boolean).join('/'),
+    path,
+    children: null,
+    headers: parsePageHeaders(path),
+  };
+};
 
 // Interface defining the structure of a single header in the API
 interface APIHeader {
@@ -119,6 +125,7 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
     headers = h2s.map((h) => {
       const text = cleanHeaderText(h, anchorRE); // Clean up header text
       const anchor = extractAnchor(h, anchorRE, text); // Extract or generate anchor
+
       return { text, anchor };
     });
   } else {

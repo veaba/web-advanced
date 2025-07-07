@@ -12,7 +12,7 @@ sidebar: auto
 
 ## CSP (内容安全策略)
 
-https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP
+<https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP>
 
 ## SQL 注入
 

@@ -30,9 +30,9 @@ Cross site request forgery (跨站请求伪造)。
 比如构造一个 `from` 表单
 
 ```html
-<from id="foo" action="/api/" method="POST">
+<form id="foo" action="/api/" method="POST">
   <input type="text" value="name" />
-</from>
+</form>
 <script>
   document.forms('foo')[0].submit();
 </script>

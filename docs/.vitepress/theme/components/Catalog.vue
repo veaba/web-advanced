@@ -60,6 +60,23 @@ const pages = computed(() => {
 onMounted(async () => {
   console.log('apiIndex', apiIndex);
   console.log('pages', pages);
+
+  const allLinks = [];
+
+  for (const section of apiIndex) {
+    if (section.children) {
+      for (const item of section.children) {
+        for (const h of item.headers) {
+          allLinks.push({
+            text: h.text,
+            link: item.path + '.html#' + h.anchor,
+          });
+        }
+      }
+    }
+  }
+
+  console.log('allLinks', allLinks);
 });
 </script>
 

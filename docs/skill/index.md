@@ -8,7 +8,7 @@ sidebar: auto
 
 ## 跨域问题
 
-> @https://segmentfault.com/a/1190000011145364
+> <https://segmentfault.com/a/1190000011145364>
 
 - JSONP 跨域
   - **缺点：只支持 get、不支持 post**

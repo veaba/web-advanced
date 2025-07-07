@@ -113,7 +113,7 @@ export default {
     },
   };
 
-  const sharePropertyfinition = {
+  const sharePropertyDefinition = {
     enumerable: true,
     configurable: true,
     get: noop,
@@ -254,7 +254,11 @@ this.newDepIds = new Set();
 ## api
 
 - el
-  可以是 css 选择器，可以是 HTMLElement 实例 <sub>[HTMLElement 实例是什么？](http://www.w3school.com.cn/xmldom/dom_htmlelement.asp)</sub>
+  可以是 css 选择器，可以是 HTMLElement 实例
+
+:::tip
+[HTMLElement 实例是什么？](http://www.w3school.com.cn/xmldom/dom_htmlelement.asp)
+:::
 
 - 全局
 
@@ -280,7 +284,7 @@ const Vue = {
   set: { target, key, value }, //确保响应式更新
   delete: { target, key }, //避免被删除无法触发更新，但尽量少用它
   directive: (id, [definition]), //指令
-  filter: (id, [defintion]), //注册或获取全局过滤器
+  filter: (id, [definition]), //注册或获取全局过滤器
   component: (id, [definition]), //注册或获取全局组件
   use: object | Function, //安装vue 插件
   mixin: { Object }, //混入
@@ -323,7 +327,7 @@ const Vue = {
 
 ### vue3.0 `先占坑`
 
-> https://www.bilibili.com/video/av36787459/ vue-v2.5.16.js 3.0 最新进展，来自 Vue Conf 杭州
+> <https://www.bilibili.com/video/av36787459/> vue-v2.5.16.js 3.0 最新进展，来自 Vue Conf 杭州
 
 #### 模板编译、Virtual Dom runtime 性能
 
@@ -386,7 +390,7 @@ const Vue = {
 
 - 场景
   - `vue native`
-  - `wexx`
+  - `weex`
   - `mpvue` 小程序
 - vue 作为 runtime 编译到多端
   - 独立出真正的 customer render API，在 `import {createRenderer} from '@vue/runtime-core'`，平台无关 vue runtime

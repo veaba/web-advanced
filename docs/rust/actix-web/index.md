@@ -23,7 +23,7 @@ Actix 是开发带有 Rust 的 web 服务的门户，本文档将为你提供指
 
 ### 什么是 Actix
 
-Acitx 是多种集合
+Actix 是多种集合
 
 Actix 一个集合体，它的基础是一个强大的 `actor` 系统，用于 Rust，而 `actix-web` 系统最初就是在这个系统之上构建的，这是你最有可能使用的。`actix-web` 给你的是一个有趣且快速的 web 开发框架。
 
@@ -340,7 +340,7 @@ async fn main() -> std::io::Result<()> {
 }
 ```
 
-![](https://actix.rs/img/diagrams/http_server.svg)
+![http_server](https://actix.rs/img/diagrams/http_server.svg)
 
 ### 连接生命周期
 
@@ -352,23 +352,23 @@ async fn main() -> std::io::Result<()> {
 
 请注意，下面的图表仅勾勒了 `happy-path` 的场景
 
-![](https://actix.rs/img/diagrams/connection_overview.svg)
+![connection_overview](https://actix.rs/img/diagrams/connection_overview.svg)
 
 更详细地 Accept 循环
 
-![](https://actix.rs/img/diagrams/connection_accept.svg)
+![connection_accept](https://actix.rs/img/diagrams/connection_accept.svg)
 
 大多数代码实现位于 `actix-server` 机箱中，用于结构 `Accept`。
 
 更详细的 `Worker` 循环
 
-![](https://actix.rs/img/diagrams/connection_worker.svg)
+![connection_worker](https://actix.rs/img/diagrams/connection_worker.svg)
 
 大多数代码实现都位于 `actix-server` crate 的 `Worker` 结构中。
 
 大致的请求循环
 
-![](https://actix.rs/img/diagrams/connection_request.svg)
+![connection_request](https://actix.rs/img/diagrams/connection_request.svg)
 
 请求循环的大多数代码实现位于 `actix-web` 和 `actix-http` 机箱中。
 

@@ -4,8 +4,8 @@ sidebar: auto
 
 # Vue.js 2 API
 
-- @vue API 文档 en https://vuejs.org/v2/api
-- @vue API 文档 cn https://cn.vuejs.org/v2/api
+- @vue API 文档 en <https://vuejs.org/v2/api>
+- @vue API 文档 cn <https://cn.vuejs.org/v2/api>
 - @desc 以下内容为@veaba 根据自己的理解和参考文档整理
 - @疑问为什么有了 en 和 cn api 文档，我还这么抄一遍人家官方的大纲？
   > 答：里面会掺杂我过去两年使用 vue 作为企业级开发框架的实践化经验，会以 demo 的形式加以解释，以便加深记忆。整理出来的原因是以为，本人记忆力日渐衰减，我必须以文本形式整理出来加以记忆，不然等于没学没做过项目一样，vue 还是有很多我还没用过的地方，有些理解比较薄弱或者新增加的特性，还没实践到实际的企业项目开发中，毕竟还在学习中。如果有理解不对的地方，麻烦提 issue，一起进步，一起学习
@@ -22,7 +22,7 @@ sidebar: auto
 ![vue-prototype](/images/vue-prototype.png)
 
 - `$delete`: function del(target,key)
-- `$destroy`: funcion()
+- `$destroy`: function()
 - `$emit`: function(event)
 - `$forceUpdate`:function()
 - `$inspect`:function()
@@ -31,13 +31,13 @@ sidebar: auto
 - `$off`:function(event,fn)
 - `$on`:function(event,fn)
 - `$once`:function(event,fn)
-- `$set`:funtion(target,key,val)
+- `$set`:function(target,key,val)
 - `$watch`:function(expOrFn,cb,options)
 - `__patch__`:patch(oldVnode,vnode,hydrating,removeOnly)
 - `_b`:function bindObjectProps(data,tag,value,asProp, isSync)
 - `_d`:function bindDynamicKeys(baseObj,values)
 - `_e`:function (text)
-- `_f`:funtion resolveFilter(id)
+- `_f`:function resolveFilter(id)
 - `_g`:bindObjectListeners(data,value)
 - `_i`:function looseIndexOf(val,render)
 - `_init`:function options()
@@ -91,7 +91,7 @@ sidebar: auto
 
 ## 疑问
 
-- 如果把 vue 看做一种设计模式，那么实例化 `const vue = new Vue() ` 这个过程中，vue 是什么设计模式的呢？
+- 如果把 vue 看做一种设计模式，那么实例化 `const vue = new Vue()` 这个过程中，vue 是什么设计模式的呢？
   > 应该是构造函数+原型继承方法，组合继承/伪经典继承。
 
 这意味着，如果让你去写 Vue，其实应该是这样写的 [*待确认]：
@@ -104,10 +104,10 @@ function Vue(options) {
   }
   this.util = options.util;
   this.set = options.set;
-  this.delete = opitions.delete;
+  this.delete = options.delete;
   // ...
 }
-Vue.prototyoe.$emit = function () {
+Vue.prototype.$emit = function () {
   console.log('hello emit');
 };
 ```
@@ -120,7 +120,11 @@ Vue.prototyoe.$emit = function () {
 
 ---
 
-## Global config `为什么有这个，Vue函数里面找不到，或者说应该怎么找，如果不看文档情况下~`
+## Global config
+
+:::tip
+什么有这个，Vue 函数里面找不到，或者说应该怎么找，如果不看文档情况下
+:::
 
 ### `config.silent`
 
@@ -130,13 +134,13 @@ Vue.prototyoe.$emit = function () {
 
 ### `config.errorHandler`
 
-### `config.warnHangdler`
+### `config.warnHandler`
 
 ### `config.ignoreElements`
 
 ### `config.keyCodes`
 
-### `config.preformance`
+### `config.performance`
 
 ### `config.productionTip`
 
@@ -242,7 +246,7 @@ Vue.prototyoe.$emit = function () {
 
 ### model
 
-### inheriAttrs
+### inheritAttrs
 
 ### comments
 
@@ -292,7 +296,7 @@ Vue.prototyoe.$emit = function () {
 
 ### `vm.$emit`
 
-## Instance Methods/Lifecle
+## Instance Methods/Lifecycle
 
 ### `vm.$mount`
 
@@ -350,16 +354,18 @@ Vue.prototyoe.$emit = function () {
 
 ### component
 
-### transtion
+### transition
 
-### transtion-group
+### transition-group
 
 ### keep-alive
 
-### slot
+### slots
 
 ## VNode-Interface
 
 ## Server-Side Rendering
 
-## 根据 vue 的打印数据，其他应该是这样的见 https://github.com/veaba/web-advanced-frond-end/blob/master/demos/js/aVue.js
+## 根据 vue 的打印数据
+
+其他应该是这样的见 <https://github.com/veaba/web-advanced-frond-end/blob/master/demos/js/aVue.js>
