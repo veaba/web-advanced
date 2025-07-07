@@ -458,11 +458,17 @@ iframe.contentWindow.document.body.innerHTML = 'hello world';
 
 立即执行函数，不暴露私有成员
 
-## CommonJS (通用环境) node 的实现、webpack 也是
+## CommonJS (通用环境)
 
-## AMD-require.js/curl.js (异步模块定义，一开始写好，前置，适合浏览器环境) [AMD (异步模块定义，一开始写好，前置)](https://github.com/amdjs/amdjs-api/wiki/AMD)
+node 的实现、webpack 也是
 
-## CMD (sea.js 实现-) [require.js 就近模式](https://github.com/seajs/seajs/issues/242) [require.js 就近模式 1](http://annn.me/how-to-realize-cmd-loader/)
+## AMD-require.js/curl.js
+
+(异步模块定义，一开始写好，前置，适合浏览器环境) [AMD (异步模块定义，一开始写好，前置)](https://github.com/amdjs/amdjs-api/wiki/AMD)
+
+## CMD (sea.js 实现)
+
+[require.js 就近模式](https://github.com/seajs/seajs/issues/242) [require.js 就近模式 1](http://annn.me/how-to-realize-cmd-loader/)
 
 ## 异步加载 js
 
