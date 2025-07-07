@@ -63,14 +63,13 @@ const scanItems = (parent: string, parentPath: string, item: string) => {
 };
 
 const createItem = (parent: string, folder: string, file: string, path: string) => {
-  console.log('path=>', path);
+  // console.log('path=>', path);
 
   const pathStr = `/${[parent, folder, file.replace(/\.md$/, '')].filter(Boolean).join('/')}`;
-  console.log('pathStr1=>', pathStr);
 
   return {
     title: [folder, file.replace(/\.md$/, '')].filter(Boolean).join('/'),
-    path,
+    path: pathStr,
     children: null,
     headers: parsePageHeaders(path),
   };
@@ -125,7 +124,6 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
     headers = h2s.map((h) => {
       const text = cleanHeaderText(h, anchorRE); // Clean up header text
       const anchor = extractAnchor(h, anchorRE, text); // Extract or generate anchor
-
       return { text, anchor };
     });
   } else {
@@ -141,7 +139,7 @@ function extractHeadersFromMarkdown(mdText: string, fullPath: string): APIHeader
     headers = [
       {
         text: anchor || mdFileName,
-        anchor: anchor || mdText,
+        anchor: anchor,
       },
     ];
   }
