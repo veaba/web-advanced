@@ -293,9 +293,7 @@ sidebar: auto
 
 ### 方式 3：双 float 逆序方式
 
-- 右边移到最前面
-- 其次到 left
-- center
+- 右边移到 `center` 之前
 - 查看：[margin-left_center_right-layout-3.html](/demos/html/margin-left_center_right-layout-3.html)
 
 ::: details
@@ -342,8 +340,8 @@ sidebar: auto
 
   <body>
     <div class="main">
-      <div class="right">右右边右边右边边</div>
       <div class="left">左边左边左边左边</div>
+        <div class="right">右右边右边右边边</div>
       <div class="center">
         中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间中间
       </div>
