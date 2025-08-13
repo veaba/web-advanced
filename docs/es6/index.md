@@ -32,35 +32,64 @@ for (let i = 0; i < 5; i++) {}
 console.info(i); // 抛出未定义 且 for 括号和 大括号是不同的作用域
 ```
 
+## 数组
+
+一下为 es6 引入的新特性
+
+|特性|静态方法|实例方法|描述|
+|---|---|---|---|
+||`Array.from()`|||
+||`Array.of()`|||
+|||`copyWithin()`||
+|||`find()`||
+|||`findIndex()`||
+|||`findLast()`||
+|||`findLastIndex()`||
+|||`fill()`||
+|||`entries()`||
+|||`keys()`||
+|||`values()`||
+|||`includes()`||
+|||`flat()`||
+|||`flatMap()`||
+|||`at()`||
+|||`toReversed()`||
+|||`toSorted()`||
+|||`toSpliced()`||
+|||`width()`||
+|||`group()`||
+|||`groupToMap()`||
+|数组空位||||
+|||||
+
 ## 箭头函数
 
-> https://www.cnblogs.com/mengff/p/9656486.html
+> <https://www.cnblogs.com/mengff/p/9656486.html>
 
-1. 箭头函数 this 是父作用域的 this，不是调用时的 this
+- 箭头函数 this 是父作用域的 this，不是调用时的 this
+  - 如何知道当前的父作用域
 
-   - 如何知道当前的父作用域
+- 箭头函数不能作为构造函数，不能使用 new
 
-2. 箭头函数不能作为构造函数，不能使用 new
+- 箭头函数没有 arguments 和 caller、callee
 
-3. 箭头函数没有 arguments 和 caller、callee
+- 箭头函数通过 call、apply 调用不会改变 this 指向，只会入参
 
-4. 箭头函数通过 call、apply 调用不会改变 this 指向，只会入参
-
-5. 箭头函数没有原型属性
+- 箭头函数没有原型属性
 
 ```js
 const fn = () => {};
 console.log(fn.prototype);
 ```
 
-6. 箭头函数不能作为 Generator 函数，不能使用 yield 关键字
+- 箭头函数不能作为 Generator 函数，不能使用 yield 关键字
 
-7. 箭头函数返回对象需要加括号
+- 箭头函数返回对象需要加括号
 
-8. 箭头函数不能在 ES6 class 中声明的方法为实例方法，不是原型方法
+- 箭头函数不能在 ES6 class 中声明的方法为实例方法，不是原型方法
 
 ```js
-//deom1
+//demo1
 class Super {
   sayName() {
     //do some thing here
@@ -70,7 +99,7 @@ class Super {
 var a = new Super();
 var b = new Super();
 a.sayName === b.sayName; //true
-//所有实例化之后的对象共享prototypy上的sayName方法
+//所有实例化之后的对象共享 prototype 上的sayName方法
 
 //demo2
 class Super {
@@ -85,7 +114,7 @@ a.sayName === b.sayName; //false
 //实例化之后的对象各自拥有自己的sayName方法，比demo1需要更多的内存空间
 ```
 
-9. 多重箭头函数是高阶函数，相当于内嵌函数，就是闭包函数
+- 多重箭头函数是高阶函数，相当于内嵌函数，就是闭包函数
 
 ## 函数
 
@@ -221,7 +250,7 @@ class Dog extends Animal {
 }
 
 //实例化
-const d = new Dog('Lilei');
+const d = new Dog('LiLei');
 d.speak();
 ```
 
@@ -249,7 +278,7 @@ class Cat {
   constructor(name) {
     this.name = name;
   }
-  speack() {
+  speak() {
     console.log(this.name + ' makes a noise');
     return 2;
   }
@@ -291,10 +320,12 @@ Object.getPrototypeOf(this).name.call(this);
 
 > 状态的变更
 
-> 缺点：无法向外抛出错误移除，并主动中断这样的流程结果
+:::tip
+缺点：无法向外抛出错误移除，并主动中断这样的流程结果
+:::
 
 ```js
-const promise = new Promose((resolve, reject) => {
+const promise = new Promise((resolve, reject) => {
   const a = 1;
   if (a === 1) {
     resolve('ddd');
@@ -307,7 +338,7 @@ promise()
   .then((res) => {
     console.log(res);
   })
-  .cacth((err) => {
+  .catch((err) => {
     console.log();
   });
 ```
@@ -328,7 +359,7 @@ promise()
 
 - all()
 
-- racr()
+- race()
 
 ## Generator
 
@@ -340,10 +371,10 @@ promise()
   - 更好的语义
   - 更广的适用性
   - 返回值是 promise
-- async 函数的的返回值是 Promise 对象，aysnc 表示该函数内部有异步操作
+- async 函数的的返回值是 Promise 对象，`async` 表示该函数内部有异步操作
 - await 命令后可以是 Promise 对象和原始类型的值 (数值，字符串，布尔值，此时等同于同步操作)
 - 如果包装成为一个函数，then 里面表示当遇到 await 是执行 then 然后才执行后面
-- 如何使用 asyns/await
+- 如何使用 `async/await`
   - 函数声明
   - 函数表达式
   - 对象的方法
@@ -570,15 +601,23 @@ a4();
 function* hello() {
   yield 'hello'; //yield 表达式
   yield 'world'; //yield 表达式
-  return 'hellow and world';
+  return 'hello and world';
 }
 ```
 
-- 分段执行。`yiled` 表示暂停执行的标志，`next` 表示恢复执行
+- 分段执行。`yield` 表示暂停执行的标志，`next` 表示恢复执行
 - es6 提供的异步编程解决方案。[阮一峰 Generator 函数的语法](http://es6.ruanyifeng.com/#docs/generator)
 - 状态机，封装了多个内部状态
 - 有 `*` 星号 function \* a(){}
-- 函数体内部使用了 yield 表达式，定义不同的内部状态 (yield 产出的意思) function \* a(){yield ‘hello’；}；var func = a()；
+- 函数体内部使用了 yield 表达式，定义不同的内部状态 (yield 产出的意思)
+
+```js
+function a(){
+  yield 'hello'
+}；
+
+var func = a()；
+```
 
 ## Symbol
 
@@ -636,7 +675,7 @@ if (Reflect.defineProperty(target, property, attributes)) {
 // 旧的写法
 'assign' in Object; //true
 // 新写法
-Reflect.has(Object, 'assigne'); //true
+Reflect.has(Object, 'assign'); //true
 
 // 旧的delete 操作符
 var obj = {
@@ -690,7 +729,7 @@ Reflect.apply(Math.floor, undefined, [1.6]); //1
 - **Reflect.has(target,name)**
 - **Reflect.ownKeys(target)**
 - **Reflect.isExtensible(target)**
-- **Reflect.prevenExtensions(target)**
+- **Reflect.preventExtensions(target)**
 - **Reflect.getOwnPropertyDescriptor(target,name)**
 - **Reflect.getPrototypeOf(target)**
 - **Reflect.setPrototypeOf(target,prototype)**

@@ -34,25 +34,25 @@ sidebar: auto
     > key 的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
     - 请求头 header
 
-```js
-const json = {
-  Accept: 'text/plain,text/html' /*指定客户端能够接受的内容类型，也可以是星号  */,
-  'Accept-Encoding': 'gzip, deflate, br' /*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/,
-  'Accept-Language': 'en,zh' /*语言*/,
-  Authorization: 'Basic xxxx' /*HTTP授权的证书*/,
-  'Cache-control': 'no-cache' /*指定请求和响应遵从的缓存机制*/,
-  'Content-Type': 'text/html',
-  Connection: 'close' /*是否是持久链接，http1.1默认持久:Keep-Alive*/,
-  'Content-Length': 233,
-  Date: 'Tue, 18 Sep 2018 11:05:26 GMT',
-  'access-control-allow-origin': '*' /*允许所有域名的脚本访问该资源,保护静态资源么*/,
-  Status: 200,
-  Cookie: 'xx',
-  Host: 'www.baidu.com',
-  'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36' /*浏览器特征编码*/,
-};
-```
+    ```js
+    const json = {
+      Accept: 'text/plain,text/html' /*指定客户端能够接受的内容类型，也可以是星号  */,
+      'Accept-Encoding': 'gzip, deflate, br' /*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/,
+      'Accept-Language': 'en,zh' /*语言*/,
+      Authorization: 'Basic xxxx' /*HTTP授权的证书*/,
+      'Cache-control': 'no-cache' /*指定请求和响应遵从的缓存机制*/,
+      'Content-Type': 'text/html',
+      Connection: 'close' /*是否是持久链接，http1.1默认持久:Keep-Alive*/,
+      'Content-Length': 233,
+      Date: 'Tue, 18 Sep 2018 11:05:26 GMT',
+      'access-control-allow-origin': '*' /*允许所有域名的脚本访问该资源,保护静态资源么*/,
+      Status: 200,
+      Cookie: 'xx',
+      Host: 'www.baidu.com',
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36' /*浏览器特征编码*/,
+    };
+    ```
 
     - 请求体
 
@@ -64,7 +64,7 @@ const json = {
   Age: 12, //原始服务器到代理缓存形成的估算时间
   'Content-Type': 'text/html;charts=utf-8',
   'Cache-Control': 'no-cache' /*告诉素有的缓存机制是否可以缓存以及哪种类型*/,
-  'Content-Languge': 'en,zh',
+  'Content-Language': 'en,zh',
   'Content-Length': 2121 /*响应体的长度*/,
   Date: 'Tue, 18 Sep 2018 11:05:26 GMT',
   Expires: 'Thu, 01 Dec 2010 16:00:00 GMT' /*响应过期的时间*/,
@@ -75,7 +75,7 @@ const json = {
 ```
 
 - http 状态码
-  > @参考 https://www.jianshu.com/p/760b1b579b0f
+  > @参考 <https://www.jianshu.com/p/760b1b579b0f>
   - 1xx 临时响应
     - 100 webSocket 请继续
   - 2xx 成功
@@ -86,7 +86,7 @@ const json = {
     - 204 无内容，处理了请求但没有返回任何内容
   - 3xx 重定向
     - 300
-    - 301 永久重定向，发生在访问 `http://www.baidu.com` 时重定向到 443 端口的 `https://www.baidu.com`，可以访问下 http://www.baidu.com，看下请求资源情况
+    - 301 永久重定向，发生在访问 `http://www.baidu.com` 时重定向到 443 端口的 `https://www.baidu.com`，可以访问下 <http://www.baidu.com>，看下请求资源情况
     - 302 临时重定向
     - 303
     - 304 未修改，自从上次请求后，网页未修改过。chrome 允许缓存就大部分都是 304
@@ -217,6 +217,5 @@ const httpCode = {
 
 ## SPDY
 
-https://blog.csdn.net/qq_41635167/article/details/89484445
-
-https://zhuanlan.zhihu.com/p/50479555
+- <https://blog.csdn.net/qq_41635167/article/details/89484445>
+- <https://zhuanlan.zhihu.com/p/50479555>

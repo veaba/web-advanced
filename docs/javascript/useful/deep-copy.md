@@ -12,6 +12,42 @@ b.name = 'Sa';
 console.log(a, b); // 两者都是 Sa
 ```
 
+## 差异化
+
+||浅拷贝|深拷贝|
+|---|---|---|
+|基本类型|复制|复制|
+|引用类型|只复制引用|复制|
+|复制范围|复制对象本身|递归复制对象所有类型的字段|
+|与原对象比较|共享数据|完全独立|
+|修改应用|会被影响|不会影响|
+|适用结构|简单|复杂|
+|`Object.assign`|✅|❎|
+|`拓展符...`|✅|❎|
+|`slice()`|✅|❎|
+|`concat()`|✅|❎|
+
+### slice 浅拷贝用法
+
+```js
+let originalArray = [1, 2, 3, { value: 4 }];
+let copiedArray = originalArray.slice();
+ 
+console.log(copiedArray); // 输出: [1, 2, 3, { value: 4 }]
+ 
+// 修改原始数组
+originalArray[3].value = 5;
+ 
+console.log(originalArray); // 输出: [1, 2, 3, { value: 5 }]
+console.log(copiedArray); // 输出: [1, 2, 3, { value: 5 }]
+
+// 修改原始数组中的 基本类型
+originalArray[3].value = 11;
+
+console.log(originalArray); // 输出: [11, 2, 3, { value: 5 }]
+console.log(copiedArray); // 输出: [1, 2, 3, { value: 5 }]
+```
+
 ## 浅拷贝
 
 仅处理第一个层级
