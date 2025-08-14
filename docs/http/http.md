@@ -6,37 +6,37 @@ sidebar: auto
 
 - HTTP1.1 有个问题叫线端阻塞 (head-of-line blocking)
 
-  - 一个连接一次只提交一个请求的效率比较高，多了就慢
+    - 一个连接一次只提交一个请求的效率比较高，多了就慢
 
 - http 请求与响应
-  - request，请求
-    > key 的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
-    - 请求头 header
+    - request，请求
+      > key 的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
+        - 请求头 header
 
-    ```js
-    const json = {
-      Accept: 'text/plain,text/html' /*指定客户端能够接受的内容类型，也可以是星号  */,
-      'Accept-Encoding': 'gzip, deflate, br' /*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/,
-      'Accept-Language': 'en,zh' /*语言*/,
-      Authorization: 'Basic xxxx' /*HTTP授权的证书*/,
-      'Cache-control': 'no-cache' /*指定请求和响应遵从的缓存机制*/,
-      'Content-Type': 'text/html',
-      Connection: 'close' /*是否是持久链接，http1.1默认持久:Keep-Alive*/,
-      'Content-Length': 233,
-      Date: 'Tue, 18 Sep 2018 11:05:26 GMT',
-      'access-control-allow-origin': '*' /*允许所有域名的脚本访问该资源,保护静态资源么*/,
-      Status: 200,
-      Cookie: 'xx',
-      Host: 'www.baidu.com',
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36' /*浏览器特征编码*/,
-    };
-    ```
+      ```js
+      const json = {
+        Accept: 'text/plain,text/html' /*指定客户端能够接受的内容类型，也可以是星号  */,
+        'Accept-Encoding': 'gzip, deflate, br' /*指定浏览器可以支持的web服务器返回内容压缩编码类型。*/,
+        'Accept-Language': 'en,zh' /*语言*/,
+        Authorization: 'Basic xxxx' /*HTTP授权的证书*/,
+        'Cache-control': 'no-cache' /*指定请求和响应遵从的缓存机制*/,
+        'Content-Type': 'text/html',
+        Connection: 'close' /*是否是持久链接，http1.1默认持久:Keep-Alive*/,
+        'Content-Length': 233,
+        Date: 'Tue, 18 Sep 2018 11:05:26 GMT',
+        'access-control-allow-origin': '*' /*允许所有域名的脚本访问该资源,保护静态资源么*/,
+        Status: 200,
+        Cookie: 'xx',
+        Host: 'www.baidu.com',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36' /*浏览器特征编码*/,
+      };
+      ```
 
-    - 请求体
+        - 请求体
 
 - response，响应
-  - 响应头 header
+    - 响应头 header
 
 ```js
 const json = {
@@ -53,40 +53,53 @@ const json = {
 };
 ```
 
-- http 状态码
-  > @参考 <https://www.jianshu.com/p/760b1b579b0f>
-  - 1xx 临时响应
-    - 100 webSocket 请继续
-  - 2xx 成功
-    - 200 已成功
-    - 201 请求成功，服务器创建了新的资源
-    - 202 已接受，服务器已接受，但尚未处理
-    - 203 非授权，返回的信息可能来自另一个来源
-    - 204 无内容，处理了请求但没有返回任何内容
-  - 3xx 重定向
-    - 300
-    - 301 永久重定向，发生在访问 `http://www.baidu.com` 时重定向到 443 端口的 `https://www.baidu.com`，可以访问下 <http://www.baidu.com>，看下请求资源情况
-    - 302 临时重定向
-    - 303
-    - 304 未修改，自从上次请求后，网页未修改过。chrome 允许缓存就大部分都是 304
-    - 305
-    - 306
-    - 307 内部重定向？Internal Redirect
-  - 4xx 客户端
+## http 状态码
 
-    - 400 错误请求
-    - 401 未授权，请求要求身份验证，对于需要登录的网页服务器可能返回此响应
-    - 402
-    - 403 禁止，服务器拒绝请求 forbidden
-    - 404 找不到，服务器未找到网页，网页丢失，not found
+> @参考 <https://www.jianshu.com/p/760b1b579b0f>
 
-  - 5xx 服务端
-    - 500 服务器内部错误，服务器遇到错误，无法处理
-    - 501 无法识别，尚未实施，比如无法处理请求方法
-    - 502 错误网关，网关错误，服务器作为网关从上游服务器收到无效响应
-    - 503 服务不可用，停机维护，指暂停状态。
-    - 504 网关超时
-    - 505 HTTP 版本不受支持，不支持请求所用的 HTTP 版本
+### 1xx 临时响应
+
+- 100 webSocket 请继续
+- 101 webSocket 比如升级协议，常见到 `webSocket` 使用
+
+### 2xx 成功
+
+- 200 已成功
+- 201 请求成功，服务器创建了新的资源
+- 202 已接受，服务器已接受，但尚未处理
+- 203 非授权，返回的信息可能来自另一个来源
+- 204 无内容，处理了请求但没有返回任何内容
+
+### 3xx 重定向
+
+- 300 多种选择
+- 301 永久重定向，发生在访问 `http://www.baidu.com` 时重定向到 443 端口的 `https://www.baidu.com`
+  ，可以访问下 <http://www.baidu.com>，看下请求资源情况
+- 302 临时重定向
+- 303 查看其它位置
+- 304 未修改，自从上次请求后，网页未修改过。chrome 允许缓存，大部分都是 304
+- 305 使用代理
+- 306
+- 307 内部重定向？Internal Redirect
+
+### 4xx 客户端
+
+- 400 错误请求，服务器不理解请求的语法
+- 401 未授权，请求要求身份验证，对于需要登录的网页服务器可能返回此响应
+- 402 预留
+- 403 禁止，服务器拒绝请求 forbidden
+- 404 找不到，服务器未找到网页，网页丢失，not found
+
+### 5xx 服务端
+
+- 500 服务器内部错误，服务器遇到错误，无法处理
+- 501 无法识别，尚未实施，比如无法处理请求方法
+- 502 错误网关，`Bad Gateway`, 网关错误，服务器作为网关从上游服务器收到无效响应
+- 503 服务不可用，停机维护，指暂停状态。
+- 504 网关超时，`Gateway Timeout`
+- 505 HTTP 版本不受支持，不支持请求所用的 HTTP 版本
+
+### node HTTP 状态码枚举
 
 > 一份来自 node 的 http 响应代码
 
@@ -160,25 +173,25 @@ const httpCode = {
 };
 ```
 
-
 ## 特性
 
 - HTTP 协议是应用层协议，底层基于 TCP 连接
+
 - HTTP 协议规定了浏览器与服务器通信的四个步骤：
-  1. 建立连接
-  2. 发送请求
-  3. 接收响应
-  4. 关闭连接
+    1. 建立连接
+    2. 发送请求
+    3. 接收响应
+    4. 关闭连接
 
 - HTTP 请求报文中，包括：
-  1. 请求方式，如 GET、POST 等
-  2. 请求的路径
-  3. 协议版本
-  4. 消息头等
+    1. 请求方式，如 GET、POST 等
+    2. 请求的路径
+    3. 协议版本
+    4. 消息头等
 
 - HTTP 响应报文中，包括：
 
-  1. 状态码
-  2. 状态名
-  3. 协议版本
-  4. 消息头等
+    1. 状态码
+    2. 状态名
+    3. 协议版本
+    4. 消息头等

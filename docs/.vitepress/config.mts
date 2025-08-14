@@ -73,6 +73,10 @@ export default defineConfig({
         { text: '动画', link: '/css/animation' },
         { text: '左右布局', link: '/css/left-center-right' },
       ],
+      '/interview': [
+        { text: '目录', link: '/interview/index' },
+        { text: '流行的面试题', link: '/interview/pop' }
+      ],
       '/javascript/': [
         {
           text: 'JavaScript',
@@ -141,6 +145,12 @@ export default defineConfig({
                 { text: 'call', link: '/javascript/context/call' },
               ],
             },
+            {
+              text: '有趣的发现',
+              items: [
+                { text: '✨比较', link: '/javascript/highLight/index' }
+              ]
+            }
           ],
         },
       ],
