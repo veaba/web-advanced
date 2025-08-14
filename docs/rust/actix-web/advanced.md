@@ -319,7 +319,7 @@ App::new().service(
     web::resource("/path").route(
         web::route()
             .guard(guard::Get())
-            .guard(gurad::Header("content-type","text/plain"))
+            .guard(guard::Header("content-type","text/plain"))
             .to(||HttpResponse::Ok()),
     )
 )
@@ -670,8 +670,8 @@ async fn main() -> std::io::Result<()> {
 use actix_web::{HttpRequest, Responder};
 
 async fn index(req: HttpRequest) -> impl Responder {
-    let url = req.url_for("youtube", &["oHg5SJYRHA0"]).unwrap();
-    assert_eq!(url.as_str(), "https://youtube.com/watch/oHg5SJYRHA0");
+    let url = req.url_for("youtube", &["111"]).unwrap();
+    assert_eq!(url.as_str(), "https://youtube.com/watch/111");
 
     url.into_string()
 }
@@ -1641,7 +1641,7 @@ async fn main() -> std::io::Result<()> {
 可以使用 `ErrorHandlers::handler()` 方法为特定状态代码注册自定义错误处理程序。你可以修改现有的响应或创建完全新的响应。错误处理程序可以立即返回响应，也可以返回解析为响应的未来。
 
 ```rust
-use actix_web::middleware::errhandlers::{ErrorHandlerResponse, ErrorHandlers};
+use actix_web::middleware::errHandlers::{ErrorHandlerResponse, ErrorHandlers};
 use actix_web::{dev, http, HttpResponse, Result};
 
 fn render_500<B>(mut res: dev::ServiceResponse<B>) -> Result<ErrorHandlerResponse<B>> {
