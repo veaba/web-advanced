@@ -268,7 +268,8 @@ function getProp<O, K extends keyof O>(obj: O, key: K) {
 const x1 = { a: 1, b: 22, c: 33 };
 
 console.log('a==>', getProp(x1, 'a'));
-console.log('m==>', getProp(x, 'm')); // 错误：Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c"'. console.log("m==>",getProp(x1,"m"))
+console.log('m==>', getProp(x, 'm')); 
+// 错误：Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c"'. console.log("m==>",getProp(x1,"m"))
 ```
 
 ### 泛型里使用类类型

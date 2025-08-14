@@ -20,7 +20,7 @@
 
 也就是 **`同站检查`** 的意思。
 
-```
+```shell
 Set-cookie:CookieName=CookieValue; SameSite=Strict
 ```
 
@@ -30,7 +30,7 @@ Set-cookie:CookieName=CookieValue; SameSite=Strict
 
 大多数是否，不发送第三方 `Cookie`，除了导航到目标网站的 `Get` 请求。
 
-```
+```shell
  Set-cookie: CName=CValue; SameSite=Lax
 ```
 
@@ -53,13 +53,13 @@ Set-cookie:CookieName=CookieValue; SameSite=Strict
 
 无效设置
 
-```
+```shell
 Set-Cookie: name=123;SameSite=None
 ```
 
 有效的设置，即 Cookie 只能通过 HTTPS 协议发送。
 
-```
+```shell
 Set-Cookie: name=123;SameSite=None;Secure
 ```
 

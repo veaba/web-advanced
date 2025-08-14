@@ -6,12 +6,12 @@ sidebar: auto
 
 - HTTP1.1 有个问题叫线端阻塞 (head-of-line blocking)
 
-    - 一个连接一次只提交一个请求的效率比较高，多了就慢
+  - 一个连接一次只提交一个请求的效率比较高，多了就慢
 
 - http 请求与响应
-    - request，请求
+  - request，请求
       > key 的一般大写开头，也可以小写，一把大写，基本随开发者喜好。
-        - 请求头 header
+    - 请求头 header
 
       ```js
       const json = {
@@ -33,10 +33,10 @@ sidebar: auto
       };
       ```
 
-        - 请求体
+    - 请求体
 
 - response，响应
-    - 响应头 header
+  - 响应头 header
 
 ```js
 const json = {

@@ -89,7 +89,9 @@
   });
   console.log(
     arrT
-  ); /*/[undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]*/
+  ); 
+  /*/[undefined, undefined, undefined, undefined, undefined, undefined, 
+  undefined, undefined, undefined]*/
 
   /*demo2*/
   const ages = [32, 33, 16, 40];

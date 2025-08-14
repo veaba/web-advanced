@@ -510,7 +510,7 @@ _`keep-alive`_ 连接行为由服务器设置定义。
 - `KeepAlive::Tcp(75)` - 使用 `SO_KEEPALIVE` socket 选项
 
 ```rust
-use actix_web::{web,App,HttpReesponse,HttpServer};
+use actix_web::{web,App,HttpResponse,HttpServer};
 
 #[actix_rt::main]
 

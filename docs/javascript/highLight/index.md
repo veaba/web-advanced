@@ -45,16 +45,16 @@ console.timeEnd('箭头函数');
 
 | 测试次数 | 具名函数 | 匿名函数 | 箭头函数 |
 | -------- | -------- | -------- | -------- |
-| 1        |          |
-| 2        |          |
-| 3        |          |
-| 4        |          |
-| 5        |          |
-| 6        |          |
-| 7        |          |
-| 8        |          |
-| 9        |          |
-| 10       |          |
+| 1        |          |  |
+| 2        |          |  |
+| 3        |          |  |
+| 4        |          |  |
+| 5        |          |  |
+| 6        |          |  |
+| 7        |          |  |
+| 8        |          |  |
+| 9        |          |  |
+| 10       |          |  |
 
 测试结果：
 函数执行时间所需时间：箭头函数 `>` 匿名函数 `>` 具名函数
@@ -105,12 +105,12 @@ console.timeEnd('箭头函数');
 
 ```text
 {
-	lastModified:1569222661942,
-	lastModifiedDate:Mon Sep 23 2019 15:11:01 GMT+0800 (中国标准时间)
-	name:"文件名.png",
-	size:7777,/kb
-	type:"image/png",
-	webkitRelativePath:""
+ lastModified:1569222661942,
+ lastModifiedDate:Mon Sep 23 2019 15:11:01 GMT+0800 (中国标准时间)
+ name:"文件名.png",
+ size:7777,/kb
+ type:"image/png",
+ webkitRelativePath:""
 }
 
 2. 外面一般包裹着数组里面
