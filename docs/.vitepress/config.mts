@@ -46,10 +46,12 @@ export default defineConfig({
       {
         text: '类库',
         items: [
-          { text: 'nuxt', link: '/nuxt' },
           { text: 'vite', link: '/vite' },
-          { text: 'vue', link: '/vue' },
           { text: 'webpack', link: '/webpack' },
+          { text: 'babel', link: '/babel' },
+          { text: 'vue', link: '/vue' },
+          { text: 'react', link: '/react' },
+          { text: 'nuxt', link: '/nuxt' },
         ],
       },
       {
@@ -66,7 +68,8 @@ export default defineConfig({
 
     sidebar: {
       '/css': [
-        { text: 'CSS', link: '/css/css3' },
+        { text: '目录', link: '/css/index' },
+        { text: 'CSS3', link: '/css/css3' },
         { text: '动画', link: '/css/animation' },
         { text: '左右布局', link: '/css/left-center-right' },
       ],
@@ -75,15 +78,19 @@ export default defineConfig({
           text: 'JavaScript',
           items: [
             { text: '目录', link: '/javascript' },
+            {
+              text: '😘生态相关', items: [
+                { text: 'Typescript', link: '/typescript' },
+                { text: 'ECMAScript', link: '/es6/' },
+                { text: 'Node', link: '/node' },
+                { text: 'HTTP', link: '/http' },
+              ],
+            },
             { text: '基础', link: '/javascript/base' },
-            { text: 'Typescript', link: '/typescript' },
-            { text: 'Node', link: '/node' },
             { text: 'BOM', link: '/javascript/bom' },
             { text: 'DOM', link: '/javascript/dom' },
-            { text: 'ECMAScript', link: '/es6/' },
             { text: '原型与原型链', link: '/javascript/prototype' },
             { text: 'Blob', link: '/javascript/blob' },
-            { text: 'HTTP', link: '/http' },
             { text: '设计模式', link: '/javascript/design-models/index' },
             { text: '正则', link: '/javascript/regex' },
             {
@@ -137,6 +144,16 @@ export default defineConfig({
           ],
         },
       ],
+      '/http/': [
+        { text: '目录', link: '/http' },
+        { text: 'http', link: '/http/http' },
+        { text: 'http2', link: '/http/http2' },
+        { text: 'http3', link: '/http/http3' },
+        { text: 'https', link: '/http/https' },
+        { text: 'http headers', link: '/http/http-headers' },
+        { text: 'http 缓存', link: '/http/http-cache' },
+        { text: 'SPDY', link: '/http/SPDY' },
+      ]
     },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/veaba/web-advanced' }],

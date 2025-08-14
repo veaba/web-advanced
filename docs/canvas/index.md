@@ -11,7 +11,7 @@ sidebar: auto
 - 最适合图片密集型的游戏，对象被频繁重绘
 - 逐像素进行渲染
 - 图形被绘制完成，就不会继续被浏览器关注，如果位置发生变化，需要重新绘制
-- canvas 不可以通过浏览器提供的接口获取到 TODO
-- drawImage 贴图受跨域限制
+- `canvas` 不可以通过浏览器提供的接口获取到 TODO
+- `drawImage` 贴图受跨域限制
 
 ## RequestAnimationFrame

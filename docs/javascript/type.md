@@ -1,28 +1,23 @@
-# 类型
+# 数据类型
 
-**基本类型**：
+## 基本类型
 
-- `null`
+| 数据类型                                 | 描述   |
+|--------------------------------------|------|
+| `null`                               | 基本类型 |
+| `undefined`                          | 基本类型 |
+| `string`                             | 基本类型 |
+| `number`                             | 基本类型 |
+| `boolean`                            | 基本类型 |
+| `symbol` <Badge type="tip">新</Badge> | 基本类型 |
+| `bigint` <Badge type="tip">新</Badge> | 基本类型 |
+| `object`                             | 引用类型 |
+| `function`                           | 引用类型 |
+| `array`                              | 引用类型 |
 
-- `undefined`
-
-- `string`
-
-- `number`
-
-- `boolean`
-
-- `symbol` 新的
-
-- `bigint` 新的
-
-**引用类型**：
-
-- `object`
-
-  - `function` (都是属于 `object`)
-
-  - `array` (都是属于 `object`)
+:v:
+:u:
+:e:
 
 ## 类型转换
 
@@ -47,8 +42,9 @@ const num = 2020;
 const str = 'hello world';
 const sys = Symbol(2020);
 
-const obj = { name: 'hello' };
-const fn = function () {};
+const obj = {name: 'hello'};
+const fn = function () {
+};
 const arr = [2020, 12, 20];
 
 console.log(typeof nul); // object
@@ -79,15 +75,15 @@ console.log(arr instanceof Array); // true
 
 ```js
 console.log(bool.constructor === Boolean); // true
-console.log(num.constructor ===  Number); // true
-console.log(str.constructor ===  String); // true
-console.log(obj.constructor ===  Object); // true
-console.log(fn.constructor ===  Function); // true
-console.log(arr.constructor ===  Array); // true
-console.log(sys.constructor ===  Symbol); // true
+console.log(number.constructor === Number); // true
+console.log(str.constructor === String); // true
+console.log(obj.constructor === Object); // true
+console.log(fn.constructor === Function); // true
+console.log(arr.constructor === Array); // true
+console.log(sys.constructor === Symbol); // true
 
-console.log(nul.constructor ===null); // error
-console.log(undefine.constructor undefined); // error
+console.log(nul.constructor === null); // error
+console.log(undefine.constructor === undefined) // error
 ```
 
 **Object.prototype.toString.call**：

@@ -33,15 +33,19 @@ JavaScript 组成：
 
 等等。
 
-## Context
+## 数据类型
+
+<Catalog base="/javascript/type" />
+
+## 上下文
 
 <Catalog base="/javascript/context" />
 
-## Method
+## 方法
 
 <Catalog base="/javascript/static-method" />
 
-## Inherit
+## 继承
 
 <Catalog base="/javascript/inherit" />
 
