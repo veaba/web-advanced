@@ -3,6 +3,7 @@
 - umd
 - iife
 - cjs
+
 > rollup src\app.ts --file build.js --format cjs
 
 ## cjs

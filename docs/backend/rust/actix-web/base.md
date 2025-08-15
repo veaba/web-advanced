@@ -135,7 +135,7 @@ async fn main() -> std::io::Result<()> {
 
 在本例中，带有 `/app` 前缀和 `index.html` 索引资源已创建。此资源可通过 `/app/index.html` url。
 
-有关详细信息，请查看 [URL Dispatch](/rust/actix-web/#url-dispatch) 部分。
+有关详细信息，请查看 [URL Dispatch](/backend/rust/actix-web/#url-dispatch) 部分。
 
 State(状态)
 

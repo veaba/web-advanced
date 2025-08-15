@@ -41,6 +41,14 @@ export default defineConfig({
           { text: 'v8', link: '/v8' },
           { text: 'webgl', link: '/webgl' },
           { text: 'security', link: '/security' },
+          {
+            text: '业务', items: [
+              { text: '跨域问题', link: '/skill/cors' },
+              { text: '微信支付', link: '/skill/wechat-pay' },
+              { text: '支付宝', link: '/skill/alipay' },
+              { text: 'github授权', link: '/skill/github-auth' },
+            ]
+          },
         ],
       },
       {
@@ -48,6 +56,7 @@ export default defineConfig({
         items: [
           { text: 'vite', link: '/vite' },
           { text: 'webpack', link: '/webpack' },
+          { text: 'rollup', link: '/rollup' },
           { text: 'babel', link: '/babel' },
           { text: 'vue', link: '/vue' },
           { text: 'react', link: '/react' },
@@ -85,9 +94,14 @@ export default defineConfig({
             {
               text: '😘生态相关', items: [
                 { text: 'Typescript', link: '/typescript' },
-                { text: 'ECMAScript', link: '/es6/' },
-                { text: 'Node', link: '/node' },
+                { text: 'ECMAScript', link: '/frontend/es6/' },
+                { text: 'Node', link: '/backend/node' },
                 { text: 'HTTP', link: '/http' },
+              ],
+            },
+            {
+              text: '👍性能相关', items: [
+                { text: '性能提升', link: '/frontend/performance' },
               ],
             },
             { text: '基础', link: '/javascript/base' },

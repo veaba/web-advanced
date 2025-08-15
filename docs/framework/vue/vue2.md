@@ -4,7 +4,7 @@ sidebar: auto
 
 # Vue
 
-- [更多关于 VUE API 人工整理手记，见 /docs/vue-api.md @veaba](/vue/vue2-api)
+- [更多关于 VUE API 人工整理手记，见 /docs/vue-api.md @veaba](/framework/vue/vue2-api)
 
 ```vue
 <div id="app" @click="send">

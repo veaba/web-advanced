@@ -21,7 +21,7 @@ sidebar: auto
 
 - display:none 不会发生回流和重绘
 - 回流一定触发重绘，重绘不一定会触发回流
-- 复杂动画，使用 `position: abosution` 使其脱离文档流
+- 复杂动画，使用 `position: absolute` 使其脱离文档流
 - css3 硬件加速 (GPU 加速)
 - css3 硬件加速下以下属性不会发生重绘回流：
   - transform
@@ -69,7 +69,7 @@ dom.border = '1px solid'; // 回流+重绘
 dom.border = 'blue'; // 重绘
 dom.backgroundColor = '#ccc'; // 重绘
 dom.fontSize = '14px'; // 重绘+回流
-document.body(document.createTextNode('abcdev!'));
+document.body(document.createTextNode('hello world!'));
 ```
 
 解决办法

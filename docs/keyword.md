@@ -21,7 +21,7 @@ sidebar: auto
 - [防抖](/javascript/useful/debounce)
 - [节流](/javascript/useful/throttle)
 - canvas
-- [proxy](/es6/proxy)
+- [proxy](frontend/es6/proxy)
 - node 中 commonJs 与 ES6 module
 - node eventLoop
 - BFC
