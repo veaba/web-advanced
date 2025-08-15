@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <video src="" width="600" height="400"></video>
+    <script>
+        function getUserMedia() {
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMidea || navigator.mozGetUserMedia
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia(
+                    {
+                        audio: true,
+                        video: {width: 1280, height: 720}
+                    },
+                    function (stream) {
+                        const video = document.querySelector('video')
+                        video.src = window.URL.createObjectURL(stream);
+                        console.info(stream);
+                        alert(stream)
+                        console.info(video.src);
+                        video.onloadedmetadata = function (e) {
+                            console.info(e);
+                            video.paly()
+                        }
+                    },
+                    function (err) {
+                        console.info(err)
+                        console.info('the follow error：' + err.name);
+                    }
+                )
+            } else {
+                alert('您的浏览器不支持 该直播方案')
+            }
+        }
+        getUserMedia()
+    </script>
+</body>
+
+</html>
