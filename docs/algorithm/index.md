@@ -145,3 +145,9 @@ function total(n) {
 
 显然可以比较 `O(n)` > `O(1)`，这是算法的魅力，提高效率。
 **O(n2) 空间复杂度**：
+
+## 经典算法
+
+<Catalog base="/algorithm/search/two-split" />
+
+<Catalog base="/algorithm/sort/index" />
