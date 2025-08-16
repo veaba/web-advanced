@@ -178,6 +178,13 @@ export default defineConfig({
         { text: 'http 缓存', link: '/http/http-cache' },
         { text: 'SPDY', link: '/http/SPDY' },
       ]
+      ,
+      '/algorithm/': [
+        { text: '目录', link: '/algorithm' },
+        { text: '二分查找', link: '/algorithm/search/two-split' },
+        { text: '排序算法', link: '/algorithm/sort/index' },
+        { text: 'Leetcode', link: '/leetcode/index' },
+      ]
     },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/veaba/web-advanced' }],
