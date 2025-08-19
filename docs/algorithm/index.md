@@ -151,3 +151,9 @@ function total(n) {
 <Catalog base="/algorithm/search/two-split" />
 
 <Catalog base="/algorithm/sort/index" />
+
+## 算法学习网站
+
+- [Visual Go](https://visualgo.net/en/sorting)
+- [Algorithm Visualizer](https://algorithm-visualizer.org/)
+- [Sorting Visualizer](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)

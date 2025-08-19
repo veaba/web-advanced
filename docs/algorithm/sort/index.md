@@ -23,7 +23,7 @@
 <!--@include: ./select.md{2,}  -->
 
 ## 插入排序
-<!--@include: ./insert.md{2,}  -->
+<!--@include: ./insertion.md{2,}  -->
 
 ## 希尔排序
 <!--@include: ./hill.md{2,}  -->

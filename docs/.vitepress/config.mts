@@ -181,9 +181,13 @@ export default defineConfig({
       ,
       '/algorithm/': [
         { text: '目录', link: '/algorithm' },
-        { text: '二分查找', link: '/algorithm/search/two-split' },
+        { text: '二分查找', link: '/algorithm/search/binary-search-two' },
         { text: '排序算法', link: '/algorithm/sort/index' },
         { text: 'Leetcode', link: '/leetcode/index' },
+      ],
+      '/leetcode/': [
+        { text: '目录', link: '/leetcode' },
+        { text: '算法', link: '/algorithm' },
       ]
     },
 

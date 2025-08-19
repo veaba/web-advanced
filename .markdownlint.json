@@ -2,7 +2,8 @@
   "MD033": {
     "allowed_elements": [
       "Badge",
-      "Catalog"
+      "Catalog",
+      "sup"
     ]
   },
   "MD013": {

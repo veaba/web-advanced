@@ -13,11 +13,10 @@
 var arr = [12, 12, 15, 445, 451, 12, 123456, 61, 20, 136, 4856, 1, 0];
 for (let i = 0; i < arr.length; i++) {
   for (let j = 0; j < arr.length - i - 1; j++) {
-    console.log('j=>', i, j);
-    if (arr[i] > arr[j]) {
-      const temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
+    if (arr[j] > arr[j+1]) {
+      const temp = arr[j];
+      arr[i] = arr[j+1];
+      arr[j+1] = temp;
     }
   }
 }
