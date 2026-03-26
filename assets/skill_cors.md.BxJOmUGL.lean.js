@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,aa as i}from"./chunks/framework.B-KB5lLM.js";const p=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"skill/cors.md","filePath":"skill/cors.md"}'),a={name:"skill/cors.md"};function r(s,l,n,c,u,_){return t(),o("div",null,l[0]||(l[0]=[i("",3)]))}const m=e(a,[["render",r]]);export{p as __pageData,m as default};

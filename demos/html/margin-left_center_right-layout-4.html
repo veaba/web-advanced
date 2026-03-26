@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浮动三栏布局示例</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .container {
+      overflow: hidden;
+    }
+
+    .left, .right {
+      width: 200px;
+      background-color: #f1f1f1;
+      position: relative;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    .middle {
+      float: left;
+      width: 100%;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <h2>左侧边栏</h2>
+      <p>固定宽度200px</p>
+    </div>
+
+    <div class="middle">
+      <h2>主要内容</h2>
+      <p>中间栏宽度自适应，会填满剩余空间。</p>
+      <p>这是页面的主要内容区域，包含最重要的信息。</p>
+    </div>
+
+    <div class="right">
+      <h2>右侧边栏</h2>
+      <p>固定宽度200px</p>
+    </div>
+  </div>
+
+</body>
+</html>
+    
