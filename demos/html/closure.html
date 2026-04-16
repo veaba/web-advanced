@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function scope() {
+        var a = 2020;
+        return function() {
+          console.log("ret====");
+          a = a + " year";
+          return a
+        };
+      }
+      scope()
+    //   return
+    //   const x =scope()();
+    //   console.log('x=>',x)
+    </script>
+  </body>
+</html>

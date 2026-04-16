@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>左中右布局 Flex</title>
+    <style>
+      .parent {
+        height: 200px;
+        border: 1px solid red;
+        display:flex;
+        justify-content:center;
+      }
+      .left {
+        border: 1px solid yellow;
+        width: 200px;
+      }
+      .center {
+        border: 1px solid blue;
+        flex: 1;
+      }
+      .right {
+        border: 1px solid slateblue;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      <div class="left">
+        Left
+      </div>
+      <div class="center">
+        Center Flex
+        布局是轴线布局，只能指定"项目"针对轴线的位置，可以看作是一维布局。
+      </div>
+      <div class="right">
+        Right
+      </div>
+    </div>
+  </body>
+</html>
+
